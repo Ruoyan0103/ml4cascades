@@ -1,7 +1,7 @@
 import os
 import xml.etree.ElementTree as ET
 from ml4cascades.potentials import IPotential
-from ml4cascades.lammps.calcs import RelaxationCalculator, CascadeCalculator
+from ml4cascades.lammps.calcs import CascadeCalculator
 
 module_dir = os.path.dirname(__file__)
 
@@ -64,11 +64,12 @@ if __name__ == "__main__":
     gap.write_param(gap_file)
 
     mass, element, lattice, alat, size, temperature = 72.56, 'Ge', 'diamond', 5.76, 9, 300    
-    relax_calc = RelaxationCalculator(gap, mass, element, lattice, alat, size, temperature)
-    # relax_calc.calculate()
-
+    
     pka_id = 10
     energies, num_directions = [100, 400, 1000, 2000, 5000, 10e3, 20e3, 50e3], 30
-    cas_calc = CascadeCalculator(gap, mass, element, lattice, alat, size, temperature,
-                                 pka_id, energies, num_directions)
+    energies, num_directions = [100, 400, 1000], 30
+    sizes = [1, 1, 1]    # Sizes for each energy
+    pka_ids = [1, 2, 3]  # PKA IDs for each energy
+    cas_calc = CascadeCalculator(gap, mass, element, lattice, alat, sizes, temperature,
+                                 pka_ids, energies, num_directions)
     cas_calc.calculate()

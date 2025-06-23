@@ -1,5 +1,5 @@
 # LAMMPS input for equilibrating the cell
-# Parameters: ff_settings, mass, Temp 
+# Parameters: ff_settings, mass, Temp
 
 #-------------------------INITIALIZATION--------------------------
 units		    metal
@@ -8,16 +8,15 @@ atom_style      atomic
 read_data       data.input
 
 #---------------------------FORCE FIELD---------------------------
-pair_style        quip
-pair_coeff        * * /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/potentials/params/GAP/Ge-v10.xml "Potential xml_label=GAP_2025_3_8_120_22_43_25_989" 32
-mass            1  72.56
+{ff_settings}
+mass            1  {mass}
 
 #---------------------------RELAXATION----------------------------
 min_style       cg
 minimize        1.0e-8 1.0e-10  10000 100000
 reset_timestep  0
 timestep        0.001
-velocity        all create 300 51742 mom yes rot yes dist gaussian units box
+velocity        all create {Temp} 51742 mom yes rot yes dist gaussian units box
 thermo		    100
 thermo_style    custom step time atoms temp press pe etotal lx ly lz vol
 compute         ep  all pe/atom
@@ -25,18 +24,18 @@ compute         ek  all ke/atom
 dump            1 all custom 1000 dump.relax id type x y z c_ep c_ek
 
 #--------------------------NVT SIMULATION---------------------------
-fix             1 all nvt temp 300 300 0.1 tchain 5
+fix             1 all nvt temp {Temp} {Temp} 0.1 tchain 5
 run             30000
 unfix           1
 
 #--------------------------NPT SIMULATION---------------------------
-fix             2 all npt temp 300 300 0.1 iso 0.0 0.0 1.0 tchain 5 pchain 5 drag 1.0  
+fix             2 all npt temp {Temp} {Temp} 0.1 iso 0.0 0.0 1.0 tchain 5 pchain 5 drag 1.0  
 run             30000
 unfix           2
 
 #---------------------
 # uncomment if you want to execute
-#fix            3 all npt temp 300 300 0.2 iso 0.0 0.0 2.0 tchain 5 pchain 5  #x 0.0 0.0 1.0 y 0.0 0.0 1.0
+#fix            3 all npt temp {Temp} {Temp} 0.2 iso 0.0 0.0 2.0 tchain 5 pchain 5  #x 0.0 0.0 1.0 y 0.0 0.0 1.0
 #run            30000
 #unfix          3
 #---------------------

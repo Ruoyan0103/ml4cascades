@@ -9,7 +9,7 @@ log_dir = os.path.join(module_dir, 'logs')
 
 class LMPStaticCalculator(ABC):
     def __init__(self, task_name, potential, mass, 
-                 element, lattice, alat, size):
+                 element, lattice, alat, sizes):
         self.template_dir = os.path.join(module_dir, 'templates', task_name)
         self.calculation_dir = os.path.join(result_dir, task_name, potential.name)
         self.log_file = os.path.join(log_dir, f'{task_name}_{potential.name}.log')
@@ -24,7 +24,7 @@ class LMPStaticCalculator(ABC):
         self.element = element
         self.lattice = lattice
         self.alat = alat
-        self.size = size
+        self.sizes = sizes
 
 
     @abstractmethod

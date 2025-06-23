@@ -1,9 +1,9 @@
 # LAMMPS input script for PKA simulation
-# Parameters: data_file, data_restart, ff_settings, mass, pka_id, v_x, v_y, v_z
+# Parameters: ff_settings, mass, pka_id, v_x, v_y, v_z, Temp
 
 #---------------------------------INITIALIZATION------------------------------
-#read_restart    {data_restart}
-read_data       {data_file}
+read_restart    restart.relaxed
+# read_data       data_file
 reset_timestep  0
 
 #-------------------------------FORCE FIELD-----------------------------------
@@ -13,15 +13,15 @@ mass            1  {mass}
 #---------------------------BORDER REGION SETTINGS----------------------------
 variable        br  index   3.0
 
-region          xrdown block $(xlo) ${br} $(ylo) $(yhi) $(zlo) $(zhi) units box
+region          xrdown block $(xlo) v_br $(ylo) $(yhi) $(zlo) $(zhi) units box
 group           xdown region xrdown
 region          xrup block $(xhi-v_br) $(xhi) $(ylo) $(yhi) $(zlo) $(zhi) units box
 group           xup region xrup
-region          yrdown block $(xlo) $(xhi) $(ylo) ${br} $(zlo) $(zhi) units box
+region          yrdown block $(xlo) $(xhi) $(ylo) v_br $(zlo) $(zhi) units box
 group           ydown region yrdown
 region          yrup block $(xlo) $(xhi) $(yhi-v_br) $(yhi) $(zlo) $(zhi) units box
 group           yup region yrup
-region          zrdown block $(xlo) $(xhi) $(ylo) $(yhi) $(zlo) ${br} units box
+region          zrdown block $(xlo) $(xhi) $(ylo) $(yhi) $(zlo) v_br units box
 group           zdown region zrdown
 region          zrup block $(xlo) $(xhi) $(ylo) $(yhi) $(zhi-v_br) $(zhi) units box
 group           zup region zrup
@@ -31,12 +31,12 @@ group           mobile subtract all boundary
 
 #---------------------------------PKA SETTINGS---------------------------------
 group           PKA  id == {pka_id}
-velocity        PKA set {v_x} {v_y} {v_z} units box
+velocity        PKA set {V_x} {V_y} {V_z} units box
 compute         ep all pe/atom
 compute         ek all ke/atom
 
 #------------------------------------SIMULATION---------------------------------
-fix             1 boundary nvt temp 300.0 300.0 0.1
+fix             1 boundary nvt temp {Temp} {Temp} 0.1
 fix             4 mobile nve
 fix             3 all dt/reset 1 NULL 0.003 0.1 emax 30.0 units box
 fix             5 all electron/stopping 10.0 elstop-table.txt

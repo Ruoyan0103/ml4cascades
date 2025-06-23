@@ -8,8 +8,17 @@ log_dir = os.path.join(module_dir, 'logs')
 
 
 class LMPStaticCalculator(ABC):
-    def __init__(self, task_name, potential, mass, 
-                 element, lattice, alat, sizes):
+    def __init__(self, task_name, potential, mass, element, lattice, alat):
+        """
+        Initialize the LAMMPS static calculator.
+        Args:
+            task_name (str): Name of the task.
+            potential (Potential): The potential object containing force field settings.
+            mass (float): Mass of the atoms.
+            element (str): Element symbol.
+            lattice (str): Lattice type.
+            alat (float): Lattice constant.
+        """
         self.template_dir = os.path.join(module_dir, 'templates', task_name)
         self.calculation_dir = os.path.join(result_dir, task_name, potential.name)
         self.log_file = os.path.join(log_dir, f'{task_name}_{potential.name}.log')
@@ -24,13 +33,14 @@ class LMPStaticCalculator(ABC):
         self.element = element
         self.lattice = lattice
         self.alat = alat
-        self.sizes = sizes
-
+        
 
     @abstractmethod
     def _setup(self, exe_folder=None):
         """
         Setup the input file for the LAMMPS simulation.
+        Args:
+            exe_folder (str, optional): Directory where the executable files will be placed.
         """
         with open(os.path.join(self.template_dir, 'submit.sh'), 'r') as f:
             submit_template = f.read()

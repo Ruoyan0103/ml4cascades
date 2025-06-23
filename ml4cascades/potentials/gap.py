@@ -63,13 +63,11 @@ if __name__ == "__main__":
     gap = GAPotential.from_config(gap_file)
     gap.write_param(gap_file)
 
-    mass, element, lattice, alat, size, temperature = 72.56, 'Ge', 'diamond', 5.76, 9, 300    
-    
-    pka_id = 10
+    mass, element, lattice, alat, temperature = 72.56, 'Ge', 'diamond', 5.76, 300    
     energies, num_directions = [100, 400, 1000, 2000, 5000, 10e3, 20e3, 50e3], 30
     energies, num_directions = [100, 400, 1000], 30
-    sizes = [1, 1, 1]    # Sizes for each energy
-    pka_ids = [1, 2, 3]  # PKA IDs for each energy
+    sizes = [9, 9, 9]     
+    pka_ids = [1202, 1202, 1202]  
     cas_calc = CascadeCalculator(gap, mass, element, lattice, alat, sizes, temperature,
                                  pka_ids, energies, num_directions)
     cas_calc.calculate()

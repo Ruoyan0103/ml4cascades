@@ -20,7 +20,6 @@ class MEAMPotential(IPotential):
         self.ff_settings = [self.pair_style, self.pair_coeff]
 
 
-# example usage
 if __name__ == "__main__":
     library_file = os.path.join(module_dir, 'params', 'MEAM', 'library.meam')
     element_file = os.path.join(module_dir, 'params', 'MEAM', 'Ge.meam')
@@ -28,13 +27,11 @@ if __name__ == "__main__":
     meam = MEAMPotential()
     meam.write_param(library_file, element_file, element_symbol)
     
-    mass, element, lattice, alat, size, temperature = 72.56, 'Ge', 'diamond', 5.76, 9, 300    
-    
-    pka_id = 10
+    mass, element, lattice, alat, temperature = 72.56, 'Ge', 'diamond', 5.76, 300    
     energies, num_directions = [100, 400, 1000, 2000, 5000, 10e3, 20e3, 50e3], 30
     energies, num_directions = [100, 400, 1000], 30
-    sizes = [1, 1, 1]    # Sizes for each energy
-    pka_ids = [1, 2, 3]  # PKA IDs for each energy
+    sizes = [9, 9, 9]     
+    pka_ids = [1202, 1202, 1202]  
     cas_calc = CascadeCalculator(meam, mass, element, lattice, alat, sizes, temperature,
                                  pka_ids, energies, num_directions)
     cas_calc.calculate()

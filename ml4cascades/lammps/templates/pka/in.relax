@@ -41,6 +41,7 @@ unfix           2
 #---------------------
 
 undump          1
+write_data      relax.out
 write_restart   restart.relaxed
  
 

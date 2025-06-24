@@ -28,10 +28,10 @@ if __name__ == "__main__":
     meam.write_param(library_file, element_file, element_symbol)
     
     mass, element, lattice, alat, temperature = 72.56, 'Ge', 'diamond', 5.76, 300    
-    energies, num_directions = [100, 400, 1000, 2000, 5000, 10e3, 20e3, 50e3], 30
-    energies, num_directions = [100, 400, 1000], 30
-    sizes = [9, 9, 9]     
-    pka_ids = [1202, 1202, 1202]  
+    energies, num_directions = [100, 400, 1000, 2000, 5000, 10e3], 59
+    sizes = [9, 13, 17, 22, 30, 37]  # 47 - 20e3 63 - 50e3
+    pka_ids = [2918, 8674, 17185, 28932, 104738, 191392]
+
     cas_calc = CascadeCalculator(meam, mass, element, lattice, alat, sizes, temperature,
                                  pka_ids, energies, num_directions)
     cas_calc.calculate()

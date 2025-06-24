@@ -17,7 +17,7 @@ class CascadeCalculator(LMPStaticCalculator):
     Threshold displacement energy calculator.
     """          
     def __init__(self, potential, mass, element, lattice, alat, sizes, temperature, 
-                 pka_ids, energies, num_directions, task_name='pka'):
+                 pka_ids, energies, num_sampling_points, task_name='pka'):
         """
         Initialize the CascadeCalculator.
         Args:
@@ -30,7 +30,7 @@ class CascadeCalculator(LMPStaticCalculator):
             temperature (float): Temperature for the simulation in Kelvin.
             pka_ids (list): List of primary knock-on atom IDs in different supercells.
             energies (list): List of energies for the PKA in eV.
-            num_directions (int): Number of random directions to sample.
+            num_sampling_points (int): Number of random directions to sample.
             task_name (str, optional): Name of the task. Defaults to 'pka'.
         """
         super().__init__(task_name, potential, mass, element, lattice, alat)
@@ -38,13 +38,13 @@ class CascadeCalculator(LMPStaticCalculator):
         self.temp = temperature
         self.pka_ids = pka_ids
         self.energies = energies
-        self.num_directions = num_directions 
+        self.num_sampling_points = num_sampling_points 
         self.angle_set = set()
         self.hkl_list = []
         self.min_phi = 0
-        self.max_phi = 45
+        self.max_phi = 54.7
         self.min_theta = 0
-        self.max_theta = 54.7
+        self.max_theta = 45
 
 
     def _get_random_angles(self, min_phi, max_phi, min_theta, max_theta, num_points):
@@ -57,27 +57,44 @@ class CascadeCalculator(LMPStaticCalculator):
             max_theta (float): Maximum polar angle in degrees.
             num_points (int): Number of random points to generate.
         """
-        min_phi = np.radians(min_phi)
-        max_phi = np.radians(max_phi)
-        min_theta = np.radians(min_theta)
-        max_theta = np.radians(max_theta)
+        _min_phi = np.radians(min_phi)
+        _max_phi = np.radians(max_phi)
+        _min_theta = np.radians(min_theta)
+        _max_theta = np.radians(max_theta)
         np.random.seed(42)  
-        phi = np.random.uniform(min_phi, max_phi, num_points)                          # azimuthal angle (φ)
-        costheta = np.random.uniform(np.cos(min_theta), np.cos(max_theta), num_points) 
+        phi = np.random.uniform(_min_phi, _max_phi, num_points)                        # azimuthal angle (φ)
+        costheta = np.random.uniform(np.cos(_min_theta), np.cos(_max_theta), num_points) 
         theta = np.arccos(costheta)                                                    # polar angle (θ)
         self.angle_set = set(zip(phi, theta))                                          # Store unique angles
 
     
-    def _set_hkl_from_angles(self):
+    def _set_hkl_from_angles(self, threshold_deg=15, num_directions=30):
         """
         Convert spherical angles to normalized Miller indices (hkl).
         """
+        cos_thresh = np.cos(np.radians(threshold_deg))
+        channeling_vectors = [
+            [0, 0, 1],
+            [1, 0, 1],
+            [1, 1, 1]
+        ]
+        channeling_dirs = [v / np.linalg.norm(np.array(v)) for v in channeling_vectors]
         for angle in self.angle_set:
+            if len(self.hkl_list) >= num_directions:
+                break
             phi, theta = angle
             h = np.sin(theta) * np.cos(phi)
             k = np.sin(theta) * np.sin(phi)
             l = np.cos(theta)
-            self.hkl_list.append(np.array((h, k, l)) / np.linalg.norm(np.array((h, k, l)))) # Normalize the vector
+            hkl = np.array((h, k, l))
+            add_hkl = True
+            for d in channeling_dirs:
+                if abs(np.dot(hkl, d)) > cos_thresh:
+                       add_hkl = False
+            if add_hkl:
+                self.hkl_list.append(hkl)
+                
+            
         hkl_file = os.path.join(self.calculation_dir, 'hkl_list.dat')
         with open(hkl_file, 'w') as f:  
             np.savetxt(f, np.array(self.hkl_list), 
@@ -112,7 +129,7 @@ class CascadeCalculator(LMPStaticCalculator):
         """
         Set up the directories and input files for the LAMMPS simulation.
         """
-        self._get_random_angles(self.min_phi, self.max_phi, self.min_theta, self.max_theta, self.num_directions)
+        self._get_random_angles(self.min_phi, self.max_phi, self.min_theta, self.max_theta, self.num_sampling_points)
         self._set_hkl_from_angles()
         for energy, pka_id, in zip(self.energies, self.pka_ids):
             # energy = 0.5 * self.mass * AMU_TO_KG * np.sum(hkl**2) * (velocity*ANGSTROM_TO_METER/PS_TO_S)**2 * JOULE_TO_EV
@@ -150,19 +167,21 @@ class CascadeCalculator(LMPStaticCalculator):
         subprocess.run('sbatch submit-relax.sh', shell=True, check=True, cwd=relax_dir)
 
 
-    def calculate(self):
+    def calculate(self, relax_flag=True):
         """
         Run the cascade calculations.
         """
         self._setup()
-        for energy, size in zip(self.energies, self.sizes):
-            eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
-            self._relax(eng_dir, size)
-        # time.sleep(35)
-        # for energy in self.energies:
-        #     for idx, _ in enumerate(self.hkl_list):
-        #         eng_hkl_dir = os.path.join(eng_dir, str(idx))
-        #         subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=eng_hkl_dir)
+        if relax_flag:
+            for energy, size in zip(self.energies, self.sizes):
+                eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
+                self._relax(eng_dir, size)
+        else:
+            for energy in self.energies:
+                eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
+                for idx, _ in enumerate(self.hkl_list):
+                    eng_hkl_dir = os.path.join(eng_dir, str(idx))
+                    subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=eng_hkl_dir)
 
 
 

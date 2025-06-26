@@ -68,7 +68,7 @@ class CascadeCalculator(LMPStaticCalculator):
         self.angle_set = set(zip(phi, theta))                                          # Store unique angles
 
     
-    def _set_hkl_from_angles(self, threshold_deg=15, num_directions=30):
+    def _set_hkl_from_angles(self, threshold_deg=15, num_directions=1):
         """
         Convert spherical angles to normalized Miller indices (hkl).
         """
@@ -123,6 +123,8 @@ class CascadeCalculator(LMPStaticCalculator):
             f.write(input_template.format(ff_settings='\n'.join(ff_settings), mass=self.mass, 
                                           pka_id=pka_id, Temp=self.temp, 
                                           V_x=Vx, V_y=Vy, V_z=Vz))
+        shutil.copy(os.path.join(self.template_dir, 'Ge_Ge_elstop.txt'), 
+                    os.path.join(eng_hkl_dir, 'Ge_Ge_elstop.txt'))
         
                     
     def _setup(self):
@@ -167,7 +169,7 @@ class CascadeCalculator(LMPStaticCalculator):
         subprocess.run('sbatch submit-relax.sh', shell=True, check=True, cwd=relax_dir)
 
 
-    def calculate(self, relax_flag=True):
+    def calculate(self, relax_flag=False):
         """
         Run the cascade calculations.
         """

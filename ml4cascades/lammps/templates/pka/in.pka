@@ -30,7 +30,12 @@ group           boundary union xdown xup ydown yup zdown zup
 group           mobile subtract all boundary
 
 #---------------------------------PKA SETTINGS---------------------------------
-group           PKA  id == {pka_id}
+
+# variable        r2 equal sqrt(2*a^2)/4
+# region          select sphere 0 0 0 v_r2 units box
+# group           PKA region select
+
+group           PKA id == {pka_id}
 velocity        PKA set {V_x} {V_y} {V_z} units box
 compute         ep all pe/atom
 compute         ek all ke/atom
@@ -39,7 +44,7 @@ compute         ek all ke/atom
 fix             1 boundary nvt temp {Temp} {Temp} 0.1
 fix             4 mobile nve
 fix             3 all dt/reset 1 NULL 0.003 0.1 emax 30.0 units box
-# fix             5 all electron/stopping 10.0 elstop-table.txt
+fix             5 all electron/stopping 10.0 Ge_Ge_elstop.txt
 thermo          1
 thermo_style    custom step dt time press ke pe etotal lx ly lz vol
 thermo_modify   lost error

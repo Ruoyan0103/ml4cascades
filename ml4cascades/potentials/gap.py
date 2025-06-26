@@ -1,8 +1,8 @@
 import os
 import xml.etree.ElementTree as ET
 from ml4cascades.potentials import IPotential
-from ml4cascades.lammps.calcs import CascadeCalculator
-import ml4cascades 
+from ml4cascades.turbogap.calcs import CascadeCalculator
+
 
 module_dir = os.path.dirname(__file__)
 
@@ -60,10 +60,12 @@ class GAPotential(IPotential):
 
 
 class TGAPotential(IPotential):
-    def __init__(self, params):
+    def __init__(self):
         self.name = 'TGAP'
-        self.ff_settings = params
+        self.ff_settings = '{}'
 
+    def write_param(self, params):
+        self.ff_settings = self.ff_settings.format(params)
 
 
 if __name__ == "__main__":
@@ -80,12 +82,14 @@ if __name__ == "__main__":
     #                              pka_ids, energies, num_directions)
     # cas_calc.calculate()
 
-    gap_file = os.path.join(module_dir, 'params', 'TGAP', 'Ge-v10-gap') 
-    tgap = TGAPotential(gap_file)
+    gap_file_folder = os.path.join(module_dir, 'params', 'TGAP') 
+    gap_file = 'Ge-v10-gap'
+    tgap = TGAPotential()
+    tgap.write_param(gap_file)
     num_species, mass, element, lattice, alat, temperature = 1, 72.64, 'Ge', 'diamond', 5.76, 300 
-    simulation_steps = 3000
-    energies, num_directions = [10], 1
-    sizes = [2] 
-    cas_calc = ml4cascades.turbogap.calcs.CascadeCalculator(tgap, num_species, mass, element, lattice, alat, sizes, temperature,
-                                                            energies, num_directions, simulation_steps)
+    simulation_steps = 1000
+    energies, num_sampling_points = [15, 20], 10
+    sizes = [3, 3] 
+    cas_calc = CascadeCalculator(tgap, num_species, mass, element, lattice, alat, sizes, temperature,
+                                energies, num_sampling_points, simulation_steps, gap_file_folder)
     cas_calc.calculate()

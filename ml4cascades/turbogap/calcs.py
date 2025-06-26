@@ -8,7 +8,7 @@ import numpy as np
 AMU_TO_KG = 1.66053906660E-27 # Atomic mass unit to kg conversion factor
 JOULE_TO_EV = 6.241509074E18  # Joule to eV conversion factor
 ANGSTROM_TO_METER = 1E-10     # Angstroms/picosecond to meters/second conversion factor
-PS_TO_S = 1E-12               # Picoseconds to seconds conversion factor
+FS_TO_S = 1E-15               # Picoseconds to seconds conversion factor
 module_dir = os.path.dirname(__file__) 
 
 
@@ -17,7 +17,7 @@ class CascadeCalculator(TurboGAPCalculator):
     Threshold displacement energy calculator.
     """          
     def __init__(self, potential, num_species, mass, element, lattice, alat, sizes, temperature, 
-                 pka_ids, energies, num_sampling_points, simulation_steps, task_name='pka'):
+                 energies, num_sampling_points, simulation_steps, gap_file_folder, task_name='pka'):
         """
         Initialize the CascadeCalculator.
         Args:
@@ -33,13 +33,13 @@ class CascadeCalculator(TurboGAPCalculator):
             num_sampling_points (int): Number of random directions to sample.
             task_name (str, optional): Name of the task. Defaults to 'pka'.
         """
-        super().__init__(task_name, num_species, potential, mass, element, lattice, alat)
+        super().__init__(task_name, potential, num_species, mass, element, lattice, alat)
         self.sizes = sizes
         self.temp = temperature
-        self.pka_ids = pka_ids
         self.energies = energies
         self.num_sampling_points = num_sampling_points 
         self.simulation_steps = simulation_steps
+        self.gap_file_folder = gap_file_folder
         self.angle_set = set()
         self.hkl_list = []
         self.min_phi = 0
@@ -114,7 +114,7 @@ class CascadeCalculator(TurboGAPCalculator):
             input_template = f.read()
         input_file = os.path.join(relax_dir, 'input')
         with open(input_file, 'w') as f:
-            f.write(input_template.format(ff_settings='\n'.join(self.ff_settings), num_species=self.num_species,
+            f.write(input_template.format(ff_settings=self.ff_settings, num_species=self.num_species,
                                           element=self.element, mass=self.mass, Temp=self.temp))
         unit_cell = bulk(self.element, self.lattice, a=self.alat, cubic=True)
         super_cell = unit_cell * [size, size, size]
@@ -124,7 +124,7 @@ class CascadeCalculator(TurboGAPCalculator):
 
     def _get_pka_id(self, trajectory_file):
         relaxed_struct = read(trajectory_file, format='extxyz', index=-1)
-        center = traj.get_center_of_mass()
+        center = relaxed_struct.get_center_of_mass()
         positions_list = relaxed_struct.get_positions()
         dist = 1000
         closest_idx = None
@@ -148,24 +148,23 @@ class CascadeCalculator(TurboGAPCalculator):
             eng_hkl_dir (str): Directory for the specific energy and hkl combination.
             trajectory_file (str): Path to the trajectory file.
         """
-        with open(os.path.join(self.template_dir, 'in.pka'), 'r') as f:
+        with open(os.path.join(self.template_dir, 'input-pka'), 'r') as f:
             input_template = f.read()
         ff_settings = self.ff_settings
         input_file = os.path.join(eng_hkl_dir, 'input')
         with open(input_file, 'w') as f:
-            f.write(input_template.format(ff_settings='\n'.join(ff_settings), num_species=self.num_species,
+            f.write(input_template.format(ff_settings=ff_settings, num_species=self.num_species,
                                           element=self.element, mass=self.mass, Temp=self.temp, simulation_steps=self.simulation_steps,
-                                          stopping_file=os.path.join(template_dir, 'Ge_Ge_elstop.txt')))
+                                          stopping_file=os.path.join(self.template_dir, 'Ge_Ge_elstop.txt')))
         relaxed_struct = read(trajectory_file, format='extxyz', index=-1)
-        velocities = relaxed_struct.get_velocities()
-        with open(new_trajectory_file, 'w') as f:
-            Vx = velocity * hkl[0]
-            Vy = velocity * hkl[1]
-            Vz = velocity * hkl[2]
-            velocities[pka_id]  = [Vx, Vy, Vz]  
-            relaxed_struct.set_velocities(velocities)
-            new_trajectory_file = os.path.join(eng_hkl_dir, 'thermalized.xyz')
-            write(new_trajectory_file, relaxed_struct, format='extxyz')
+        velocities = relaxed_struct.get_array('velocities')
+        Vx = velocity * hkl[0]
+        Vy = velocity * hkl[1]
+        Vz = velocity * hkl[2]
+        velocities[closest_idx]  = [Vx, Vy, Vz]  
+        relaxed_struct.set_array('velocities', velocities)
+        new_trajectory_file = os.path.join(eng_hkl_dir, 'thermalized.xyz')
+        write(new_trajectory_file, relaxed_struct, format='extxyz')
         
                     
     def _setup(self):
@@ -176,15 +175,21 @@ class CascadeCalculator(TurboGAPCalculator):
         self._set_hkl_from_angles()
         for energy, size in zip(self.energies, self.sizes):
             eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
+            os.makedirs(eng_dir, exist_ok=True)
+            shutil.copytree(self.gap_file_folder, os.path.join(eng_dir, 'gap_files'), dirs_exist_ok=True)
             self._relax(eng_dir, size)
+        time.sleep(180)
+        # energy = 0.5 * self.mass * AMU_TO_KG * np.sum(hkl**2) * (velocity*ANGSTROM_TO_METER/PS_TO_S)**2 * JOULE_TO_EV
+        # np.sum(hkl**2) approximate to 1
+        for energy in self.energies:
+            eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
             trajectory_file = os.path.join(eng_dir, 'trajectory_out.xyz')
-            pka_id = self._get_pka_id(trajectory_file)  
-            # energy = 0.5 * self.mass * AMU_TO_KG * np.sum(hkl**2) * (velocity*ANGSTROM_TO_METER/PS_TO_S)**2 * JOULE_TO_EV
-            # np.sum(hkl**2) approximate to 1
-            velocity = np.sqrt(2 * energy  / (self.mass * AMU_TO_KG * JOULE_TO_EV)) / (ANGSTROM_TO_METER/PS_TO_S) 
+            pka_id = self._get_pka_id(trajectory_file)
+            velocity = np.sqrt(2 * energy  / (self.mass * AMU_TO_KG * JOULE_TO_EV)) / (ANGSTROM_TO_METER/FS_TO_S) 
             for idx, hkl in enumerate(self.hkl_list):
                 eng_hkl_dir = os.path.join(eng_dir, str(idx))
                 os.makedirs(eng_hkl_dir, exist_ok=True)
+                shutil.copytree(self.gap_file_folder, os.path.join(eng_hkl_dir, 'gap_files'), dirs_exist_ok=True)
                 self._setup_helper(velocity, pka_id, hkl, eng_hkl_dir, trajectory_file)
                 shutil.copy(os.path.join(self.template_dir, 'submit-mahti.sh'), os.path.join(eng_hkl_dir, 'submit.sh')) 
 

@@ -2,7 +2,7 @@
 ! Parameters: ff_settings, num_species, element, mass, simulation_steps, stopping_file
 ! Species-specific info
 atoms_file = 'thermalized.xyz'
-pot_file = {ff_settings}
+pot_file = "gap_files/{ff_settings}"
 n_species = {num_species}
 species = {element}
 masses = {mass}

@@ -1,6 +1,6 @@
-# This is a comment
-#       atom-1    
-# eV    eV/Ang     # units metal
+# electronic stopping
+130
+E(eV) Ge
 1.1 6.023E-02
 1.2 6.023E-02
 1.3 6.268E-02

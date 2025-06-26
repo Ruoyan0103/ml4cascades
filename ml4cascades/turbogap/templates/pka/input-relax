@@ -1,13 +1,13 @@
 ! TurboGAP input file for relaxation
 ! Parameters: ff_settings, num_species, element, mass, Temp
 atoms_file = "data.input"
-pot_file = "{ff_settings}"
+pot_file = "gap_files/{ff_settings}"
 n_species = {num_species}
 species = {element}
 masses = {mass}
 
 ! MD options
-md_nsteps = 50000
+md_nsteps = 200
 md_step = 1.
  ! Temperature
 thermostat = berendsen

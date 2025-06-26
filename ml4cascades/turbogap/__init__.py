@@ -13,6 +13,7 @@ class TurboGAPCalculator(ABC):
         Initialize the LAMMPS static calculator.
         Args:
             task_name (str): Name of the task.
+            num_species (int): Number of species in the system. 
             potential (Potential): The potential object containing force field settings.
             num_species (int): Number of species in the system.
             mass (float): Mass of the atoms.

@@ -1,13 +1,14 @@
+! TurboGAP input file for PKA simulation
+! Parameters: ff_settings, num_species, element, mass, simulation_steps, stopping_file
 ! Species-specific info
-atoms_file = 'xyz_setup.xyz'
-pot_file = 'gap_files/Si.ZBL-stiff.TGAP.gap'
-n_species = 1
-species = Si
-masses = 28.085
-
+atoms_file = 'thermalized.xyz'
+pot_file = {ff_settings}
+n_species = {num_species}
+species = {element}
+masses = {mass}
+ 
 ! MD options
-md_nsteps = 100 !16000
-!md_nsteps = 30000
+md_nsteps = {simulation_steps}
 md_step = 1.
 
 ! Adaptive timestep
@@ -21,10 +22,9 @@ adapt_emax = 30
 ! Electronic stopping
 electronic_stopping = .true. 
 eel_cut = 10
-estop_filename = 'potentials/Si_in_Si_srim_turbogap.elstop'
+estop_filename = '{stopping_file}'
 
 ! Writeouts
 write_thermo = 100
 write_xyz = 100
-!write_lv = .true.
 neighbors_buffer = 0.5

@@ -1,22 +1,27 @@
-atoms_file = "Ge_quenched.xyz"
-pot_file = "gap_files/Ge-v10-gap"
-n_species = 1
-species = Ge
-masses = 72.64
+! TurboGAP input file for relaxation
+! Parameters: ff_settings, num_species, element, mass, Temp
+atoms_file = "data.input"
+pot_file = "{ff_settings}"
+n_species = {num_species}
+species = {element}
+masses = {mass}
 
 ! MD options
-md_nsteps = 80000
+md_nsteps = 50000
 md_step = 1.
+ ! Temperature
 thermostat = berendsen
-t_beg = 700
-t_end = 700
-tau_t = 1000.
+t_beg = {Temp}
+t_end = {Temp}
+tau_t = 100.
+ ! Pressure
 barostat = berendsen
 barostat_sym = diag
-p_beg = 1.
-p_end = 1.
-tau_p = 2000.
+p_beg = 0
+p_end = 0
+tau_p = 1000.
 gamma_p = 30.
+! Output
 write_thermo = 500
-write_xyz = 1000
+write_xyz = 5000
 neighbors_buffer = 0.5

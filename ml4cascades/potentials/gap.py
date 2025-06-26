@@ -2,6 +2,7 @@ import os
 import xml.etree.ElementTree as ET
 from ml4cascades.potentials import IPotential
 from ml4cascades.lammps.calcs import CascadeCalculator
+import ml4cascades 
 
 module_dir = os.path.dirname(__file__)
 
@@ -58,16 +59,33 @@ class GAPotential(IPotential):
         self.ff_settings = [self.pair_style, self.pair_coeff]
 
 
-if __name__ == "__main__":
-    gap_file = os.path.join(module_dir, 'params', 'GAP', 'Ge-v10.xml')
-    gap = GAPotential.from_config(gap_file)
-    gap.write_param(gap_file)
+class TGAPotential(IPotential):
+    def __init__(self, params):
+        self.name = 'TGAP'
+        self.ff_settings = params
 
-    mass, element, lattice, alat, temperature = 72.56, 'Ge', 'diamond', 5.76, 300    
-    energies, num_directions = [100, 400, 1000, 2000, 5000, 10e3, 20e3, 50e3], 30
-    energies, num_directions = [100, 400, 1000], 30
-    sizes = [9, 9, 9]     
-    pka_ids = [1202, 1202, 1202]  
-    cas_calc = CascadeCalculator(gap, mass, element, lattice, alat, sizes, temperature,
-                                 pka_ids, energies, num_directions)
+
+
+if __name__ == "__main__":
+    # gap_file = os.path.join(module_dir, 'params', 'GAP', 'Ge-v10.xml')
+    # gap = GAPotential.from_config(gap_file)
+    # gap.write_param(gap_file)
+
+    # mass, element, lattice, alat, temperature = 72.56, 'Ge', 'diamond', 5.76, 300    
+    # energies, num_directions = [100, 400, 1000, 2000, 5000, 10e3, 20e3, 50e3], 30
+    # energies, num_directions = [100, 400, 1000], 30
+    # sizes = [9, 9, 9]     
+    # pka_ids = [1202, 1202, 1202]  
+    # cas_calc = CascadeCalculator(gap, mass, element, lattice, alat, sizes, temperature,
+    #                              pka_ids, energies, num_directions)
+    # cas_calc.calculate()
+
+    gap_file = os.path.join(module_dir, 'params', 'TGAP', 'Ge-v10-gap') 
+    tgap = TGAPotential(gap_file)
+    num_species, mass, element, lattice, alat, temperature = 1, 72.64, 'Ge', 'diamond', 5.76, 300 
+    simulation_steps = 3000
+    energies, num_directions = [10], 1
+    sizes = [2] 
+    cas_calc = ml4cascades.turbogap.calcs.CascadeCalculator(tgap, num_species, mass, element, lattice, alat, sizes, temperature,
+                                                            energies, num_directions, simulation_steps)
     cas_calc.calculate()

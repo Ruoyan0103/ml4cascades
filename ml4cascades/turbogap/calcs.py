@@ -1,4 +1,4 @@
-from ml4cascades.lammps import LMPStaticCalculator
+from ml4cascades.turbogap import TurboGAPCalculator
 import os, subprocess, math, shutil, time
 from ase.build import bulk 
 from ase.io import read, write
@@ -12,12 +12,12 @@ PS_TO_S = 1E-12               # Picoseconds to seconds conversion factor
 module_dir = os.path.dirname(__file__) 
 
 
-class CascadeCalculator(LMPStaticCalculator):
+class CascadeCalculator(TurboGAPCalculator):
     """ 
     Threshold displacement energy calculator.
     """          
-    def __init__(self, potential, mass, element, lattice, alat, sizes, temperature, 
-                 pka_ids, energies, num_sampling_points, task_name='pka'):
+    def __init__(self, potential, num_species, mass, element, lattice, alat, sizes, temperature, 
+                 pka_ids, energies, num_sampling_points, simulation_steps, task_name='pka'):
         """
         Initialize the CascadeCalculator.
         Args:
@@ -33,12 +33,13 @@ class CascadeCalculator(LMPStaticCalculator):
             num_sampling_points (int): Number of random directions to sample.
             task_name (str, optional): Name of the task. Defaults to 'pka'.
         """
-        super().__init__(task_name, potential, mass, element, lattice, alat)
+        super().__init__(task_name, num_species, potential, mass, element, lattice, alat)
         self.sizes = sizes
         self.temp = temperature
         self.pka_ids = pka_ids
         self.energies = energies
         self.num_sampling_points = num_sampling_points 
+        self.simulation_steps = simulation_steps
         self.angle_set = set()
         self.hkl_list = []
         self.min_phi = 0
@@ -93,17 +94,51 @@ class CascadeCalculator(LMPStaticCalculator):
                        add_hkl = False
             if add_hkl:
                 self.hkl_list.append(hkl)
-                
-            
         hkl_file = os.path.join(self.calculation_dir, 'hkl_list.dat')
         with open(hkl_file, 'w') as f:  
             np.savetxt(f, np.array(self.hkl_list), 
                        fmt='%.8f',      
                        delimiter=' ',   
-                       header='h     k     l')  
-        
-        
-    def _setup_helper(self, velocity, pka_id, hkl, eng_hkl_dir):
+                       header='h     k     l') 
+
+
+    def _relax(self, relax_dir, size): 
+        """
+        Set up the relaxation simulation for a given supercell size.
+        Args:
+            relax_dir (str): Directory for the relaxation simulation.
+            size (int): Size of the supercell.
+        """
+        shutil.copy(os.path.join(self.template_dir, 'submit-mahti.sh'), os.path.join(relax_dir, 'submit.sh'))
+        with open(os.path.join(self.template_dir, 'input-relax'), 'r') as f:
+            input_template = f.read()
+        input_file = os.path.join(relax_dir, 'input')
+        with open(input_file, 'w') as f:
+            f.write(input_template.format(ff_settings='\n'.join(self.ff_settings), num_species=self.num_species,
+                                          element=self.element, mass=self.mass, Temp=self.temp))
+        unit_cell = bulk(self.element, self.lattice, a=self.alat, cubic=True)
+        super_cell = unit_cell * [size, size, size]
+        write(os.path.join(relax_dir, 'data.input'), super_cell, format='extxyz')
+        subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=relax_dir)
+
+
+    def _get_pka_id(self, trajectory_file):
+        relaxed_struct = read(trajectory_file, format='extxyz', index=-1)
+        center = traj.get_center_of_mass()
+        positions_list = relaxed_struct.get_positions()
+        dist = 1000
+        closest_idx = None
+        for idx, positions in enumerate(positions_list):
+            temp_dist = np.linalg.norm(positions - center)
+            if temp_dist < dist:
+                dist = temp_dist
+                closest_idx = idx
+        pka_id = relaxed_struct.get_atomic_numbers()[closest_idx]
+        return pka_id
+
+
+
+    def _setup_helper(self, velocity, pka_id, hkl, eng_hkl_dir, trajectory_file):
         """
         Helper function to set up the input file for the LAMMPS simulation.
         Args:
@@ -111,20 +146,26 @@ class CascadeCalculator(LMPStaticCalculator):
             pka_id (int): ID of the primary knock-on atom.
             hkl (np.array): Miller indices for the direction of the PKA.
             eng_hkl_dir (str): Directory for the specific energy and hkl combination.
+            trajectory_file (str): Path to the trajectory file.
         """
         with open(os.path.join(self.template_dir, 'in.pka'), 'r') as f:
             input_template = f.read()
         ff_settings = self.ff_settings
-        input_file = os.path.join(eng_hkl_dir, 'in.pka')
+        input_file = os.path.join(eng_hkl_dir, 'input')
         with open(input_file, 'w') as f:
+            f.write(input_template.format(ff_settings='\n'.join(ff_settings), num_species=self.num_species,
+                                          element=self.element, mass=self.mass, Temp=self.temp, simulation_steps=self.simulation_steps,
+                                          stopping_file=os.path.join(template_dir, 'Ge_Ge_elstop.txt')))
+        relaxed_struct = read(trajectory_file, format='extxyz', index=-1)
+        velocities = relaxed_struct.get_velocities()
+        with open(new_trajectory_file, 'w') as f:
             Vx = velocity * hkl[0]
             Vy = velocity * hkl[1]
             Vz = velocity * hkl[2]
-            f.write(input_template.format(ff_settings='\n'.join(ff_settings), mass=self.mass, 
-                                          pka_id=pka_id, Temp=self.temp, 
-                                          V_x=Vx, V_y=Vy, V_z=Vz))
-        shutil.copy(os.path.join(self.template_dir, 'Ge_Ge_elstop.txt'), 
-                    os.path.join(eng_hkl_dir, 'Ge_Ge_elstop.txt'))
+            velocities[pka_id]  = [Vx, Vy, Vz]  
+            relaxed_struct.set_velocities(velocities)
+            new_trajectory_file = os.path.join(eng_hkl_dir, 'thermalized.xyz')
+            write(new_trajectory_file, relaxed_struct, format='extxyz')
         
                     
     def _setup(self):
@@ -133,57 +174,31 @@ class CascadeCalculator(LMPStaticCalculator):
         """
         self._get_random_angles(self.min_phi, self.max_phi, self.min_theta, self.max_theta, self.num_sampling_points)
         self._set_hkl_from_angles()
-        for energy, pka_id, in zip(self.energies, self.pka_ids):
+        for energy, size in zip(self.energies, self.sizes):
+            eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
+            self._relax(eng_dir, size)
+            trajectory_file = os.path.join(eng_dir, 'trajectory_out.xyz')
+            pka_id = self._get_pka_id(trajectory_file)  
             # energy = 0.5 * self.mass * AMU_TO_KG * np.sum(hkl**2) * (velocity*ANGSTROM_TO_METER/PS_TO_S)**2 * JOULE_TO_EV
             # np.sum(hkl**2) approximate to 1
             velocity = np.sqrt(2 * energy  / (self.mass * AMU_TO_KG * JOULE_TO_EV)) / (ANGSTROM_TO_METER/PS_TO_S) 
-            eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
             for idx, hkl in enumerate(self.hkl_list):
                 eng_hkl_dir = os.path.join(eng_dir, str(idx))
                 os.makedirs(eng_hkl_dir, exist_ok=True)
-                super()._setup(eng_hkl_dir)                              # for submit file
-                self._setup_helper(velocity, pka_id, hkl, eng_hkl_dir)   # for input file
+                self._setup_helper(velocity, pka_id, hkl, eng_hkl_dir, trajectory_file)
+                shutil.copy(os.path.join(self.template_dir, 'submit-mahti.sh'), os.path.join(eng_hkl_dir, 'submit.sh')) 
 
 
-    def _relax(self, relax_dir, size):
-        """
-        Set up the relaxation simulation for a given supercell size.
-        Args:
-            relax_dir (str): Directory for the relaxation simulation.
-            size (int): Size of the supercell.
-        """
-        with open(os.path.join(self.template_dir, 'submit.sh'), 'r') as f:
-            submit_template = f.read()
-        submit_file = os.path.join(relax_dir, 'submit-relax.sh')
-        with open(submit_file, 'w') as f:
-            f.write(submit_template.format(file='in.relax'))
-        with open(os.path.join(self.template_dir, 'in.relax'), 'r') as f:
-            input_template = f.read()
-        input_file = os.path.join(relax_dir, 'in.relax')
-        with open(input_file, 'w') as f:
-            f.write(input_template.format(ff_settings='\n'.join(self.ff_settings), mass=self.mass, Temp=self.temp))
-
-        unit_cell = bulk(self.element, self.lattice, a=self.alat, cubic=True)
-        super_cell = unit_cell * [size, size, size]
-        write(os.path.join(relax_dir, 'data.input'), super_cell, format='lammps-data')
-        subprocess.run('sbatch submit-relax.sh', shell=True, check=True, cwd=relax_dir)
-
-
-    def calculate(self, relax_flag=False):
+    def calculate(self):
         """
         Run the cascade calculations.
         """
         self._setup()
-        if relax_flag:
-            for energy, size in zip(self.energies, self.sizes):
-                eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
-                self._relax(eng_dir, size)
-        else:
-            for energy in self.energies:
-                eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
-                for idx, _ in enumerate(self.hkl_list):
-                    eng_hkl_dir = os.path.join(eng_dir, str(idx))
-                    subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=eng_hkl_dir)
+        for energy in self.energies:
+            eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
+            for idx, _ in enumerate(self.hkl_list):
+                eng_hkl_dir = os.path.join(eng_dir, str(idx))
+                subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=eng_hkl_dir)
 
 
 

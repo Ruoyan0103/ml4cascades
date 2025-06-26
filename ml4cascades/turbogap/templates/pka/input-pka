@@ -1,0 +1,30 @@
+! Species-specific info
+atoms_file = 'xyz_setup.xyz'
+pot_file = 'gap_files/Si.ZBL-stiff.TGAP.gap'
+n_species = 1
+species = Si
+masses = 28.085
+
+! MD options
+md_nsteps = 100 !16000
+!md_nsteps = 30000
+md_step = 1.
+
+! Adaptive timestep
+adaptive_time = .true.
+adapt_tstep_interval = 1
+adapt_tmin = 1.0E-10
+adapt_tmax = 1.0
+adapt_xmax = 0.1
+adapt_emax = 30
+
+! Electronic stopping
+electronic_stopping = .true. 
+eel_cut = 10
+estop_filename = 'potentials/Si_in_Si_srim_turbogap.elstop'
+
+! Writeouts
+write_thermo = 100
+write_xyz = 100
+!write_lv = .true.
+neighbors_buffer = 0.5

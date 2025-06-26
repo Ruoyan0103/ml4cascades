@@ -1,0 +1,22 @@
+atoms_file = "Ge_quenched.xyz"
+pot_file = "gap_files/Ge-v10-gap"
+n_species = 1
+species = Ge
+masses = 72.64
+
+! MD options
+md_nsteps = 80000
+md_step = 1.
+thermostat = berendsen
+t_beg = 700
+t_end = 700
+tau_t = 1000.
+barostat = berendsen
+barostat_sym = diag
+p_beg = 1.
+p_end = 1.
+tau_p = 2000.
+gamma_p = 30.
+write_thermo = 500
+write_xyz = 1000
+neighbors_buffer = 0.5

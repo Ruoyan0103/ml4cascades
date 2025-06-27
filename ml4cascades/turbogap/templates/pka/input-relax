@@ -1,5 +1,5 @@
 ! TurboGAP input file for relaxation
-! Parameters: ff_settings, num_species, element, mass, Temp
+! Parameters: ff_settings, num_species, element, mass, equilibration_steps, Temp
 atoms_file = "data.input"
 pot_file = "gap_files/{ff_settings}"
 n_species = {num_species}
@@ -7,14 +7,14 @@ species = {element}
 masses = {mass}
 
 ! MD options
-md_nsteps = 200
+md_nsteps = {equilibration_steps} ! e.g. 30000 steps for 30 ps
 md_step = 1.
- ! Temperature
+! Temperature
 thermostat = berendsen
 t_beg = {Temp}
 t_end = {Temp}
 tau_t = 100.
- ! Pressure
+! Pressure
 barostat = berendsen
 barostat_sym = diag
 p_beg = 0
@@ -22,6 +22,6 @@ p_end = 0
 tau_p = 1000.
 gamma_p = 30.
 ! Output
-write_thermo = 500
-write_xyz = 5000
+write_thermo = 100
+write_xyz = 1000
 neighbors_buffer = 0.5

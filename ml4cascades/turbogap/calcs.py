@@ -17,7 +17,7 @@ class CascadeCalculator(TurboGAPCalculator):
     Threshold displacement energy calculator.
     """          
     def __init__(self, potential, num_species, mass, element, lattice, alat, sizes, temperature, 
-                 energies, num_sampling_points, simulation_steps, gap_file_folder, task_name='pka'):
+                 energies, num_sampling_points, equilibration_steps, cascade_steps, gap_file_folder, task_name='pka'):
         """
         Initialize the CascadeCalculator.
         Args:
@@ -37,8 +37,9 @@ class CascadeCalculator(TurboGAPCalculator):
         self.sizes = sizes
         self.temp = temperature
         self.energies = energies
-        self.num_sampling_points = num_sampling_points 
-        self.simulation_steps = simulation_steps
+        self.num_sampling_points = num_sampling_points
+        self.equilibration_steps = equilibration_steps
+        self.cascade_steps = cascade_steps
         self.gap_file_folder = gap_file_folder
         self.angle_set = set()
         self.hkl_list = []
@@ -109,17 +110,22 @@ class CascadeCalculator(TurboGAPCalculator):
             relax_dir (str): Directory for the relaxation simulation.
             size (int): Size of the supercell.
         """
-        shutil.copy(os.path.join(self.template_dir, 'submit-mahti.sh'), os.path.join(relax_dir, 'submit.sh'))
+        with open(os.path.join(self.template_dir, 'submit-mahti.sh'), 'r') as f:
+            submit_template = f.read()
+        submit_file = os.path.join(relax_dir, 'submit.sh')
+        with open(submit_file, 'w') as f:
+            f.write(submit_template.format(job_name=f'relax_{size}{size}{size}'))
         with open(os.path.join(self.template_dir, 'input-relax'), 'r') as f:
             input_template = f.read()
         input_file = os.path.join(relax_dir, 'input')
         with open(input_file, 'w') as f:
             f.write(input_template.format(ff_settings=self.ff_settings, num_species=self.num_species,
-                                          element=self.element, mass=self.mass, Temp=self.temp))
+                                          element=self.element, mass=self.mass, equilibration_steps=self.equilibration_steps,
+                                          Temp=self.temp))
         unit_cell = bulk(self.element, self.lattice, a=self.alat, cubic=True)
         super_cell = unit_cell * [size, size, size]
         write(os.path.join(relax_dir, 'data.input'), super_cell, format='extxyz')
-        subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=relax_dir)
+        # subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=relax_dir)
 
 
     def _get_pka_id(self, trajectory_file):
@@ -133,20 +139,20 @@ class CascadeCalculator(TurboGAPCalculator):
             if temp_dist < dist:
                 dist = temp_dist
                 closest_idx = idx
-        pka_id = relaxed_struct.get_atomic_numbers()[closest_idx]
-        return pka_id
+        pka_id = closest_idx
+        self.logger.info(f'PKA ID: {pka_id} with positions: {positions_list[pka_id]}')
+        return relaxed_struct, pka_id
 
 
-
-    def _setup_helper(self, velocity, pka_id, hkl, eng_hkl_dir, trajectory_file):
+    def _setup_helper(self, velocity, relaxed_struct, pka_id, hkl, eng_hkl_dir):
         """
         Helper function to set up the input file for the LAMMPS simulation.
         Args:
             velocity (float): Velocity of the PKA in m/s.
+            relaxed_struct (ase.Atoms): Relaxed structure with velocities set.
             pka_id (int): ID of the primary knock-on atom.
             hkl (np.array): Miller indices for the direction of the PKA.
             eng_hkl_dir (str): Directory for the specific energy and hkl combination.
-            trajectory_file (str): Path to the trajectory file.
         """
         with open(os.path.join(self.template_dir, 'input-pka'), 'r') as f:
             input_template = f.read()
@@ -154,15 +160,16 @@ class CascadeCalculator(TurboGAPCalculator):
         input_file = os.path.join(eng_hkl_dir, 'input')
         with open(input_file, 'w') as f:
             f.write(input_template.format(ff_settings=ff_settings, num_species=self.num_species,
-                                          element=self.element, mass=self.mass, Temp=self.temp, simulation_steps=self.simulation_steps,
+                                          element=self.element, mass=self.mass, Temp=self.temp, cascade_steps=self.cascade_steps,
                                           stopping_file=os.path.join(self.template_dir, 'Ge_Ge_elstop.txt')))
-        relaxed_struct = read(trajectory_file, format='extxyz', index=-1)
         velocities = relaxed_struct.get_array('velocities')
+        self.logger.info(f'PKA ID {pka_id} with old velocities {velocities[pka_id]} ang/fs')
         Vx = velocity * hkl[0]
         Vy = velocity * hkl[1]
         Vz = velocity * hkl[2]
-        velocities[closest_idx]  = [Vx, Vy, Vz]  
+        velocities[pka_id]  = [Vx, Vy, Vz]  
         relaxed_struct.set_array('velocities', velocities)
+        self.logger.info(f'PKA ID {pka_id} with new velocities {velocities[pka_id]} ang/fs')
         new_trajectory_file = os.path.join(eng_hkl_dir, 'thermalized.xyz')
         write(new_trajectory_file, relaxed_struct, format='extxyz')
         
@@ -178,32 +185,37 @@ class CascadeCalculator(TurboGAPCalculator):
             os.makedirs(eng_dir, exist_ok=True)
             shutil.copytree(self.gap_file_folder, os.path.join(eng_dir, 'gap_files'), dirs_exist_ok=True)
             self._relax(eng_dir, size)
-        time.sleep(180)
-        # energy = 0.5 * self.mass * AMU_TO_KG * np.sum(hkl**2) * (velocity*ANGSTROM_TO_METER/PS_TO_S)**2 * JOULE_TO_EV
-        # np.sum(hkl**2) approximate to 1
-        for energy in self.energies:
-            eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
-            trajectory_file = os.path.join(eng_dir, 'trajectory_out.xyz')
-            pka_id = self._get_pka_id(trajectory_file)
-            velocity = np.sqrt(2 * energy  / (self.mass * AMU_TO_KG * JOULE_TO_EV)) / (ANGSTROM_TO_METER/FS_TO_S) 
-            for idx, hkl in enumerate(self.hkl_list):
-                eng_hkl_dir = os.path.join(eng_dir, str(idx))
-                os.makedirs(eng_hkl_dir, exist_ok=True)
-                shutil.copytree(self.gap_file_folder, os.path.join(eng_hkl_dir, 'gap_files'), dirs_exist_ok=True)
-                self._setup_helper(velocity, pka_id, hkl, eng_hkl_dir, trajectory_file)
-                shutil.copy(os.path.join(self.template_dir, 'submit-mahti.sh'), os.path.join(eng_hkl_dir, 'submit.sh')) 
-
-
-    def calculate(self):
+        
+    
+    def calculate(self, runcascade=False):
         """
         Run the cascade calculations.
         """
         self._setup()
-        for energy in self.energies:
-            eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
-            for idx, _ in enumerate(self.hkl_list):
-                eng_hkl_dir = os.path.join(eng_dir, str(idx))
-                subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=eng_hkl_dir)
+        # time.sleep(120)
+        if runcascade:
+            for energy in self.energies:
+                self.logger.info(f'---------------------------------------------------')
+                self.logger.info(f'Running cascade calculations for energy: {energy} eV')
+                eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
+                trajectory_file = os.path.join(eng_dir, 'trajectory_out.xyz')
+                relaxed_struct, pka_id = self._get_pka_id(trajectory_file)
+                velocity = np.sqrt(2 * energy  / (self.mass * AMU_TO_KG * JOULE_TO_EV)) / (ANGSTROM_TO_METER/FS_TO_S) 
+                for idx, hkl in enumerate(self.hkl_list):
+                    eng_hkl_dir = os.path.join(eng_dir, str(idx))
+                    os.makedirs(eng_hkl_dir, exist_ok=True)
+                    shutil.copytree(self.gap_file_folder, os.path.join(eng_hkl_dir, 'gap_files'), dirs_exist_ok=True)
+                    self._setup_helper(velocity, relaxed_struct, pka_id, hkl, eng_hkl_dir)
+                    shutil.copy(os.path.join(self.template_dir, 'submit-mahti.sh'), os.path.join(eng_hkl_dir, 'submit.sh')) eng_hkl_dir = os.path.join(eng_dir, str(idx))
+                    subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=eng_hkl_dir)
+
+
+    def check_border(self):
+        """
+        Check no atoms are outside the simulation box.
+        """
+        pass 
+                
 
 
 

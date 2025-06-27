@@ -1,14 +1,14 @@
 ! TurboGAP input file for PKA simulation
-! Parameters: ff_settings, num_species, element, mass, simulation_steps, stopping_file
+! Parameters: ff_settings, num_species, element, mass, cascade_steps, Temp, stopping_file
 ! Species-specific info
 atoms_file = 'thermalized.xyz'
 pot_file = "gap_files/{ff_settings}"
 n_species = {num_species}
 species = {element}
 masses = {mass}
- 
+
 ! MD options
-md_nsteps = {simulation_steps}
+md_nsteps = {cascade_steps}
 md_step = 1.
 
 ! Adaptive timestep
@@ -23,6 +23,15 @@ adapt_emax = 30
 electronic_stopping = .true. 
 eel_cut = 10
 estop_filename = '{stopping_file}'
+
+! Border thermostat
+! make_group = inside block xlow xhigh ylow yhigh zlow zhigh
+! make_group = border subtract 2 all inside
+! thermostat = "berendsen"
+! thermostat_groupID = border
+! t_beg = {Temp}
+! t_end = {Temp}
+! tau_t = 100.
 
 ! Writeouts
 write_thermo = 100

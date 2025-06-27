@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 import os
-
+from ml4cascades.loggers.logger import AppLogger
 
 module_dir = os.path.dirname(__file__)
 result_dir = os.path.join(module_dir, 'results')
@@ -36,21 +36,13 @@ class TurboGAPCalculator(ABC):
         self.element = element
         self.lattice = lattice
         self.alat = alat
+        self.logger = AppLogger(__name__, self.log_file, overwrite=True).get_logger()
         
 
     @abstractmethod
-    def _setup(self, exe_folder=None):
-        """
-        Setup the input file for the LAMMPS simulation.
-        Args:
-            exe_folder (str, optional): Directory where the executable files will be placed.
-        """
-        if exe_folder is None:
-            exe_folder = self.calculation_dir
-        submit_file = os.path.join(exe_folder, 'submit.sh')
-        shutil.copy(os.path.join(self.template_dir, 'submit-mahti.sh'), submit_file)
+    def _setup(self):
+        pass
         
-
 
     @abstractmethod
     def calculate(self):

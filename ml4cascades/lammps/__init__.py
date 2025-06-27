@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 import os
-
+from ml4cascades.loggers.logger import AppLogger
 
 module_dir = os.path.dirname(__file__)
 result_dir = os.path.join(module_dir, 'results')
@@ -33,6 +33,7 @@ class LMPStaticCalculator(ABC):
         self.element = element
         self.lattice = lattice
         self.alat = alat
+        self.logger = AppLogger(__name__, self.log_file, overwrite=True).get_logger()
         
 
     @abstractmethod

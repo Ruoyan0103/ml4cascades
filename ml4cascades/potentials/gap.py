@@ -2,7 +2,7 @@ import os
 import xml.etree.ElementTree as ET
 from ml4cascades.potentials import IPotential
 from ml4cascades.turbogap.calcs import CascadeCalculator
-
+import numpy as np
 
 module_dir = os.path.dirname(__file__)
 
@@ -61,7 +61,7 @@ class GAPotential(IPotential):
 
 class TGAPotential(IPotential):
     def __init__(self):
-        self.name = 'TGAP'
+        self.name = 'TGAPotential'
         self.ff_settings = '{}'
 
     def write_param(self, params):

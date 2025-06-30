@@ -22,6 +22,7 @@ class CascadeCalculator(TurboGAPCalculator):
         Initialize the CascadeCalculator.
         Args:
             potential (Potential): The potential object containing force field settings.
+            num_species (int): Number of species in the system.
             mass (float): Mass of the atoms.
             element (str): Element symbol.
             lattice (str): Lattice type.
@@ -31,6 +32,9 @@ class CascadeCalculator(TurboGAPCalculator):
             pka_ids (list): List of primary knock-on atom IDs in different supercells.
             energies (list): List of energies for the PKA in eV.
             num_sampling_points (int): Number of random directions to sample.
+            equilibration_steps (int): Number of equilibration steps.
+            cascade_steps (int): Number of steps in the cascade simulation.
+            gap_file_folder (str): Path to the folder containing GAP files.
             task_name (str, optional): Name of the task. Defaults to 'pka'.
         """
         super().__init__(task_name, potential, num_species, mass, element, lattice, alat)
@@ -49,23 +53,13 @@ class CascadeCalculator(TurboGAPCalculator):
         self.max_theta = 45
 
 
-    def _get_random_angles(self, min_phi, max_phi, min_theta, max_theta, num_points):
+    def _get_random_angles(self):
         """
         Generate random angles in spherical coordinates.
-        Args:
-            min_phi (float): Minimum azimuthal angle in degrees.
-            max_phi (float): Maximum azimuthal angle in degrees.
-            min_theta (float): Minimum polar angle in degrees.
-            max_theta (float): Maximum polar angle in degrees.
-            num_points (int): Number of random points to generate.
         """
-        _min_phi = np.radians(min_phi)
-        _max_phi = np.radians(max_phi)
-        _min_theta = np.radians(min_theta)
-        _max_theta = np.radians(max_theta)
         np.random.seed(42)  
-        phi = np.random.uniform(_min_phi, _max_phi, num_points)                        # azimuthal angle (φ)
-        costheta = np.random.uniform(np.cos(_min_theta), np.cos(_max_theta), num_points) 
+        phi = np.random.uniform(self.min_phi, self.max_phi, self.num_points)           # azimuthal angle (φ)
+        costheta = np.random.uniform(np.cos(self.min_theta), np.cos(self.max_theta), self.num_points) 
         theta = np.arccos(costheta)                                                    # polar angle (θ)
         self.angle_set = set(zip(phi, theta))                                          # Store unique angles
 
@@ -110,7 +104,7 @@ class CascadeCalculator(TurboGAPCalculator):
             relax_dir (str): Directory for the relaxation simulation.
             size (int): Size of the supercell.
         """
-        with open(os.path.join(self.template_dir, 'submit-mahti.sh'), 'r') as f:
+        with open(os.path.join(self.template_dir, 'submit-triton.sh'), 'r') as f:
             submit_template = f.read()
         submit_file = os.path.join(relax_dir, 'submit.sh')
         with open(submit_file, 'w') as f:
@@ -178,7 +172,7 @@ class CascadeCalculator(TurboGAPCalculator):
         """
         Set up the directories and input files for the LAMMPS simulation.
         """
-        self._get_random_angles(self.min_phi, self.max_phi, self.min_theta, self.max_theta, self.num_sampling_points)
+        self._get_random_angles()
         self._set_hkl_from_angles()
         for energy, size in zip(self.energies, self.sizes):
             eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
@@ -206,7 +200,7 @@ class CascadeCalculator(TurboGAPCalculator):
                     os.makedirs(eng_hkl_dir, exist_ok=True)
                     shutil.copytree(self.gap_file_folder, os.path.join(eng_hkl_dir, 'gap_files'), dirs_exist_ok=True)
                     self._setup_helper(velocity, relaxed_struct, pka_id, hkl, eng_hkl_dir)
-                    shutil.copy(os.path.join(self.template_dir, 'submit-mahti.sh'), os.path.join(eng_hkl_dir, 'submit.sh')) eng_hkl_dir = os.path.join(eng_dir, str(idx))
+                    shutil.copy(os.path.join(self.template_dir, 'submit-triton.sh'), os.path.join(eng_hkl_dir, 'submit.sh')) eng_hkl_dir = os.path.join(eng_dir, str(idx))
                     subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=eng_hkl_dir)
 
 

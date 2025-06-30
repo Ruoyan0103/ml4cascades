@@ -11,29 +11,34 @@ masses = {mass}
 md_nsteps = {cascade_steps}
 md_step = 1.
 
-! Adaptive timestep
+! Adaptive timestep 
 adaptive_time = .true.
+adapt_time_groupID = all
 adapt_tstep_interval = 1
 adapt_tmin = 1.0E-10
-adapt_tmax = 1.0
-adapt_xmax = 0.1
-adapt_emax = 30
+adapt_tmax = 1.0E-00
+adapt_xmax = 1.0E-01
+adapt_emax = 30.0
 
 ! Electronic stopping
 electronic_stopping = .true. 
+eel_groupID = all
 eel_cut = 10
+eel_freq_out = 10
 estop_filename = '{stopping_file}'
 
 ! Border thermostat
-! make_group = inside block xlow xhigh ylow yhigh zlow zhigh
-! make_group = border subtract 2 all inside
-! thermostat = "berendsen"
-! thermostat_groupID = border
-! t_beg = {Temp}
-! t_end = {Temp}
-! tau_t = 100.
+make_group = inside block {xlow} {xhigh} {ylow} {yhigh} {zlow} {zhigh}
+make_group = border subtract 2 all inside
+make_group = inside dynamic 100
+make_group = border dynamic 100
+thermostat = "berendsen"
+thermostat_groupID = border
+t_beg = {Temp}
+t_end = {Temp}
+tau_t = 100.
 
 ! Writeouts
-write_thermo = 100
+write_thermo = 10
 write_xyz = 100
 neighbors_buffer = 0.5

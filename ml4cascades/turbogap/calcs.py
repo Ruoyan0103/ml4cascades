@@ -16,7 +16,7 @@ class CascadeCalculator(TurboGAPCalculator):
     """ 
     Threshold displacement energy calculator.
     """          
-    def __init__(self, potential, num_species, mass, element, lattice, alat, sizes, temperature, 
+    def __init__(self, potential, num_species, mass, element, lattice, alat, sizes, thicknesses, temperature, 
                  energies, num_sampling_points, equilibration_steps, cascade_steps, gap_file_folder, task_name='pka'):
         """
         Initialize the CascadeCalculator.
@@ -41,10 +41,11 @@ class CascadeCalculator(TurboGAPCalculator):
         self.sizes = sizes
         self.temp = temperature
         self.energies = energies
-        self.num_sampling_points = num_sampling_points
+        self.num_points = num_sampling_points
         self.equilibration_steps = equilibration_steps
         self.cascade_steps = cascade_steps
         self.gap_file_folder = gap_file_folder
+        self.thicknesses = thicknesses  
         self.angle_set = set()
         self.hkl_list = []
         self.min_phi = 0
@@ -138,7 +139,7 @@ class CascadeCalculator(TurboGAPCalculator):
         return relaxed_struct, pka_id
 
 
-    def _setup_helper(self, velocity, relaxed_struct, pka_id, hkl, eng_hkl_dir):
+    def _setup_helper(self, velocity, relaxed_struct, thickness, pka_id, hkl, eng_hkl_dir):
         """
         Helper function to set up the input file for the LAMMPS simulation.
         Args:
@@ -152,10 +153,12 @@ class CascadeCalculator(TurboGAPCalculator):
             input_template = f.read()
         ff_settings = self.ff_settings
         input_file = os.path.join(eng_hkl_dir, 'input')
+        a, b, c, _, _, _ = relaxed_struct.cell.cellpar()
         with open(input_file, 'w') as f:
             f.write(input_template.format(ff_settings=ff_settings, num_species=self.num_species,
                                           element=self.element, mass=self.mass, Temp=self.temp, cascade_steps=self.cascade_steps,
-                                          stopping_file=os.path.join(self.template_dir, 'Ge_Ge_elstop.txt')))
+                                          stopping_file=os.path.join(self.template_dir, 'Ge_Ge_elstop.txt'), xlow=thickness, xhigh=a-thickness,
+                                          ylow=thickness, yhigh=a-thickness, zlow=thickness, zhigh=a-thickness))
         velocities = relaxed_struct.get_array('velocities')
         self.logger.info(f'PKA ID {pka_id} with old velocities {velocities[pka_id]} ang/fs')
         Vx = velocity * hkl[0]
@@ -181,14 +184,14 @@ class CascadeCalculator(TurboGAPCalculator):
             self._relax(eng_dir, size)
         
     
-    def calculate(self, runcascade=False):
+    def calculate(self, runcascade=True):
         """
         Run the cascade calculations.
         """
         self._setup()
         # time.sleep(120)
         if runcascade:
-            for energy in self.energies:
+            for energy, thickness in zip(self.energies, self.thicknesses):
                 self.logger.info(f'---------------------------------------------------')
                 self.logger.info(f'Running cascade calculations for energy: {energy} eV')
                 eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
@@ -199,8 +202,8 @@ class CascadeCalculator(TurboGAPCalculator):
                     eng_hkl_dir = os.path.join(eng_dir, str(idx))
                     os.makedirs(eng_hkl_dir, exist_ok=True)
                     shutil.copytree(self.gap_file_folder, os.path.join(eng_hkl_dir, 'gap_files'), dirs_exist_ok=True)
-                    self._setup_helper(velocity, relaxed_struct, pka_id, hkl, eng_hkl_dir)
-                    shutil.copy(os.path.join(self.template_dir, 'submit-triton.sh'), os.path.join(eng_hkl_dir, 'submit.sh')) eng_hkl_dir = os.path.join(eng_dir, str(idx))
+                    self._setup_helper(velocity, relaxed_struct, thickness, pka_id, hkl, eng_hkl_dir)
+                    shutil.copy(os.path.join(self.template_dir, 'submit-triton.sh'), os.path.join(eng_hkl_dir, 'submit.sh')) 
                     subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=eng_hkl_dir)
 
 

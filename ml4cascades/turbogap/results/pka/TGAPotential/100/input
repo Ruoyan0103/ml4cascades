@@ -1,0 +1,27 @@
+! TurboGAP input file for relaxation
+! Parameters: ff_settings, num_species, element, mass, equilibration_steps, Temp
+atoms_file = "data.input"
+pot_file = "gap_files/Ge-v10-gap"
+n_species = 1
+species = Ge
+masses = 72.64
+
+! MD options
+md_nsteps = 30000 ! e.g. 30000 steps for 30 ps
+md_step = 1.
+! Temperature
+thermostat = berendsen
+t_beg = 300
+t_end = 300
+tau_t = 100.
+! Pressure
+barostat = berendsen
+barostat_sym = diag
+p_beg = 0
+p_end = 0
+tau_p = 1000.
+gamma_p = 30.
+! Output
+write_thermo = 100
+write_xyz = 1000
+neighbors_buffer = 0.5

@@ -1,0 +1,5 @@
+2025-06-30 17:01 - ml4cascades.turbogap - INFO - ---------------------------------------------------
+2025-06-30 17:01 - ml4cascades.turbogap - INFO - Running cascade calculations for energy: 100 eV
+2025-06-30 17:01 - ml4cascades.turbogap - INFO - PKA ID: 2336 with positions: [23.13622472 23.19606929 23.03005319]
+2025-06-30 17:01 - ml4cascades.turbogap - INFO - PKA ID 2336 with old velocities [ 0.00195894 -0.00191077 -0.00356774] ang/fs
+2025-06-30 17:01 - ml4cascades.turbogap - INFO - PKA ID 2336 with new velocities [-0.10413221 -0.0272498   0.12238985] ang/fs

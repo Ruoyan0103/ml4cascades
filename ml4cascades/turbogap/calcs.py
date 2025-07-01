@@ -3,6 +3,11 @@ import os, subprocess, math, shutil, time
 from ase.build import bulk 
 from ase.io import read, write
 import numpy as np
+from ovito.io import import_file
+from ovito.modifiers import WignerSeitzAnalysisModifier, ClusterAnalysisModifier, ExpressionSelectionModifier, DislocationAnalysisModifier
+from ovito.pipeline import StaticSource, Pipeline
+from collections import Counter
+from ovito.data import DislocationNetwork
 
 
 AMU_TO_KG = 1.66053906660E-27 # Atomic mass unit to kg conversion factor
@@ -52,6 +57,7 @@ class CascadeCalculator(TurboGAPCalculator):
         self.max_phi = 54.7
         self.min_theta = 0
         self.max_theta = 45
+        self.num_directions = 1
 
 
     def _get_random_angles(self):
@@ -65,7 +71,7 @@ class CascadeCalculator(TurboGAPCalculator):
         self.angle_set = set(zip(phi, theta))                                          # Store unique angles
 
     
-    def _set_hkl_from_angles(self, threshold_deg=15, num_directions=1):
+    def _set_hkl_from_angles(self, threshold_deg=15):
         """
         Convert spherical angles to normalized Miller indices (hkl).
         """
@@ -77,7 +83,7 @@ class CascadeCalculator(TurboGAPCalculator):
         ]
         channeling_dirs = [v / np.linalg.norm(np.array(v)) for v in channeling_vectors]
         for angle in self.angle_set:
-            if len(self.hkl_list) >= num_directions:
+            if len(self.hkl_list) >= self.num_directions:
                 break
             phi, theta = angle
             h = np.sin(theta) * np.cos(phi)
@@ -203,15 +209,154 @@ class CascadeCalculator(TurboGAPCalculator):
                     os.makedirs(eng_hkl_dir, exist_ok=True)
                     shutil.copytree(self.gap_file_folder, os.path.join(eng_hkl_dir, 'gap_files'), dirs_exist_ok=True)
                     self._setup_helper(velocity, relaxed_struct, thickness, pka_id, hkl, eng_hkl_dir)
-                    shutil.copy(os.path.join(self.template_dir, 'submit-triton.sh'), os.path.join(eng_hkl_dir, 'submit.sh')) 
+                    with open(os.path.join(self.template_dir, 'submit-triton.sh'), 'r') as f:
+                        submit_template = f.read()
+                    submit_file = os.path.join(eng_hkl_dir, 'submit.sh')
+                    with open(submit_file, 'w') as f:
+                        f.write(submit_template.format(job_name=f'cas_{energy}_{idx}'))
                     subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=eng_hkl_dir)
 
 
-    def check_border(self):
-        """
-        Check no atoms are outside the simulation box.
-        """
-        pass 
+    def postProcess(self):
+        eng_vac = {}             # {energy: list of number of vacancies}
+        eng_inter = {}           # {energy: list of number of intersttials}
+        eng_vac_cluster = {}     # {energy: list of number of vacancy clusters}
+        eng_inter_cluster = {}   # {energy: list of number of interstitial clusters}
+        for energy in self.energies:
+            eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
+            
+            self.logger.info(f'---------------------------------------------------')
+            self.logger.info(f'Post-processing for energy: {energy} eV')
+            number_of_vacancies = []
+            number_of_interstitials = []
+            number_of_vacancy_clusters = []
+            number_of_interstitial_clusters = []
+            for idx, hkl in enumerate(self.hkl_list):
+                self.logger.info(f'Processing hkl: {hkl}')
+                eng_hkl_dir = os.path.join(eng_dir, str(idx))
+                relaxed_file = os.path.join(eng_hkl_dir, 'thermalized.xyz')
+                reference_pipeline = import_file(relaxed_file) 
+                
+                all_pipeline = import_file(os.path.join(eng_hkl_dir, 'trajectory_out.xyz'))
+                last_frame = all_pipeline.compute(all_pipeline.source.num_frames-1)
+                pipeline = Pipeline(source=StaticSource(data=last_frame))
+
+                # Count vacancies and interstitials
+                cnt_vacancies, cnt_inteerstitials = self._countVacAndInter(pipeline, reference_pipeline)
+                self.logger.info(f'Vacancies: {cnt_vacancies}, Interstitials: {cnt_inteerstitials}')
+                number_of_vacancies.append(cnt_vacancies)
+                number_of_interstitials.append(cnt_inteerstitials)
+                # Count vacancy clusters
+                expression = 'Occupancy == 0'
+                vac_clusters, total_line_length, cell_volume, dislocation_lines = self._clustersAndDXA(pipeline, reference_pipeline, expression)
+                self.logger.info(f'Vacancy Clusters: {vac_clusters}')
+                sum_vac_clusters = sum(vac_clusters.values())
+                number_of_vacancy_clusters.append(sum_vac_clusters)
+                self.logger.info(f'Total dislocation line length: {total_line_length}, Cell volume: {cell_volume}, Dislocation density : {total_line_length/cell_volume}')
+                self.logger.info(f'Number of dislocation lines: {len(dislocation_lines)}')
+                for line in dislocation_lines:
+                    self.logger.info(f'Dislocation line {line.id}: Length = {line.length}, Burgers vector = {line.true_burgers_vector}')
+                # Count interstitial clusters
+                expression = 'Occupancy > 1'
+                inter_clusters, total_line_length, cell_volume, dislocation_lines = self._clustersAndDXA(pipeline, reference_pipeline, expression)
+                self.logger.info(f'Interstitial Clusters: {inter_clusters}')
+                sum_inter_clusters = sum(inter_clusters.values())
+                number_of_interstitial_clusters.append(sum_inter_clusters)
+                self.logger.info(f'Total dislocation line length: {total_line_length}, Cell volume: {cell_volume}, Dislocation density : {total_line_length/cell_volume}')
+                self.logger.info(f'Number of dislocation lines: {len(dislocation_lines)}')
+                for line in dislocation_lines:
+                    self.logger.info(f'Dislocation line {line.id}: Length = {line.length}, Burgers vector = {line.true_burgers_vector}')
+
+            eng_vac[energy] = number_of_vacancies
+            eng_inter[energy] = number_of_interstitials
+            eng_vac_cluster[energy] = number_of_vacancy_clusters
+            eng_inter_cluster[energy] = number_of_interstitial_clusters
+
+        def write_txt(vacancy_dict, interstitial_dict, file_name1, file_name2):
+            eng_meanVac_stdVac = {
+                energy: (np.mean(num_vac), np.std(num_vac))
+                for energy, num_vac in vacancy_dict.items()
+            }
+            eng_meanInt_stdInt = {
+                energy: (np.mean(num_int), np.std(num_int))
+                for energy, num_int in interstitial_dict.items()
+            }
+            with open(os.path.join(self.calculation_dir, file_name1), 'w') as f:
+                # Write header (title)
+                f.write("# Energy (eV)    Mean value    Std Dev value\n")
+                f.write("# ---------------------------------------------\n")
+                
+                for energy, (mean_vac, std_vac) in eng_meanVac_stdVac.items():
+                    # Align values with fixed-width formatting
+                    f.write(f"{energy:>10.1f} {mean_vac:>15} {std_vac:>15}\n")
+            with open(os.path.join(self.calculation_dir, file_name2), 'w') as f:
+                # Write header (title)
+                f.write("# Energy (eV)    Mean value    Std Dev value\n")
+                f.write("# ----------------------------------------------------\n")
+                
+                for energy, (mean_int, std_int) in eng_meanInt_stdInt.items():
+                    # Align values with fixed-width formatting
+                    f.write(f"{energy:>10.1f} {mean_int:>15} {std_int:>15}\n")
+            
+        write_txt(eng_vac, eng_inter, 'eng_vac.txt', 'eng_inter.txt')
+        write_txt(eng_vac_cluster, eng_inter_cluster, 'eng_vac_cluster.txt', 'eng_inter_cluster.txt')
+
+
+    def _countVacAndInter(self, pipeline, reference_pipeline):
+        # wigner_seitz analysis
+        wsam = WignerSeitzAnalysisModifier(per_type_occupancies=True, output_displaced=False)
+        wsam.reference = reference_pipeline.source
+        pipeline.modifiers.append(wsam)
+        data = pipeline.compute(0)
+        cnt_vacancies = 0
+        cnt_interstitials = 0
+        for occupancy, position in zip(data.particles['Occupancy'], data.particles['Position']):
+            if occupancy == 0:
+                cnt_vacancies += 1
+            if occupancy > 1:
+                cnt_interstitials += 1
+        pipeline.modifiers.remove(wsam)        # otherwise it influence consecutive analysis
+        return cnt_vacancies, cnt_interstitials
+
+                
+    def _clustersAndDXA(self, pipeline, reference_pipeline, expression):
+        # wigner_seitz analysis
+        wsam = WignerSeitzAnalysisModifier(per_type_occupancies=True, output_displaced=False)
+        wsam.reference = reference_pipeline.source
+        pipeline.modifiers.append(wsam)
+        # selection modifier to select vacancies
+        sel = ExpressionSelectionModifier(expression=expression)
+        pipeline.modifiers.append(sel)
+        # cluster analysis
+        cls = ClusterAnalysisModifier(cutoff=1, sort_by_size=True, only_selected=True)
+        pipeline.modifiers.append(cls)
+        # dislocation analysis
+        dxa = DislocationAnalysisModifier(only_selected=True)
+        dxa.input_crystal_structure = DislocationAnalysisModifier.Lattice.CubicDiamond
+        pipeline.modifiers.append(dxa)
+
+        data = pipeline.compute(0)
+        cluster_table = data.tables['clusters']
+        cluster_sizes = cluster_table['Cluster Size']
+        total_line_length = data.attributes['DislocationAnalysis.total_line_length']
+        cell_volume = data.attributes['DislocationAnalysis.cell_volume']
+        
+        pipeline.modifiers.remove(wsam)
+        pipeline.modifiers.remove(sel)
+        pipeline.modifiers.remove(cls)
+        pipeline.modifiers.remove(dxa)
+        count_dict = Counter(cluster_sizes)  # {cluster size: count}
+        return count_dict, total_line_length, cell_volume, data.dislocations.lines     
+    
+
+        
+
+        
+                
+
+
+
+    
                 
 
 

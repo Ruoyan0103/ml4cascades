@@ -97,5 +97,6 @@ if __name__ == "__main__":
     cascade_steps = 10000
     cas_calc = CascadeCalculator(tgap, num_species, mass, element, lattice, alat, sizes, thicknesses, temperature,
                                 energies, num_sampling_points, equilibration_steps, cascade_steps, gap_file_folder)
-    runcascade = True
+    runcascade = False
     cas_calc.calculate(runcascade)
+    cas_calc.postProcess()

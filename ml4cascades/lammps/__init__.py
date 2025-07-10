@@ -43,7 +43,7 @@ class LMPStaticCalculator(ABC):
         Args:
             exe_folder (str, optional): Directory where the executable files will be placed.
         """
-        with open(os.path.join(self.template_dir, 'submit.sh'), 'r') as f:
+        with open(os.path.join(self.template_dir, 'submit-triton.sh'), 'r') as f:
             submit_template = f.read()
         if exe_folder is None:
             exe_folder = self.calculation_dir

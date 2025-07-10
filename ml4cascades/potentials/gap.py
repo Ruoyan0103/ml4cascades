@@ -1,7 +1,8 @@
 import os
 import xml.etree.ElementTree as ET
 from ml4cascades.potentials import IPotential
-from ml4cascades.turbogap.calcs import CascadeCalculator
+# from ml4cascades.turbogap.calcs import CascadeCalculator
+from ml4cascades.lammps.calcs import CascadeCalculator
 import numpy as np
 
 module_dir = os.path.dirname(__file__)
@@ -69,34 +70,68 @@ class TGAPotential(IPotential):
 
 
 if __name__ == "__main__":
-    # gap_file = os.path.join(module_dir, 'params', 'GAP', 'Ge-v10.xml')
-    # gap = GAPotential.from_config(gap_file)
-    # gap.write_param(gap_file)
+    gap_file = os.path.join(module_dir, 'params', 'GAP', 'Ge-v10.xml')
+    gap = GAPotential.from_config(gap_file)
+    gap.write_param(gap_file)
 
-    # mass, element, lattice, alat, temperature = 72.56, 'Ge', 'diamond', 5.76, 300    
-    # energies, num_directions = [100, 400, 1000, 2000, 5000, 10e3, 20e3, 50e3], 30
-    # energies, num_directions = [100, 400, 1000], 30
-    # sizes = [9, 9, 9]     
-    # pka_ids = [1202, 1202, 1202]  
-    # cas_calc = CascadeCalculator(gap, mass, element, lattice, alat, sizes, temperature,
-    #                              pka_ids, energies, num_directions)
-    # cas_calc.calculate()
-
-    gap_file_folder = os.path.join(module_dir, 'params', 'TGAP') 
-    gap_file = 'Ge-v10-gap'
-    tgap = TGAPotential()
-    tgap.write_param(gap_file)
-    num_species, mass, element, lattice, alat, temperature = 1, 72.64, 'Ge', 'diamond', 5.76, 300 
-    energies, num_sampling_points = [100, 400, 1000, 2000, 5000, 10e3, 20e3, 50e3], 10      # energy in eV
-    energies, num_sampling_points = [100], 10      # energy in eV
+    mass, element, lattice, alat, temperature = 72.56, 'Ge', 'diamond', 5.76, 300    
+    energies, num_directions = [100, 400], 500
+    energies, num_directions = [1000, 2000, 5000], 500
+    energies, num_directions = [400], 500
+    # energies, num_directions = [5000], 500
+    # energies, num_directions = [10e3, 20e3], 500
     sizes = [] 
+    radius_fracs = []
     for e in energies:
-        sizes.append(int(np.ceil(np.cbrt(e*40/8))))
-    thicknesses = [2.0]  
-    equilibration_steps = 30000
-    cascade_steps = 10000
-    cas_calc = CascadeCalculator(tgap, num_species, mass, element, lattice, alat, sizes, thicknesses, temperature,
-                                energies, num_sampling_points, equilibration_steps, cascade_steps, gap_file_folder)
-    runcascade = False
-    cas_calc.calculate(runcascade)
-    cas_calc.postProcess()
+        if e <= 400:
+            sizes.append(int(np.ceil(np.cbrt(e*20/8))))
+            radius_fracs.append(0.5)
+        elif e > 400 and e <= 2000:
+            sizes.append(int(np.ceil(np.cbrt(e*30/8))))
+            radius_fracs.append(0.5)
+        elif e > 2000 and e <= 5000:
+            sizes.append(int(np.ceil(np.cbrt(e*40/8))))
+            radius_fracs.append(0.8)
+        elif e > 5000 and e <= 20e3:
+            sizes.append(int(np.ceil(np.cbrt(e*55/8))))
+            radius_fracs.append(0.9)
+    thicknesses = [alat] * len(energies)
+
+    cas_calc = CascadeCalculator(gap, mass, element, lattice, alat, sizes, thicknesses, radius_fracs, temperature,
+                                energies, num_directions)
+    cas_calc.calculate(relax_flag=False, simulation_flag=False, check_flag=True) 
+
+
+
+    # gap_file_folder = os.path.join(module_dir, 'params', 'TGAP') 
+    # gap_file = 'Ge-v10-gap'
+    # tgap = TGAPotential()
+    # tgap.write_param(gap_file)
+    # num_species, mass, element, lattice, alat, temperature = 1, 72.64, 'Ge', 'diamond', 5.76, 300 
+    # energies, num_sampling_points = [100, 400], 500
+    # energies, num_sampling_points = [1000, 2000, 5000], 500
+    # # energies, num_directions = [100], 500
+    # # energies, num_directions = [5000], 500
+    # # energies, num_directions = [10e3, 20e3], 500
+    # sizes = [] 
+    # radius_fracs = []
+    # for e in energies:
+    #     if e <= 400:
+    #         sizes.append(int(np.ceil(np.cbrt(e*20/8))))
+    #         radius_fracs.append(0.5)
+    #     elif e > 400 and e <= 2000:
+    #         sizes.append(int(np.ceil(np.cbrt(e*30/8))))
+    #         radius_fracs.append(0.5)
+    #     elif e > 2000 and e <= 5000:
+    #         sizes.append(int(np.ceil(np.cbrt(e*40/8))))
+    #         radius_fracs.append(0.8)
+    #     elif e > 5000 and e <= 20e3:
+    #         sizes.append(int(np.ceil(np.cbrt(e*55/8))))
+    #         radius_fracs.append(0.9)
+    # thicknesses = [alat] * len(energies)
+    # equilibration_steps = 30000
+    # cascade_steps = 30500
+    # cas_calc = CascadeCalculator(tgap, num_species, mass, element, lattice, alat, sizes, thicknesses, radius_fracs, temperature,
+    #                             energies, num_sampling_points, equilibration_steps, cascade_steps, gap_file_folder)
+    # cas_calc.calculate(relaxflag=True, cascadeflag=False)
+    # cas_calc.postProcess() 

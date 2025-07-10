@@ -30,8 +30,7 @@ estop_filename = '{stopping_file}'
 ! Border thermostat
 make_group = inside block 6 {xlow} {xhigh} {ylow} {yhigh} {zlow} {zhigh}
 make_group = border subtract 2 all inside
-make_group = inside dynamic 100
-make_group = border dynamic 100
+make_group = all dynamic 100
 thermostat = "berendsen"
 thermostat_groupID = border
 t_beg = {Temp}

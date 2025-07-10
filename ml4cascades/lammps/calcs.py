@@ -16,8 +16,8 @@ class CascadeCalculator(LMPStaticCalculator):
     """ 
     Threshold displacement energy calculator.
     """          
-    def __init__(self, potential, mass, element, lattice, alat, sizes, temperature, 
-                 pka_ids, energies, num_sampling_points, task_name='pka'):
+    def __init__(self, potential, mass, element, lattice, alat, sizes, thicknesses, radius_fracs, temperature, 
+                 energies, num_sampling_points, task_name='pka'):
         """
         Initialize the CascadeCalculator.
         Args:
@@ -35,16 +35,20 @@ class CascadeCalculator(LMPStaticCalculator):
         """
         super().__init__(task_name, potential, mass, element, lattice, alat)
         self.sizes = sizes
+        self.border_thicknesses = thicknesses
+        self.radius_fracs = radius_fracs
         self.temp = temperature
-        self.pka_ids = pka_ids
         self.energies = energies
         self.num_sampling_points = num_sampling_points 
         self.angle_set = set()
         self.hkl_list = []
         self.min_phi = 0
         self.max_phi = 54.7
+        # self.max_phi = 360
         self.min_theta = 0
         self.max_theta = 45
+        # self.max_theta = 180
+        self.num_directions = 30
 
 
     def _get_random_angles(self, min_phi, max_phi, min_theta, max_theta, num_points):
@@ -61,14 +65,14 @@ class CascadeCalculator(LMPStaticCalculator):
         _max_phi = np.radians(max_phi)
         _min_theta = np.radians(min_theta)
         _max_theta = np.radians(max_theta)
-        np.random.seed(42)  
+        np.random.seed(96)  
         phi = np.random.uniform(_min_phi, _max_phi, num_points)                        # azimuthal angle (φ)
         costheta = np.random.uniform(np.cos(_min_theta), np.cos(_max_theta), num_points) 
         theta = np.arccos(costheta)                                                    # polar angle (θ)
         self.angle_set = set(zip(phi, theta))                                          # Store unique angles
 
     
-    def _set_hkl_from_angles(self, threshold_deg=15, num_directions=1):
+    def _set_hkl_from_angles(self, threshold_deg=15):
         """
         Convert spherical angles to normalized Miller indices (hkl).
         """
@@ -80,7 +84,7 @@ class CascadeCalculator(LMPStaticCalculator):
         ]
         channeling_dirs = [v / np.linalg.norm(np.array(v)) for v in channeling_vectors]
         for angle in self.angle_set:
-            if len(self.hkl_list) >= num_directions:
+            if len(self.hkl_list) >= self.num_directions:
                 break
             phi, theta = angle
             h = np.sin(theta) * np.cos(phi)
@@ -101,9 +105,38 @@ class CascadeCalculator(LMPStaticCalculator):
                        fmt='%.8f',      
                        delimiter=' ',   
                        header='h     k     l')  
-        
-        
-    def _setup_helper(self, velocity, pka_id, hkl, eng_hkl_dir):
+            
+
+    def _get_pka_id_center(self, trajectory_file):
+        relaxed_struct = read(trajectory_file, format='lammps-data', index=-1)
+        center = relaxed_struct.get_center_of_mass()
+        pka_id = self._get_pka_id(relaxed_struct, center)
+        return relaxed_struct, pka_id
+    
+
+    def _get_pka_id_sphere(self, trajectory_file, hkl, radius_frac):
+        relaxed_struct = read(trajectory_file, format='lammps-data', index=-1)         
+        a, b, c, _, _, _ = relaxed_struct.get_cell_lengths_and_angles()
+        radius = 0.5 * min(a, b, c) * radius_frac
+        position = hkl * radius + relaxed_struct.get_center_of_mass()
+        pka_id = self._get_pka_id(relaxed_struct, position)
+        return relaxed_struct, pka_id
+            
+    
+    def _get_pka_id(self, relaxed_struct, target_position):
+        positions_list = relaxed_struct.get_positions()
+        dist = 1000
+        closest_idx = None
+        for idx, positions in enumerate(positions_list):
+            temp_dist = np.linalg.norm(positions - target_position)
+            if temp_dist < dist:
+                dist = temp_dist
+                closest_idx = idx
+        pka_id = closest_idx + 1      # LAMMPS IDs start from 1
+        return pka_id
+    
+
+    def _setup_helper(self, velocity, pka_id, heatsink_thickness, hkl, eng_hkl_dir):
         """
         Helper function to set up the input file for the LAMMPS simulation.
         Args:
@@ -116,33 +149,29 @@ class CascadeCalculator(LMPStaticCalculator):
             input_template = f.read()
         ff_settings = self.ff_settings
         input_file = os.path.join(eng_hkl_dir, 'in.pka')
+        # -hkl represent the opposite direction of random choosing PKA position
+        # doesn't matter center position
         with open(input_file, 'w') as f:
-            Vx = velocity * hkl[0]
-            Vy = velocity * hkl[1]
-            Vz = velocity * hkl[2]
+            Vx = velocity * -hkl[0]        
+            Vy = velocity * -hkl[1]
+            Vz = velocity * -hkl[2]
+            thin_border = heatsink_thickness
             f.write(input_template.format(ff_settings='\n'.join(ff_settings), mass=self.mass, 
                                           pka_id=pka_id, Temp=self.temp, 
-                                          V_x=Vx, V_y=Vy, V_z=Vz))
+                                          V_x=Vx, V_y=Vy, V_z=Vz,
+                                          heatsink_thickness=heatsink_thickness,
+                                          border_thickness=thin_border))
+        self.logger.info(f'PKA ID: {pka_id} with Velocities: {Vx:.2f}, {Vy:.2f}, {Vz:.2f} ang/ps')
         shutil.copy(os.path.join(self.template_dir, 'Ge_Ge_elstop.txt'), 
                     os.path.join(eng_hkl_dir, 'Ge_Ge_elstop.txt'))
         
                     
-    def _setup(self):
+    def _setup(self, velocity, pka_id, border_thickness, hkl, eng_hkl_dir):
         """
         Set up the directories and input files for the LAMMPS simulation.
         """
-        self._get_random_angles(self.min_phi, self.max_phi, self.min_theta, self.max_theta, self.num_sampling_points)
-        self._set_hkl_from_angles()
-        for energy, pka_id, in zip(self.energies, self.pka_ids):
-            # energy = 0.5 * self.mass * AMU_TO_KG * np.sum(hkl**2) * (velocity*ANGSTROM_TO_METER/PS_TO_S)**2 * JOULE_TO_EV
-            # np.sum(hkl**2) approximate to 1
-            velocity = np.sqrt(2 * energy  / (self.mass * AMU_TO_KG * JOULE_TO_EV)) / (ANGSTROM_TO_METER/PS_TO_S) 
-            eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
-            for idx, hkl in enumerate(self.hkl_list):
-                eng_hkl_dir = os.path.join(eng_dir, str(idx))
-                os.makedirs(eng_hkl_dir, exist_ok=True)
-                super()._setup(eng_hkl_dir)                              # for submit file
-                self._setup_helper(velocity, pka_id, hkl, eng_hkl_dir)   # for input file
+        super()._setup(eng_hkl_dir)                                                # for submit file
+        self._setup_helper(velocity, pka_id, border_thickness, hkl, eng_hkl_dir)   # for input file
 
 
     def _relax(self, relax_dir, size):
@@ -152,7 +181,7 @@ class CascadeCalculator(LMPStaticCalculator):
             relax_dir (str): Directory for the relaxation simulation.
             size (int): Size of the supercell.
         """
-        with open(os.path.join(self.template_dir, 'submit.sh'), 'r') as f:
+        with open(os.path.join(self.template_dir, 'submit-triton.sh'), 'r') as f:
             submit_template = f.read()
         submit_file = os.path.join(relax_dir, 'submit-relax.sh')
         with open(submit_file, 'w') as f:
@@ -168,22 +197,58 @@ class CascadeCalculator(LMPStaticCalculator):
         write(os.path.join(relax_dir, 'data.input'), super_cell, format='lammps-data')
         subprocess.run('sbatch submit-relax.sh', shell=True, check=True, cwd=relax_dir)
 
-
-    def calculate(self, relax_flag=False):
+    """
+    choose pka at the center of the supercell
+    """
+    def calculate(self, relax_flag=False, simulation_flag=False, check_flag=False):
         """
         Run the cascade calculations.
         """
-        self._setup()
+        self._get_random_angles(self.min_phi, self.max_phi, self.min_theta, self.max_theta, self.num_sampling_points)
+        self._set_hkl_from_angles()
+        for energy, size in zip(self.energies, self.sizes):
+            eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
+            for idx, _ in enumerate(self.hkl_list):
+                eng_hkl_dir = os.path.join(eng_dir, str(idx))
+                os.makedirs(eng_hkl_dir, exist_ok=True)
         if relax_flag:
             for energy, size in zip(self.energies, self.sizes):
+                self.logger.info(f'------------------Relaxation for energy: {energy} eV, supercell size: {size} --------------------')
                 eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
                 self._relax(eng_dir, size)
-        else:
-            for energy in self.energies:
+        if simulation_flag:
+            for energy, border_thickness, size, radius_frac in zip(self.energies, self.border_thicknesses, self.sizes, self.radius_fracs):
+                self.logger.info(f'------------------Cascade simulation for energy: {energy} eV, supercell size: {size} --------------------')
                 eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
-                for idx, _ in enumerate(self.hkl_list):
+                velocity = np.sqrt(2 * energy  / (self.mass * AMU_TO_KG * JOULE_TO_EV)) / (ANGSTROM_TO_METER/PS_TO_S) 
+                # _, pka_id = self._get_pka_id_center(os.path.join(eng_dir, 'relax.out'))
+                for idx, hkl in enumerate(self.hkl_list):
+                    _, pka_id = self._get_pka_id_sphere(os.path.join(eng_dir, 'relax.out'), hkl, radius_frac)
                     eng_hkl_dir = os.path.join(eng_dir, str(idx))
+                    self._setup(velocity, pka_id, border_thickness, hkl, eng_hkl_dir)
                     subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=eng_hkl_dir)
+        if check_flag:
+            self.logger.info(f'--------------------------------------Check supercell size ----------------------------------------')
+            self._check_cell_size() 
+
+
+    def _check_cell_size(self):
+         for energy, size in zip(self.energies, self.sizes):
+            failed_cnt = 0
+            eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
+            for idx, hkl in enumerate(self.hkl_list):
+                eng_hkl_dir = os.path.join(eng_dir, str(idx))
+                lammps_output = os.path.join(eng_hkl_dir, 'data.txt')
+                if not os.path.exists(lammps_output):
+                    self.logger.info(f"LAMMPS output file not found for energy {energy} eV, hkl {hkl}.")
+                    continue
+                Step, Time, Epot, Ekin, Etot, Temp, max_ek, max_ek_border = np.loadtxt(lammps_output, skiprows=1, unpack=True)
+                if Time[-1] < 30:
+                    self.logger.warning(f"Simulation run less than 30 ps for energy {energy} eV, hkl: {idx}.")
+                    failed_cnt += 1
+            self.logger.info(f"Energy: {energy} eV, Failed cases: {failed_cnt} for energy {energy} eV with size {size}.")
+                
+
 
 
 

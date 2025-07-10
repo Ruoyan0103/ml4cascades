@@ -1,11 +1,11 @@
 #!/bin/bash
 
-#SBATCH --time=24:00:00
+#SBATCH --time=48:00:00
 #SBATCH --partition=batch
 ##SBATCH --account=sumo
 #SBATCH --nodes=1
 #SBATCH --ntasks=12
-#SBATCH --mem=20G
+#SBATCH --mem=50G
 #SBATCH --job-name={job_name}
 
 module load gcc/11.4.0

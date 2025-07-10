@@ -1,11 +1,11 @@
 #!/bin/bash
 
-#SBATCH --time=10:00:00
+#SBATCH --time=100:00:00
 #SBATCH --partition=batch
 ##SBATCH --account=sumo
 #SBATCH --nodes=1
 #SBATCH --ntasks=12
-#SBATCH --mem=50G
+#SBATCH --mem=60G
 #SBATCH --job-name={file}
 
 

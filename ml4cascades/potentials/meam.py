@@ -2,6 +2,7 @@ import os
 import xml.etree.ElementTree as ET
 from ml4cascades.potentials import IPotential
 from ml4cascades.lammps.calcs import CascadeCalculator
+import numpy as np
 module_dir = os.path.dirname(__file__)
 
 class MEAMPotential(IPotential):
@@ -28,17 +29,37 @@ if __name__ == "__main__":
     meam.write_param(library_file, element_file, element_symbol)
     
     mass, element, lattice, alat, temperature = 72.64, 'Ge', 'diamond', 5.76, 300    
-    energies, num_directions = [100, 400, 1000, 2000, 5000, 10e3], 59
-    sizes = [9, 13, 17, 22, 30, 37]  # 47 - 20e3 63 - 50e3
-    pka_ids = [2918, 8674, 17185, 28932, 104738, 191392]
 
-    energies, num_directions = [400, 1000], 59
-    sizes = [13, 17]  # 47 - 20e3 63 - 50e3
-    pka_ids = [8674, 17185]
+    # 100, 400, 1000 ok with e*30/8, thickness alat 
+    # 2000, 5000, 10e3 ok with e*40/8 tickness alat+3
+    # energies, num_directions = [2000, 5000, 10e3, 20e3, 50e3], 59
+    # energies, num_directions = [2000, 5000, 10e3], 59
+    energies, num_directions = [100, 400], 500
+    energies, num_directions = [1000, 2000], 500
+    energies, num_directions = [5000], 500
+    energies, num_directions = [10e3, 20e3], 500
+    sizes = [] 
+    radius_fracs = []
+    for e in energies:
+        if e <= 400:
+            sizes.append(int(np.ceil(np.cbrt(e*20/8))))
+            radius_fracs.append(0.5)
+        elif e > 400 and e <= 2000:
+            sizes.append(int(np.ceil(np.cbrt(e*30/8))))
+            radius_fracs.append(0.5)
+        elif e > 2000 and e <= 5000:
+            sizes.append(int(np.ceil(np.cbrt(e*40/8))))
+            radius_fracs.append(0.8)
+        elif e > 5000 and e <= 20e3:
+            sizes.append(int(np.ceil(np.cbrt(e*55/8))))
+            radius_fracs.append(0.9)
+    thicknesses = [alat] * len(energies)
 
-    cas_calc = CascadeCalculator(meam, mass, element, lattice, alat, sizes, temperature,
-                                 pka_ids, energies, num_directions)
-    cas_calc.calculate()
+    cas_calc = CascadeCalculator(meam, mass, element, lattice, alat, sizes, thicknesses, radius_fracs, temperature,
+                                energies, num_directions)
+    cas_calc.calculate(relax_flag=False, simulation_flag=False, check_flag=True)  # check temp, check whether it stops ok -> tgap
+
+
     
     
     

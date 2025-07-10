@@ -21,7 +21,7 @@ class CascadeCalculator(TurboGAPCalculator):
     """ 
     Threshold displacement energy calculator.
     """          
-    def __init__(self, potential, num_species, mass, element, lattice, alat, sizes, thicknesses, temperature, 
+    def __init__(self, potential, num_species, mass, element, lattice, alat, sizes, thicknesses, radius_fracs, temperature, 
                  energies, num_sampling_points, equilibration_steps, cascade_steps, gap_file_folder, task_name='pka'):
         """
         Initialize the CascadeCalculator.
@@ -50,14 +50,15 @@ class CascadeCalculator(TurboGAPCalculator):
         self.equilibration_steps = equilibration_steps
         self.cascade_steps = cascade_steps
         self.gap_file_folder = gap_file_folder
-        self.thicknesses = thicknesses  
+        self.thicknesses = thicknesses 
+        self.radius_fracs = radius_fracs 
         self.angle_set = set()
         self.hkl_list = []
         self.min_phi = 0
         self.max_phi = 54.7
         self.min_theta = 0
         self.max_theta = 45
-        self.num_directions = 1
+        self.num_directions = 30
 
 
     def _get_random_angles(self):
@@ -115,7 +116,7 @@ class CascadeCalculator(TurboGAPCalculator):
             submit_template = f.read()
         submit_file = os.path.join(relax_dir, 'submit.sh')
         with open(submit_file, 'w') as f:
-            f.write(submit_template.format(job_name=f'relax_{size}{size}{size}'))
+            f.write(submit_template.format(job_name=f'rlx_{size}{size}{size}'))
         with open(os.path.join(self.template_dir, 'input-relax'), 'r') as f:
             input_template = f.read()
         input_file = os.path.join(relax_dir, 'input')
@@ -126,23 +127,36 @@ class CascadeCalculator(TurboGAPCalculator):
         unit_cell = bulk(self.element, self.lattice, a=self.alat, cubic=True)
         super_cell = unit_cell * [size, size, size]
         write(os.path.join(relax_dir, 'data.input'), super_cell, format='extxyz')
-        # subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=relax_dir)
+        subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=relax_dir)
 
 
-    def _get_pka_id(self, trajectory_file):
+    def _get_pka_id_center(self, trajectory_file):
         relaxed_struct = read(trajectory_file, format='extxyz', index=-1)
         center = relaxed_struct.get_center_of_mass()
+        pka_id = self._get_pka_id(relaxed_struct, center)
+        return relaxed_struct, pka_id
+    
+
+    def _get_pka_id_sphere(self, trajectory_file, hkl, radius_frac):
+        relaxed_struct = read(trajectory_file, format='extxyz', index=-1)         
+        a, b, c, _, _, _ = relaxed_struct.get_cell_lengths_and_angles()
+        radius = 0.5 * min(a, b, c) * radius_frac
+        position = hkl * radius + relaxed_struct.get_center_of_mass()
+        pka_id = self._get_pka_id(relaxed_struct, position)
+        return relaxed_struct, pka_id
+            
+    
+    def _get_pka_id(self, relaxed_struct, target_position):
         positions_list = relaxed_struct.get_positions()
         dist = 1000
         closest_idx = None
         for idx, positions in enumerate(positions_list):
-            temp_dist = np.linalg.norm(positions - center)
+            temp_dist = np.linalg.norm(positions - target_position)
             if temp_dist < dist:
                 dist = temp_dist
                 closest_idx = idx
-        pka_id = closest_idx
-        self.logger.info(f'PKA ID: {pka_id} with positions: {positions_list[pka_id]}')
-        return relaxed_struct, pka_id
+        pka_id = closest_idx + 1      # LAMMPS IDs start from 1
+        return pka_id
 
 
     def _setup_helper(self, velocity, relaxed_struct, thickness, pka_id, hkl, eng_hkl_dir):
@@ -167,17 +181,17 @@ class CascadeCalculator(TurboGAPCalculator):
                                           ylow=thickness, yhigh=a-thickness, zlow=thickness, zhigh=a-thickness))
         velocities = relaxed_struct.get_array('velocities')
         self.logger.info(f'PKA ID {pka_id} with old velocities {velocities[pka_id]} ang/fs')
-        Vx = velocity * hkl[0]
-        Vy = velocity * hkl[1]
-        Vz = velocity * hkl[2]
+        Vx = velocity * -hkl[0]
+        Vy = velocity * -hkl[1]
+        Vz = velocity * -hkl[2]
         velocities[pka_id]  = [Vx, Vy, Vz]  
         relaxed_struct.set_array('velocities', velocities)
-        self.logger.info(f'PKA ID {pka_id} with new velocities {velocities[pka_id]} ang/fs')
+        self.logger.info(f'PKA ID: {pka_id} with new Velocities: {Vx:.2f}, {Vy:.2f}, {Vz:.2f} ang/fs')
         new_trajectory_file = os.path.join(eng_hkl_dir, 'thermalized.xyz')
         write(new_trajectory_file, relaxed_struct, format='extxyz')
         
                     
-    def _setup(self):
+    def _setup(self, relaxflag):
         """
         Set up the directories and input files for the LAMMPS simulation.
         """
@@ -187,25 +201,26 @@ class CascadeCalculator(TurboGAPCalculator):
             eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
             os.makedirs(eng_dir, exist_ok=True)
             shutil.copytree(self.gap_file_folder, os.path.join(eng_dir, 'gap_files'), dirs_exist_ok=True)
-            self._relax(eng_dir, size)
+            if relaxflag:
+                self.logger.info(f'------------------Relaxation for energy: {energy} eV, supercell size: {size} --------------------')
+                self._relax(eng_dir, size)
         
     
-    def calculate(self, runcascade=True):
+    def calculate(self, relaxflag=False, cascadeflag=False):
         """
         Run the cascade calculations.
         """
-        self._setup()
+        self._setup(relaxflag)
         # time.sleep(120)
-        if runcascade:
-            for energy, thickness in zip(self.energies, self.thicknesses):
-                self.logger.info(f'---------------------------------------------------')
-                self.logger.info(f'Running cascade calculations for energy: {energy} eV')
+        if cascadeflag:
+            for energy, thickness, size, radius_frac, in zip(self.energies, self.thicknesses, self.sizes, self.radius_fracs):
+                self.logger.info(f'------------------Cascade simulation for energy: {energy} eV, supercell size: {size} --------------------')
                 eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
                 trajectory_file = os.path.join(eng_dir, 'trajectory_out.xyz')
-                relaxed_struct, pka_id = self._get_pka_id(trajectory_file)
                 velocity = np.sqrt(2 * energy  / (self.mass * AMU_TO_KG * JOULE_TO_EV)) / (ANGSTROM_TO_METER/FS_TO_S) 
                 for idx, hkl in enumerate(self.hkl_list):
                     eng_hkl_dir = os.path.join(eng_dir, str(idx))
+                    relaxed_struct, pka_id = self._get_pka_id_sphere(trajectory_file, hkl, radius_frac)
                     os.makedirs(eng_hkl_dir, exist_ok=True)
                     shutil.copytree(self.gap_file_folder, os.path.join(eng_hkl_dir, 'gap_files'), dirs_exist_ok=True)
                     self._setup_helper(velocity, relaxed_struct, thickness, pka_id, hkl, eng_hkl_dir)
@@ -346,7 +361,7 @@ class CascadeCalculator(TurboGAPCalculator):
         pipeline.modifiers.remove(cls)
         pipeline.modifiers.remove(dxa)
         count_dict = Counter(cluster_sizes)  # {cluster size: count}
-        return count_dict, total_line_length, cell_volume, data.dislocations.lines     
+        return count_dict, total_line_length, cell_volume, data.dislocations.lines       
     
 
         

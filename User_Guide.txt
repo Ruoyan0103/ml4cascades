@@ -1,0 +1,58 @@
+ml4cascades User Guide
+====================
+The repository contains the pipeline for running LAMMPS simulations and post-processing outputs with OVITO.
+
+--------------------------------------------------
+Requirements
+--------------------------------------------------
+A python virtual environment with ovito pyhon module installed inside it.
+
+Lammps software configured to work with "lmp" command: directory added in bashrc.
+--------------------------------------------------
+Running Simulations
+--------------------------------------------------
+
+Choose the potential you want to run by running the commands:
+
+   python -m ml4cascades.potentials.meam         # MEAM potential
+   python -m ml4cascades.potentials.tersoff_zbl # Tersoff+ZBL potential
+ 
+Inside each potential script inside the directort ./ml4cascades/potentials 
+you can find flags to turn on/off different parts of the pipeline:
+- Relaxation   : lattice relaxation simulations
+- Simulation   : main cascade simulations
+- Checking     : Cell size checks before running simulations
+- Post-processing : defect analysis and other OVITO-based routines
+
+This allows you to run the steps you need. You can set only one flag to True at a time
+
+Simulation outputs are stored in a `results/` folder inside `ml4cascades/lammps`.
+Logs are stored in `ml4cascades/lammps/logs/`.
+
+--------------------------------------------------
+Directory Overview
+--------------------------------------------------
+
+- ml4cascades/potentials/ : Potential scripts and parameter files. Set flags inside the potential script to control which steps to run.
+- ml4cascades/lammps/     : LAMMPS calculation scripts, input templates, logs, and post-processing scripts.
+- ml4cascades/turbogap/   : TurboGAP-specific scripts, templates, and logs.
+- ml4cascades/loggers/    : Logging utilities.
+- ./run_job.sh       : Helper script to run simulations and post-processing in parallel.
+
+In general: potentials/ sets up the interaction, lammps/ runs the simulation and handles post-processing, and results/logs are organized inside lammps/ during execution.
+
+--------------------------------------------------
+Post-Processing
+--------------------------------------------------
+
+- Run the parallel post-processing script:
+   bash run_job.sh
+
+After setting the post_processing flag to True inside the potential file
+
+--------------------------------------------------
+Extending the Code
+--------------------------------------------------
+
+- Add new potentials: create a new script in potentials/ and add parameter files.
+- Add new analysis routines: modify post_process.py or add scripts in lammps/.

@@ -38,38 +38,42 @@ velocity        PKA set {V_x} {V_y} {V_z} units box
 
 #---------------------------------MONITOR BORDER---------------------------------
 #---------------------------------Same thickness as heatsink---------------------
-variable        br internal {border_thickness}
-region          xrdown2 block $(xlo) $(xlo+v_br) $(ylo) $(yhi) $(zlo) $(zhi) units box
-group           xdown2 region xrdown2
-region          xrup2 block $(xhi-v_br) $(xhi) $(ylo) $(yhi) $(zlo) $(zhi) units box
-group           xup2 region xrup2
-region          yrdown2 block $(xlo) $(xhi) $(ylo) $(ylo+v_br) $(zlo) $(zhi) units box
-group           ydown2 region yrdown2
-region          yrup2 block $(xlo) $(xhi) $(yhi-v_br) $(yhi) $(zlo) $(zhi) units box
-group           yup2 region yrup2
-region          zrdown2 block $(xlo) $(xhi) $(ylo) $(yhi) $(zlo) $(zlo+v_br) units box
-group           zdown2 region zrdown2
-region          zrup2 block $(xlo) $(xhi) $(ylo) $(yhi) $(zhi-v_br) $(zhi) units box
-group           zup2 region zrup2
-group           border union xdown2 xup2 ydown2 yup2 zdown2 zup2
+# variable        br internal {border_thickness}
+# region          xrdown2 block $(xlo) $(xlo+v_br) $(ylo) $(yhi) $(zlo) $(zhi) units box
+# group           xdown2 region xrdown2
+# region          xrup2 block $(xhi-v_br) $(xhi) $(ylo) $(yhi) $(zlo) $(zhi) units box
+# group           xup2 region xrup2
+# region          yrdown2 block $(xlo) $(xhi) $(ylo) $(ylo+v_br) $(zlo) $(zhi) units box
+# group           ydown2 region yrdown2
+# region          yrup2 block $(xlo) $(xhi) $(yhi-v_br) $(yhi) $(zlo) $(zhi) units box
+# group           yup2 region yrup2
+# region          zrdown2 block $(xlo) $(xhi) $(ylo) $(yhi) $(zlo) $(zlo+v_br) units box
+# group           zdown2 region zrdown2
+# region          zrup2 block $(xlo) $(xhi) $(ylo) $(yhi) $(zhi-v_br) $(zhi) units box
+# group           zup2 region zrup2
+# group           border union xdown2 xup2 ydown2 yup2 zdown2 zup2
 
-set             group border i_myflag 3
+# set             group border i_myflag 3
 
 #------------------------------------SIMULATION---------------------------------
 compute         ep all pe/atom
 compute         ek all ke/atom
 compute         myflag_val all property/atom i_myflag
-compute         emax border reduce max c_ek
+# compute         emax border reduce max c_ek
+compute         emax heatsink reduce max c_ek
 variable        emaxbrdr equal c_emax
-fix             1 heatsink nvt temp {Temp} {Temp} 0.1
+# fix             1 heatsink nvt temp {Temp} {Temp} 0.1
+fix             1 heatsink temp/berendsen {Temp} {Temp} 0.1
 fix             4 mobile nve
 fix             3 all dt/reset 1 NULL 0.003 0.1 emax 30.0 units box
 fix             5 all electron/stopping 10.0 Ge_Ge_elstop.txt
 # fix             terminate all halt 500 v_emaxbrdr > 5.0 error hard message yes
+# for pka energy of 100 eV
+fix             6 all recenter INIT INIT INIT
 thermo          10
 thermo_style    custom step dt time temp press pe ke
 thermo_modify   lost error
-dump            1 all custom 10 dump.PKA id type x y z c_ep c_ek c_myflag_val
+dump            1 all custom 100 dump.PKA id type x y z c_ep c_ek c_myflag_val
 variable        t equal "time"
 
 #----------------------------------------- OUTPUT --------------------------------

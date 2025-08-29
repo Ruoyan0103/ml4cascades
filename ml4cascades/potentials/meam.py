@@ -34,30 +34,31 @@ if __name__ == "__main__":
     # 2000, 5000, 10e3 ok with e*40/8 tickness alat+3
     # energies, num_directions = [2000, 5000, 10e3, 20e3, 50e3], 59
     # energies, num_directions = [2000, 5000, 10e3], 59
-    energies, num_directions = [100, 400], 500
-    energies, num_directions = [1000, 2000], 500
-    energies, num_directions = [5000], 500
-    energies, num_directions = [10e3, 20e3], 500
+    energies, num_directions = [100], 500
+    # energies, num_directions = [1000, 2000], 500
+    # energies, num_directions = [5000], 500
+    # energies, num_directions = [10e3], 500
     sizes = [] 
     radius_fracs = []
     for e in energies:
-        if e <= 400:
+        if e < 400:
             sizes.append(int(np.ceil(np.cbrt(e*20/8))))
             radius_fracs.append(0.5)
-        elif e > 400 and e <= 2000:
+        elif e >= 400 and e < 2000:
             sizes.append(int(np.ceil(np.cbrt(e*30/8))))
             radius_fracs.append(0.5)
-        elif e > 2000 and e <= 5000:
+        elif e >= 2000 and e <= 5000:
             sizes.append(int(np.ceil(np.cbrt(e*40/8))))
             radius_fracs.append(0.8)
         elif e > 5000 and e <= 20e3:
-            sizes.append(int(np.ceil(np.cbrt(e*55/8))))
-            radius_fracs.append(0.9)
-    thicknesses = [alat] * len(energies)
+            sizes.append(int(np.ceil(np.cbrt(e*65/8))))
+            radius_fracs.append(0.95)
+    # thicknesses = [alat] * len(energies)
+    thicknesses = [alat/2] * len(energies)
 
     cas_calc = CascadeCalculator(meam, mass, element, lattice, alat, sizes, thicknesses, radius_fracs, temperature,
                                 energies, num_directions)
-    cas_calc.calculate(relax_flag=False, simulation_flag=False, check_flag=True)  # check temp, check whether it stops ok -> tgap
+    cas_calc.calculate(relax_flag=False, simulation_flag=False, check_flag=False, postprocess_flag=True)  # check temp, check whether it stops ok -> tgap
 
 
     

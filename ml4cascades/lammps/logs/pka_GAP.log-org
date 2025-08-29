@@ -1,0 +1,226 @@
+2025-07-09 11:23 - ml4cascades.lammps - INFO - ------------------Relaxation for energy: 100 eV, supercell size: 7 --------------------
+2025-07-09 11:23 - ml4cascades.lammps - INFO - ------------------Relaxation for energy: 400 eV, supercell size: 10 --------------------
+2025-07-09 11:59 - ml4cascades.lammps - INFO - ------------------Relaxation for energy: 1000 eV, supercell size: 16 --------------------
+2025-07-09 11:59 - ml4cascades.lammps - INFO - ------------------Relaxation for energy: 2000 eV, supercell size: 20 --------------------
+2025-07-09 11:59 - ml4cascades.lammps - INFO - ------------------Relaxation for energy: 5000 eV, supercell size: 30 --------------------
+2025-07-09 16:38 - ml4cascades.lammps - INFO - ------------------Cascade simulation for energy: 100 eV, supercell size: 7 --------------------
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1382 with Velocities: -48.19, -3.32, -155.76 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -78.55, -49.83, -133.95 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1392 with Velocities: -32.94, -45.31, -153.16 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1833 with Velocities: -48.62, -57.04, -144.84 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1391 with Velocities: -45.27, -4.87, -156.59 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1833 with Velocities: -48.24, -58.17, -144.51 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -76.85, -16.01, -142.94 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1392 with Velocities: -52.54, -23.72, -152.55 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -96.63, -52.19, -120.56 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -87.55, -50.75, -127.89 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -94.77, -48.90, -123.38 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1833 with Velocities: -46.95, -41.71, -150.50 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -89.23, -32.05, -132.68 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1783 with Velocities: -74.84, -9.32, -144.59 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1833 with Velocities: -56.95, -52.41, -143.54 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1833 with Velocities: -49.77, -60.87, -142.87 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -92.86, -35.73, -129.21 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1833 with Velocities: -60.32, -59.38, -139.39 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1829 with Velocities: -100.12, -56.56, -115.64 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -89.55, -31.89, -132.51 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1382 with Velocities: -48.94, -5.22, -155.47 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -76.83, -45.84, -136.35 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1438 with Velocities: -62.86, -82.70, -125.71 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1392 with Velocities: -50.43, -20.69, -153.70 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1829 with Velocities: -95.53, -59.05, -118.24 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -83.80, -59.13, -126.79 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1833 with Velocities: -51.39, -55.50, -144.48 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -67.66, -17.86, -147.30 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1778 with Velocities: -71.30, -1.26, -146.66 ang/ps
+2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1438 with Velocities: -65.98, -77.93, -127.15 ang/ps
+2025-07-09 20:13 - ml4cascades.lammps - INFO - --------------------------------------Check supercell size ----------------------------------------
+2025-07-09 20:13 - ml4cascades.lammps - INFO - Energy: 100 eV, Failed cases: 0 for energy 100 eV with size 7.
+2025-07-10 07:55 - ml4cascades.lammps - INFO - ------------------Cascade simulation for energy: 400 eV, supercell size: 10 --------------------
+2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 4384 with Velocities: -96.39, -6.64, -311.52 ang/ps
+2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 5252 with Velocities: -157.10, -99.65, -267.89 ang/ps
+2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 4463 with Velocities: -65.88, -90.62, -306.31 ang/ps
+2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 4464 with Velocities: -97.24, -114.07, -289.67 ang/ps
+2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 4461 with Velocities: -90.55, -9.75, -313.18 ang/ps
+2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 4464 with Velocities: -96.48, -116.34, -289.02 ang/ps
+2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 5257 with Velocities: -153.70, -32.02, -285.88 ang/ps
+2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 4463 with Velocities: -105.08, -47.45, -305.10 ang/ps
+2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 5252 with Velocities: -193.26, -104.37, -241.12 ang/ps
+2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 5252 with Velocities: -175.10, -101.49, -255.77 ang/ps
+2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 5252 with Velocities: -189.53, -97.81, -246.76 ang/ps
+2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 4463 with Velocities: -93.89, -83.41, -301.01 ang/ps
+2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 5263 with Velocities: -178.46, -64.10, -265.37 ang/ps
+2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 5257 with Velocities: -149.69, -18.64, -289.18 ang/ps
+2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 4464 with Velocities: -113.90, -104.83, -287.08 ang/ps
+2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 4464 with Velocities: -99.54, -121.73, -285.75 ang/ps
+2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 5263 with Velocities: -185.71, -71.46, -258.42 ang/ps
+2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 4464 with Velocities: -120.65, -118.76, -278.78 ang/ps
+2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 5252 with Velocities: -200.24, -113.11, -231.28 ang/ps
+2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 5263 with Velocities: -179.10, -63.78, -265.02 ang/ps
+2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 4384 with Velocities: -97.88, -10.44, -310.95 ang/ps
+2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 5252 with Velocities: -153.65, -91.67, -272.70 ang/ps
+2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 4534 with Velocities: -125.73, -165.41, -251.42 ang/ps
+2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 4461 with Velocities: -100.87, -41.37, -307.40 ang/ps
+2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 5252 with Velocities: -191.06, -118.10, -236.49 ang/ps
+2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 5252 with Velocities: -167.61, -118.27, -253.57 ang/ps
+2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 4464 with Velocities: -102.78, -111.00, -288.95 ang/ps
+2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 5257 with Velocities: -135.32, -35.73, -294.60 ang/ps
+2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 5257 with Velocities: -142.61, -2.53, -293.32 ang/ps
+2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 4534 with Velocities: -131.95, -155.87, -254.31 ang/ps
+2025-07-10 11:52 - ml4cascades.lammps - INFO - --------------------------------------Check supercell size ----------------------------------------
+2025-07-10 11:52 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 400 eV, hkl: 3.
+2025-07-10 11:52 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 400 eV, hkl: 5.
+2025-07-10 11:52 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 400 eV, hkl: 9.
+2025-07-10 11:52 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 400 eV, hkl: 11.
+2025-07-10 11:52 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 400 eV, hkl: 12.
+2025-07-10 11:52 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 400 eV, hkl: 16.
+2025-07-10 11:52 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 400 eV, hkl: 20.
+2025-07-10 11:52 - ml4cascades.lammps - INFO - Energy: 400 eV, Failed cases: 7 for energy 400 eV with size 10.
+2025-07-10 22:41 - ml4cascades.lammps - INFO - ------------------Cascade simulation for energy: 400 eV, supercell size: 12 --------------------
+2025-07-10 22:43 - ml4cascades.lammps - INFO - ------------------Relaxation for energy: 400 eV, supercell size: 12 --------------------
+2025-07-11 08:01 - ml4cascades.lammps - INFO - ------------------Cascade simulation for energy: 1000 eV, supercell size: 16 --------------------
+2025-07-11 08:01 - ml4cascades.lammps - INFO - PKA ID: 19420 with Velocities: -152.40, -10.51, -492.55 ang/ps
+2025-07-11 08:02 - ml4cascades.lammps - INFO - PKA ID: 21721 with Velocities: -248.40, -157.56, -423.58 ang/ps
+2025-07-11 08:02 - ml4cascades.lammps - INFO - PKA ID: 17629 with Velocities: -104.16, -143.29, -484.32 ang/ps
+2025-07-11 08:02 - ml4cascades.lammps - INFO - PKA ID: 19675 with Velocities: -153.76, -180.36, -458.01 ang/ps
+2025-07-11 08:02 - ml4cascades.lammps - INFO - PKA ID: 19553 with Velocities: -143.17, -15.41, -495.19 ang/ps
+2025-07-11 08:02 - ml4cascades.lammps - INFO - PKA ID: 19675 with Velocities: -152.54, -183.95, -456.99 ang/ps
+2025-07-11 08:02 - ml4cascades.lammps - INFO - PKA ID: 21595 with Velocities: -243.02, -50.63, -452.02 ang/ps
+2025-07-11 08:02 - ml4cascades.lammps - INFO - PKA ID: 19547 with Velocities: -166.15, -75.02, -482.40 ang/ps
+2025-07-11 08:02 - ml4cascades.lammps - INFO - PKA ID: 21721 with Velocities: -305.57, -165.02, -381.24 ang/ps
+2025-07-11 08:02 - ml4cascades.lammps - INFO - PKA ID: 21721 with Velocities: -276.85, -160.47, -404.41 ang/ps
+2025-07-11 08:02 - ml4cascades.lammps - INFO - PKA ID: 21721 with Velocities: -299.68, -154.64, -390.16 ang/ps
+2025-07-11 08:02 - ml4cascades.lammps - INFO - PKA ID: 19548 with Velocities: -148.46, -131.88, -475.93 ang/ps
+2025-07-11 08:02 - ml4cascades.lammps - INFO - PKA ID: 21721 with Velocities: -282.18, -101.35, -419.59 ang/ps
+2025-07-11 08:02 - ml4cascades.lammps - INFO - PKA ID: 19549 with Velocities: -236.67, -29.47, -457.23 ang/ps
+2025-07-11 08:03 - ml4cascades.lammps - INFO - PKA ID: 19674 with Velocities: -180.10, -165.75, -453.92 ang/ps
+2025-07-11 08:03 - ml4cascades.lammps - INFO - PKA ID: 19675 with Velocities: -157.38, -192.47, -451.81 ang/ps
+2025-07-11 08:03 - ml4cascades.lammps - INFO - PKA ID: 21588 with Velocities: -293.64, -112.98, -408.60 ang/ps
+2025-07-11 08:03 - ml4cascades.lammps - INFO - PKA ID: 19674 with Velocities: -190.76, -187.77, -440.79 ang/ps
+2025-07-11 08:03 - ml4cascades.lammps - INFO - PKA ID: 21717 with Velocities: -316.60, -178.85, -365.68 ang/ps
+2025-07-11 08:03 - ml4cascades.lammps - INFO - PKA ID: 21721 with Velocities: -283.18, -100.84, -419.03 ang/ps
+2025-07-11 08:03 - ml4cascades.lammps - INFO - PKA ID: 19420 with Velocities: -154.77, -16.50, -491.65 ang/ps
+2025-07-11 08:03 - ml4cascades.lammps - INFO - PKA ID: 19552 with Velocities: -242.94, -144.95, -431.18 ang/ps
+2025-07-11 08:03 - ml4cascades.lammps - INFO - PKA ID: 19668 with Velocities: -198.79, -261.53, -397.53 ang/ps
+2025-07-11 08:03 - ml4cascades.lammps - INFO - PKA ID: 19547 with Velocities: -159.49, -65.41, -486.04 ang/ps
+2025-07-11 08:03 - ml4cascades.lammps - INFO - PKA ID: 21727 with Velocities: -302.10, -186.73, -373.92 ang/ps
+2025-07-11 08:03 - ml4cascades.lammps - INFO - PKA ID: 19670 with Velocities: -265.01, -187.00, -400.93 ang/ps
+2025-07-11 08:03 - ml4cascades.lammps - INFO - PKA ID: 19674 with Velocities: -162.51, -175.50, -456.88 ang/ps
+2025-07-11 08:04 - ml4cascades.lammps - INFO - PKA ID: 19549 with Velocities: -213.96, -56.49, -465.81 ang/ps
+2025-07-11 08:04 - ml4cascades.lammps - INFO - PKA ID: 19549 with Velocities: -225.48, -4.00, -463.78 ang/ps
+2025-07-11 08:04 - ml4cascades.lammps - INFO - PKA ID: 19679 with Velocities: -208.63, -246.45, -402.10 ang/ps
+2025-07-12 08:52 - ml4cascades.lammps - INFO - --------------------------------------Check supercell size ----------------------------------------
+2025-07-12 08:52 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 1000 eV, hkl: 23.
+2025-07-12 08:52 - ml4cascades.lammps - INFO - Energy: 1000 eV, Failed cases: 1 for energy 1000 eV with size 16.
+2025-07-12 09:24 - ml4cascades.lammps - INFO - ------------------Cascade simulation for energy: 400 eV, supercell size: 12 --------------------
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 7558 with Velocities: -96.39, -6.64, -311.52 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 8805 with Velocities: -157.10, -99.65, -267.89 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 7556 with Velocities: -65.88, -90.62, -306.31 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 7653 with Velocities: -97.24, -114.07, -289.67 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 7558 with Velocities: -90.55, -9.75, -313.18 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 7653 with Velocities: -96.48, -116.34, -289.02 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 8706 with Velocities: -153.70, -32.02, -285.88 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 7558 with Velocities: -105.08, -47.45, -305.10 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 8712 with Velocities: -193.26, -104.37, -241.12 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 8712 with Velocities: -175.10, -101.49, -255.77 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 8712 with Velocities: -189.53, -97.81, -246.76 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 8707 with Velocities: -93.89, -83.41, -301.01 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 8711 with Velocities: -178.46, -64.10, -265.37 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 8709 with Velocities: -149.69, -18.64, -289.18 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 7560 with Velocities: -113.90, -104.83, -287.08 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 7653 with Velocities: -99.54, -121.73, -285.75 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 8711 with Velocities: -185.71, -71.46, -258.42 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 7560 with Velocities: -120.65, -118.76, -278.78 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 8712 with Velocities: -200.24, -113.11, -231.28 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 8711 with Velocities: -179.10, -63.78, -265.02 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 7558 with Velocities: -97.88, -10.44, -310.95 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 8708 with Velocities: -153.65, -91.67, -272.70 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 8802 with Velocities: -125.73, -165.41, -251.42 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 7558 with Velocities: -100.87, -41.37, -307.40 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 8712 with Velocities: -191.06, -118.10, -236.49 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 8805 with Velocities: -167.61, -118.27, -253.57 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 7560 with Velocities: -102.78, -111.00, -288.95 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 8707 with Velocities: -135.32, -35.73, -294.60 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 8612 with Velocities: -142.61, -2.53, -293.32 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 8802 with Velocities: -131.95, -155.87, -254.31 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - ------------------Cascade simulation for energy: 2000 eV, supercell size: 20 --------------------
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 36917 with Velocities: -215.53, -14.86, -696.58 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 40279 with Velocities: -351.29, -222.83, -599.03 ang/ps
+2025-07-12 09:24 - ml4cascades.lammps - INFO - PKA ID: 33878 with Velocities: -147.30, -202.64, -684.93 ang/ps
+2025-07-12 09:25 - ml4cascades.lammps - INFO - PKA ID: 37079 with Velocities: -217.45, -255.07, -647.73 ang/ps
+2025-07-12 09:25 - ml4cascades.lammps - INFO - PKA ID: 36917 with Velocities: -202.47, -21.80, -700.30 ang/ps
+2025-07-12 09:25 - ml4cascades.lammps - INFO - PKA ID: 37079 with Velocities: -215.73, -260.15, -646.28 ang/ps
+2025-07-12 09:25 - ml4cascades.lammps - INFO - PKA ID: 40114 with Velocities: -343.69, -71.61, -639.25 ang/ps
+2025-07-12 09:25 - ml4cascades.lammps - INFO - PKA ID: 36916 with Velocities: -234.97, -106.10, -682.22 ang/ps
+2025-07-12 09:25 - ml4cascades.lammps - INFO - PKA ID: 43467 with Velocities: -432.14, -233.38, -539.15 ang/ps
+2025-07-12 09:25 - ml4cascades.lammps - INFO - PKA ID: 40279 with Velocities: -391.53, -226.94, -571.92 ang/ps
+2025-07-12 09:25 - ml4cascades.lammps - INFO - PKA ID: 40270 with Velocities: -423.81, -218.70, -551.77 ang/ps
+2025-07-12 09:25 - ml4cascades.lammps - INFO - PKA ID: 37077 with Velocities: -209.95, -186.51, -673.07 ang/ps
+2025-07-12 09:25 - ml4cascades.lammps - INFO - PKA ID: 40120 with Velocities: -399.06, -143.33, -593.38 ang/ps
+2025-07-12 09:25 - ml4cascades.lammps - INFO - PKA ID: 40114 with Velocities: -334.71, -41.68, -646.63 ang/ps
+2025-07-12 09:26 - ml4cascades.lammps - INFO - PKA ID: 37079 with Velocities: -254.70, -234.40, -641.93 ang/ps
+2025-07-12 09:26 - ml4cascades.lammps - INFO - PKA ID: 37080 with Velocities: -222.58, -272.20, -638.95 ang/ps
+2025-07-12 09:26 - ml4cascades.lammps - INFO - PKA ID: 43473 with Velocities: -415.27, -159.78, -577.85 ang/ps
+2025-07-12 09:26 - ml4cascades.lammps - INFO - PKA ID: 37080 with Velocities: -269.77, -265.55, -623.38 ang/ps
+2025-07-12 09:26 - ml4cascades.lammps - INFO - PKA ID: 43467 with Velocities: -447.74, -252.93, -517.15 ang/ps
+2025-07-12 09:26 - ml4cascades.lammps - INFO - PKA ID: 40120 with Velocities: -400.48, -142.61, -592.59 ang/ps
+2025-07-12 09:26 - ml4cascades.lammps - INFO - PKA ID: 36917 with Velocities: -218.88, -23.33, -695.30 ang/ps
+2025-07-12 09:26 - ml4cascades.lammps - INFO - PKA ID: 40274 with Velocities: -343.57, -204.99, -609.78 ang/ps
+2025-07-12 09:26 - ml4cascades.lammps - INFO - PKA ID: 37230 with Velocities: -281.14, -369.86, -562.19 ang/ps
+2025-07-12 09:26 - ml4cascades.lammps - INFO - PKA ID: 36916 with Velocities: -225.55, -92.51, -687.36 ang/ps
+2025-07-12 09:26 - ml4cascades.lammps - INFO - PKA ID: 43467 with Velocities: -427.23, -264.08, -528.80 ang/ps
+2025-07-12 09:26 - ml4cascades.lammps - INFO - PKA ID: 40268 with Velocities: -374.78, -264.46, -567.00 ang/ps
+2025-07-12 09:27 - ml4cascades.lammps - INFO - PKA ID: 37079 with Velocities: -229.82, -248.19, -646.12 ang/ps
+2025-07-12 09:27 - ml4cascades.lammps - INFO - PKA ID: 40115 with Velocities: -302.59, -79.89, -658.75 ang/ps
+2025-07-12 09:27 - ml4cascades.lammps - INFO - PKA ID: 36760 with Velocities: -318.88, -5.65, -655.88 ang/ps
+2025-07-12 09:27 - ml4cascades.lammps - INFO - PKA ID: 37230 with Velocities: -295.05, -348.53, -568.65 ang/ps
+2025-07-12 14:53 - ml4cascades.lammps - INFO - --------------------------------------Check supercell size ----------------------------------------
+2025-07-12 14:53 - ml4cascades.lammps - INFO - Energy: 400 eV, Failed cases: 0 for energy 400 eV with size 12.
+2025-07-14 08:19 - ml4cascades.lammps - INFO - --------------------------------------Check supercell size ----------------------------------------
+2025-07-14 08:19 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 2000 eV, hkl: 0.
+2025-07-14 08:19 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 2000 eV, hkl: 3.
+2025-07-14 08:19 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 2000 eV, hkl: 4.
+2025-07-14 08:19 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 2000 eV, hkl: 5.
+2025-07-14 08:19 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 2000 eV, hkl: 6.
+2025-07-14 08:19 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 2000 eV, hkl: 11.
+2025-07-14 08:19 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 2000 eV, hkl: 15.
+2025-07-14 08:19 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 2000 eV, hkl: 18.
+2025-07-14 08:19 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 2000 eV, hkl: 19.
+2025-07-14 08:19 - ml4cascades.lammps - INFO - Energy: 2000 eV, Failed cases: 9 for energy 2000 eV with size 20.
+2025-07-15 08:11 - ml4cascades.lammps - INFO - ------------------Relaxation for energy: 2000 eV, supercell size: 22 --------------------
+2025-07-18 07:52 - ml4cascades.lammps - INFO - ------------------Cascade simulation for energy: 2000 eV, supercell size: 22 --------------------
+2025-07-18 07:52 - ml4cascades.lammps - INFO - PKA ID: 52429 with Velocities: -215.53, -14.86, -696.58 ang/ps
+2025-07-18 07:52 - ml4cascades.lammps - INFO - PKA ID: 60514 with Velocities: -351.29, -222.83, -599.03 ang/ps
+2025-07-18 07:53 - ml4cascades.lammps - INFO - PKA ID: 48911 with Velocities: -147.30, -202.64, -684.93 ang/ps
+2025-07-18 07:53 - ml4cascades.lammps - INFO - PKA ID: 52949 with Velocities: -217.45, -255.07, -647.73 ang/ps
+2025-07-18 07:53 - ml4cascades.lammps - INFO - PKA ID: 52426 with Velocities: -202.47, -21.80, -700.30 ang/ps
+2025-07-18 07:53 - ml4cascades.lammps - INFO - PKA ID: 52949 with Velocities: -215.73, -260.15, -646.28 ang/ps
+2025-07-18 07:53 - ml4cascades.lammps - INFO - PKA ID: 60163 with Velocities: -343.69, -71.61, -639.25 ang/ps
+2025-07-18 07:53 - ml4cascades.lammps - INFO - PKA ID: 52598 with Velocities: -234.97, -106.10, -682.22 ang/ps
+2025-07-18 07:53 - ml4cascades.lammps - INFO - PKA ID: 64379 with Velocities: -432.14, -233.38, -539.15 ang/ps
+2025-07-18 07:54 - ml4cascades.lammps - INFO - PKA ID: 60519 with Velocities: -391.53, -226.94, -571.92 ang/ps
+2025-07-18 07:54 - ml4cascades.lammps - INFO - PKA ID: 64379 with Velocities: -423.81, -218.70, -551.77 ang/ps
+2025-07-18 07:54 - ml4cascades.lammps - INFO - PKA ID: 52778 with Velocities: -209.95, -186.51, -673.07 ang/ps
+2025-07-18 07:54 - ml4cascades.lammps - INFO - PKA ID: 60343 with Velocities: -399.06, -143.33, -593.38 ang/ps
+2025-07-18 07:54 - ml4cascades.lammps - INFO - PKA ID: 56294 with Velocities: -334.71, -41.68, -646.63 ang/ps
+2025-07-18 07:54 - ml4cascades.lammps - INFO - PKA ID: 56643 with Velocities: -254.70, -234.40, -641.93 ang/ps
+2025-07-18 07:54 - ml4cascades.lammps - INFO - PKA ID: 52949 with Velocities: -222.58, -272.20, -638.95 ang/ps
+2025-07-18 07:55 - ml4cascades.lammps - INFO - PKA ID: 64385 with Velocities: -415.27, -159.78, -577.85 ang/ps
+2025-07-18 07:55 - ml4cascades.lammps - INFO - PKA ID: 56818 with Velocities: -269.77, -265.55, -623.38 ang/ps
+2025-07-18 07:55 - ml4cascades.lammps - INFO - PKA ID: 64553 with Velocities: -447.74, -252.93, -517.15 ang/ps
+2025-07-18 07:55 - ml4cascades.lammps - INFO - PKA ID: 60343 with Velocities: -400.48, -142.61, -592.59 ang/ps
+2025-07-18 07:55 - ml4cascades.lammps - INFO - PKA ID: 52426 with Velocities: -218.88, -23.33, -695.30 ang/ps
+2025-07-18 07:55 - ml4cascades.lammps - INFO - PKA ID: 60514 with Velocities: -343.57, -204.99, -609.78 ang/ps
+2025-07-18 07:55 - ml4cascades.lammps - INFO - PKA ID: 56987 with Velocities: -281.14, -369.86, -562.19 ang/ps
+2025-07-18 07:55 - ml4cascades.lammps - INFO - PKA ID: 52432 with Velocities: -225.55, -92.51, -687.36 ang/ps
+2025-07-18 07:56 - ml4cascades.lammps - INFO - PKA ID: 64553 with Velocities: -427.23, -264.08, -528.80 ang/ps
+2025-07-18 07:56 - ml4cascades.lammps - INFO - PKA ID: 60685 with Velocities: -374.78, -264.46, -567.00 ang/ps
+2025-07-18 07:56 - ml4cascades.lammps - INFO - PKA ID: 52949 with Velocities: -229.82, -248.19, -646.12 ang/ps
+2025-07-18 07:56 - ml4cascades.lammps - INFO - PKA ID: 56292 with Velocities: -302.59, -79.89, -658.75 ang/ps
+2025-07-18 07:56 - ml4cascades.lammps - INFO - PKA ID: 56294 with Velocities: -318.88, -5.65, -655.88 ang/ps
+2025-07-18 07:56 - ml4cascades.lammps - INFO - PKA ID: 56989 with Velocities: -295.05, -348.53, -568.65 ang/ps
+2025-07-19 14:05 - ml4cascades.lammps - INFO - --------------------------------------Check supercell size ----------------------------------------
+2025-07-19 14:05 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 2000 eV, hkl: 0.
+2025-07-19 14:05 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 2000 eV, hkl: 11.
+2025-07-19 14:05 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 2000 eV, hkl: 16.
+2025-07-19 14:05 - ml4cascades.lammps - INFO - Energy: 2000 eV, Failed cases: 3 for energy 2000 eV with size 22.

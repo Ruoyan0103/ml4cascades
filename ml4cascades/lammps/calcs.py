@@ -319,8 +319,23 @@ class CascadeCalculator(LMPStaticCalculator):
         eng_inter_time = {}      # {energy: list of (time, mean_inter, std_inter)}
         eng_temp_time = {}       # {energy: list of (time, mean_temp, std_temp)}
         
+        # bin clusters
+        def bin_clusters(cluster_dict, value_list):
+            for size, cnt in cluster_dict.items():
+                if 1 <= size < 3:
+                    value_list[0] += cnt
+                elif 4 <= size < 6:
+                    value_list[1] += cnt
+                elif 7 <= size < 9:
+                    value_list[2] += cnt
+                else:
+                    value_list[3] += cnt
+
         for energy in self.energies:
+            num_correct_cluster = 0
             eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
+            sum_vac_cluster_sizes = [0] * 4
+            sum_inter_cluster_sizes = [0] * 4
             self.logger.info(f'---------------------------------------------------')
             self.logger.info(f'Post-processing for energy: {energy} eV')
             
@@ -383,32 +398,42 @@ class CascadeCalculator(LMPStaticCalculator):
                 last_frame = all_pipeline.compute(all_pipeline.source.num_frames-1)
                 pipeline = Pipeline(source=StaticSource(data=last_frame))
                 cnt_vacancies, cnt_interstitials = self._countVacAndInter(pipeline, reference_pipeline)
+                self.logger.info(f'index {idx}: hkl {hkl} ')
                 self.logger.info(f'Vacancies: {cnt_vacancies}, Interstitials: {cnt_interstitials}')
+                if cnt_vacancies != cnt_interstitials:
+                    self.logger.warning(f"!!!Mismatch in vacancies and interstitials, ignore.")
+                    # continue
+                num_correct_cluster += 1
                 number_of_vacancies.append(cnt_vacancies)
                 number_of_interstitials.append(cnt_interstitials)
                 expression = 'Occupancy == 0'
                 vac_clusters, total_line_length, cell_volume, dislocation_lines = self._clustersAndDXA(pipeline, reference_pipeline, expression)
                 self.logger.info(f'Vacancy Clusters: {vac_clusters}')
-                sum_vac_clusters = sum(vac_clusters.values())
-                number_of_vacancy_clusters.append(sum_vac_clusters)
-                self.logger.info(f'Total dislocation line length: {total_line_length}, Cell volume: {cell_volume}, Dislocation density: {total_line_length/cell_volume}')
+                # sum_vac_clusters = sum(vac_clusters.keys())
+                bin_clusters(vac_clusters, sum_vac_cluster_sizes)
+                # number_of_vacancy_clusters.append(sum_vac_clusters)
+                self.logger.info(f'Total dislocation line length: {total_line_length}, Dislocation density: {total_line_length/cell_volume}')
                 self.logger.info(f'Number of dislocation lines: {len(dislocation_lines)}')
                 for line in dislocation_lines:
                     self.logger.info(f'Dislocation line {line.id}: Length = {line.length}, Burgers vector = {line.true_burgers_vector}')
                 expression = 'Occupancy > 1'
                 inter_clusters, total_line_length, cell_volume, dislocation_lines = self._clustersAndDXA(pipeline, reference_pipeline, expression)
                 self.logger.info(f'Interstitial Clusters: {inter_clusters}')
-                sum_inter_clusters = sum(inter_clusters.values())
-                number_of_interstitial_clusters.append(sum_inter_clusters)
-                self.logger.info(f'Total dislocation line length: {total_line_length}, Cell volume: {cell_volume}, Dislocation density: {total_line_length/cell_volume}')
+                # sum_inter_clusters = sum(inter_clusters.keys())
+                bin_clusters(inter_clusters, sum_inter_cluster_sizes)
+                # number_of_interstitial_clusters.append(sum_inter_clusters)
+                self.logger.info(f'Total dislocation line length: {total_line_length}, Dislocation density: {total_line_length/cell_volume}')
                 self.logger.info(f'Number of dislocation lines: {len(dislocation_lines)}')
                 for line in dislocation_lines:
                     self.logger.info(f'Dislocation line {line.id}: Length = {line.length}, Burgers vector = {line.true_burgers_vector}')
             
             eng_vac[energy] = number_of_vacancies
             eng_inter[energy] = number_of_interstitials
-            eng_vac_cluster[energy] = number_of_vacancy_clusters
-            eng_inter_cluster[energy] = number_of_interstitial_clusters
+            eng_vac_cluster[energy] = sum_vac_cluster_sizes
+            eng_inter_cluster[energy] = sum_inter_cluster_sizes
+            self.logger.info(f'correct cluster count: {num_correct_cluster} for energy {energy} eV')
+            self.logger.info(f'Energy: {energy} eV, number of vac clusters by size: {sum_vac_cluster_sizes}')
+            self.logger.info(f'Energy: {energy} eV, number of inter clusters by size: {sum_inter_cluster_sizes}')
             
             # Aggregate time-dependent data
             if time_data:
@@ -442,7 +467,7 @@ class CascadeCalculator(LMPStaticCalculator):
                 eng_vac_time[energy] = [(t, np.mean(v), np.std(v)) for t, v in zip(common_times, vac_time.T)]
                 eng_inter_time[energy] = [(t, np.mean(i), np.std(i)) for t, i in zip(common_times, inter_time.T)]
                 eng_temp_time[energy] = [(t, np.mean(temp), np.std(temp)) for t, temp in zip(common_times, temp_time.T)]
-        
+
         # Write existing outputs
         def write_txt(vacancy_dict, interstitial_dict, file_name1, file_name2):
             for energy in vacancy_dict:
@@ -462,9 +487,35 @@ class CascadeCalculator(LMPStaticCalculator):
                         f.write("# Energy (eV)    Mean value    Std Dev value\n")
                         f.write("# ----------------------------------------------------\n")
                         f.write(f"{energy:>10.1f} {mean_int:>15} {std_int:>15}\n")
+
+        def write_txt_cluster(vacancy_dict, interstitial_dict, file_name1, file_name2, num_correct_cluster):
+            ranges = ['1 - 3', '4 - 6', '7 - 9', '10+']
+            for energy in vacancy_dict:
+                output_dir = os.path.join(self.calculation_dir, f"{int(energy)}_postprocessing")
+                os.makedirs(output_dir, exist_ok=True)
+                vac_cluster_num_by_size = vacancy_dict.get(energy)
+                inter_cluster_num_by_size = interstitial_dict.get(energy)
+                if vac_cluster_num_by_size:
+                    for i in range(len(vac_cluster_num_by_size)):
+                        mean_vac_cluster_num_by_size = vac_cluster_num_by_size[i] / len(self.hkl_list) 
+                        with open(os.path.join(output_dir, file_name1), 'a') as f:
+                            if i == 0:
+                                f.write("# Energy (eV)    Mean value\n")
+                                f.write("# ---------------------------------------------\n")
+                                f.write(f"{energy:>10.1f}\n")
+                            f.write(f"{ranges[i]} {mean_vac_cluster_num_by_size:>15}\n")
+                if inter_cluster_num_by_size:
+                    for i in range(len(inter_cluster_num_by_size)):
+                        mean_inter_cluster_num_by_size = inter_cluster_num_by_size[i] / len(self.hkl_list) 
+                        with open(os.path.join(output_dir, file_name2), 'a') as f:
+                            if i == 0:
+                                f.write("# Energy (eV)    Mean value\n")
+                                f.write("# ----------------------------------------------------\n")
+                                f.write(f"{energy:>10.1f}\n")
+                            f.write(f"{ranges[i]} {mean_inter_cluster_num_by_size:>15}\n")
         
         write_txt(eng_vac, eng_inter, 'eng_vac.txt', 'eng_inter.txt')
-        write_txt(eng_vac_cluster, eng_inter_cluster, 'eng_vac_cluster.txt', 'eng_inter_cluster.txt')
+        write_txt_cluster(eng_vac_cluster, eng_inter_cluster, 'eng_vac_cluster.txt', 'eng_inter_cluster.txt', num_correct_cluster)
         
         # Write time-dependent outputs
         for energy in eng_vac_time:
@@ -513,7 +564,7 @@ class CascadeCalculator(LMPStaticCalculator):
         pipeline.modifiers.append(wsam)
         sel = ExpressionSelectionModifier(expression=expression)
         pipeline.modifiers.append(sel)
-        cls = ClusterAnalysisModifier(cutoff=1, sort_by_size=True, only_selected=True)
+        cls = ClusterAnalysisModifier(cutoff=8.4, sort_by_size=True, only_selected=True)
         pipeline.modifiers.append(cls)
         dxa = DislocationAnalysisModifier(only_selected=True)
         dxa.input_crystal_structure = DislocationAnalysisModifier.Lattice.CubicDiamond

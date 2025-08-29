@@ -1,78 +1,1000 @@
-2025-07-09 11:23 - ml4cascades.lammps - INFO - ------------------Relaxation for energy: 100 eV, supercell size: 7 --------------------
-2025-07-09 11:23 - ml4cascades.lammps - INFO - ------------------Relaxation for energy: 400 eV, supercell size: 10 --------------------
-2025-07-09 11:59 - ml4cascades.lammps - INFO - ------------------Relaxation for energy: 1000 eV, supercell size: 16 --------------------
-2025-07-09 11:59 - ml4cascades.lammps - INFO - ------------------Relaxation for energy: 2000 eV, supercell size: 20 --------------------
-2025-07-09 11:59 - ml4cascades.lammps - INFO - ------------------Relaxation for energy: 5000 eV, supercell size: 30 --------------------
-2025-07-09 16:38 - ml4cascades.lammps - INFO - ------------------Cascade simulation for energy: 100 eV, supercell size: 7 --------------------
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1382 with Velocities: -48.19, -3.32, -155.76 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -78.55, -49.83, -133.95 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1392 with Velocities: -32.94, -45.31, -153.16 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1833 with Velocities: -48.62, -57.04, -144.84 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1391 with Velocities: -45.27, -4.87, -156.59 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1833 with Velocities: -48.24, -58.17, -144.51 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -76.85, -16.01, -142.94 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1392 with Velocities: -52.54, -23.72, -152.55 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -96.63, -52.19, -120.56 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -87.55, -50.75, -127.89 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -94.77, -48.90, -123.38 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1833 with Velocities: -46.95, -41.71, -150.50 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -89.23, -32.05, -132.68 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1783 with Velocities: -74.84, -9.32, -144.59 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1833 with Velocities: -56.95, -52.41, -143.54 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1833 with Velocities: -49.77, -60.87, -142.87 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -92.86, -35.73, -129.21 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1833 with Velocities: -60.32, -59.38, -139.39 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1829 with Velocities: -100.12, -56.56, -115.64 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -89.55, -31.89, -132.51 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1382 with Velocities: -48.94, -5.22, -155.47 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -76.83, -45.84, -136.35 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1438 with Velocities: -62.86, -82.70, -125.71 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1392 with Velocities: -50.43, -20.69, -153.70 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1829 with Velocities: -95.53, -59.05, -118.24 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -83.80, -59.13, -126.79 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1833 with Velocities: -51.39, -55.50, -144.48 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1772 with Velocities: -67.66, -17.86, -147.30 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1778 with Velocities: -71.30, -1.26, -146.66 ang/ps
-2025-07-09 16:38 - ml4cascades.lammps - INFO - PKA ID: 1438 with Velocities: -65.98, -77.93, -127.15 ang/ps
-2025-07-09 20:13 - ml4cascades.lammps - INFO - --------------------------------------Check supercell size ----------------------------------------
-2025-07-09 20:13 - ml4cascades.lammps - INFO - Energy: 100 eV, Failed cases: 0 for energy 100 eV with size 7.
-2025-07-10 07:55 - ml4cascades.lammps - INFO - ------------------Cascade simulation for energy: 400 eV, supercell size: 10 --------------------
-2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 4384 with Velocities: -96.39, -6.64, -311.52 ang/ps
-2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 5252 with Velocities: -157.10, -99.65, -267.89 ang/ps
-2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 4463 with Velocities: -65.88, -90.62, -306.31 ang/ps
-2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 4464 with Velocities: -97.24, -114.07, -289.67 ang/ps
-2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 4461 with Velocities: -90.55, -9.75, -313.18 ang/ps
-2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 4464 with Velocities: -96.48, -116.34, -289.02 ang/ps
-2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 5257 with Velocities: -153.70, -32.02, -285.88 ang/ps
-2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 4463 with Velocities: -105.08, -47.45, -305.10 ang/ps
-2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 5252 with Velocities: -193.26, -104.37, -241.12 ang/ps
-2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 5252 with Velocities: -175.10, -101.49, -255.77 ang/ps
-2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 5252 with Velocities: -189.53, -97.81, -246.76 ang/ps
-2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 4463 with Velocities: -93.89, -83.41, -301.01 ang/ps
-2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 5263 with Velocities: -178.46, -64.10, -265.37 ang/ps
-2025-07-10 07:55 - ml4cascades.lammps - INFO - PKA ID: 5257 with Velocities: -149.69, -18.64, -289.18 ang/ps
-2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 4464 with Velocities: -113.90, -104.83, -287.08 ang/ps
-2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 4464 with Velocities: -99.54, -121.73, -285.75 ang/ps
-2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 5263 with Velocities: -185.71, -71.46, -258.42 ang/ps
-2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 4464 with Velocities: -120.65, -118.76, -278.78 ang/ps
-2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 5252 with Velocities: -200.24, -113.11, -231.28 ang/ps
-2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 5263 with Velocities: -179.10, -63.78, -265.02 ang/ps
-2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 4384 with Velocities: -97.88, -10.44, -310.95 ang/ps
-2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 5252 with Velocities: -153.65, -91.67, -272.70 ang/ps
-2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 4534 with Velocities: -125.73, -165.41, -251.42 ang/ps
-2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 4461 with Velocities: -100.87, -41.37, -307.40 ang/ps
-2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 5252 with Velocities: -191.06, -118.10, -236.49 ang/ps
-2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 5252 with Velocities: -167.61, -118.27, -253.57 ang/ps
-2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 4464 with Velocities: -102.78, -111.00, -288.95 ang/ps
-2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 5257 with Velocities: -135.32, -35.73, -294.60 ang/ps
-2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 5257 with Velocities: -142.61, -2.53, -293.32 ang/ps
-2025-07-10 07:56 - ml4cascades.lammps - INFO - PKA ID: 4534 with Velocities: -131.95, -155.87, -254.31 ang/ps
-2025-07-10 11:52 - ml4cascades.lammps - INFO - --------------------------------------Check supercell size ----------------------------------------
-2025-07-10 11:52 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 400 eV, hkl: 3.
-2025-07-10 11:52 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 400 eV, hkl: 5.
-2025-07-10 11:52 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 400 eV, hkl: 9.
-2025-07-10 11:52 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 400 eV, hkl: 11.
-2025-07-10 11:52 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 400 eV, hkl: 12.
-2025-07-10 11:52 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 400 eV, hkl: 16.
-2025-07-10 11:52 - ml4cascades.lammps - WARNING - Simulation run less than 30 ps for energy 400 eV, hkl: 20.
-2025-07-10 11:52 - ml4cascades.lammps - INFO - Energy: 400 eV, Failed cases: 7 for energy 400 eV with size 10.
+2025-08-21 09:35 - ml4cascades.lammps - INFO - Saved hkl_list.dat to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/pka/GAP/100/hkl_list.dat
+2025-08-21 09:35 - ml4cascades.lammps - INFO - Saved hkl_list.dat to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/pka/GAP/400/hkl_list.dat
+2025-08-21 09:35 - ml4cascades.lammps - INFO - Saved hkl_list.dat to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/pka/GAP/1000/hkl_list.dat
+2025-08-21 09:35 - ml4cascades.lammps - INFO - Saved hkl_list.dat to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/pka/GAP/2000/hkl_list.dat
+2025-08-21 09:35 - ml4cascades.lammps - INFO - --------------------------------------Post-processing simulations ----------------------------------------
+2025-08-21 09:35 - ml4cascades.lammps - INFO - ---------------------------------------------------
+2025-08-21 09:35 - ml4cascades.lammps - INFO - Post-processing for energy: 100 eV
+2025-08-21 09:36 - ml4cascades.lammps - INFO - index 0: hkl [0.29552945 0.02037054 0.95511643] 
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Vacancies: 0, Interstitials: 0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter()
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter()
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - index 1: hkl [0.48167057 0.30553306 0.82136655] 
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Vacancies: 1, Interstitials: 1
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 1})
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 1})
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - index 2: hkl [0.20197498 0.27785259 0.9391507 ] 
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Vacancies: 1, Interstitials: 1
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 1})
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 1})
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - index 3: hkl [0.29815221 0.34974124 0.88813643] 
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Vacancies: 2, Interstitials: 2
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 1})
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 2})
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - index 4: hkl [0.27762207 0.02988676 0.96022537] 
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Vacancies: 2, Interstitials: 2
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 1})
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 2})
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - index 5: hkl [0.29579411 0.3567087  0.88615165] 
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Vacancies: 2, Interstitials: 2
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 1})
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 2})
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:36 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - index 6: hkl [0.47125234 0.09818456 0.87651641] 
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Vacancies: 2, Interstitials: 2
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 1})
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 2})
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - index 7: hkl [0.32218753 0.14548076 0.93543067] 
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Vacancies: 2, Interstitials: 2
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 1})
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 2})
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - index 8: hkl [0.59252605 0.32000014 0.73926504] 
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Vacancies: 0, Interstitials: 0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter()
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter()
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - index 9: hkl [0.53684756 0.31117385 0.78419738] 
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Vacancies: 1, Interstitials: 1
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 1})
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 1})
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - index 10: hkl [0.58110627 0.29987122 0.75656643] 
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Vacancies: 2, Interstitials: 2
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 1})
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 2})
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - index 11: hkl [0.28788124 0.25573723 0.92288832] 
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Vacancies: 1, Interstitials: 1
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 1})
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 1})
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - index 12: hkl [0.54716973 0.19652771 0.81362285] 
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Vacancies: 1, Interstitials: 1
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 1})
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 1})
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:37 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - index 13: hkl [0.4589356  0.05714766 0.88662972] 
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Vacancies: 3, Interstitials: 3
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({3: 1})
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 3})
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - index 14: hkl [0.34923203 0.32139822 0.88019326] 
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Vacancies: 2, Interstitials: 2
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 2})
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 2})
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - index 15: hkl [0.30518669 0.37323005 0.87610525] 
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Vacancies: 3, Interstitials: 3
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({3: 1})
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({2: 1, 1: 1})
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - index 16: hkl [0.56940187 0.21908347 0.79232818] 
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Vacancies: 1, Interstitials: 1
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 1})
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 1})
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - index 17: hkl [0.36989954 0.36411423 0.8547486 ] 
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Vacancies: 2, Interstitials: 2
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 1})
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 2})
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - index 18: hkl [0.6139283  0.34680314 0.70909775] 
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Vacancies: 2, Interstitials: 2
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 1})
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 2})
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:38 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - index 19: hkl [0.54912575 0.19554725 0.81254057] 
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Vacancies: 1, Interstitials: 1
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 1})
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 1})
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - index 20: hkl [0.30011285 0.03199562 0.95336696] 
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Vacancies: 1, Interstitials: 1
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 1})
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 1})
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - index 21: hkl [0.47109182 0.28107537 0.83610354] 
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Vacancies: 1, Interstitials: 1
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 1})
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 1})
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - index 22: hkl [0.38548268 0.50714355 0.77084923] 
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Vacancies: 4, Interstitials: 3
+2025-08-21 09:39 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({4: 1})
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 3})
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - index 23: hkl [0.30926768 0.12684511 0.94247749] 
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Vacancies: 2, Interstitials: 2
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 1})
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 2})
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - index 24: hkl [0.58579777 0.36209835 0.72506948] 
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Vacancies: 2, Interstitials: 2
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 1})
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 2})
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - index 25: hkl [0.51388914 0.36261566 0.77744958] 
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Vacancies: 1, Interstitials: 1
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 1})
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 1})
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:39 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:40 - ml4cascades.lammps - INFO - index 26: hkl [0.31512092 0.34031413 0.88593741] 
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Vacancies: 1, Interstitials: 1
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 1})
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 1})
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:40 - ml4cascades.lammps - INFO - index 27: hkl [0.41489987 0.1095436  0.90324874] 
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Vacancies: 3, Interstitials: 3
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({3: 1})
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({2: 1, 1: 1})
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:40 - ml4cascades.lammps - INFO - index 28: hkl [0.43723834 0.00775167 0.89931226] 
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Vacancies: 2, Interstitials: 2
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 1})
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 2})
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:40 - ml4cascades.lammps - INFO - index 29: hkl [0.40456621 0.47788918 0.77971027] 
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Vacancies: 3, Interstitials: 3
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({3: 1})
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 3})
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:40 - ml4cascades.lammps - INFO - correct cluster count: 30 for energy 100 eV
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Energy: 100 eV, number of vac clusters by size: [24, 1, 0, 4]
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Energy: 100 eV, number of inter clusters by size: [48, 0, 0, 0]
+2025-08-21 09:40 - ml4cascades.lammps - INFO - ---------------------------------------------------
+2025-08-21 09:40 - ml4cascades.lammps - INFO - Post-processing for energy: 400 eV
+2025-08-21 09:41 - ml4cascades.lammps - INFO - index 0: hkl [0.29552945 0.02037054 0.95511643] 
+2025-08-21 09:41 - ml4cascades.lammps - INFO - Vacancies: 4, Interstitials: 4
+2025-08-21 09:41 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({3: 1, 1: 1})
+2025-08-21 09:41 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:41 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:41 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 4})
+2025-08-21 09:41 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:41 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:41 - ml4cascades.lammps - INFO - index 1: hkl [0.48167057 0.30553306 0.82136655] 
+2025-08-21 09:41 - ml4cascades.lammps - INFO - Vacancies: 4, Interstitials: 4
+2025-08-21 09:41 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 2})
+2025-08-21 09:41 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:41 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:41 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 4})
+2025-08-21 09:41 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:41 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:42 - ml4cascades.lammps - INFO - index 2: hkl [0.20197498 0.27785259 0.9391507 ] 
+2025-08-21 09:42 - ml4cascades.lammps - INFO - Vacancies: 4, Interstitials: 4
+2025-08-21 09:42 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({3: 1, 1: 1})
+2025-08-21 09:42 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:42 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:42 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 4})
+2025-08-21 09:42 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:42 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:43 - ml4cascades.lammps - INFO - index 3: hkl [0.29815221 0.34974124 0.88813643] 
+2025-08-21 09:43 - ml4cascades.lammps - INFO - Vacancies: 4, Interstitials: 4
+2025-08-21 09:43 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({4: 1})
+2025-08-21 09:43 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:43 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:43 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 4})
+2025-08-21 09:43 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:43 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:44 - ml4cascades.lammps - INFO - index 4: hkl [0.27762207 0.02988676 0.96022537] 
+2025-08-21 09:44 - ml4cascades.lammps - INFO - Vacancies: 3, Interstitials: 3
+2025-08-21 09:44 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 3})
+2025-08-21 09:44 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:44 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:44 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 3})
+2025-08-21 09:44 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:44 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:44 - ml4cascades.lammps - INFO - index 5: hkl [0.29579411 0.3567087  0.88615165] 
+2025-08-21 09:44 - ml4cascades.lammps - INFO - Vacancies: 6, Interstitials: 6
+2025-08-21 09:44 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({6: 1})
+2025-08-21 09:44 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:44 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:44 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 6})
+2025-08-21 09:44 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:44 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:45 - ml4cascades.lammps - INFO - index 6: hkl [0.47125234 0.09818456 0.87651641] 
+2025-08-21 09:45 - ml4cascades.lammps - INFO - Vacancies: 3, Interstitials: 3
+2025-08-21 09:45 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 1, 1: 1})
+2025-08-21 09:45 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:45 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:45 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 3})
+2025-08-21 09:45 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:45 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:46 - ml4cascades.lammps - INFO - index 7: hkl [0.32218753 0.14548076 0.93543067] 
+2025-08-21 09:46 - ml4cascades.lammps - INFO - Vacancies: 5, Interstitials: 5
+2025-08-21 09:46 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 2, 3: 1})
+2025-08-21 09:46 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:46 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:46 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 5})
+2025-08-21 09:46 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:46 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:46 - ml4cascades.lammps - INFO - index 8: hkl [0.59252605 0.32000014 0.73926504] 
+2025-08-21 09:46 - ml4cascades.lammps - INFO - Vacancies: 1, Interstitials: 1
+2025-08-21 09:46 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 1})
+2025-08-21 09:46 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:46 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:46 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 1})
+2025-08-21 09:46 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:46 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:47 - ml4cascades.lammps - INFO - index 9: hkl [0.53684756 0.31117385 0.78419738] 
+2025-08-21 09:47 - ml4cascades.lammps - INFO - Vacancies: 4, Interstitials: 4
+2025-08-21 09:47 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({3: 1, 1: 1})
+2025-08-21 09:47 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:47 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:47 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 4})
+2025-08-21 09:47 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:47 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:48 - ml4cascades.lammps - INFO - index 10: hkl [0.58110627 0.29987122 0.75656643] 
+2025-08-21 09:48 - ml4cascades.lammps - INFO - Vacancies: 2, Interstitials: 2
+2025-08-21 09:48 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 1})
+2025-08-21 09:48 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:48 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:48 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 2})
+2025-08-21 09:48 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:48 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:48 - ml4cascades.lammps - INFO - index 11: hkl [0.28788124 0.25573723 0.92288832] 
+2025-08-21 09:48 - ml4cascades.lammps - INFO - Vacancies: 2, Interstitials: 2
+2025-08-21 09:48 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 2})
+2025-08-21 09:48 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:48 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:48 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 2})
+2025-08-21 09:48 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:48 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:49 - ml4cascades.lammps - INFO - index 12: hkl [0.54716973 0.19652771 0.81362285] 
+2025-08-21 09:49 - ml4cascades.lammps - INFO - Vacancies: 5, Interstitials: 5
+2025-08-21 09:49 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({3: 1, 2: 1})
+2025-08-21 09:49 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:49 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:49 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 5})
+2025-08-21 09:49 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:49 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:50 - ml4cascades.lammps - INFO - index 13: hkl [0.4589356  0.05714766 0.88662972] 
+2025-08-21 09:50 - ml4cascades.lammps - INFO - Vacancies: 6, Interstitials: 5
+2025-08-21 09:50 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 09:50 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({4: 1, 2: 1})
+2025-08-21 09:50 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:50 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:50 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({2: 2, 1: 1})
+2025-08-21 09:50 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:50 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:50 - ml4cascades.lammps - INFO - index 14: hkl [0.34923203 0.32139822 0.88019326] 
+2025-08-21 09:50 - ml4cascades.lammps - INFO - Vacancies: 7, Interstitials: 5
+2025-08-21 09:50 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 09:50 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({6: 1, 1: 1})
+2025-08-21 09:50 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:50 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:50 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 5})
+2025-08-21 09:50 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:50 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:51 - ml4cascades.lammps - INFO - index 15: hkl [0.30518669 0.37323005 0.87610525] 
+2025-08-21 09:51 - ml4cascades.lammps - INFO - Vacancies: 5, Interstitials: 5
+2025-08-21 09:51 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({4: 1, 1: 1})
+2025-08-21 09:51 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:51 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:51 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 5})
+2025-08-21 09:51 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:51 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:52 - ml4cascades.lammps - INFO - index 16: hkl [0.56940187 0.21908347 0.79232818] 
+2025-08-21 09:52 - ml4cascades.lammps - INFO - Vacancies: 7, Interstitials: 7
+2025-08-21 09:52 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({6: 1, 1: 1})
+2025-08-21 09:52 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:52 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:52 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 5, 2: 1})
+2025-08-21 09:52 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:52 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:53 - ml4cascades.lammps - INFO - index 17: hkl [0.36989954 0.36411423 0.8547486 ] 
+2025-08-21 09:53 - ml4cascades.lammps - INFO - Vacancies: 8, Interstitials: 8
+2025-08-21 09:53 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({4: 2})
+2025-08-21 09:53 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:53 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:53 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 6, 2: 1})
+2025-08-21 09:53 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:53 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:53 - ml4cascades.lammps - INFO - index 18: hkl [0.6139283  0.34680314 0.70909775] 
+2025-08-21 09:53 - ml4cascades.lammps - INFO - Vacancies: 4, Interstitials: 4
+2025-08-21 09:53 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 2, 2: 1})
+2025-08-21 09:53 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:53 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:53 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 4})
+2025-08-21 09:53 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:53 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:54 - ml4cascades.lammps - INFO - index 19: hkl [0.54912575 0.19554725 0.81254057] 
+2025-08-21 09:54 - ml4cascades.lammps - INFO - Vacancies: 9, Interstitials: 8
+2025-08-21 09:54 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 09:54 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({5: 1, 4: 1})
+2025-08-21 09:54 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:54 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:54 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 8})
+2025-08-21 09:54 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:54 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:55 - ml4cascades.lammps - INFO - index 20: hkl [0.30011285 0.03199562 0.95336696] 
+2025-08-21 09:55 - ml4cascades.lammps - INFO - Vacancies: 5, Interstitials: 5
+2025-08-21 09:55 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({4: 1, 1: 1})
+2025-08-21 09:55 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:55 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:55 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 5})
+2025-08-21 09:55 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:55 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:55 - ml4cascades.lammps - INFO - index 21: hkl [0.47109182 0.28107537 0.83610354] 
+2025-08-21 09:55 - ml4cascades.lammps - INFO - Vacancies: 4, Interstitials: 3
+2025-08-21 09:55 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 09:55 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 2})
+2025-08-21 09:55 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:55 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:55 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({2: 1, 1: 1})
+2025-08-21 09:55 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:55 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:56 - ml4cascades.lammps - INFO - index 22: hkl [0.38548268 0.50714355 0.77084923] 
+2025-08-21 09:56 - ml4cascades.lammps - INFO - Vacancies: 3, Interstitials: 3
+2025-08-21 09:56 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 3})
+2025-08-21 09:56 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:56 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:56 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 3})
+2025-08-21 09:56 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:56 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:57 - ml4cascades.lammps - INFO - index 23: hkl [0.30926768 0.12684511 0.94247749] 
+2025-08-21 09:57 - ml4cascades.lammps - INFO - Vacancies: 7, Interstitials: 7
+2025-08-21 09:57 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({7: 1})
+2025-08-21 09:57 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:57 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:57 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 7})
+2025-08-21 09:57 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:57 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:57 - ml4cascades.lammps - INFO - index 24: hkl [0.58579777 0.36209835 0.72506948] 
+2025-08-21 09:57 - ml4cascades.lammps - INFO - Vacancies: 4, Interstitials: 4
+2025-08-21 09:57 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({3: 1, 1: 1})
+2025-08-21 09:57 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:57 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:57 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 4})
+2025-08-21 09:57 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:57 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:58 - ml4cascades.lammps - INFO - index 25: hkl [0.51388914 0.36261566 0.77744958] 
+2025-08-21 09:58 - ml4cascades.lammps - INFO - Vacancies: 6, Interstitials: 6
+2025-08-21 09:58 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({3: 1, 2: 1, 1: 1})
+2025-08-21 09:58 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:58 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:58 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 6})
+2025-08-21 09:58 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:58 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:59 - ml4cascades.lammps - INFO - index 26: hkl [0.31512092 0.34031413 0.88593741] 
+2025-08-21 09:59 - ml4cascades.lammps - INFO - Vacancies: 6, Interstitials: 6
+2025-08-21 09:59 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 3, 3: 1})
+2025-08-21 09:59 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:59 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 09:59 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 6})
+2025-08-21 09:59 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 09:59 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:00 - ml4cascades.lammps - INFO - index 27: hkl [0.41489987 0.1095436  0.90324874] 
+2025-08-21 10:00 - ml4cascades.lammps - INFO - Vacancies: 7, Interstitials: 7
+2025-08-21 10:00 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({4: 1, 3: 1})
+2025-08-21 10:00 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:00 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:00 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 7})
+2025-08-21 10:00 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:00 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:00 - ml4cascades.lammps - INFO - index 28: hkl [0.43723834 0.00775167 0.89931226] 
+2025-08-21 10:00 - ml4cascades.lammps - INFO - Vacancies: 6, Interstitials: 5
+2025-08-21 10:00 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 10:00 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({5: 1, 1: 1})
+2025-08-21 10:00 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:00 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:00 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 5})
+2025-08-21 10:00 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:00 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:01 - ml4cascades.lammps - INFO - index 29: hkl [0.40456621 0.47788918 0.77971027] 
+2025-08-21 10:01 - ml4cascades.lammps - INFO - Vacancies: 5, Interstitials: 5
+2025-08-21 10:01 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({3: 1, 2: 1})
+2025-08-21 10:01 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:01 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:01 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 3, 2: 1})
+2025-08-21 10:01 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:01 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:01 - ml4cascades.lammps - INFO - correct cluster count: 30 for energy 400 eV
+2025-08-21 10:01 - ml4cascades.lammps - INFO - Energy: 400 eV, number of vac clusters by size: [38, 10, 1, 13]
+2025-08-21 10:01 - ml4cascades.lammps - INFO - Energy: 400 eV, number of inter clusters by size: [134, 0, 0, 0]
+2025-08-21 10:01 - ml4cascades.lammps - INFO - ---------------------------------------------------
+2025-08-21 10:01 - ml4cascades.lammps - INFO - Post-processing for energy: 1000 eV
+2025-08-21 10:03 - ml4cascades.lammps - INFO - index 0: hkl [0.29552945 0.02037054 0.95511643] 
+2025-08-21 10:03 - ml4cascades.lammps - INFO - Vacancies: 11, Interstitials: 10
+2025-08-21 10:03 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 10:03 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({8: 1, 2: 1, 1: 1})
+2025-08-21 10:03 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:03 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:03 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 7, 3: 1})
+2025-08-21 10:03 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:03 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:04 - ml4cascades.lammps - INFO - index 1: hkl [0.48167057 0.30553306 0.82136655] 
+2025-08-21 10:04 - ml4cascades.lammps - INFO - Vacancies: 18, Interstitials: 18
+2025-08-21 10:04 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({13: 1, 3: 1, 2: 1})
+2025-08-21 10:04 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:04 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:04 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 8, 10: 1})
+2025-08-21 10:04 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:04 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:06 - ml4cascades.lammps - INFO - index 2: hkl [0.20197498 0.27785259 0.9391507 ] 
+2025-08-21 10:06 - ml4cascades.lammps - INFO - Vacancies: 13, Interstitials: 13
+2025-08-21 10:06 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({9: 1, 3: 1, 1: 1})
+2025-08-21 10:06 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:06 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:06 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 11, 2: 1})
+2025-08-21 10:06 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:06 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:08 - ml4cascades.lammps - INFO - index 3: hkl [0.29815221 0.34974124 0.88813643] 
+2025-08-21 10:08 - ml4cascades.lammps - INFO - Vacancies: 3, Interstitials: 3
+2025-08-21 10:08 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 1, 1: 1})
+2025-08-21 10:08 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:08 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:08 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 3})
+2025-08-21 10:08 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:08 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:09 - ml4cascades.lammps - INFO - index 4: hkl [0.27762207 0.02988676 0.96022537] 
+2025-08-21 10:09 - ml4cascades.lammps - INFO - Vacancies: 11, Interstitials: 11
+2025-08-21 10:09 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 3, 6: 1, 2: 1})
+2025-08-21 10:09 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:09 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:09 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 7, 4: 1})
+2025-08-21 10:09 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:09 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:11 - ml4cascades.lammps - INFO - index 5: hkl [0.29579411 0.3567087  0.88615165] 
+2025-08-21 10:11 - ml4cascades.lammps - INFO - Vacancies: 17, Interstitials: 17
+2025-08-21 10:11 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 2, 12: 1, 3: 1})
+2025-08-21 10:11 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:11 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:11 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 8, 7: 1, 2: 1})
+2025-08-21 10:11 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:11 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:13 - ml4cascades.lammps - INFO - index 6: hkl [0.47125234 0.09818456 0.87651641] 
+2025-08-21 10:13 - ml4cascades.lammps - INFO - Vacancies: 11, Interstitials: 11
+2025-08-21 10:13 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({5: 1, 3: 1, 2: 1, 1: 1})
+2025-08-21 10:13 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:13 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:13 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 11})
+2025-08-21 10:13 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:13 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:15 - ml4cascades.lammps - INFO - index 7: hkl [0.32218753 0.14548076 0.93543067] 
+2025-08-21 10:15 - ml4cascades.lammps - INFO - Vacancies: 8, Interstitials: 7
+2025-08-21 10:15 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 10:15 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({6: 1, 2: 1})
+2025-08-21 10:15 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:15 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:15 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 7})
+2025-08-21 10:15 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:15 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:16 - ml4cascades.lammps - INFO - index 8: hkl [0.59252605 0.32000014 0.73926504] 
+2025-08-21 10:16 - ml4cascades.lammps - INFO - Vacancies: 19, Interstitials: 19
+2025-08-21 10:16 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 2, 17: 1})
+2025-08-21 10:16 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:16 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:16 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 6, 13: 1})
+2025-08-21 10:16 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:16 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:18 - ml4cascades.lammps - INFO - index 9: hkl [0.53684756 0.31117385 0.78419738] 
+2025-08-21 10:18 - ml4cascades.lammps - INFO - Vacancies: 15, Interstitials: 13
+2025-08-21 10:18 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 10:18 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 4, 5: 1, 4: 1, 2: 1})
+2025-08-21 10:18 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:18 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:18 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 11, 2: 1})
+2025-08-21 10:18 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:18 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:20 - ml4cascades.lammps - INFO - index 10: hkl [0.58110627 0.29987122 0.75656643] 
+2025-08-21 10:20 - ml4cascades.lammps - INFO - Vacancies: 8, Interstitials: 6
+2025-08-21 10:20 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 10:20 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 3, 3: 1, 2: 1})
+2025-08-21 10:20 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:20 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:20 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 6})
+2025-08-21 10:20 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:20 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:21 - ml4cascades.lammps - INFO - index 11: hkl [0.28788124 0.25573723 0.92288832] 
+2025-08-21 10:21 - ml4cascades.lammps - INFO - Vacancies: 8, Interstitials: 7
+2025-08-21 10:21 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 10:21 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({6: 1, 2: 1})
+2025-08-21 10:21 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:21 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:21 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 5, 2: 1})
+2025-08-21 10:21 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:21 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:23 - ml4cascades.lammps - INFO - index 12: hkl [0.54716973 0.19652771 0.81362285] 
+2025-08-21 10:23 - ml4cascades.lammps - INFO - Vacancies: 9, Interstitials: 8
+2025-08-21 10:23 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 10:23 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({7: 1, 2: 1})
+2025-08-21 10:23 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:23 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:23 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 8})
+2025-08-21 10:23 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:23 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:25 - ml4cascades.lammps - INFO - index 13: hkl [0.4589356  0.05714766 0.88662972] 
+2025-08-21 10:25 - ml4cascades.lammps - INFO - Vacancies: 12, Interstitials: 11
+2025-08-21 10:25 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 10:25 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({4: 2, 3: 1, 1: 1})
+2025-08-21 10:25 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:25 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:25 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 7, 2: 2})
+2025-08-21 10:25 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:25 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:27 - ml4cascades.lammps - INFO - index 14: hkl [0.34923203 0.32139822 0.88019326] 
+2025-08-21 10:27 - ml4cascades.lammps - INFO - Vacancies: 8, Interstitials: 8
+2025-08-21 10:27 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 2, 4: 1})
+2025-08-21 10:27 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:27 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:27 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 8})
+2025-08-21 10:27 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:27 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:28 - ml4cascades.lammps - INFO - index 15: hkl [0.30518669 0.37323005 0.87610525] 
+2025-08-21 10:28 - ml4cascades.lammps - INFO - Vacancies: 14, Interstitials: 14
+2025-08-21 10:28 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({13: 1, 1: 1})
+2025-08-21 10:28 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:28 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:28 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 7, 7: 1})
+2025-08-21 10:28 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:28 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:30 - ml4cascades.lammps - INFO - index 16: hkl [0.56940187 0.21908347 0.79232818] 
+2025-08-21 10:30 - ml4cascades.lammps - INFO - Vacancies: 7, Interstitials: 6
+2025-08-21 10:30 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 10:30 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 4, 3: 1})
+2025-08-21 10:30 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:30 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:30 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 6})
+2025-08-21 10:30 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:30 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:32 - ml4cascades.lammps - INFO - index 17: hkl [0.36989954 0.36411423 0.8547486 ] 
+2025-08-21 10:32 - ml4cascades.lammps - INFO - Vacancies: 16, Interstitials: 16
+2025-08-21 10:32 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 2, 12: 1, 2: 1})
+2025-08-21 10:32 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:32 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:32 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 8, 8: 1})
+2025-08-21 10:32 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:32 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:34 - ml4cascades.lammps - INFO - index 18: hkl [0.6139283  0.34680314 0.70909775] 
+2025-08-21 10:34 - ml4cascades.lammps - INFO - Vacancies: 9, Interstitials: 8
+2025-08-21 10:34 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 10:34 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({6: 1, 2: 1, 1: 1})
+2025-08-21 10:34 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:34 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:34 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 8})
+2025-08-21 10:34 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:34 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:35 - ml4cascades.lammps - INFO - index 19: hkl [0.54912575 0.19554725 0.81254057] 
+2025-08-21 10:35 - ml4cascades.lammps - INFO - Vacancies: 14, Interstitials: 14
+2025-08-21 10:35 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 3, 1: 2, 6: 1})
+2025-08-21 10:35 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:35 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:35 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 14})
+2025-08-21 10:35 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:35 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:37 - ml4cascades.lammps - INFO - index 20: hkl [0.30011285 0.03199562 0.95336696] 
+2025-08-21 10:37 - ml4cascades.lammps - INFO - Vacancies: 12, Interstitials: 11
+2025-08-21 10:37 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 10:37 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 2, 4: 1, 3: 1, 1: 1})
+2025-08-21 10:37 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:37 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:37 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 11})
+2025-08-21 10:37 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:37 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:39 - ml4cascades.lammps - INFO - index 21: hkl [0.47109182 0.28107537 0.83610354] 
+2025-08-21 10:39 - ml4cascades.lammps - INFO - Vacancies: 15, Interstitials: 15
+2025-08-21 10:39 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({9: 1, 4: 1, 2: 1})
+2025-08-21 10:39 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:39 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:39 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 4, 11: 1})
+2025-08-21 10:39 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:39 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:41 - ml4cascades.lammps - INFO - index 22: hkl [0.38548268 0.50714355 0.77084923] 
+2025-08-21 10:41 - ml4cascades.lammps - INFO - Vacancies: 8, Interstitials: 8
+2025-08-21 10:41 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({3: 2, 1: 2})
+2025-08-21 10:41 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:41 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:41 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 8})
+2025-08-21 10:41 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:41 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:41 - ml4cascades.lammps - INFO - Skipping hkl [0.30926768 0.12684511 0.94247749] (index 23) for energy 1000 eV: final time 0.286501936330135 ps < 30 ps.
+2025-08-21 10:42 - ml4cascades.lammps - INFO - index 24: hkl [0.58579777 0.36209835 0.72506948] 
+2025-08-21 10:42 - ml4cascades.lammps - INFO - Vacancies: 19, Interstitials: 18
+2025-08-21 10:42 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 10:42 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 3, 1: 3, 6: 1, 4: 1})
+2025-08-21 10:42 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:42 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:42 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 10, 6: 1, 2: 1})
+2025-08-21 10:42 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:42 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:44 - ml4cascades.lammps - INFO - index 25: hkl [0.51388914 0.36261566 0.77744958] 
+2025-08-21 10:44 - ml4cascades.lammps - INFO - Vacancies: 12, Interstitials: 11
+2025-08-21 10:44 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 10:44 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 3, 2: 2, 5: 1})
+2025-08-21 10:44 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:44 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:44 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 8, 3: 1})
+2025-08-21 10:44 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:44 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:46 - ml4cascades.lammps - INFO - index 26: hkl [0.31512092 0.34031413 0.88593741] 
+2025-08-21 10:46 - ml4cascades.lammps - INFO - Vacancies: 10, Interstitials: 8
+2025-08-21 10:46 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 10:46 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 2, 8: 1})
+2025-08-21 10:46 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:46 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:46 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 6, 2: 1})
+2025-08-21 10:46 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:46 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:48 - ml4cascades.lammps - INFO - index 27: hkl [0.41489987 0.1095436  0.90324874] 
+2025-08-21 10:48 - ml4cascades.lammps - INFO - Vacancies: 10, Interstitials: 8
+2025-08-21 10:48 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 10:48 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 2, 5: 1, 1: 1})
+2025-08-21 10:48 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:48 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:48 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 8})
+2025-08-21 10:48 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:48 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:50 - ml4cascades.lammps - INFO - index 28: hkl [0.43723834 0.00775167 0.89931226] 
+2025-08-21 10:50 - ml4cascades.lammps - INFO - Vacancies: 10, Interstitials: 9
+2025-08-21 10:50 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 10:50 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({4: 2, 2: 1})
+2025-08-21 10:50 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:50 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:50 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 9})
+2025-08-21 10:50 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:50 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:51 - ml4cascades.lammps - INFO - index 29: hkl [0.40456621 0.47788918 0.77971027] 
+2025-08-21 10:51 - ml4cascades.lammps - INFO - Vacancies: 6, Interstitials: 6
+2025-08-21 10:51 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 2, 1: 2})
+2025-08-21 10:51 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:51 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:51 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 6})
+2025-08-21 10:51 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:51 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:51 - ml4cascades.lammps - INFO - correct cluster count: 29 for energy 1000 eV
+2025-08-21 10:51 - ml4cascades.lammps - INFO - Energy: 1000 eV, number of vac clusters by size: [73, 13, 3, 23]
+2025-08-21 10:51 - ml4cascades.lammps - INFO - Energy: 1000 eV, number of inter clusters by size: [234, 1, 3, 6]
+2025-08-21 10:51 - ml4cascades.lammps - INFO - ---------------------------------------------------
+2025-08-21 10:51 - ml4cascades.lammps - INFO - Post-processing for energy: 2000 eV
+2025-08-21 10:51 - ml4cascades.lammps - INFO - Skipping hkl [0.29552945 0.02037054 0.95511643] (index 0) for energy 2000 eV: final time 0.301568440550032 ps < 30 ps.
+2025-08-21 10:56 - ml4cascades.lammps - INFO - index 1: hkl [0.48167057 0.30553306 0.82136655] 
+2025-08-21 10:56 - ml4cascades.lammps - INFO - Vacancies: 26, Interstitials: 26
+2025-08-21 10:56 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 3, 4: 2, 3: 2, 2: 2, 5: 1})
+2025-08-21 10:56 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:56 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 10:56 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 17, 9: 1})
+2025-08-21 10:56 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 10:56 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:01 - ml4cascades.lammps - INFO - index 2: hkl [0.20197498 0.27785259 0.9391507 ] 
+2025-08-21 11:01 - ml4cascades.lammps - INFO - Vacancies: 72, Interstitials: 70
+2025-08-21 11:01 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 11:01 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 2, 1: 2, 66: 1})
+2025-08-21 11:01 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:01 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:01 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 14, 56: 1})
+2025-08-21 11:01 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:01 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:06 - ml4cascades.lammps - INFO - index 3: hkl [0.29815221 0.34974124 0.88813643] 
+2025-08-21 11:06 - ml4cascades.lammps - INFO - Vacancies: 30, Interstitials: 27
+2025-08-21 11:06 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 11:06 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 6, 4: 3, 2: 3, 3: 2})
+2025-08-21 11:06 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:06 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:06 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 25, 2: 1})
+2025-08-21 11:06 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:06 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:10 - ml4cascades.lammps - INFO - index 4: hkl [0.27762207 0.02988676 0.96022537] 
+2025-08-21 11:10 - ml4cascades.lammps - INFO - Vacancies: 54, Interstitials: 52
+2025-08-21 11:10 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 11:10 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({54: 1})
+2025-08-21 11:10 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:10 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:10 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 17, 33: 1, 2: 1})
+2025-08-21 11:10 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:10 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:15 - ml4cascades.lammps - INFO - index 5: hkl [0.29579411 0.3567087  0.88615165] 
+2025-08-21 11:15 - ml4cascades.lammps - INFO - Vacancies: 19, Interstitials: 18
+2025-08-21 11:15 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 11:15 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 6, 3: 3, 4: 1})
+2025-08-21 11:15 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:15 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:15 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 16, 2: 1})
+2025-08-21 11:15 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:15 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:20 - ml4cascades.lammps - INFO - index 6: hkl [0.47125234 0.09818456 0.87651641] 
+2025-08-21 11:20 - ml4cascades.lammps - INFO - Vacancies: 61, Interstitials: 60
+2025-08-21 11:20 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 11:20 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 2, 56: 1, 1: 1})
+2025-08-21 11:20 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:20 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:20 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 15, 43: 1, 2: 1})
+2025-08-21 11:20 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:20 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:25 - ml4cascades.lammps - INFO - index 7: hkl [0.32218753 0.14548076 0.93543067] 
+2025-08-21 11:25 - ml4cascades.lammps - INFO - Vacancies: 20, Interstitials: 20
+2025-08-21 11:25 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 5, 2: 3, 6: 1, 3: 1})
+2025-08-21 11:25 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:25 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:25 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 18, 2: 1})
+2025-08-21 11:25 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:25 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:30 - ml4cascades.lammps - INFO - index 8: hkl [0.59252605 0.32000014 0.73926504] 
+2025-08-21 11:30 - ml4cascades.lammps - INFO - Vacancies: 42, Interstitials: 42
+2025-08-21 11:30 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 2, 30: 1, 4: 1, 3: 1, 1: 1})
+2025-08-21 11:30 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:30 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:30 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 14, 28: 1})
+2025-08-21 11:30 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:30 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:35 - ml4cascades.lammps - INFO - index 9: hkl [0.53684756 0.31117385 0.78419738] 
+2025-08-21 11:35 - ml4cascades.lammps - INFO - Vacancies: 30, Interstitials: 29
+2025-08-21 11:35 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 11:35 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 2, 16: 1, 10: 1, 2: 1})
+2025-08-21 11:35 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:35 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:35 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 15, 11: 1, 3: 1})
+2025-08-21 11:35 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:35 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:39 - ml4cascades.lammps - INFO - index 10: hkl [0.58110627 0.29987122 0.75656643] 
+2025-08-21 11:39 - ml4cascades.lammps - INFO - Vacancies: 25, Interstitials: 22
+2025-08-21 11:39 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 11:39 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 7, 8: 1, 5: 1, 3: 1, 2: 1})
+2025-08-21 11:39 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:39 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:39 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 14, 8: 1})
+2025-08-21 11:39 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:39 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:39 - ml4cascades.lammps - INFO - Skipping hkl [0.28788124 0.25573723 0.92288832] (index 11) for energy 2000 eV: final time 0.556267136437998 ps < 30 ps.
+2025-08-21 11:44 - ml4cascades.lammps - INFO - index 12: hkl [0.54716973 0.19652771 0.81362285] 
+2025-08-21 11:44 - ml4cascades.lammps - INFO - Vacancies: 110, Interstitials: 109
+2025-08-21 11:44 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 11:44 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({109: 1, 1: 1})
+2025-08-21 11:44 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:44 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:44 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 11, 98: 1})
+2025-08-21 11:44 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:44 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:49 - ml4cascades.lammps - INFO - index 13: hkl [0.4589356  0.05714766 0.88662972] 
+2025-08-21 11:49 - ml4cascades.lammps - INFO - Vacancies: 63, Interstitials: 61
+2025-08-21 11:49 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 11:49 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 2, 55: 1, 4: 1, 2: 1})
+2025-08-21 11:49 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:49 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:49 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 14, 47: 1})
+2025-08-21 11:49 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:49 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:54 - ml4cascades.lammps - INFO - index 14: hkl [0.34923203 0.32139822 0.88019326] 
+2025-08-21 11:54 - ml4cascades.lammps - INFO - Vacancies: 23, Interstitials: 20
+2025-08-21 11:54 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 11:54 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 5, 6: 2, 3: 2})
+2025-08-21 11:54 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:54 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:54 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 20})
+2025-08-21 11:54 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:54 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:58 - ml4cascades.lammps - INFO - index 15: hkl [0.30518669 0.37323005 0.87610525] 
+2025-08-21 11:58 - ml4cascades.lammps - INFO - Vacancies: 21, Interstitials: 20
+2025-08-21 11:58 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 11:58 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 3, 4: 2, 5: 1, 3: 1, 2: 1})
+2025-08-21 11:58 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:58 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:58 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 20})
+2025-08-21 11:58 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 11:58 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 11:58 - ml4cascades.lammps - INFO - Skipping hkl [0.56940187 0.21908347 0.79232818] (index 16) for energy 2000 eV: final time 0.15125340452716 ps < 30 ps.
+2025-08-21 12:03 - ml4cascades.lammps - INFO - index 17: hkl [0.36989954 0.36411423 0.8547486 ] 
+2025-08-21 12:03 - ml4cascades.lammps - INFO - Vacancies: 73, Interstitials: 72
+2025-08-21 12:03 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 12:03 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 3, 65: 1, 5: 1})
+2025-08-21 12:03 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:03 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:03 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 10, 62: 1})
+2025-08-21 12:03 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:03 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:08 - ml4cascades.lammps - INFO - index 18: hkl [0.6139283  0.34680314 0.70909775] 
+2025-08-21 12:08 - ml4cascades.lammps - INFO - Vacancies: 37, Interstitials: 36
+2025-08-21 12:08 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 12:08 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 4, 17: 1, 14: 1, 2: 1})
+2025-08-21 12:08 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:08 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:08 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 13, 2: 2, 12: 1, 7: 1})
+2025-08-21 12:08 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:08 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:13 - ml4cascades.lammps - INFO - index 19: hkl [0.54912575 0.19554725 0.81254057] 
+2025-08-21 12:13 - ml4cascades.lammps - INFO - Vacancies: 40, Interstitials: 39
+2025-08-21 12:13 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 12:13 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 3, 29: 1, 5: 1, 3: 1})
+2025-08-21 12:13 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:13 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:13 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 13, 24: 1, 2: 1})
+2025-08-21 12:13 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:13 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:18 - ml4cascades.lammps - INFO - index 20: hkl [0.30011285 0.03199562 0.95336696] 
+2025-08-21 12:18 - ml4cascades.lammps - INFO - Vacancies: 24, Interstitials: 24
+2025-08-21 12:18 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({3: 3, 2: 2, 10: 1, 1: 1})
+2025-08-21 12:18 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:18 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:18 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 10, 10: 1, 4: 1})
+2025-08-21 12:18 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:18 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:23 - ml4cascades.lammps - INFO - index 21: hkl [0.47109182 0.28107537 0.83610354] 
+2025-08-21 12:23 - ml4cascades.lammps - INFO - Vacancies: 30, Interstitials: 29
+2025-08-21 12:23 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 12:23 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 6, 2: 3, 15: 1, 3: 1})
+2025-08-21 12:23 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:23 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:23 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 18, 9: 1, 2: 1})
+2025-08-21 12:23 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:23 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:28 - ml4cascades.lammps - INFO - index 22: hkl [0.38548268 0.50714355 0.77084923] 
+2025-08-21 12:28 - ml4cascades.lammps - INFO - Vacancies: 69, Interstitials: 68
+2025-08-21 12:28 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 12:28 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({63: 1, 3: 1, 2: 1, 1: 1})
+2025-08-21 12:28 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:28 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:28 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 12, 56: 1})
+2025-08-21 12:28 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:28 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:33 - ml4cascades.lammps - INFO - index 23: hkl [0.30926768 0.12684511 0.94247749] 
+2025-08-21 12:33 - ml4cascades.lammps - INFO - Vacancies: 52, Interstitials: 49
+2025-08-21 12:33 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 12:33 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({38: 1, 6: 1, 5: 1, 3: 1})
+2025-08-21 12:33 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:33 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:33 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 14, 35: 1})
+2025-08-21 12:33 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:33 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:38 - ml4cascades.lammps - INFO - index 24: hkl [0.58579777 0.36209835 0.72506948] 
+2025-08-21 12:38 - ml4cascades.lammps - INFO - Vacancies: 20, Interstitials: 20
+2025-08-21 12:38 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 4, 2: 3, 3: 2, 4: 1})
+2025-08-21 12:38 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:38 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:38 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 16, 2: 2})
+2025-08-21 12:38 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:38 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:43 - ml4cascades.lammps - INFO - index 25: hkl [0.51388914 0.36261566 0.77744958] 
+2025-08-21 12:43 - ml4cascades.lammps - INFO - Vacancies: 22, Interstitials: 21
+2025-08-21 12:43 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 12:43 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 4, 1: 2, 9: 1, 3: 1})
+2025-08-21 12:43 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:43 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:43 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 16, 5: 1})
+2025-08-21 12:43 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:43 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:48 - ml4cascades.lammps - INFO - index 26: hkl [0.31512092 0.34031413 0.88593741] 
+2025-08-21 12:48 - ml4cascades.lammps - INFO - Vacancies: 32, Interstitials: 31
+2025-08-21 12:48 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 12:48 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 5, 22: 1, 3: 1, 2: 1})
+2025-08-21 12:48 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:48 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:48 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 12, 15: 1, 4: 1})
+2025-08-21 12:48 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:48 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:52 - ml4cascades.lammps - INFO - index 27: hkl [0.41489987 0.1095436  0.90324874] 
+2025-08-21 12:52 - ml4cascades.lammps - INFO - Vacancies: 46, Interstitials: 42
+2025-08-21 12:52 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 12:52 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({2: 2, 31: 1, 10: 1, 1: 1})
+2025-08-21 12:52 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:52 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:52 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 12, 26: 1, 4: 1})
+2025-08-21 12:52 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:52 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:57 - ml4cascades.lammps - INFO - index 28: hkl [0.43723834 0.00775167 0.89931226] 
+2025-08-21 12:57 - ml4cascades.lammps - INFO - Vacancies: 28, Interstitials: 26
+2025-08-21 12:57 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 12:57 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({1: 3, 15: 1, 5: 1, 3: 1, 2: 1})
+2025-08-21 12:57 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:57 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 12:57 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 14, 2: 2, 8: 1})
+2025-08-21 12:57 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 12:57 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 13:02 - ml4cascades.lammps - INFO - index 29: hkl [0.40456621 0.47788918 0.77971027] 
+2025-08-21 13:02 - ml4cascades.lammps - INFO - Vacancies: 76, Interstitials: 74
+2025-08-21 13:02 - ml4cascades.lammps - WARNING - !!!Mismatch in vacancies and interstitials, ignore.
+2025-08-21 13:02 - ml4cascades.lammps - INFO - Vacancy Clusters: Counter({74: 1, 2: 1})
+2025-08-21 13:02 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 13:02 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 13:02 - ml4cascades.lammps - INFO - Interstitial Clusters: Counter({1: 17, 57: 1})
+2025-08-21 13:02 - ml4cascades.lammps - INFO - Total dislocation line length: 0.0, Dislocation density: 0.0
+2025-08-21 13:02 - ml4cascades.lammps - INFO - Number of dislocation lines: 0
+2025-08-21 13:02 - ml4cascades.lammps - INFO - correct cluster count: 27 for energy 2000 eV
+2025-08-21 13:02 - ml4cascades.lammps - INFO - Energy: 2000 eV, number of vac clusters by size: [114, 18, 1, 51]
+2025-08-21 13:02 - ml4cascades.lammps - INFO - Energy: 2000 eV, number of inter clusters by size: [420, 4, 3, 19]

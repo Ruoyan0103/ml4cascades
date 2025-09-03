@@ -1,0 +1,64 @@
+! TurboGAP input file for PKA simulation
+! Parameters: ff_settings, num_species, element, mass, cascade_steps, Temp
+! Parameters for EPH: ephxlow, ephxhigh, ephylow, ephyhigh, ephzlow, ephzhigh, 
+!                     heat_capacity, thermal_conductivity, gsx, 
+!                     xlow, xhigh, ylow, yhigh, zlow, zhigh
+! Species-specific info
+atoms_file = 'thermalized.xyz'
+pot_file = "gap_files/{ff_settings}"
+n_species = {num_species}
+species = {element}
+masses = {mass}
+
+! MD options
+md_nsteps = {cascade_steps}
+md_step = 1.
+
+! Adaptive timestep 
+adaptive_time = .true.
+adapt_time_groupID = all
+adapt_tstep_interval = 1
+adapt_tmin = 1.0E-10
+adapt_tmax = 1.0E-00
+adapt_xmax = 1.0E-01
+adapt_emax = 30.0
+
+! Electronic system - eph model
+nonadiabatic_processes = .true.                                        
+eph_fdm_option = 1                                                     
+eph_friction_option = 1                                                
+eph_random_option = 1                                                  
+eph_betafile = 'beta.dat'                                              
+
+eph_box_limits = {ephxlow} {ephxhigh} {ephylow} {ephyhigh} {ephzlow} {ephzhigh}
+
+eph_rho_e = 1.0                       ! scaling parameter for FDM mesh                
+eph_C_e = {heat_capacity}             ! electronic heat capacity (eV/A^3/K)                
+eph_kappa_e = {thermal_conductivity}  ! electronic thermal conductivity (eV/A/K/ps)     
+eph_Ti_e = {Temp}                     ! initial electronic temperature (K)            
+
+eph_gsx = {gsx}                       ! fine grids in x,y,z directions                 
+eph_gsy = {gsx}
+eph_gsz = {gsx}
+
+eph_md_last_step = 0
+eph_md_prev_time = 0.0
+eph_E_prev_time = 0.0
+eph_freq_Tout = 100
+eph_freq_mesh_Tout = 10000
+eph_Toutfile = 'El_temp_mesh.out'
+
+! Border thermostat
+make_group = inside block 6 {xlow} {xhigh} {ylow} {yhigh} {zlow} {zhigh}
+make_group = border subtract 2 all inside
+make_group = all dynamic 100
+thermostat = "berendsen"
+thermostat_groupID = border
+t_beg = {Temp}
+t_end = {Temp}
+tau_t = 100.
+
+! Writeouts
+write_thermo = 10
+write_xyz = 100
+neighbors_buffer = 0.5

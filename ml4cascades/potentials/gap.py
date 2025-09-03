@@ -1,8 +1,8 @@
 import os
 import xml.etree.ElementTree as ET
 from ml4cascades.potentials import IPotential
-# from ml4cascades.turbogap.calcs import CascadeCalculator
-from ml4cascades.lammps.calcs import CascadeCalculator
+from ml4cascades.turbogap.calcs import CascadeCalculator
+# from ml4cascades.lammps.calcs import CascadeCalculator
 import numpy as np
 
 module_dir = os.path.dirname(__file__)
@@ -75,7 +75,7 @@ if __name__ == "__main__":
     gap.write_param(gap_file)
 
     mass, element, lattice, alat, temperature = 72.56, 'Ge', 'diamond', 5.76, 300    
-    energies, num_directions = [100, 400, 1000, 2000], 500
+    energies, num_directions = [100], 500
     # energies, num_directions = [2000], 500
     # energies, num_directions = [5000], 500
     # energies, num_directions = [10e3, 20e3], 500

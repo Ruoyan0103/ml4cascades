@@ -1,8 +1,9 @@
 ! TurboGAP input file for PKA simulation
 ! Parameters: ff_settings, num_species, element, mass, cascade_steps, Temp
-! Parameters for EPH: ephxlow, ephxhigh, ephylow, ephyhigh, ephzlow, ephzhigh, 
+! Parameters for EPH: beta_file, ephxlow, ephxhigh, ephylow, ephyhigh, ephzlow, ephzhigh, 
 !                     heat_capacity, thermal_conductivity, gsx, 
 !                     xlow, xhigh, ylow, yhigh, zlow, zhigh
+
 ! Species-specific info
 atoms_file = 'thermalized.xyz'
 pot_file = "gap_files/{ff_settings}"
@@ -19,16 +20,16 @@ adaptive_time = .true.
 adapt_time_groupID = all
 adapt_tstep_interval = 1
 adapt_tmin = 1.0E-10
-adapt_tmax = 1.0E-00
-adapt_xmax = 1.0E-01
-adapt_emax = 30.0
+adapt_tmax = 1.0E-00   ! 1 fs
+adapt_xmax = 1.0E-01   ! 0.1 Angstrom
+adapt_emax = 30.0      ! 30 eV
 
 ! Electronic system - eph model
 nonadiabatic_processes = .true.                                        
 eph_fdm_option = 1                                                     
 eph_friction_option = 1                                                
 eph_random_option = 1                                                  
-eph_betafile = 'beta.dat'                                              
+eph_betafile = '{beta_file}'                                        
 
 eph_box_limits = {ephxlow} {ephxhigh} {ephylow} {ephyhigh} {ephzlow} {ephzhigh}
 
@@ -41,12 +42,11 @@ eph_gsx = {gsx}                       ! fine grids in x,y,z directions
 eph_gsy = {gsx}
 eph_gsz = {gsx}
 
-eph_md_last_step = 0
-eph_md_prev_time = 0.0
-eph_E_prev_time = 0.0
+eph_Tinfile = '{eph_tin_file}'
+
 eph_freq_Tout = 100
 eph_freq_mesh_Tout = 10000
-eph_Toutfile = 'El_temp_mesh.out'
+eph_Toutfile = '{eph_tout_file}'
 
 ! Border thermostat
 make_group = inside block 6 {xlow} {xhigh} {ylow} {yhigh} {zlow} {zhigh}

@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import os
 from ml4cascades.loggers.logger import AppLogger
+from .utils import TCeKappa
 
 module_dir = os.path.dirname(__file__)
 result_dir = os.path.join(module_dir, 'results')
@@ -50,3 +51,5 @@ class TurboGAPCalculator(ABC):
         Calculate the properties using LAMMPS.
         """
         pass
+
+__all__['TurboGAPCalculator', 'TCeKappa']

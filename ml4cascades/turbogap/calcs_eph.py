@@ -21,7 +21,7 @@ module_dir = os.path.dirname(__file__)
 result_dir = os.path.join(module_dir, 'results')
 log_dir = os.path.join(module_dir, 'logs')
 
-class CascadeCalculator(TurboGAPCalculator):       
+class CascadeCalculatorEPH(TurboGAPCalculator):       
     def __init__(
         self, 
         basicinput: BasicInput, 
@@ -29,7 +29,7 @@ class CascadeCalculator(TurboGAPCalculator):
         radius_fracs: list[float], 
         temperature: float, 
         energies: list[float], 
-        sampling_directions: int,
+        num_sampling_direcs: int,
         equ_md_steps: int, 
         cascade_md_steps: int, 
         gap_file_folder: str,
@@ -41,7 +41,7 @@ class CascadeCalculator(TurboGAPCalculator):
         self.radius_fracs = radius_fracs
         self.temp = temperature
         self.energies = energies
-        self.sampling_directions = sampling_directions
+        self.num_sampling_direcs = num_sampling_direcs
         self.equ_md_steps = equ_md_steps
         self.cascade_md_steps = cascade_md_steps
         self.gap_file_folder = gap_file_folder
@@ -57,19 +57,19 @@ class CascadeCalculator(TurboGAPCalculator):
 
     def _get_random_angles(self):
         np.random.seed(42)  
-        phi = np.random.uniform(self.min_phi, self.max_phi, self.tried_sampling_points)           
-        costheta = np.random.uniform(np.cos(self.min_theta), np.cos(self.max_theta), self.tried_sampling_points) 
+        phi = np.random.uniform(self.min_phi, self.max_phi, self.num_sampling_direcs*1.1)           
+        costheta = np.random.uniform(np.cos(self.min_theta), np.cos(self.max_theta), self.num_sampling_direcs*1.1) 
         theta = np.arccos(costheta)                                                    
         self.angle_set = set(zip(phi, theta))                                    
 
     def _set_hkl_from_angles(self):
         '''
-        self.sampling_directions * 1.1
+        self.num_sampling_direcs * 1.1
         if <= 10 % cases failed, then supercell size and sampling directions are both satisfied
         otherwise, the supercell size needed to be increased
         '''
         for angle in self.angle_set:
-            if len(self.hkl_list) >= self.sampling_directions * 1.1: 
+            if len(self.hkl_list) >= self.num_sampling_direcs * 1.1: 
                 break
             phi, theta = angle
             h = np.sin(theta) * np.cos(phi)
@@ -98,8 +98,8 @@ class CascadeCalculator(TurboGAPCalculator):
             input_template = f.read()
         input_file = os.path.join(relax_dir, 'input')
         with open(input_file, 'w') as f:
-            f.write(input_template.format(ff_settings=self.ff_settings, num_species=self.num_species,
-                                          element=self.element, mass=self.mass, equilibration_steps=self.equilibration_steps,
+            f.write(input_template.format(ff_settings=self.bi.ff_settings, num_species=len(self.bi.element),
+                                          element=self.bi.element, mass=self.bi.mass, equilibration_steps=self.equ_md_steps,
                                           Temp=self.temp))
         unit_cell = bulk(self.element, self.lattice, a=self.alat, cubic=True)
         super_cell = unit_cell * [size, size, size]

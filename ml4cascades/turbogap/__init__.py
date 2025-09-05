@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 import os
 from ml4cascades.loggers.logger import AppLogger
 from .utils import TCeKappa
+from .calcs_eph import CascadeCalculatorEPH
 
 module_dir = os.path.dirname(__file__)
 result_dir = os.path.join(module_dir, 'results')
@@ -19,4 +20,4 @@ class TurboGAPCalculator(ABC):
         os.makedirs(log_dir, exist_ok=True)
         
 
-__all__['TCeKappa']
+__all__['TCeKappa', 'CascadeCalculatorEPH']

@@ -1,80 +1,82 @@
 import os
 import xml.etree.ElementTree as ET
 from ml4cascades.potentials import IPotential
-from ml4cascades.turbogap.calcs import CascadeCalculator
+from ml4cascades.utils import BasicInput
+from ml4cascades.turbogap import CascadeCalculatorEPH
 # from ml4cascades.lammps.calcs import CascadeCalculator
 import numpy as np
 
 module_dir = os.path.dirname(__file__)
 
-
 class GAPotential(IPotential):
     pair_style = 'pair_style        quip'
-    pair_coeff = 'pair_coeff        * * {} {} {}'
+    pair_coeff_template = 'pair_coeff        * * {} {} {}'
 
-
-    def __init__(self, params):
+    def __init__(self, params: dict):
         self.name = 'GAP'
         self.params = params
+        self.element = None
         self.ff_settings = None
 
-
     @staticmethod
-    def from_config(filename):
-        """
-        Initialize potentials with parameters file.
+    def from_config(filename: str) -> 'GAPotential':
+        if not filename.endswith('.xml'):
+            raise ValueError(f"Only XML files are supported: {filename}")
 
-        ARgs:
-            filename (str): The file storing parameters of potentials.
+        tree = ET.parse(filename)
+        root = tree.getroot()
+        potential_label = root.tag
+        pairpot = root.find('pairpot')
+        glue_params = pairpot.find('Glue_params')
+        per_type_data = glue_params.find('per_type_data')
+        specie_z = per_type_data.get('atomic_num')
 
-        Returns:
-            GAPotential.
-        """
-        if filename.endswith('.xml'):
-            def get_xml(xml_file):
-                tree = ET.parse(xml_file)
-                root = tree.getroot()
-                potential_label = root.tag
-                pairpot = root.find('pairpot')
-                glue_params = pairpot.find('Glue_params')
-                per_type_data = glue_params.find('per_type_data')
-                specie_z = per_type_data.get('atomic_num')
-                return filename, potential_label, specie_z
+        params = dict(xml_file=filename, potential_label=potential_label, specie_z=specie_z)
+        return GAPotential(params)
 
-            filename, potential_label, specie_z = get_xml(filename)
-            params = dict(xml_file=filename, potential_label=potential_label, specie_z=specie_z)
-            return GAPotential(params)
-        
-
-    def write_param(self, xml_filename=None):
-        """
-        Write potential parameters for lammps calculation.
-
-        Args:
-            xml_filename (str): Filename to store xml formatted parameters.
-        """
-        self.element = self.params.get('specie_z', None)
-        self.pair_coeff = self.pair_coeff.format(xml_filename, 
-                                            '\"Potential xml_label={}\"'.format(self.params.get('potential_label', None)),
-                                            self.params.get('specie_z', None))
-        self.ff_settings = [self.pair_style, self.pair_coeff]
+    def write_param(self, filename: str):
+        self.element = self.params.get('specie_z')
+        pair_coeff = self.pair_coeff_template.format(
+            filename,
+            f"\"Potential xml_label={self.params.get('potential_label')}\"",
+            self.params.get('specie_z')
+        )
+        self.ff_settings = [self.pair_style, pair_coeff]
 
 
 class TGAPotential(IPotential):
-    def __init__(self):
-        self.name = 'TGAPotential'
-        self.ff_settings = '{}'
+    ff_template = '{}'  
 
-    def write_param(self, params):
-        self.ff_settings = self.ff_settings.format(params)
+    def __init__(self):
+        self.name = 'TGAP'
+        self.ff_settings = None
+
+    def write_param(self, param_file: str):
+        self.ff_settings = self.ff_template.format(param_file)
 
 
 if __name__ == "__main__":
     gap_file = os.path.join(module_dir, 'params', 'GAP', 'Ge-v10.xml')
     gap = GAPotential.from_config(gap_file)
     gap.write_param(gap_file)
+    gap_ff_settings = gap.ff_settings
 
-    mass, element, lattice, alat, temperature = 72.56, 'Ge', 'diamond', 5.76, 300    
+    gap_file_folder = os.path.join(module_dir, 'params', 'TGAP') 
+    gap_file = 'Ge-v10-gap'
+    tgap = TGAPotential()
+    tgap.write_param(gap_file)
+    tgap_ff_settings = tgap.ff_settings
+
+    bi = BasicInput(ff_settings=tgap_ff_settings, mass=[72.64], element=['Ge'], lattice=['diamond'], alat=[[5.76]*3])
+    temperature = 300
+    num_directions = 30
+    equ_md_steps = 30000
+    cascade_md_steps = 30500
+
+
+
+
+
     energies, num_directions = [100], 500
     # energies, num_directions = [2000], 500
     # energies, num_directions = [5000], 500
@@ -103,11 +105,8 @@ if __name__ == "__main__":
 
 
 
-    # gap_file_folder = os.path.join(module_dir, 'params', 'TGAP') 
-    # gap_file = 'Ge-v10-gap'
-    # tgap = TGAPotential()
-    # tgap.write_param(gap_file)
-    # num_species, mass, element, lattice, alat, temperature = 1, 72.64, 'Ge', 'diamond', 5.76, 300 
+
+   
     # energies, num_sampling_points = [100, 400], 500
     # energies, num_sampling_points = [1000, 2000, 5000], 500
     # # energies, num_directions = [100], 500

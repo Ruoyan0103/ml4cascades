@@ -19,4 +19,4 @@ class TurboGAPCalculator(ABC):
         os.makedirs(log_dir, exist_ok=True)
         
 
-__all__['TurboGAPCalculator', 'TCeKappa']
+__all__['TCeKappa']

@@ -8,24 +8,27 @@ class TCeKappa:
         self, 
         parameters_in_file: str,
         parameters_out_file: str,
-        tin_file: Optional[str] = None,
-        grids: Optional[list[int]] = None,
-        boxsize: Optional[list[float]] = None,
-        constant_Temp: Optional[float] = None
+        tin_file: str,
+        grids: list[int],
+        boxsize: list[float],
+        T_e: float,
+        read_from_param_file: int, # 1: read from parameters file, 0: do not read
+        C_e: float=1,
+        K_e: float=1
     ):
-        if tin_file is None and constant_Temp is None:
-            raise ValueError(
-                "You must provide either `tin_file` or `constant_Temp`.\n"
-                "Ce and Kappa must either come from a file or be constant values."
-            )
-        if tin_file is not None and (grids or boxsize is None):
-            raise ValueError("If `tin_file` is provided, `grids` must also be set and non-empty.")
         self.parameters_in_file = parameters_in_file
         self.parameters_out_file = parameters_out_file
         self.tin_file = tin_file
         self.grids = grids
         self.boxsize = boxsize
-        self.constant_Temp = constant_Temp
+        self.read_from_param_file = read_from_param_file
+        self.T_e = T_e
+        if C_e == 1:
+            warnings.warn("C_e is set to the default placeholder (1). Please provide a correct value.")
+        if K_e == 1:
+            warnings.warn("K_e is set to the default placeholder (1). Please provide a correct value.")
+        self.C_e = C_e
+        self.K_e = K_e
     
     def _convert_Ce_unit(
         self,
@@ -75,36 +78,29 @@ class TCeKappa:
                 f.write(f'{C:.6e} {K:.6e}\n')
         print('Parameters out file is written.')
 
-    def constant_Ce_Kappa(self):
-        Ce_constant = None
-        Kappa_constant = None
-        if self.constant_Temp is not None:
-            Temp, Ce, Kappa = self._read_file()
-            for t, c, k in zip(Temp, Ce, Kappa):
-                if self.constant_Temp == t:
-                    Ce_constant = c
-                    Kappa_constant = k
-                    break
-        if Ce_constant is None or Kappa_constant is None:
-            raise ValueError(f'Ce and Kappa at {self.constant_Temp} is not found.')
-        return Ce_constant, Kappa_constant
+    def _get_Ce_Ke_for_T(self):
+        Temp, Ce, Kappa = self._read_file()
+        for T, C, K in zip(Temp, Ce, Kappa):
+            if T == self.T_e:
+                return C, K
+        raise ValueError(f'Temperature {self.T_e} K not found in the parameters file.') 
 
     def tinfile_Ce_Kappa(self):
-        if self.tin_file is not None:
-            self.write_parameters_file()
-            with open(self.tin_file, 'w') as f:
-                f.write('# Tin file for Ge\n')
-                f.write(f'# Read parameters from {self.parameters_out_file}\n')
-                f.write('# i j k T_e S rho_e C_e kappa_e f\n')
-                f.write(f'{self.grids[0]} {self.grids[1]} {self.grids[2]} 1\n')
-                f.write(f'{self.boxsize[0]} {self.boxsize[1]}\n')
-                f.write(f'{self.boxsize[2]} {self.boxsize[3]}\n')
-                f.write(f'{self.boxsize[4]} {self.boxsize[5]}\n')
-                for x in range(self.grids[0]):
-                    for y in range(self.grids[1]):
-                        for z in range(self.grids[2]):
-                            f.write(f'{x} {y} {z} 3.000000e+02 0.000000e+00 1.000000e+00 1.000000e-05 1.000000e-09 1 1\n')
-                            # only x, y, z matters, Te, Ce, Kappa will be read from parameters file
+        self.write_parameters_file()
+        with open(self.tin_file, 'w') as f:
+            f.write('# Tin file for Ge\n')
+            f.write('# \n')
+            f.write('# \n')
+            f.write(f'{self.grids[0]} {self.grids[1]} {self.grids[2]} 1\n')
+            f.write(f'{self.boxsize[0]} {self.boxsize[1]}\n')
+            f.write(f'{self.boxsize[2]} {self.boxsize[3]}\n')
+            f.write(f'{self.boxsize[4]} {self.boxsize[5]}\n')
+            f.write('# i j k T_e S_e rho_e C_e K_e flag T_dyn_flag \n')
+            for x in range(self.grids[0]+1):
+                for y in range(self.grids[1]+1):
+                    for z in range(self.grids[2]+1):
+                        f.write(f'{x+1} {y+1} {z+1} {self.T_e} 0.000000e+00 1.000000e+00 {self.C_e} {self.K_e} 0 {self.read_from_param_file}\n')
+                        # only x, y, z matters, Te, Ce, Kappa will be read from parameters file
 
 
 

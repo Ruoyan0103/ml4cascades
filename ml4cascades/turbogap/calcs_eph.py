@@ -1,5 +1,7 @@
 from ml4cascades.turbogap import TurboGAPCalculator, TCeKappa
+from ml4cascades.utils import BasicInput
 import os, subprocess, math, shutil, time
+from ase import Atoms
 from ase.build import bulk 
 from ase.io import read, write
 import numpy as np
@@ -14,89 +16,67 @@ AMU_TO_KG = 1.66053906660E-27 # Atomic mass unit to kg conversion factor
 JOULE_TO_EV = 6.241509074E18  # Joule to eV conversion factor
 ANGSTROM_TO_METER = 1E-10     # Angstroms/picosecond to meters/second conversion factor
 FS_TO_S = 1E-15               # Picoseconds to seconds conversion factor
-module_dir = os.path.dirname(__file__) 
 
+module_dir = os.path.dirname(__file__)
+result_dir = os.path.join(module_dir, 'results')
+log_dir = os.path.join(module_dir, 'logs')
 
-class CascadeCalculator(TurboGAPCalculator):
-    """ 
-    Threshold displacement energy calculator.
-    """          
-    def __init__(self, potential, num_species, mass, element, lattice, alat, sizes, thicknesses, radius_fracs, temperature, 
-                 energies, num_sampling_points, equilibration_steps, cascade_steps, gap_file_folder, task_name='pka'):
-        """
-        Initialize the CascadeCalculator.
-        Args:
-            potential (Potential): The potential object containing force field settings.
-            num_species (int): Number of species in the system.
-            mass (float): Mass of the atoms.
-            element (str): Element symbol.
-            lattice (str): Lattice type.
-            alat (float): Lattice constant.
-            sizes (list): List of supercell sizes for different PKA energies.
-            temperature (float): Temperature for the simulation in Kelvin.
-            pka_ids (list): List of primary knock-on atom IDs in different supercells.
-            energies (list): List of energies for the PKA in eV.
-            num_sampling_points (int): Number of random directions to sample.
-            equilibration_steps (int): Number of equilibration steps.
-            cascade_steps (int): Number of steps in the cascade simulation.
-            gap_file_folder (str): Path to the folder containing GAP files.
-            task_name (str, optional): Name of the task. Defaults to 'pka'.
-        """
-        super().__init__(task_name, potential, num_species, mass, element, lattice, alat)
+class CascadeCalculator(TurboGAPCalculator):       
+    def __init__(
+        self, 
+        basicinput: BasicInput, 
+        sizes: list[int], 
+        radius_fracs: list[float], 
+        temperature: float, 
+        energies: list[float], 
+        sampling_directions: int,
+        equ_md_steps: int, 
+        cascade_md_steps: int, 
+        gap_file_folder: str,
+        eph_parameter_from_file: int, # 1: read from parameters file, 0: do not read
+        task_name='pka'
+    ):
+        self.bi = basicinput
         self.sizes = sizes
+        self.radius_fracs = radius_fracs
         self.temp = temperature
         self.energies = energies
-        self.num_points = num_sampling_points
-        self.equilibration_steps = equilibration_steps
-        self.cascade_steps = cascade_steps
+        self.sampling_directions = sampling_directions
+        self.equ_md_steps = equ_md_steps
+        self.cascade_md_steps = cascade_md_steps
         self.gap_file_folder = gap_file_folder
-        self.thicknesses = thicknesses 
-        self.radius_fracs = radius_fracs 
+        self.eph_parameter_from_file = eph_parameter_from_file
+        self.task_name = task_name
         self.angle_set = set()
         self.hkl_list = []
-        self.min_phi = 0
-        self.max_phi = 54.7
-        self.min_theta = 0
-        self.max_theta = 45
-        self.num_directions = 30
 
+        self.min_phi = 0
+        self.max_phi = 2*np.pi
+        self.min_theta = 0
+        self.max_theta = np.pi
 
     def _get_random_angles(self):
-        """
-        Generate random angles in spherical coordinates.
-        """
         np.random.seed(42)  
-        phi = np.random.uniform(self.min_phi, self.max_phi, self.num_points)           # azimuthal angle (φ)
-        costheta = np.random.uniform(np.cos(self.min_theta), np.cos(self.max_theta), self.num_points) 
-        theta = np.arccos(costheta)                                                    # polar angle (θ)
-        self.angle_set = set(zip(phi, theta))                                          # Store unique angles
+        phi = np.random.uniform(self.min_phi, self.max_phi, self.tried_sampling_points)           
+        costheta = np.random.uniform(np.cos(self.min_theta), np.cos(self.max_theta), self.tried_sampling_points) 
+        theta = np.arccos(costheta)                                                    
+        self.angle_set = set(zip(phi, theta))                                    
 
-    
-    def _set_hkl_from_angles(self, threshold_deg=15):
-        """
-        Convert spherical angles to normalized Miller indices (hkl).
-        """
-        cos_thresh = np.cos(np.radians(threshold_deg))
-        channeling_vectors = [
-            [0, 0, 1],
-            [1, 0, 1],
-            [1, 1, 1]
-        ]
-        channeling_dirs = [v / np.linalg.norm(np.array(v)) for v in channeling_vectors]
+    def _set_hkl_from_angles(self):
+        '''
+        self.sampling_directions * 1.1
+        if <= 10 % cases failed, then supercell size and sampling directions are both satisfied
+        otherwise, the supercell size needed to be increased
+        '''
         for angle in self.angle_set:
-            if len(self.hkl_list) >= self.num_directions:
+            if len(self.hkl_list) >= self.sampling_directions * 1.1: 
                 break
             phi, theta = angle
             h = np.sin(theta) * np.cos(phi)
             k = np.sin(theta) * np.sin(phi)
             l = np.cos(theta)
             hkl = np.array((h, k, l))
-            add_hkl = True
-            for d in channeling_dirs:
-                if abs(np.dot(hkl, d)) > cos_thresh:
-                       add_hkl = False
-            if add_hkl:
-                self.hkl_list.append(hkl)
+            self.hkl_list.append(hkl)
         hkl_file = os.path.join(self.calculation_dir, 'hkl_list.dat')
         with open(hkl_file, 'w') as f:  
             np.savetxt(f, np.array(self.hkl_list), 
@@ -104,14 +84,11 @@ class CascadeCalculator(TurboGAPCalculator):
                        delimiter=' ',   
                        header='h     k     l') 
 
-
-    def _relax(self, relax_dir, size): 
-        """
-        Set up the relaxation simulation for a given supercell size.
-        Args:
-            relax_dir (str): Directory for the relaxation simulation.
-            size (int): Size of the supercell.
-        """
+    def _relax(
+        self, 
+        relax_dir: str, 
+        size: int
+    ): 
         with open(os.path.join(self.template_dir, 'submit-triton.sh'), 'r') as f:
             submit_template = f.read()
         submit_file = os.path.join(relax_dir, 'submit.sh')
@@ -129,24 +106,33 @@ class CascadeCalculator(TurboGAPCalculator):
         write(os.path.join(relax_dir, 'data.input'), super_cell, format='extxyz')
         subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=relax_dir)
 
-
-    def _get_pka_id_center(self, trajectory_file):
+    def _get_pka_id_center(
+        self, 
+        trajectory_file: str
+    ) -> Tuple[Atoms, int]:  
         relaxed_struct = read(trajectory_file, format='extxyz', index=-1)
         center = relaxed_struct.get_center_of_mass()
         pka_id = self._get_pka_id(relaxed_struct, center)
         return relaxed_struct, pka_id
-    
 
-    def _get_pka_id_sphere(self, trajectory_file, hkl, radius_frac):
+    def _get_pka_id_sphere(
+        self, 
+        trajectory_file: str, 
+        hkl: np.ndarray, 
+        radius_frac: float
+    ) -> Tuple[Atoms, int]:
         relaxed_struct = read(trajectory_file, format='extxyz', index=-1)         
         a, b, c, _, _, _ = relaxed_struct.get_cell_lengths_and_angles()
         radius = 0.5 * min(a, b, c) * radius_frac
         position = hkl * radius + relaxed_struct.get_center_of_mass()
         pka_id = self._get_pka_id(relaxed_struct, position)
         return relaxed_struct, pka_id
-            
     
-    def _get_pka_id(self, relaxed_struct, target_position):
+    def _get_pka_id(
+        self, 
+        relaxed_struct: Atoms, 
+        target_position: np.ndarray
+    ) -> int:
         positions_list = relaxed_struct.get_positions()
         dist = 1000
         closest_idx = None
@@ -158,27 +144,76 @@ class CascadeCalculator(TurboGAPCalculator):
         pka_id = closest_idx + 1      # LAMMPS IDs start from 1
         return pka_id
 
-
-    def _setup_helper(self, velocity, relaxed_struct, thickness, pka_id, hkl, eng_hkl_dir):
-        """
-        Helper function to set up the input file for the LAMMPS simulation.
-        Args:
-            velocity (float): Velocity of the PKA in m/s.
-            relaxed_struct (ase.Atoms): Relaxed structure with velocities set.
-            pka_id (int): ID of the primary knock-on atom.
-            hkl (np.array): Miller indices for the direction of the PKA.
-            eng_hkl_dir (str): Directory for the specific energy and hkl combination.
-        """
-        with open(os.path.join(self.template_dir, 'input-pka-stopping'), 'r') as f:
+    def _setup_helper(
+        self, 
+        velocity: float, 
+        relaxed_struct: Atoms, 
+        pka_id: int, 
+        hkl: np.ndarray, 
+        eng_hkl_dir: str,
+        eng_dir: str
+    ):
+        with open(os.path.join(self.template_dir, 'input-pka-eph'), 'r') as f:
             input_template = f.read()
-        ff_settings = self.ff_settings
-        input_file = os.path.join(eng_hkl_dir, 'input')
         a, b, c, _, _, _ = relaxed_struct.cell.cellpar()
+        input_file = os.path.join(eng_hkl_dir, 'input')
+
+        # ------------------------ eph setting start ------------------------
+        beta_file = os.path.join(self.template_dir, 'beta.dat')
+        voxel_size = 25 # Å
+        scaling_factor = 3
+        thickness_x, thickness_y, thickness_z = (a*scaling_factor-a)/2, (b*scaling_factor-b)/2, (c*scaling_factor-c)/2
+        gsx, gsy, gsz = a*scaling_factor/voxel_size, b*scaling_factor/voxel_size, c*scaling_factor/voxel_size
+        parameters_in_file = os.path.join(self.template_dir, 'K_Ge.dat')
+        parameters_out_file = os.path.join(self.eng_hkl_dir, 'Te-dependent_e-parameters.txt')
+        tin_file = os.path.join(self.eng_dir, 'tin.dat')
+        tout_file = os.path.join(self.eng_hkl_dir, 'tout.dat')
+        if self.eph_parameter_from_file == 1:
+            tcekappa = TCeKappa(parameters_in_file=parameters_in_file,
+                    parameters_out_file=parameters_out_file,
+                    tin_file=tin_file,
+                    grids=[int(gsx), int(gsy), int(gsz)],
+                    boxsize=[a*scaling_factor, b*scaling_factor, c*scaling_factor],
+                    T_e=self.temp,
+                    C_e=1, # will read from file
+                    K_e=1,
+                    read_from_param_file=1)
+        elif self.eph_parameter_from_file == 0:
+            tcekappa = TCeKappa(parameters_in_file=parameters_in_file,
+                                parameters_out_file=parameters_out_file,
+                                tin_file=tin_file,
+                                grids=[int(gsx), int(gsy), int(gsz)],
+                                boxsize=[a*scaling_factor, b*scaling_factor, c*scaling_factor],
+                                T_e=self.temp,
+                                C_e=1, # will be reset
+                                K_e=1,
+                                read_from_param_file=0)
+            C_e, K_e = tcekappa._get_Ce_Ke_for_T()
+            tcekappa = TCeKappa(parameters_in_file=parameters_in_file,
+                                parameters_out_file=parameters_out_file,
+                                tin_file=tin_file,
+                                grids=[int(gsx), int(gsy), int(gsz)],
+                                boxsize=[a*scaling_factor, b*scaling_factor, c*scaling_factor],
+                                T_e=self.temp,
+                                C_e=C_e,
+                                K_e=K_e,
+                                read_from_param_file=0)
+        # ------------------------ eph setting end ------------------------
+
         with open(input_file, 'w') as f:
-            f.write(input_template.format(ff_settings=ff_settings, num_species=self.num_species,
-                                          element=self.element, mass=self.mass, Temp=self.temp, cascade_steps=self.cascade_steps,
-                                          stopping_file=os.path.join(self.template_dir, 'Ge_Ge_elstop.txt'), xlow=thickness, xhigh=a-thickness,
-                                          ylow=thickness, yhigh=a-thickness, zlow=thickness, zhigh=a-thickness))
+            f.write(input_template.format(ff_settings=self.ff_settings, 
+                                          num_species=self.bi.num_species,
+                                          element=self.bi.element, 
+                                          mass=self.bi.mass, 
+                                          Temp=self.temp, 
+                                          cascade_steps=self.cascade_md_steps, 
+                                          beta_file=os.path.join(self.template_dir, 'beta.dat'),
+                                          xlow=0-thickness_x, xhigh=a+thickness_x,
+                                          ylow=0-thickness_y, yhigh=b+thickness_y,
+                                          zlow=0-thickness_z, zhigh=c+thickness_z,
+                                          eph_tin_file=tin_file, 
+                                          eph_tout_file=tout_file))
+
         velocities = relaxed_struct.get_array('velocities')
         self.logger.info(f'PKA ID {pka_id} with old velocities {velocities[pka_id]} ang/fs')
         Vx = velocity * -hkl[0]
@@ -209,9 +244,9 @@ class CascadeCalculator(TurboGAPCalculator):
         Run the cascade calculations.
         """
         self._setup(relaxflag)
-        # time.sleep(120)
+        # each time set one flag True
         if cascadeflag:
-            for energy, thickness, size, radius_frac, in zip(self.energies, self.thicknesses, self.sizes, self.radius_fracs):
+            for energy, size, radius_frac, in zip(self.energies, self.sizes, self.radius_fracs):
                 self.logger.info(f'------------------Cascade simulation for energy: {energy} eV, supercell size: {size} --------------------')
                 eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
                 trajectory_file = os.path.join(eng_dir, 'trajectory_out.xyz')
@@ -221,7 +256,7 @@ class CascadeCalculator(TurboGAPCalculator):
                     relaxed_struct, pka_id = self._get_pka_id_sphere(trajectory_file, hkl, radius_frac)
                     os.makedirs(eng_hkl_dir, exist_ok=True)
                     shutil.copytree(self.gap_file_folder, os.path.join(eng_hkl_dir, 'gap_files'), dirs_exist_ok=True)
-                    self._setup_helper(velocity, relaxed_struct, thickness, pka_id, hkl, eng_hkl_dir)
+                    self._setup_helper(velocity, relaxed_struct, pka_id, hkl, eng_hkl_dir, eng_dir)
                     with open(os.path.join(self.template_dir, 'submit-triton.sh'), 'r') as f:
                         submit_template = f.read()
                     submit_file = os.path.join(eng_hkl_dir, 'submit.sh')

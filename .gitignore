@@ -1,6 +1,8 @@
 # Ignore relax_MEAM folders
 relax_MEAM_*_per_eV/
 
+save/
+
 # Ignore results folder inside ml4cascades/lammps
 ml4cascades/lammps/results/
 

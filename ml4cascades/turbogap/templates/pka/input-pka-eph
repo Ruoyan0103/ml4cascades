@@ -1,8 +1,6 @@
 ! TurboGAP input file for PKA simulation
 ! Parameters: ff_settings, num_species, element, mass, cascade_steps, Temp
-! Parameters for EPH: beta_file, ephxlow, ephxhigh, ephylow, ephyhigh, ephzlow, ephzhigh, 
-!                     heat_capacity, thermal_conductivity, gsx, 
-!                     xlow, xhigh, ylow, yhigh, zlow, zhigh
+! Parameters for EPH: beta_file, xlow, xhigh, ylow, yhigh, zlow, zhigh, eph_tin_file, eph_tout_file
 
 ! Species-specific info
 atoms_file = 'thermalized.xyz'
@@ -31,32 +29,18 @@ eph_friction_option = 1
 eph_random_option = 1                                                  
 eph_betafile = '{beta_file}'                                        
 
-eph_box_limits = {ephxlow} {ephxhigh} {ephylow} {ephyhigh} {ephzlow} {ephzhigh}
+eph_box_limits = {xlow} {xhigh} {ylow} {yhigh} {zlow} {zhigh}
 
 eph_rho_e = 1.0                       ! scaling parameter for FDM mesh                
-eph_C_e = {heat_capacity}             ! electronic heat capacity (eV/A^3/K)                
-eph_kappa_e = {thermal_conductivity}  ! electronic thermal conductivity (eV/A/K/ps)     
+eph_C_e = 1                           ! electronic heat capacity (eV/A^3/K), read from Tin                
+eph_kappa_e = 1                       ! electronic thermal conductivity (eV/A/K/ps), read from Tin    
 eph_Ti_e = {Temp}                     ! initial electronic temperature (K)            
-
-eph_gsx = {gsx}                       ! fine grids in x,y,z directions                 
-eph_gsy = {gsx}
-eph_gsz = {gsx}
 
 eph_Tinfile = '{eph_tin_file}'
 
 eph_freq_Tout = 100
 eph_freq_mesh_Tout = 10000
 eph_Toutfile = '{eph_tout_file}'
-
-! Border thermostat
-make_group = inside block 6 {xlow} {xhigh} {ylow} {yhigh} {zlow} {zhigh}
-make_group = border subtract 2 all inside
-make_group = all dynamic 100
-thermostat = "berendsen"
-thermostat_groupID = border
-t_beg = {Temp}
-t_end = {Temp}
-tau_t = 100.
 
 ! Writeouts
 write_thermo = 10

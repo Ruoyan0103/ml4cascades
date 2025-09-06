@@ -67,10 +67,10 @@ class TCeKappa:
     def _read_file(self):
         k_ge = np.loadtxt(self.parameters_in_file, skiprows=2)
         Temp = k_ge[:, 0]
-        Ce_org = k_ge[:, 1]
-        Kappa_org = k_ge[:, 5]
-        Ce_converted = self._convert_Ce_unit(Ce_org)
+        Kappa_org = k_ge[:, 1]
+        Ce_org = k_ge[:, 5]
         Kappa_converted = self._convert_Kappa_unit(Kappa_org)
+        Ce_converted = self._convert_Ce_unit(Ce_org)
         return Temp, Ce_converted, Kappa_converted
     
     def _write_parameters_file(self):

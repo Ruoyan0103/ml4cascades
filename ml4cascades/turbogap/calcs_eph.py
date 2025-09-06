@@ -273,7 +273,7 @@ class CascadeCalculatorEPH(TurboGAPCalculator):
                     submit_file = os.path.join(eng_hkl_dir, 'submit.sh')
                     with open(submit_file, 'w') as f:
                         f.write(submit_template.format(job_name=f'cas_{energy}_{idx}'))
-                    # subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=eng_hkl_dir)
+                    subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=eng_hkl_dir)
 
 
     def postProcess(self):

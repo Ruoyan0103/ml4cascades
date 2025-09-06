@@ -165,6 +165,12 @@ class CascadeCalculatorEPH(TurboGAPCalculator):
         voxel_size = 25 # Å
         scaling_factor = 3
         thickness_x, thickness_y, thickness_z = (a*scaling_factor-a)/2, (b*scaling_factor-b)/2, (c*scaling_factor-c)/2
+        xlow = 0-thickness_x
+        xhigh = a+thickness_x
+        ylow = 0-thickness_y
+        yhigh = b+thickness_y
+        zlow = 0-thickness_z
+        zhigh = c+thickness_z
         gsx, gsy, gsz = a*scaling_factor/voxel_size, b*scaling_factor/voxel_size, c*scaling_factor/voxel_size
         parameters_in_file = os.path.join(self.template_dir, 'K_Ge.dat')
         parameters_out_file = os.path.join(eng_hkl_dir, 'Te-dependent_e-parameters.txt')
@@ -175,17 +181,18 @@ class CascadeCalculatorEPH(TurboGAPCalculator):
                     parameters_out_file=parameters_out_file,
                     tin_file=tin_file,
                     grids=[int(gsx), int(gsy), int(gsz)],
-                    boxsize=[a*scaling_factor, b*scaling_factor, c*scaling_factor],
+                    boxsize=[xlow, xhigh, ylow, yhigh, zlow, zhigh],
                     T_e=self.temp,
                     C_e=1, # will read from file
                     K_e=1,
                     read_from_param_file=1)
+            tcekappa.write_tinfile()
         elif self.eph_parameter_from_file == 0:
             tcekappa = TCeKappa(parameters_in_file=parameters_in_file,
                                 parameters_out_file=parameters_out_file,
                                 tin_file=tin_file,
                                 grids=[int(gsx), int(gsy), int(gsz)],
-                                boxsize=[a*scaling_factor, b*scaling_factor, c*scaling_factor],
+                                boxsize=[xlow, xhigh, ylow, yhigh, zlow, zhigh],
                                 T_e=self.temp,
                                 C_e=1, # will be reset
                                 K_e=1,
@@ -195,11 +202,12 @@ class CascadeCalculatorEPH(TurboGAPCalculator):
                                 parameters_out_file=parameters_out_file,
                                 tin_file=tin_file,
                                 grids=[int(gsx), int(gsy), int(gsz)],
-                                boxsize=[a*scaling_factor, b*scaling_factor, c*scaling_factor],
+                                boxsize=[xlow, xhigh, ylow, yhigh, zlow, zhigh],
                                 T_e=self.temp,
                                 C_e=C_e,
                                 K_e=K_e,
                                 read_from_param_file=0)
+            tcekappa.write_tinfile()
         # ------------------------ eph setting end ------------------------
 
         with open(input_file, 'w') as f:
@@ -209,9 +217,9 @@ class CascadeCalculatorEPH(TurboGAPCalculator):
                                           Temp=self.temp, 
                                           cascade_steps=self.cascade_md_steps, 
                                           beta_file=os.path.join(self.template_dir, 'beta.dat'),
-                                          xlow=0-thickness_x, xhigh=a+thickness_x,
-                                          ylow=0-thickness_y, yhigh=b+thickness_y,
-                                          zlow=0-thickness_z, zhigh=c+thickness_z,
+                                          xlow=xlow, xhigh=xhigh,
+                                          ylow=ylow, yhigh=yhigh,
+                                          zlow=zlow, zhigh=zhigh,
                                           eph_tin_file=tin_file, 
                                           eph_tout_file=tout_file))
 
@@ -265,7 +273,7 @@ class CascadeCalculatorEPH(TurboGAPCalculator):
                     submit_file = os.path.join(eng_hkl_dir, 'submit.sh')
                     with open(submit_file, 'w') as f:
                         f.write(submit_template.format(job_name=f'cas_{energy}_{idx}'))
-                    subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=eng_hkl_dir)
+                    # subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=eng_hkl_dir)
 
 
     def postProcess(self):

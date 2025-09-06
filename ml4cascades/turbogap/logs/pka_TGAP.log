@@ -77,3 +77,473 @@
 2025-09-06 14:39 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1881 with new Velocities: -0.04, -0.15, -0.06 ang/fs
 2025-09-06 14:39 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1760 with old velocities [7.6510e-05 1.4819e-04 2.8290e-04] ang/fs
 2025-09-06 14:39 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1760 with new Velocities: -0.12, -0.04, 0.11 ang/fs
+2025-09-06 14:43 - ml4cascades.turbogap.calcs_base - INFO - ------------------SIMULATION for energy: 100 eV, supercell size: 7 --------------------
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - ------------------SIMULATION for energy: 100 eV, supercell size: 7 --------------------
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1833 with old velocities [ 1.7718e-04  8.6980e-05 -4.1953e-04] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1833 with new Velocities: -0.05, -0.08, -0.13 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1874 with old velocities [-0.00164149 -0.00056036 -0.00040723] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1874 with new Velocities: -0.07, -0.15, 0.02 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1423 with old velocities [-0.00195144  0.00091964 -0.0009612 ] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1423 with new Velocities: 0.02, -0.08, 0.14 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 988 with old velocities [ 6.3160e-05 -6.1536e-04 -1.6613e-04] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 988 with new Velocities: 0.12, -0.04, -0.10 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1336 with old velocities [0.00090588 0.00067888 0.00199975] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1336 with new Velocities: -0.01, 0.07, -0.15 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1716 with old velocities [-3.0480e-05  8.5235e-04  2.6008e-03] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1716 with new Velocities: -0.07, 0.08, -0.12 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1824 with old velocities [-0.00092054 -0.00123228 -0.00131742] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1824 with new Velocities: -0.10, -0.12, 0.03 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1423 with old velocities [-0.00195144  0.00091964 -0.0009612 ] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1423 with new Velocities: 0.02, -0.08, 0.14 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 935 with old velocities [-3.1179e-04 -7.8225e-04  9.5510e-05] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 935 with new Velocities: 0.12, 0.10, -0.05 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1874 with old velocities [-0.00164149 -0.00056036 -0.00040723] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1874 with new Velocities: -0.07, -0.15, 0.01 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 931 with old velocities [-0.00059286  0.00050964  0.00120627] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 931 with new Velocities: 0.12, 0.08, -0.07 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2162 with old velocities [ 0.0005718  -0.00017539 -0.00027751] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2162 with new Velocities: -0.14, 0.03, -0.08 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1046 with old velocities [ 0.00140897  0.00105288 -0.00022668] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1046 with new Velocities: 0.06, -0.07, -0.13 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 930 with old velocities [ 0.00070539 -0.0001455   0.00018302] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 930 with new Velocities: 0.12, 0.09, -0.06 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 966 with old velocities [-0.00112491  0.00115089  0.00112729] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 966 with new Velocities: 0.06, 0.01, 0.15 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 920 with old velocities [ 0.00061086  0.00210216 -0.00182703] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 920 with new Velocities: 0.08, 0.06, 0.13 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 923 with old velocities [ 0.00041117 -0.00095347  0.00244634] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 923 with new Velocities: 0.13, 0.10, -0.00 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1436 with old velocities [-1.2874e-04 -1.2490e-05 -6.2557e-04] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1436 with new Velocities: 0.04, -0.12, -0.10 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 590 with old velocities [ 0.00038697 -0.00242868 -0.00018737] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 590 with new Velocities: 0.16, 0.01, -0.04 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1759 with old velocities [ 0.00120547 -0.00102226  0.00054503] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1759 with new Velocities: -0.09, -0.01, 0.13 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1812 with old velocities [-0.0012123   0.00012055 -0.00133311] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1812 with new Velocities: -0.08, -0.13, 0.06 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2210 with old velocities [ 1.1609e-04 -1.6980e-05 -1.8993e-04] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2210 with new Velocities: -0.15, -0.06, 0.01 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1753 with old velocities [ 0.00174118  0.00016905 -0.00143426] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1753 with new Velocities: -0.06, 0.02, 0.15 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2217 with old velocities [-0.00096817 -0.00100407  0.00144234] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2217 with new Velocities: -0.15, -0.06, -0.02 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1417 with old velocities [0.00047591 0.00090275 0.00057045] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1417 with new Velocities: 0.05, -0.05, 0.15 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1385 with old velocities [-1.48894e-03 -1.32302e-03  9.20000e-07] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1385 with new Velocities: 0.02, 0.06, -0.15 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1029 with old velocities [ 0.0008276   0.00088799 -0.00137114] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1029 with new Velocities: 0.12, -0.06, 0.09 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1705 with old velocities [ 0.00164253 -0.00056556 -0.00012806] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1705 with new Velocities: -0.08, 0.13, 0.05 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1881 with old velocities [0.00141443 0.00210278 0.00078775] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1881 with new Velocities: -0.05, -0.15, -0.06 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1885 with old velocities [-0.00028058  0.00201086  0.00133526] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1885 with new Velocities: -0.07, -0.13, -0.07 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1309 with old velocities [-0.00136052  0.00112446 -0.00096989] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1309 with new Velocities: 0.01, 0.13, 0.10 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1881 with old velocities [0.00141443 0.00210278 0.00078775] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1881 with new Velocities: -0.04, -0.15, -0.06 ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1760 with old velocities [7.6510e-05 1.4819e-04 2.8290e-04] ang/fs
+2025-09-06 14:48 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1760 with new Velocities: -0.12, -0.04, 0.11 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - ------------------SIMULATION for energy: 100 eV, supercell size: 7 --------------------
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1833 with old velocities [ 1.7718e-04  8.6980e-05 -4.1953e-04] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1833 with new Velocities: -0.05, -0.08, -0.13 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1874 with old velocities [-0.00164149 -0.00056036 -0.00040723] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1874 with new Velocities: -0.07, -0.15, 0.02 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1423 with old velocities [-0.00195144  0.00091964 -0.0009612 ] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1423 with new Velocities: 0.02, -0.08, 0.14 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 988 with old velocities [ 6.3160e-05 -6.1536e-04 -1.6613e-04] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 988 with new Velocities: 0.12, -0.04, -0.10 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1336 with old velocities [0.00090588 0.00067888 0.00199975] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1336 with new Velocities: -0.01, 0.07, -0.15 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1716 with old velocities [-3.0480e-05  8.5235e-04  2.6008e-03] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1716 with new Velocities: -0.07, 0.08, -0.12 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1824 with old velocities [-0.00092054 -0.00123228 -0.00131742] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1824 with new Velocities: -0.10, -0.12, 0.03 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1423 with old velocities [-0.00195144  0.00091964 -0.0009612 ] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1423 with new Velocities: 0.02, -0.08, 0.14 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 935 with old velocities [-3.1179e-04 -7.8225e-04  9.5510e-05] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 935 with new Velocities: 0.12, 0.10, -0.05 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1874 with old velocities [-0.00164149 -0.00056036 -0.00040723] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1874 with new Velocities: -0.07, -0.15, 0.01 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 931 with old velocities [-0.00059286  0.00050964  0.00120627] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 931 with new Velocities: 0.12, 0.08, -0.07 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2162 with old velocities [ 0.0005718  -0.00017539 -0.00027751] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2162 with new Velocities: -0.14, 0.03, -0.08 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1046 with old velocities [ 0.00140897  0.00105288 -0.00022668] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1046 with new Velocities: 0.06, -0.07, -0.13 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 930 with old velocities [ 0.00070539 -0.0001455   0.00018302] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 930 with new Velocities: 0.12, 0.09, -0.06 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 966 with old velocities [-0.00112491  0.00115089  0.00112729] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 966 with new Velocities: 0.06, 0.01, 0.15 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 920 with old velocities [ 0.00061086  0.00210216 -0.00182703] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 920 with new Velocities: 0.08, 0.06, 0.13 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 923 with old velocities [ 0.00041117 -0.00095347  0.00244634] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 923 with new Velocities: 0.13, 0.10, -0.00 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1436 with old velocities [-1.2874e-04 -1.2490e-05 -6.2557e-04] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1436 with new Velocities: 0.04, -0.12, -0.10 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 590 with old velocities [ 0.00038697 -0.00242868 -0.00018737] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 590 with new Velocities: 0.16, 0.01, -0.04 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1759 with old velocities [ 0.00120547 -0.00102226  0.00054503] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1759 with new Velocities: -0.09, -0.01, 0.13 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1812 with old velocities [-0.0012123   0.00012055 -0.00133311] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1812 with new Velocities: -0.08, -0.13, 0.06 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2210 with old velocities [ 1.1609e-04 -1.6980e-05 -1.8993e-04] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2210 with new Velocities: -0.15, -0.06, 0.01 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1753 with old velocities [ 0.00174118  0.00016905 -0.00143426] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1753 with new Velocities: -0.06, 0.02, 0.15 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2217 with old velocities [-0.00096817 -0.00100407  0.00144234] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2217 with new Velocities: -0.15, -0.06, -0.02 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1417 with old velocities [0.00047591 0.00090275 0.00057045] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1417 with new Velocities: 0.05, -0.05, 0.15 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1385 with old velocities [-1.48894e-03 -1.32302e-03  9.20000e-07] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1385 with new Velocities: 0.02, 0.06, -0.15 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1029 with old velocities [ 0.0008276   0.00088799 -0.00137114] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1029 with new Velocities: 0.12, -0.06, 0.09 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1705 with old velocities [ 0.00164253 -0.00056556 -0.00012806] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1705 with new Velocities: -0.08, 0.13, 0.05 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1881 with old velocities [0.00141443 0.00210278 0.00078775] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1881 with new Velocities: -0.05, -0.15, -0.06 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1885 with old velocities [-0.00028058  0.00201086  0.00133526] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1885 with new Velocities: -0.07, -0.13, -0.07 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1309 with old velocities [-0.00136052  0.00112446 -0.00096989] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1309 with new Velocities: 0.01, 0.13, 0.10 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1881 with old velocities [0.00141443 0.00210278 0.00078775] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1881 with new Velocities: -0.04, -0.15, -0.06 ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1760 with old velocities [7.6510e-05 1.4819e-04 2.8290e-04] ang/fs
+2025-09-06 15:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1760 with new Velocities: -0.12, -0.04, 0.11 ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - ------------------SIMULATION for energy: 100 eV, supercell size: 7 --------------------
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1833 with old velocities [ 1.7718e-04  8.6980e-05 -4.1953e-04] ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1833 with new Velocities: -0.05, -0.08, -0.13 ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1874 with old velocities [-0.00164149 -0.00056036 -0.00040723] ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1874 with new Velocities: -0.07, -0.15, 0.02 ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1423 with old velocities [-0.00195144  0.00091964 -0.0009612 ] ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1423 with new Velocities: 0.02, -0.08, 0.14 ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 988 with old velocities [ 6.3160e-05 -6.1536e-04 -1.6613e-04] ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 988 with new Velocities: 0.12, -0.04, -0.10 ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1336 with old velocities [0.00090588 0.00067888 0.00199975] ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1336 with new Velocities: -0.01, 0.07, -0.15 ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1716 with old velocities [-3.0480e-05  8.5235e-04  2.6008e-03] ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1716 with new Velocities: -0.07, 0.08, -0.12 ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1824 with old velocities [-0.00092054 -0.00123228 -0.00131742] ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1824 with new Velocities: -0.10, -0.12, 0.03 ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1423 with old velocities [-0.00195144  0.00091964 -0.0009612 ] ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1423 with new Velocities: 0.02, -0.08, 0.14 ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 935 with old velocities [-3.1179e-04 -7.8225e-04  9.5510e-05] ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 935 with new Velocities: 0.12, 0.10, -0.05 ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1874 with old velocities [-0.00164149 -0.00056036 -0.00040723] ang/fs
+2025-09-06 15:02 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1874 with new Velocities: -0.07, -0.15, 0.01 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 931 with old velocities [-0.00059286  0.00050964  0.00120627] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 931 with new Velocities: 0.12, 0.08, -0.07 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2162 with old velocities [ 0.0005718  -0.00017539 -0.00027751] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2162 with new Velocities: -0.14, 0.03, -0.08 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1046 with old velocities [ 0.00140897  0.00105288 -0.00022668] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1046 with new Velocities: 0.06, -0.07, -0.13 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 930 with old velocities [ 0.00070539 -0.0001455   0.00018302] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 930 with new Velocities: 0.12, 0.09, -0.06 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 966 with old velocities [-0.00112491  0.00115089  0.00112729] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 966 with new Velocities: 0.06, 0.01, 0.15 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 920 with old velocities [ 0.00061086  0.00210216 -0.00182703] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 920 with new Velocities: 0.08, 0.06, 0.13 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 923 with old velocities [ 0.00041117 -0.00095347  0.00244634] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 923 with new Velocities: 0.13, 0.10, -0.00 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1436 with old velocities [-1.2874e-04 -1.2490e-05 -6.2557e-04] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1436 with new Velocities: 0.04, -0.12, -0.10 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 590 with old velocities [ 0.00038697 -0.00242868 -0.00018737] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 590 with new Velocities: 0.16, 0.01, -0.04 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1759 with old velocities [ 0.00120547 -0.00102226  0.00054503] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1759 with new Velocities: -0.09, -0.01, 0.13 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1812 with old velocities [-0.0012123   0.00012055 -0.00133311] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1812 with new Velocities: -0.08, -0.13, 0.06 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2210 with old velocities [ 1.1609e-04 -1.6980e-05 -1.8993e-04] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2210 with new Velocities: -0.15, -0.06, 0.01 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1753 with old velocities [ 0.00174118  0.00016905 -0.00143426] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1753 with new Velocities: -0.06, 0.02, 0.15 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2217 with old velocities [-0.00096817 -0.00100407  0.00144234] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2217 with new Velocities: -0.15, -0.06, -0.02 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1417 with old velocities [0.00047591 0.00090275 0.00057045] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1417 with new Velocities: 0.05, -0.05, 0.15 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1385 with old velocities [-1.48894e-03 -1.32302e-03  9.20000e-07] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1385 with new Velocities: 0.02, 0.06, -0.15 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1029 with old velocities [ 0.0008276   0.00088799 -0.00137114] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1029 with new Velocities: 0.12, -0.06, 0.09 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1705 with old velocities [ 0.00164253 -0.00056556 -0.00012806] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1705 with new Velocities: -0.08, 0.13, 0.05 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1881 with old velocities [0.00141443 0.00210278 0.00078775] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1881 with new Velocities: -0.05, -0.15, -0.06 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1885 with old velocities [-0.00028058  0.00201086  0.00133526] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1885 with new Velocities: -0.07, -0.13, -0.07 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1309 with old velocities [-0.00136052  0.00112446 -0.00096989] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1309 with new Velocities: 0.01, 0.13, 0.10 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1881 with old velocities [0.00141443 0.00210278 0.00078775] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1881 with new Velocities: -0.04, -0.15, -0.06 ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1760 with old velocities [7.6510e-05 1.4819e-04 2.8290e-04] ang/fs
+2025-09-06 15:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1760 with new Velocities: -0.12, -0.04, 0.11 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - ------------------SIMULATION for energy: 100 eV, supercell size: 7 --------------------
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1833 with old velocities [ 1.7718e-04  8.6980e-05 -4.1953e-04] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1833 with new Velocities: -0.05, -0.08, -0.13 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1874 with old velocities [-0.00164149 -0.00056036 -0.00040723] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1874 with new Velocities: -0.07, -0.15, 0.02 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1423 with old velocities [-0.00195144  0.00091964 -0.0009612 ] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1423 with new Velocities: 0.02, -0.08, 0.14 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 988 with old velocities [ 6.3160e-05 -6.1536e-04 -1.6613e-04] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 988 with new Velocities: 0.12, -0.04, -0.10 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1336 with old velocities [0.00090588 0.00067888 0.00199975] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1336 with new Velocities: -0.01, 0.07, -0.15 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1716 with old velocities [-3.0480e-05  8.5235e-04  2.6008e-03] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1716 with new Velocities: -0.07, 0.08, -0.12 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1824 with old velocities [-0.00092054 -0.00123228 -0.00131742] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1824 with new Velocities: -0.10, -0.12, 0.03 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1423 with old velocities [-0.00195144  0.00091964 -0.0009612 ] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1423 with new Velocities: 0.02, -0.08, 0.14 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 935 with old velocities [-3.1179e-04 -7.8225e-04  9.5510e-05] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 935 with new Velocities: 0.12, 0.10, -0.05 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1874 with old velocities [-0.00164149 -0.00056036 -0.00040723] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1874 with new Velocities: -0.07, -0.15, 0.01 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 931 with old velocities [-0.00059286  0.00050964  0.00120627] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 931 with new Velocities: 0.12, 0.08, -0.07 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2162 with old velocities [ 0.0005718  -0.00017539 -0.00027751] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2162 with new Velocities: -0.14, 0.03, -0.08 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1046 with old velocities [ 0.00140897  0.00105288 -0.00022668] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1046 with new Velocities: 0.06, -0.07, -0.13 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 930 with old velocities [ 0.00070539 -0.0001455   0.00018302] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 930 with new Velocities: 0.12, 0.09, -0.06 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 966 with old velocities [-0.00112491  0.00115089  0.00112729] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 966 with new Velocities: 0.06, 0.01, 0.15 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 920 with old velocities [ 0.00061086  0.00210216 -0.00182703] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 920 with new Velocities: 0.08, 0.06, 0.13 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 923 with old velocities [ 0.00041117 -0.00095347  0.00244634] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 923 with new Velocities: 0.13, 0.10, -0.00 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1436 with old velocities [-1.2874e-04 -1.2490e-05 -6.2557e-04] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1436 with new Velocities: 0.04, -0.12, -0.10 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 590 with old velocities [ 0.00038697 -0.00242868 -0.00018737] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 590 with new Velocities: 0.16, 0.01, -0.04 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1759 with old velocities [ 0.00120547 -0.00102226  0.00054503] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1759 with new Velocities: -0.09, -0.01, 0.13 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1812 with old velocities [-0.0012123   0.00012055 -0.00133311] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1812 with new Velocities: -0.08, -0.13, 0.06 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2210 with old velocities [ 1.1609e-04 -1.6980e-05 -1.8993e-04] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2210 with new Velocities: -0.15, -0.06, 0.01 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1753 with old velocities [ 0.00174118  0.00016905 -0.00143426] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1753 with new Velocities: -0.06, 0.02, 0.15 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2217 with old velocities [-0.00096817 -0.00100407  0.00144234] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2217 with new Velocities: -0.15, -0.06, -0.02 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1417 with old velocities [0.00047591 0.00090275 0.00057045] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1417 with new Velocities: 0.05, -0.05, 0.15 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1385 with old velocities [-1.48894e-03 -1.32302e-03  9.20000e-07] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1385 with new Velocities: 0.02, 0.06, -0.15 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1029 with old velocities [ 0.0008276   0.00088799 -0.00137114] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1029 with new Velocities: 0.12, -0.06, 0.09 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1705 with old velocities [ 0.00164253 -0.00056556 -0.00012806] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1705 with new Velocities: -0.08, 0.13, 0.05 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1881 with old velocities [0.00141443 0.00210278 0.00078775] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1881 with new Velocities: -0.05, -0.15, -0.06 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1885 with old velocities [-0.00028058  0.00201086  0.00133526] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1885 with new Velocities: -0.07, -0.13, -0.07 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1309 with old velocities [-0.00136052  0.00112446 -0.00096989] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1309 with new Velocities: 0.01, 0.13, 0.10 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1881 with old velocities [0.00141443 0.00210278 0.00078775] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1881 with new Velocities: -0.04, -0.15, -0.06 ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1760 with old velocities [7.6510e-05 1.4819e-04 2.8290e-04] ang/fs
+2025-09-06 15:10 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1760 with new Velocities: -0.12, -0.04, 0.11 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - ------------------SIMULATION for energy: 100 eV, supercell size: 7 --------------------
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1833 with old velocities [ 1.7718e-04  8.6980e-05 -4.1953e-04] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1833 with new Velocities: -0.05, -0.08, -0.13 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1874 with old velocities [-0.00164149 -0.00056036 -0.00040723] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1874 with new Velocities: -0.07, -0.15, 0.02 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1423 with old velocities [-0.00195144  0.00091964 -0.0009612 ] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1423 with new Velocities: 0.02, -0.08, 0.14 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 988 with old velocities [ 6.3160e-05 -6.1536e-04 -1.6613e-04] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 988 with new Velocities: 0.12, -0.04, -0.10 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1336 with old velocities [0.00090588 0.00067888 0.00199975] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1336 with new Velocities: -0.01, 0.07, -0.15 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1716 with old velocities [-3.0480e-05  8.5235e-04  2.6008e-03] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1716 with new Velocities: -0.07, 0.08, -0.12 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1824 with old velocities [-0.00092054 -0.00123228 -0.00131742] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1824 with new Velocities: -0.10, -0.12, 0.03 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1423 with old velocities [-0.00195144  0.00091964 -0.0009612 ] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1423 with new Velocities: 0.02, -0.08, 0.14 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 935 with old velocities [-3.1179e-04 -7.8225e-04  9.5510e-05] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 935 with new Velocities: 0.12, 0.10, -0.05 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1874 with old velocities [-0.00164149 -0.00056036 -0.00040723] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1874 with new Velocities: -0.07, -0.15, 0.01 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 931 with old velocities [-0.00059286  0.00050964  0.00120627] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 931 with new Velocities: 0.12, 0.08, -0.07 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2162 with old velocities [ 0.0005718  -0.00017539 -0.00027751] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2162 with new Velocities: -0.14, 0.03, -0.08 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1046 with old velocities [ 0.00140897  0.00105288 -0.00022668] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1046 with new Velocities: 0.06, -0.07, -0.13 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 930 with old velocities [ 0.00070539 -0.0001455   0.00018302] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 930 with new Velocities: 0.12, 0.09, -0.06 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 966 with old velocities [-0.00112491  0.00115089  0.00112729] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 966 with new Velocities: 0.06, 0.01, 0.15 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 920 with old velocities [ 0.00061086  0.00210216 -0.00182703] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 920 with new Velocities: 0.08, 0.06, 0.13 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 923 with old velocities [ 0.00041117 -0.00095347  0.00244634] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 923 with new Velocities: 0.13, 0.10, -0.00 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1436 with old velocities [-1.2874e-04 -1.2490e-05 -6.2557e-04] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1436 with new Velocities: 0.04, -0.12, -0.10 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 590 with old velocities [ 0.00038697 -0.00242868 -0.00018737] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 590 with new Velocities: 0.16, 0.01, -0.04 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1759 with old velocities [ 0.00120547 -0.00102226  0.00054503] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1759 with new Velocities: -0.09, -0.01, 0.13 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1812 with old velocities [-0.0012123   0.00012055 -0.00133311] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1812 with new Velocities: -0.08, -0.13, 0.06 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2210 with old velocities [ 1.1609e-04 -1.6980e-05 -1.8993e-04] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2210 with new Velocities: -0.15, -0.06, 0.01 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1753 with old velocities [ 0.00174118  0.00016905 -0.00143426] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1753 with new Velocities: -0.06, 0.02, 0.15 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2217 with old velocities [-0.00096817 -0.00100407  0.00144234] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2217 with new Velocities: -0.15, -0.06, -0.02 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1417 with old velocities [0.00047591 0.00090275 0.00057045] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1417 with new Velocities: 0.05, -0.05, 0.15 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1385 with old velocities [-1.48894e-03 -1.32302e-03  9.20000e-07] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1385 with new Velocities: 0.02, 0.06, -0.15 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1029 with old velocities [ 0.0008276   0.00088799 -0.00137114] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1029 with new Velocities: 0.12, -0.06, 0.09 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1705 with old velocities [ 0.00164253 -0.00056556 -0.00012806] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1705 with new Velocities: -0.08, 0.13, 0.05 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1881 with old velocities [0.00141443 0.00210278 0.00078775] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1881 with new Velocities: -0.05, -0.15, -0.06 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1885 with old velocities [-0.00028058  0.00201086  0.00133526] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1885 with new Velocities: -0.07, -0.13, -0.07 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1309 with old velocities [-0.00136052  0.00112446 -0.00096989] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1309 with new Velocities: 0.01, 0.13, 0.10 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1881 with old velocities [0.00141443 0.00210278 0.00078775] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1881 with new Velocities: -0.04, -0.15, -0.06 ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1760 with old velocities [7.6510e-05 1.4819e-04 2.8290e-04] ang/fs
+2025-09-06 15:18 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1760 with new Velocities: -0.12, -0.04, 0.11 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - ------------------SIMULATION for energy: 100 eV, supercell size: 7 --------------------
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1833 with old velocities [ 1.7718e-04  8.6980e-05 -4.1953e-04] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1833 with new Velocities: -0.05, -0.08, -0.13 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1874 with old velocities [-0.00164149 -0.00056036 -0.00040723] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1874 with new Velocities: -0.07, -0.15, 0.02 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1423 with old velocities [-0.00195144  0.00091964 -0.0009612 ] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1423 with new Velocities: 0.02, -0.08, 0.14 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 988 with old velocities [ 6.3160e-05 -6.1536e-04 -1.6613e-04] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 988 with new Velocities: 0.12, -0.04, -0.10 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1336 with old velocities [0.00090588 0.00067888 0.00199975] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1336 with new Velocities: -0.01, 0.07, -0.15 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1716 with old velocities [-3.0480e-05  8.5235e-04  2.6008e-03] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1716 with new Velocities: -0.07, 0.08, -0.12 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1824 with old velocities [-0.00092054 -0.00123228 -0.00131742] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1824 with new Velocities: -0.10, -0.12, 0.03 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1423 with old velocities [-0.00195144  0.00091964 -0.0009612 ] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1423 with new Velocities: 0.02, -0.08, 0.14 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 935 with old velocities [-3.1179e-04 -7.8225e-04  9.5510e-05] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 935 with new Velocities: 0.12, 0.10, -0.05 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1874 with old velocities [-0.00164149 -0.00056036 -0.00040723] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1874 with new Velocities: -0.07, -0.15, 0.01 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 931 with old velocities [-0.00059286  0.00050964  0.00120627] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 931 with new Velocities: 0.12, 0.08, -0.07 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2162 with old velocities [ 0.0005718  -0.00017539 -0.00027751] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2162 with new Velocities: -0.14, 0.03, -0.08 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1046 with old velocities [ 0.00140897  0.00105288 -0.00022668] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1046 with new Velocities: 0.06, -0.07, -0.13 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 930 with old velocities [ 0.00070539 -0.0001455   0.00018302] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 930 with new Velocities: 0.12, 0.09, -0.06 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 966 with old velocities [-0.00112491  0.00115089  0.00112729] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 966 with new Velocities: 0.06, 0.01, 0.15 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 920 with old velocities [ 0.00061086  0.00210216 -0.00182703] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 920 with new Velocities: 0.08, 0.06, 0.13 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 923 with old velocities [ 0.00041117 -0.00095347  0.00244634] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 923 with new Velocities: 0.13, 0.10, -0.00 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1436 with old velocities [-1.2874e-04 -1.2490e-05 -6.2557e-04] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1436 with new Velocities: 0.04, -0.12, -0.10 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 590 with old velocities [ 0.00038697 -0.00242868 -0.00018737] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 590 with new Velocities: 0.16, 0.01, -0.04 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1759 with old velocities [ 0.00120547 -0.00102226  0.00054503] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1759 with new Velocities: -0.09, -0.01, 0.13 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1812 with old velocities [-0.0012123   0.00012055 -0.00133311] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1812 with new Velocities: -0.08, -0.13, 0.06 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2210 with old velocities [ 1.1609e-04 -1.6980e-05 -1.8993e-04] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2210 with new Velocities: -0.15, -0.06, 0.01 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1753 with old velocities [ 0.00174118  0.00016905 -0.00143426] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1753 with new Velocities: -0.06, 0.02, 0.15 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2217 with old velocities [-0.00096817 -0.00100407  0.00144234] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2217 with new Velocities: -0.15, -0.06, -0.02 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1417 with old velocities [0.00047591 0.00090275 0.00057045] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1417 with new Velocities: 0.05, -0.05, 0.15 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1385 with old velocities [-1.48894e-03 -1.32302e-03  9.20000e-07] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1385 with new Velocities: 0.02, 0.06, -0.15 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1029 with old velocities [ 0.0008276   0.00088799 -0.00137114] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1029 with new Velocities: 0.12, -0.06, 0.09 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1705 with old velocities [ 0.00164253 -0.00056556 -0.00012806] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1705 with new Velocities: -0.08, 0.13, 0.05 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1881 with old velocities [0.00141443 0.00210278 0.00078775] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1881 with new Velocities: -0.05, -0.15, -0.06 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1885 with old velocities [-0.00028058  0.00201086  0.00133526] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1885 with new Velocities: -0.07, -0.13, -0.07 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1309 with old velocities [-0.00136052  0.00112446 -0.00096989] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1309 with new Velocities: 0.01, 0.13, 0.10 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1881 with old velocities [0.00141443 0.00210278 0.00078775] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1881 with new Velocities: -0.04, -0.15, -0.06 ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1760 with old velocities [7.6510e-05 1.4819e-04 2.8290e-04] ang/fs
+2025-09-06 15:38 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1760 with new Velocities: -0.12, -0.04, 0.11 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - ------------------SIMULATION for energy: 100 eV, supercell size: 7 --------------------
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1833 with old velocities [ 1.7718e-04  8.6980e-05 -4.1953e-04] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1833 with new Velocities: -0.05, -0.08, -0.13 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1874 with old velocities [-0.00164149 -0.00056036 -0.00040723] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1874 with new Velocities: -0.07, -0.15, 0.02 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1423 with old velocities [-0.00195144  0.00091964 -0.0009612 ] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1423 with new Velocities: 0.02, -0.08, 0.14 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 988 with old velocities [ 6.3160e-05 -6.1536e-04 -1.6613e-04] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 988 with new Velocities: 0.12, -0.04, -0.10 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1336 with old velocities [0.00090588 0.00067888 0.00199975] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1336 with new Velocities: -0.01, 0.07, -0.15 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1716 with old velocities [-3.0480e-05  8.5235e-04  2.6008e-03] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1716 with new Velocities: -0.07, 0.08, -0.12 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1824 with old velocities [-0.00092054 -0.00123228 -0.00131742] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1824 with new Velocities: -0.10, -0.12, 0.03 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1423 with old velocities [-0.00195144  0.00091964 -0.0009612 ] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1423 with new Velocities: 0.02, -0.08, 0.14 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 935 with old velocities [-3.1179e-04 -7.8225e-04  9.5510e-05] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 935 with new Velocities: 0.12, 0.10, -0.05 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1874 with old velocities [-0.00164149 -0.00056036 -0.00040723] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1874 with new Velocities: -0.07, -0.15, 0.01 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 931 with old velocities [-0.00059286  0.00050964  0.00120627] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 931 with new Velocities: 0.12, 0.08, -0.07 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2162 with old velocities [ 0.0005718  -0.00017539 -0.00027751] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2162 with new Velocities: -0.14, 0.03, -0.08 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1046 with old velocities [ 0.00140897  0.00105288 -0.00022668] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1046 with new Velocities: 0.06, -0.07, -0.13 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 930 with old velocities [ 0.00070539 -0.0001455   0.00018302] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 930 with new Velocities: 0.12, 0.09, -0.06 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 966 with old velocities [-0.00112491  0.00115089  0.00112729] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 966 with new Velocities: 0.06, 0.01, 0.15 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 920 with old velocities [ 0.00061086  0.00210216 -0.00182703] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 920 with new Velocities: 0.08, 0.06, 0.13 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 923 with old velocities [ 0.00041117 -0.00095347  0.00244634] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 923 with new Velocities: 0.13, 0.10, -0.00 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1436 with old velocities [-1.2874e-04 -1.2490e-05 -6.2557e-04] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1436 with new Velocities: 0.04, -0.12, -0.10 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 590 with old velocities [ 0.00038697 -0.00242868 -0.00018737] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 590 with new Velocities: 0.16, 0.01, -0.04 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1759 with old velocities [ 0.00120547 -0.00102226  0.00054503] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1759 with new Velocities: -0.09, -0.01, 0.13 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1812 with old velocities [-0.0012123   0.00012055 -0.00133311] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1812 with new Velocities: -0.08, -0.13, 0.06 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2210 with old velocities [ 1.1609e-04 -1.6980e-05 -1.8993e-04] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2210 with new Velocities: -0.15, -0.06, 0.01 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1753 with old velocities [ 0.00174118  0.00016905 -0.00143426] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1753 with new Velocities: -0.06, 0.02, 0.15 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2217 with old velocities [-0.00096817 -0.00100407  0.00144234] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2217 with new Velocities: -0.15, -0.06, -0.02 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1417 with old velocities [0.00047591 0.00090275 0.00057045] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1417 with new Velocities: 0.05, -0.05, 0.15 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1385 with old velocities [-1.48894e-03 -1.32302e-03  9.20000e-07] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1385 with new Velocities: 0.02, 0.06, -0.15 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1029 with old velocities [ 0.0008276   0.00088799 -0.00137114] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1029 with new Velocities: 0.12, -0.06, 0.09 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1705 with old velocities [ 0.00164253 -0.00056556 -0.00012806] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1705 with new Velocities: -0.08, 0.13, 0.05 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1881 with old velocities [0.00141443 0.00210278 0.00078775] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1881 with new Velocities: -0.05, -0.15, -0.06 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1885 with old velocities [-0.00028058  0.00201086  0.00133526] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1885 with new Velocities: -0.07, -0.13, -0.07 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1309 with old velocities [-0.00136052  0.00112446 -0.00096989] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1309 with new Velocities: 0.01, 0.13, 0.10 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1881 with old velocities [0.00141443 0.00210278 0.00078775] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1881 with new Velocities: -0.04, -0.15, -0.06 ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 1760 with old velocities [7.6510e-05 1.4819e-04 2.8290e-04] ang/fs
+2025-09-06 15:45 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 1760 with new Velocities: -0.12, -0.04, 0.11 ang/fs

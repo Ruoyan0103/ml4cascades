@@ -16,7 +16,9 @@ class TCeKappa:
         T_e: float,
         read_from_param_file: int, # 1: read from parameters file, 0: do not read
         C_e: float=1,
-        K_e: float=1
+        K_e: float=1,
+        N_C_e: int=50,
+        M_K_e: int=50
     ):
         self.parameters_in_file = parameters_in_file
         self.parameters_out_file = parameters_out_file
@@ -31,6 +33,8 @@ class TCeKappa:
             warnings.warn("K_e is set to the default placeholder (1). Please provide a correct value.")
         self.C_e = C_e
         self.K_e = K_e
+        self.N_C_e = N_C_e
+        self.M_K_e = M_K_e
     
     def _convert_Ce_unit(
         self,
@@ -74,10 +78,13 @@ class TCeKappa:
         with open(self.parameters_out_file, 'w') as f:
             f.write(f'# Ce & Kappa for Ge: {len(Temp)} data, 100 K dT\n')
             f.write('# https://github.com/N-Medvedev/XTANT-3_coupling_data/blob/main/K_semiconductors/K_Ge.dat\n')
-            f.write('# Ce (eV/Ang^3/K), Kappa (eV/Ang/K/ps)\n')
-            f.write(f'{len(Temp)} 100\n')
-            for C, K in zip(Ce, Kappa):
-                f.write(f'{C:.6e} {K:.6e}\n')
+            f.write('# First N line: T_e C_e(eV/Ang^3/K), no line gap, then M line: T_e K_e(eV/Ang/K/ps)\n')
+            f.write(f'{self.N_C_e}\n')
+            for T, C, _ in zip(Temp, Ce, range(self.N_C_e)):
+                f.write(f'{T} {C:.6e}\n')
+            f.write(f'{self.M_K_e}\n')
+            for T, K, _ in zip(Temp, Kappa, range(self.M_K_e)):
+                f.write(f'{T} {K:.6e}\n')
         print('Parameters out file is written.')
 
     def _get_Ce_Ke_for_T(self):
@@ -87,17 +94,17 @@ class TCeKappa:
                 return C, K
         raise ValueError(f'Temperature {self.T_e} K not found in the parameters file.') 
 
-    def tinfile_Ce_Kappa(self):
-        self.write_parameters_file()
+    def write_tinfile(self):
+        self._write_parameters_file()
         with open(self.tin_file, 'w') as f:
             f.write('# Tin file for Ge\n')
             f.write('# \n')
             f.write('# \n')
-            f.write(f'{self.grids[0]} {self.grids[1]} {self.grids[2]} 1\n')
-            f.write(f'{self.boxsize[0]} {self.boxsize[1]}\n')
+            f.write(f'{self.grids[0]+1} {self.grids[1]+1} {self.grids[2]+1} 1\n')
+            f.write(f'{self.boxsize[0]}, {self.boxsize[1]}\n')
             f.write(f'{self.boxsize[2]} {self.boxsize[3]}\n')
             f.write(f'{self.boxsize[4]} {self.boxsize[5]}\n')
-            f.write('# i j k T_e S_e rho_e C_e K_e flag T_dyn_flag \n')
+            f.write('i j k T_e S_e rho_e C_e K_e flag T_dyn_flag \n')
             for x in range(self.grids[0]+1):
                 for y in range(self.grids[1]+1):
                     for z in range(self.grids[2]+1):

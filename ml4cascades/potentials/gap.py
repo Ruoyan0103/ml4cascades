@@ -59,29 +59,21 @@ if __name__ == "__main__":
     gap_file = os.path.join(module_dir, 'params', 'GAP', 'Ge-v10.xml')
     gap = GAPotential.from_config(gap_file)
     gap.write_param(gap_file)
-    gap_ff_settings = gap.ff_settings
 
     gap_file_folder = os.path.join(module_dir, 'params', 'TGAP') 
     gap_file = 'Ge-v10-gap'
     tgap = TGAPotential()
     tgap.write_param(gap_file)
-    tgap_ff_settings = tgap.ff_settings
 
-    bi = BasicInput(ff_settings=tgap_ff_settings, mass=[72.64], element=['Ge'], lattice=['diamond'], alat=[[5.76]*3])
+    bi = BasicInput(potential=tgap, mass=[72.64], element=['Ge'], lattice=['diamond'], alat=[[5.76]*3])
     temperature = 300
     num_directions = 30
-    equ_md_steps = 30000
-    cascade_md_steps = 30500
-
-
-
-
-
-    energies, num_directions = [100], 500
-    # energies, num_directions = [2000], 500
-    # energies, num_directions = [5000], 500
-    # energies, num_directions = [10e3, 20e3], 500
-    sizes = [] 
+    equ_md_steps = 30
+    cascade_md_steps = 30
+    gap_file_folder = os.path.join(module_dir, 'params', 'TGAP')
+    eph_parameter_from_file = 0
+    energies = [100] # in eV
+    sizes = []
     radius_fracs = []
     for e in energies:
         if e < 400:
@@ -96,12 +88,49 @@ if __name__ == "__main__":
         elif e > 5000 and e <= 20e3:
             sizes.append(int(np.ceil(np.cbrt(e*55/8))))
             radius_fracs.append(0.9)
-    # thicknesses = [alat] * len(energies)
-    thicknesses = [alat/2] * len(energies)
 
-    cas_calc = CascadeCalculator(gap, mass, element, lattice, alat, sizes, thicknesses, radius_fracs, temperature,
-                                energies, num_directions)
-    cas_calc.calculate(relax_flag=False, simulation_flag=False, check_flag=False, postprocess_flag=True) 
+    cascade_eph_calc = CascadeCalculatorEPH(
+        basicinput=bi,
+        sizes=sizes,
+        radius_fracs=radius_fracs,
+        temperature=temperature,
+        energies=energies,
+        num_directions=num_directions,
+        equ_md_steps=equ_md_steps,
+        cascade_md_steps=cascade_md_steps,
+        eph_parameter_from_file=eph_parameter_from_file,
+        gap_file_folder=gap_file_folder
+    )
+    # each time set one flag True
+    cascade_eph_calc.calculate(relax_flag=False, simulation_flag=False)
+
+
+
+
+
+
+ 
+
+
+    # for e in energies:
+    #     if e < 400:
+    #         sizes.append(int(np.ceil(np.cbrt(e*20/8))))
+    #         radius_fracs.append(0.5)
+    #     elif e >= 400 and e < 2000:
+    #         sizes.append(int(np.ceil(np.cbrt(e*30/8))))
+    #         radius_fracs.append(0.5)
+    #     elif e >= 2000 and e <= 5000:
+    #         sizes.append(int(np.ceil(np.cbrt(e*40/8))))
+    #         radius_fracs.append(0.8)
+    #     elif e > 5000 and e <= 20e3:
+    #         sizes.append(int(np.ceil(np.cbrt(e*55/8))))
+    #         radius_fracs.append(0.9)
+    # # thicknesses = [alat] * len(energies)
+    # thicknesses = [alat/2] * len(energies)
+
+    # cas_calc = CascadeCalculator(gap, mass, element, lattice, alat, sizes, thicknesses, radius_fracs, temperature,
+    #                             energies, num_directions)
+    # cas_calc.calculate(relax_flag=False, simulation_flag=False, check_flag=False, postprocess_flag=True) 
 
 
 

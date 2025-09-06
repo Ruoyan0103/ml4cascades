@@ -1,7 +1,8 @@
+from ml4cascades.potentials import IPotential
 class BasicInput:
     def __init__(
         self, 
-        ff_settings: str, 
+        potential: IPotential, 
         mass: list[float], 
         element: list[str], 
         lattice: list[str], 

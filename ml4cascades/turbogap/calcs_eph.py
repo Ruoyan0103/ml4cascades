@@ -21,7 +21,7 @@ module_dir = os.path.dirname(__file__)
 result_dir = os.path.join(module_dir, 'results')
 log_dir = os.path.join(module_dir, 'logs')
 
-class CascadeCalculatorEPH(TurboGAPCalculator):       
+class CascadeCalculatorEPH(TurboGAPCalculator): 
     def __init__(
         self, 
         basicinput: BasicInput, 
@@ -34,7 +34,7 @@ class CascadeCalculatorEPH(TurboGAPCalculator):
         cascade_md_steps: int, 
         gap_file_folder: str,
         eph_parameter_from_file: int, # 1: read from parameters file, 0: do not read
-        task_name='pka'
+        task_name='pka-eph'
     ):
         self.bi = basicinput
         self.sizes = sizes
@@ -225,29 +225,31 @@ class CascadeCalculatorEPH(TurboGAPCalculator):
         new_trajectory_file = os.path.join(eng_hkl_dir, 'thermalized.xyz')
         write(new_trajectory_file, relaxed_struct, format='extxyz')
         
-    def _setup(self, relaxflag):
-        """
-        Set up the directories and input files for the LAMMPS simulation.
-        """
+    def _setup(
+        self, 
+        relax_flag: bool=False
+    ):
         self._get_random_angles()
         self._set_hkl_from_angles()
         for energy, size in zip(self.energies, self.sizes):
             eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
             os.makedirs(eng_dir, exist_ok=True)
             shutil.copytree(self.gap_file_folder, os.path.join(eng_dir, 'gap_files'), dirs_exist_ok=True)
-            if relaxflag:
-                self.logger.info(f'------------------Relaxation for energy: {energy} eV, supercell size: {size} --------------------')
+            if relax_flag:
+                self.logger.info(f'------------------RELAXATION for energy: {energy} eV, supercell size: {size} --------------------')
                 self._relax(eng_dir, size)
 
-    def calculate(self, relaxflag=False, cascadeflag=False):
-        """
-        Run the cascade calculations.
-        """
-        self._setup(relaxflag)
-        # each time set one flag True
-        if cascadeflag:
+    def calculate(
+        self, 
+        relax_flag: bool=False, 
+        simulation_flag: bool=False
+    ):
+        if relax_flag and simulation_flag:
+            raise ValueError("Only one of relax_flag or simulation_flag can be True at a time.")
+        self._setup(relax_flag)
+        if simulation_flag:
             for energy, size, radius_frac, in zip(self.energies, self.sizes, self.radius_fracs):
-                self.logger.info(f'------------------Cascade simulation for energy: {energy} eV, supercell size: {size} --------------------')
+                self.logger.info(f'------------------SIMULATION for energy: {energy} eV, supercell size: {size} --------------------')
                 eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
                 trajectory_file = os.path.join(eng_dir, 'trajectory_out.xyz')
                 velocity = np.sqrt(2 * energy  / (self.mass * AMU_TO_KG * JOULE_TO_EV)) / (ANGSTROM_TO_METER/FS_TO_S) 

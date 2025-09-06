@@ -65,9 +65,9 @@ if __name__ == "__main__":
     tgap = TGAPotential()
     tgap.write_param(gap_file)
 
-    bi = BasicInput(potential=tgap, mass=[72.64], element=['Ge'], lattice=['diamond'], alat=[[5.76]*3])
+    bi = BasicInput(potential=tgap, mass=72.64, element='Ge', lattice='diamond', alat=[5.76]*3)
     temperature = 300
-    num_directions = 30
+    num_sampling_direcs = 30
     equ_md_steps = 30
     cascade_md_steps = 30
     gap_file_folder = os.path.join(module_dir, 'params', 'TGAP')
@@ -95,14 +95,14 @@ if __name__ == "__main__":
         radius_fracs=radius_fracs,
         temperature=temperature,
         energies=energies,
-        num_directions=num_directions,
+        num_sampling_direcs=num_sampling_direcs,
         equ_md_steps=equ_md_steps,
         cascade_md_steps=cascade_md_steps,
         eph_parameter_from_file=eph_parameter_from_file,
         gap_file_folder=gap_file_folder
     )
     # each time set one flag True
-    cascade_eph_calc.calculate(relax_flag=False, simulation_flag=False)
+    cascade_eph_calc.calculate(relax_flag=False, simulation_flag=True)
 
 
 

@@ -1,11 +1,11 @@
 ! TurboGAP input file for PKA simulation
-! Parameters: ff_settings, num_species, element, mass, cascade_steps, Temp
+! Parameters: ff_settings, element, mass, cascade_steps, Temp
 ! Parameters for EPH: beta_file, xlow, xhigh, ylow, yhigh, zlow, zhigh, eph_tin_file, eph_tout_file
 
 ! Species-specific info
 atoms_file = 'thermalized.xyz'
 pot_file = "gap_files/{ff_settings}"
-n_species = {num_species}
+n_species = 1
 species = {element}
 masses = {mass}
 

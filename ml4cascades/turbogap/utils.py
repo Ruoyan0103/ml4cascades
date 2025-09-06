@@ -1,4 +1,6 @@
 import numpy as np
+import warnings 
+
 class TCeKappa:
     '''
     Ce: electronic heat capacity
@@ -34,12 +36,12 @@ class TCeKappa:
         self,
         values: list
     ):
-    '''
-        Convert Ce (heat capacity) unit from J/m^3/K to eV/Å^3/K
-        1 J = 6.242e18 eV
-        1 m^3 = 1e30 Å^3
-        1 J/m^3/K = 6.242e-12 eV/Å^3/K
-    '''
+        '''
+            Convert Ce (heat capacity) unit from J/m^3/K to eV/Å^3/K
+            1 J = 6.242e18 eV
+            1 m^3 = 1e30 Å^3
+            1 J/m^3/K = 6.242e-12 eV/Å^3/K
+        '''
         converted_values = [value * 6.242e-12 for value in values]
         return converted_values
 
@@ -47,19 +49,19 @@ class TCeKappa:
         self,
         values: list
     ):
-    '''
-        Convert Kappa (heat conductivity) unit from W/m/K to eV/Å/K/ps
-        1 W = 1 J/s = 6.242e18 eV/s
-        1 W/m/K = 6.242e18 eV/m/K/s
-        1 m = 1e10 Å
-        1 s = 1e12 ps
-        1 W/m/K = 6.242e-4 eV/Å/K/ps
-    '''
+        '''
+            Convert Kappa (heat conductivity) unit from W/m/K to eV/Å/K/ps
+            1 W = 1 J/s = 6.242e18 eV/s
+            1 W/m/K = 6.242e18 eV/m/K/s
+            1 m = 1e10 Å
+            1 s = 1e12 ps
+            1 W/m/K = 6.242e-4 eV/Å/K/ps
+        '''
         converted_values = [value * 6.242e-4 for value in values]
         return converted_values
     
     def _read_file(self):
-        k_ge = np.loadtxt(self.parameters_file, skiprows=2)
+        k_ge = np.loadtxt(self.parameters_in_file, skiprows=2)
         Temp = k_ge[:, 0]
         Ce_org = k_ge[:, 1]
         Kappa_org = k_ge[:, 5]

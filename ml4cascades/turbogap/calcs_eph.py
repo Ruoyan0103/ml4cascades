@@ -1,5 +1,4 @@
-from ml4cascades.turbogap import TurboGAPCalculator, TCeKappa
-from ml4cascades.utils import BasicInput
+from typing import Tuple
 import os, subprocess, math, shutil, time
 from ase import Atoms
 from ase.build import bulk 
@@ -10,7 +9,9 @@ from ovito.modifiers import WignerSeitzAnalysisModifier, ClusterAnalysisModifier
 from ovito.pipeline import StaticSource, Pipeline
 from collections import Counter
 from ovito.data import DislocationNetwork
-
+from .calcs_base import TurboGAPCalculator
+from .utils import TCeKappa
+from ml4cascades.utils import BasicInput
 
 AMU_TO_KG = 1.66053906660E-27 # Atomic mass unit to kg conversion factor
 JOULE_TO_EV = 6.241509074E18  # Joule to eV conversion factor
@@ -34,8 +35,9 @@ class CascadeCalculatorEPH(TurboGAPCalculator):
         cascade_md_steps: int, 
         gap_file_folder: str,
         eph_parameter_from_file: int, # 1: read from parameters file, 0: do not read
-        task_name='pka-eph'
+        task_name='pka'
     ):
+        super().__init__(task_name, basicinput.potential)
         self.bi = basicinput
         self.sizes = sizes
         self.radius_fracs = radius_fracs
@@ -57,8 +59,8 @@ class CascadeCalculatorEPH(TurboGAPCalculator):
 
     def _get_random_angles(self):
         np.random.seed(42)  
-        phi = np.random.uniform(self.min_phi, self.max_phi, self.num_sampling_direcs*1.1)           
-        costheta = np.random.uniform(np.cos(self.min_theta), np.cos(self.max_theta), self.num_sampling_direcs*1.1) 
+        phi = np.random.uniform(self.min_phi, self.max_phi, int(self.num_sampling_direcs*1.1))           
+        costheta = np.random.uniform(np.cos(self.min_theta), np.cos(self.max_theta), int(self.num_sampling_direcs*1.1)) 
         theta = np.arccos(costheta)                                                    
         self.angle_set = set(zip(phi, theta))                                    
 
@@ -98,10 +100,10 @@ class CascadeCalculatorEPH(TurboGAPCalculator):
             input_template = f.read()
         input_file = os.path.join(relax_dir, 'input')
         with open(input_file, 'w') as f:
-            f.write(input_template.format(ff_settings=self.bi.ff_settings, num_species=len(self.bi.element),
+            f.write(input_template.format(ff_settings=self.bi.potential.ff_settings, num_species=len(self.bi.element),
                                           element=self.bi.element, mass=self.bi.mass, equilibration_steps=self.equ_md_steps,
                                           Temp=self.temp))
-        unit_cell = bulk(self.element, self.lattice, a=self.alat, cubic=True)
+        unit_cell = bulk(self.bi.element, self.bi.lattice, a=self.bi.alat[0], b=self.bi.alat[1], c=self.bi.alat[2], cubic=True)
         super_cell = unit_cell * [size, size, size]
         write(os.path.join(relax_dir, 'data.input'), super_cell, format='extxyz')
         subprocess.run('sbatch submit.sh', shell=True, check=True, cwd=relax_dir)
@@ -165,9 +167,9 @@ class CascadeCalculatorEPH(TurboGAPCalculator):
         thickness_x, thickness_y, thickness_z = (a*scaling_factor-a)/2, (b*scaling_factor-b)/2, (c*scaling_factor-c)/2
         gsx, gsy, gsz = a*scaling_factor/voxel_size, b*scaling_factor/voxel_size, c*scaling_factor/voxel_size
         parameters_in_file = os.path.join(self.template_dir, 'K_Ge.dat')
-        parameters_out_file = os.path.join(self.eng_hkl_dir, 'Te-dependent_e-parameters.txt')
-        tin_file = os.path.join(self.eng_dir, 'tin.dat')
-        tout_file = os.path.join(self.eng_hkl_dir, 'tout.dat')
+        parameters_out_file = os.path.join(eng_hkl_dir, 'Te-dependent_e-parameters.txt')
+        tin_file = os.path.join(eng_dir, 'tin.dat')
+        tout_file = os.path.join(eng_hkl_dir, 'tout.dat')
         if self.eph_parameter_from_file == 1:
             tcekappa = TCeKappa(parameters_in_file=parameters_in_file,
                     parameters_out_file=parameters_out_file,
@@ -201,8 +203,7 @@ class CascadeCalculatorEPH(TurboGAPCalculator):
         # ------------------------ eph setting end ------------------------
 
         with open(input_file, 'w') as f:
-            f.write(input_template.format(ff_settings=self.ff_settings, 
-                                          num_species=self.bi.num_species,
+            f.write(input_template.format(ff_settings=self.bi.potential.ff_settings, 
                                           element=self.bi.element, 
                                           mass=self.bi.mass, 
                                           Temp=self.temp, 
@@ -252,7 +253,7 @@ class CascadeCalculatorEPH(TurboGAPCalculator):
                 self.logger.info(f'------------------SIMULATION for energy: {energy} eV, supercell size: {size} --------------------')
                 eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
                 trajectory_file = os.path.join(eng_dir, 'trajectory_out.xyz')
-                velocity = np.sqrt(2 * energy  / (self.mass * AMU_TO_KG * JOULE_TO_EV)) / (ANGSTROM_TO_METER/FS_TO_S) 
+                velocity = np.sqrt(2 * energy  / (self.bi.mass * AMU_TO_KG * JOULE_TO_EV)) / (ANGSTROM_TO_METER/FS_TO_S) 
                 for idx, hkl in enumerate(self.hkl_list):
                     eng_hkl_dir = os.path.join(eng_dir, str(idx))
                     relaxed_struct, pka_id = self._get_pka_id_sphere(trajectory_file, hkl, radius_frac)

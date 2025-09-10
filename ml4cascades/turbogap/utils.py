@@ -101,7 +101,7 @@ class TCeKappa:
             f.write('# \n')
             f.write('# \n')
             f.write(f'{self.grids[0]+1} {self.grids[1]+1} {self.grids[2]+1} 1\n')
-            f.write(f'{self.boxsize[0]}, {self.boxsize[1]}\n')
+            f.write(f'{self.boxsize[0]} {self.boxsize[1]}\n')
             f.write(f'{self.boxsize[2]} {self.boxsize[3]}\n')
             f.write(f'{self.boxsize[4]} {self.boxsize[5]}\n')
             f.write('i j k T_e S_e rho_e C_e K_e flag T_dyn_flag \n')

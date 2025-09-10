@@ -68,16 +68,16 @@ if __name__ == "__main__":
     bi = BasicInput(potential=tgap, mass=72.64, element='Ge', lattice='diamond', alat=[5.76]*3)
     temperature = 300
     num_sampling_direcs = 30
-    equ_md_steps = 30
-    cascade_md_steps = 30
+    equ_md_steps = 30000
+    cascade_md_steps = 30500
     gap_file_folder = os.path.join(module_dir, 'params', 'TGAP')
-    eph_parameter_from_file = 1
+    eph_parameter_from_file = 0
     energies = [100] # in eV
     sizes = []
     radius_fracs = []
     for e in energies:
         if e < 400:
-            sizes.append(int(np.ceil(np.cbrt(e*20/8))))
+            sizes.append(int(np.ceil(np.cbrt(e*30/8))))
             radius_fracs.append(0.5)
         elif e >= 400 and e < 2000:
             sizes.append(int(np.ceil(np.cbrt(e*30/8))))

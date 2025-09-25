@@ -32,17 +32,17 @@ eph_betafile = '{beta_file}'
 eph_box_limits = {xlow} {xhigh} {ylow} {yhigh} {zlow} {zhigh}
 
 eph_rho_e = 1.0                       ! scaling parameter for FDM mesh                
-eph_C_e = 1                           ! electronic heat capacity (eV/A^3/K), read from Tin                
-eph_kappa_e = 1                       ! electronic thermal conductivity (eV/A/K/ps), read from Tin    
+eph_C_e = {eph_C_e}                   ! electronic heat capacity (eV/A^3/K)               
+eph_kappa_e = {eph_kappa_e}           ! electronic thermal conductivity (eV/A/K/ps)
 eph_Ti_e = {Temp}                     ! initial electronic temperature (K)            
 
-eph_Tinfile = '{eph_tin_file}'
+! eph_Tinfile = '{eph_tin_file}'
 
 eph_freq_Tout = 100
 eph_freq_mesh_Tout = 10000
 eph_Toutfile = '{eph_tout_file}'
 
 ! Writeouts
-write_thermo = 10
+write_thermo = 100
 write_xyz = 100
 neighbors_buffer = 0.5

@@ -102,7 +102,7 @@ if __name__ == "__main__":
         gap_file_folder=gap_file_folder
     )
     # each time set one flag True
-    cascade_eph_calc.calculate(relax_flag=False, simulation_flag=True)
+    cascade_eph_calc.calculate(relax_flag=False, simulation_flag=True, postprocess_flag=False)
 
 
 

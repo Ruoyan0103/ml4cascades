@@ -14,7 +14,7 @@ group           PKA id == {pka_id}
 velocity        PKA set {V_x} {V_y} {V_z} units box
 
 #------------------------------------SIMULATION---------------------------------
-fix eph all eph 12345 7 4 1.0 6.242e-7 0.0692862 300 36 36 36  100 NULL {inputfiles_betafile} Ge
+fix eph all eph 12345 7 4 1.0 6.242e-7 0.0692862 300 36 36 36 100 NULL {inputfiles_betafile} Ge
 
 
 

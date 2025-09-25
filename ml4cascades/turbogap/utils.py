@@ -47,7 +47,8 @@ class TCeKappa:
             1 J/m^3/K = 6.242e-12 eV/Å^3/K
         '''
         converted_values = [value * 6.242e-12 for value in values]
-        return converted_values
+        modified_values = [value * 1e3 for value in converted_values] # from per cm^3 to per Å^3
+        return modified_values
 
     def _convert_Kappa_unit(
         self,
@@ -73,7 +74,21 @@ class TCeKappa:
         Ce_converted = self._convert_Ce_unit(Ce_org)
         return Temp, Ce_converted, Kappa_converted
     
-    def _write_parameters_file(self):
+    def _write_parameters_file_lammps(self):
+        Temp, Ce, Kappa = self._read_file()
+        with open(self.parameters_out_file, 'w') as f:
+            f.write(f'# Ce & Kappa for Ge: {len(Temp)} data, 100 K dT\n')
+            f.write('# https://github.com/N-Medvedev/XTANT-3_coupling_data/blob/main/K_semiconductors/K_Ge.dat\n')
+            f.write('# First N line: T_e C_e(eV/Ang^3/K), no line gap, then M line: T_e K_e(eV/Ang/K/ps)\n')
+            f.write(f'{self.N_C_e}\n')
+            for T, C, _ in zip(Temp, Ce, range(self.N_C_e)):
+                f.write(f'{T} {C:.6e}\n')
+            f.write(f'{self.M_K_e}\n')
+            for T, K, _ in zip(Temp, Kappa, range(self.M_K_e)):
+                f.write(f'{T} {K:.6e}\n')
+        print('Parameters out file is written.')
+
+    def _write_parameters_file_turbogap(self):
         Temp, Ce, Kappa = self._read_file()
         with open(self.parameters_out_file, 'w') as f:
             f.write(f'# Ce & Kappa for Ge: {len(Temp)} data, 100 K dT\n')
@@ -93,11 +108,31 @@ class TCeKappa:
             if T == self.T_e:
                 return C, K
         raise ValueError(f'Temperature {self.T_e} K not found in the parameters file.') 
-
-    def write_tinfile(self):
-        self._write_parameters_file()
+    
+    def write_tinfile_lammps(self):
+        self._write_parameters_file_lammps()
         with open(self.tin_file, 'w') as f:
-            f.write('# Tin file for Ge\n')
+            f.write('# Tin file\n')
+            f.write('# \n')
+            f.write('# i j k T_e S rho_e C_e kappa_e flag T_dynamic_flag\n')
+            f.write(f'{self.grids[0]} {self.grids[1]} {self.grids[2]} 1\n')
+            f.write(f'{self.boxsize[0]} {self.boxsize[1]}\n')
+            f.write(f'{self.boxsize[2]} {self.boxsize[3]}\n')
+            f.write(f'{self.boxsize[4]} {self.boxsize[5]}\n')
+            if self.read_from_param_file == 0:
+                f.write('NULL \n')
+            else:
+                f.write('Te-dependent_e-parameters.txt \n')
+            for x in range(self.grids[0]):
+                for y in range(self.grids[1]):
+                    for z in range(self.grids[2]):
+                        f.write(f'{x} {y} {z} {self.T_e} 0.000000e+00 1.000000e+00 {self.C_e} {self.K_e} 1 0\n')
+                        # only x, y, z matters, Te, Ce, Kappa will be read from parameters file
+
+    def write_tinfile_turbogap(self):
+        self._write_parameters_file_turbogap()
+        with open(self.tin_file, 'w') as f:
+            f.write('# Tin file\n')
             f.write('# \n')
             f.write('# \n')
             f.write(f'{self.grids[0]+1} {self.grids[1]+1} {self.grids[2]+1} 1\n')
@@ -110,7 +145,6 @@ class TCeKappa:
                     for z in range(self.grids[2]+1):
                         f.write(f'{x+1} {y+1} {z+1} {self.T_e} 0.000000e+00 1.000000e+00 {self.C_e} {self.K_e} 0 {self.read_from_param_file}\n')
                         # only x, y, z matters, Te, Ce, Kappa will be read from parameters file
-
 
 
 

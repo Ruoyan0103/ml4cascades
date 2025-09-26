@@ -295,17 +295,18 @@ class CascadeCalculatorEPH(TurboGAPCalculator):
         defect_values = {} # dict, {energy: mean, std of number of defects}
 
         cluster_sizes_lists = [] 
-        bins = [(1,2), (3,4), (5,6)]
+        cluster_bins = [(1,2), (3,4), (5,6)]
         for energy in self.energies:
             eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
-            hkl_file = os.path.join(eng_dir, 'hkl_list.dat')
+            hkl_file = os.path.join(self.calculation_dir, 'hkl_list.dat')
             hkl_list = np.loadtxt(hkl_file, skiprows=1)
             if hkl_list.ndim == 1:
                 hkl_list = hkl_list.reshape(1, -1)
             relaxed_file = os.path.join(eng_dir, 'trajectory_out.xyz')
-            all_pipeline = import_file(relaxed_file)
-            last_frame = all_pipeline.compute(all_pipeline.source.num_frames-1)
-            reference_pipeline = Pipeline(source=StaticSource(data=last_frame))
+            relaxed_file_last_frame = os.path.join(eng_dir, 'trajectory_out.xyz')
+            atoms = read(relaxed_file, format='extxyz', index=-1)
+            write(relaxed_file_last_frame, atoms, format='extxyz')  # rewrite to ensure correct format
+            reference_pipeline = import_file(relaxed_file_last_frame)
 
             cnt_vacancies_list = []
             cnt_interstitials_list = []
@@ -330,9 +331,9 @@ class CascadeCalculatorEPH(TurboGAPCalculator):
             inter_data[energy] = cnt_interstitials_list
             defect_data[energy] = cnt_defects_list
 
-        clusterhist = ClusterHistogram(cluster_sizes_lists, labels=self.energies, bins=bins)
+        clusterhist = ClusterHistogram(cluster_sizes_lists, labels=self.energies, bins=cluster_bins)
         fig_path = os.path.join(self.calculation_dir, 'cluster_histogram.png')
-        clusterhist.plot(fig_path, error_bars=True, palette='pastel')
+        clusterhist.plot(fig_path, palette='pastel')
         
         vac_values = {energy: (np.mean(vac_data[energy]), np.std(vac_data[energy])) for energy in vac_data}
         inter_values = {energy: (np.mean(inter_data[energy]), np.std(inter_data[energy])) for energy in inter_data}
@@ -376,43 +377,31 @@ class CascadeCalculatorEPH(TurboGAPCalculator):
         pipeline.modifiers.remove(cls)
         count_dict = Counter(cluster_sizes)
         return count_dict
-    
 
 class ClusterHistogram:
-    def __init__(
-            self, 
-            cluster_sizes_lists: list[list[dict]], 
-            labels: list[str], 
-            bins: list[tuple[int, int]]
-        ):
+    def __init__(self, cluster_sizes_lists, labels, bins):
         self.cluster_sizes_lists = cluster_sizes_lists
-        self.labels = labels
+        self.labels = [f'{l} eV' for l in labels]
         self.bins = bins
         self.df = self._prepare_combined_data()
     
-    def _assign_bin(self, size: int) -> str:
+    def _assign_bin(self, size):
         for b in self.bins:
             if b[0] <= size <= b[1]:
                 return f'{b[0]}-{b[1]}'
         return f'>{self.bins[-1][1]}'
     
-    def _prepare_data(
-            self, 
-            cluster_sizes_list: list[dict], 
-            label: str
-        ) -> pd.DataFrame:
+    def _prepare_data(self, cluster_sizes_list, label):
         all_sizes = set().union(*[d.keys() for d in cluster_sizes_list])
         avg_counts = {c: np.mean([d.get(c,0) for d in cluster_sizes_list]) for c in all_sizes}
-        std_counts = {c: np.std([d.get(c,0) for d in cluster_sizes_list]) for c in all_sizes}
-        
+
         data_for_plot = []
         for size, avg in avg_counts.items():
             bin_label = self._assign_bin(size)
             data_for_plot.append({
                 'cluster_bin': bin_label,
                 'avg_count': avg,
-                'std_count': std_counts[size],
-                'label': label
+                'energy': label
             })
         return pd.DataFrame(data_for_plot)
     
@@ -422,40 +411,29 @@ class ClusterHistogram:
             dfs.append(self._prepare_data(cls_list, label))
         return pd.concat(dfs)
     
-    def plot(
-            self, 
-            fig_path: str, 
-            error_bars=True, 
-            palette='pastel'
-        ):
-        if error_bars:
-            sns.barplot(
-                x='cluster_bin',
-                y='avg_count',
-                hue='label',
-                data=self.df,
-                palette=palette,
-                yerr=self.df['std_count']
-            )
-        else:
-            sns.barplot(
-                x='cluster_bin',
-                y='avg_count',
-                hue='label',
-                data=self.df,
-                palette=palette
-            )
-        plt.xlabel('Cluster size bin')
-        plt.ylabel('Average count')
-        plt.savefig(fig_path)
+    def plot(self, fig_path, palette='pastel'):
+        # assign a color to each energy
+        unique_energies = self.df['energy'].unique()
+        colors = sns.color_palette(palette, n_colors=len(unique_energies))
+        color_dict = dict(zip(unique_energies, colors))
         
-
-    
-
-
-
-   
-    
-
-
-
+        # plot each energy separately
+        plt.figure(figsize=(8,6))
+        for energy in unique_energies:
+            subset = self.df[self.df['energy'] == energy]
+            sns.barplot(
+                x='cluster_bin',
+                y='avg_count',
+                data=subset,
+                color=color_dict[energy],
+                errorbar=None
+            )
+        
+        # create a manual legend
+        handles = [plt.Rectangle((0,0),1,1, color=color_dict[e]) for e in unique_energies]
+        plt.legend(handles, unique_energies, title=None, fontsize=16)
+        
+        plt.xlabel('Cluster size', fontsize=16)
+        plt.ylabel('Average count', fontsize=16)
+        plt.tight_layout()
+        plt.savefig(fig_path)

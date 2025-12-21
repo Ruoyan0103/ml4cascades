@@ -1,8 +1,6 @@
-! TurboGAP input file for cascade simulation
-! Parameters: atomsfile, ff_settings, element, mass, cascade_steps, Temp
+! TurboGAP input file for thermalizing electronic system
+! Parameters: atomsfile, ff_settings, num_species, element, mass, equilibration_steps, Temp, taut
 ! Parameters for EPH: beta_file, xlow, xhigh, ylow, yhigh, zlow, zhigh, eph_tout_file
-! lack of border monitor, dynamic
-
 atoms_file = "{atomsfile}"
 pot_file = "gap_files/{ff_settings}"
 n_species = {num_species}
@@ -10,18 +8,8 @@ species = {element}
 masses = {mass}
 
 ! MD options
-md_nsteps = {cascade_steps}
-md_step = 1.
-
-! Adaptive timestep 
-adaptive_time = .true.
-adapt_time_groupID = all
-adapt_tstep_interval = 1
-adapt_tmin = 1.0E-10
-adapt_tmax = 1.0E-00               ! 1 fs after energy conservation test (8000 K)
-adapt_xmax = 1.0E-02               ! 0.01 Angstrom
-adapt_emax = 10.0                  ! 10 eV
-
+md_nsteps = {equilibration_steps} ! 5000 steps for 5 ps
+md_step = 1.                      ! fs
 ! Electronic system - EPH model
 nonadiabatic_processes = .true.
 eph_fdm_option = 1                ! update electronic temperature using FDM
@@ -37,9 +25,9 @@ eph_kappa_e = {eph_kappa_e}       ! electronic thermal conductivity (eV/A/K/ps)
 eph_Ti_e = {Temp}                 ! initial electronic temperature (K)            
 
 eph_freq_Tout = 10                ! frequency to output electronic temperature
-eph_freq_mesh_Tout = 1000 
+eph_freq_mesh_Tout = 1000
 eph_Toutfile = '{eph_tout_file}'  ! electronic temperature map output file
 
 ! Output
-write_thermo = 10                 ! Write thermo every 10 steps
+write_thermo = 10                 ! Write thermo every 10 steps, atomic temperature
 write_xyz = {equilibration_steps} ! Write final structure

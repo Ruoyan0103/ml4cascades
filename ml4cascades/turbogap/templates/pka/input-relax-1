@@ -1,0 +1,19 @@
+! TurboGAP input file for thermalizing atomic system
+! Parameters: atomsfile, ff_settings, num_species, element, mass, equilibration_steps, Temp, taut
+atoms_file = "{atomsfile}"
+pot_file = "gap_files/{ff_settings}"
+n_species = {num_species}
+species = {element}
+masses = {mass}
+
+! MD options
+md_nsteps = {equilibration_steps} ! 5000 steps for 5 ps
+md_step = 1.                      ! fs
+! Temperature
+thermostat = berendsen
+t_beg = {Temp}
+t_end = {Temp}
+tau_t = {taut}
+! Output
+write_thermo = 10                 ! Write thermo every 10 steps
+write_xyz = {equilibration_steps} ! Write final structure

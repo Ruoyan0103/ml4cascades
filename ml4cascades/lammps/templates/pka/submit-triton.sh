@@ -9,5 +9,6 @@
 #SBATCH --job-name={file}
 
 
-module load gcc openmpi fftw openblas eigen ffmpeg zstd
+module load openmpi fftw openblas eigen ffmpeg zstd
+#export LD_LIBRARY_PATH=/scratch/work/jinr1/.conda_envs/torch-env/lib:$LD_LIBRARY_PATH
 srun lmp -in {file}

@@ -295,7 +295,7 @@ class CascadeCalculatorEPH(TurboGAPCalculator):
         defect_values = {} # dict, {energy: mean, std of number of defects}
 
         cluster_sizes_lists = [] 
-        cluster_bins = [(1,2), (3,4), (5,6)]
+        cluster_bins = [(1, 2), (3, 4), (5, 6)]
         for energy in self.energies:
             eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
             hkl_file = os.path.join(self.calculation_dir, 'hkl_list.dat')

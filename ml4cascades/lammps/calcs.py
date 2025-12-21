@@ -9,6 +9,9 @@ from ovito.pipeline import StaticSource, Pipeline
 from ovito.data import DislocationNetwork
 from collections import Counter
 import logging
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 AMU_TO_KG = 1.66053906660E-27  # Atomic mass unit to kg conversion factor
 JOULE_TO_EV = 6.241509074E18   # Joule to eV conversion factor
@@ -303,244 +306,65 @@ class CascadeCalculator(LMPStaticCalculator):
                 times = list(np.linspace(0, times[-1], len(vacancies)))
         
         return times, vacancies, interstitials, temperatures
-
+    
     def postProcess(self):
-        """
-        Post-process LAMMPS simulation outputs to count vacancies, interstitials, their clusters,
-        dislocations, and time-dependent defects and temperature.
-        Excludes simulations with final time < 30 ps and reads hkl_list.dat from energy folder.
-        Aligns time-dependent data to a common 0-30 ps time axis.
-        """
-        eng_vac = {}             # {energy: list of number of vacancies}
-        eng_inter = {}           # {energy: list of number of interstitials}
-        eng_vac_cluster = {}     # {energy: list of number of vacancy clusters}
-        eng_inter_cluster = {}   # {energy: list of number of interstitial clusters}
-        eng_vac_time = {}        # {energy: list of (time, mean_vac, std_vac)}
-        eng_inter_time = {}      # {energy: list of (time, mean_inter, std_inter)}
-        eng_temp_time = {}       # {energy: list of (time, mean_temp, std_temp)}
-        
-        # bin clusters
-        def bin_clusters(cluster_dict, value_list):
-            for size, cnt in cluster_dict.items():
-                if 1 <= size < 3:
-                    value_list[0] += cnt
-                elif 4 <= size < 6:
-                    value_list[1] += cnt
-                elif 7 <= size < 9:
-                    value_list[2] += cnt
-                else:
-                    value_list[3] += cnt
+        vac_data = {}      # dict, {energy: list of number of vacancies}
+        inter_data = {}    # dict, {energy: list of number of interstitials}
+        defect_data = {}   # dict, {energy: list of number of defects}
+        vac_values = {}    # dict, {energy: mean, std of number of vacancies}
+        inter_values = {}  # dict, {energy: mean, std of number of interstitials}
+        defect_values = {} # dict, {energy: mean, std of number of defects}
 
+        cluster_sizes_lists = [] 
+        cluster_bins = [(1, 2), (3, 4), (5, 6)]
         for energy in self.energies:
-            num_correct_cluster = 0
             eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
-            sum_vac_cluster_sizes = [0] * 4
-            sum_inter_cluster_sizes = [0] * 4
-            self.logger.info(f'---------------------------------------------------')
-            self.logger.info(f'Post-processing for energy: {energy} eV')
-            
-            # Load hkl_list from eng_dir/hkl_list.dat
-            hkl_file = os.path.join(eng_dir, 'hkl_list.dat')
-            if not os.path.exists(hkl_file):
-                self.logger.warning(f"hkl_list.dat not found in {eng_dir}. Skipping energy {energy} eV.")
-                continue
-            try:
-                hkl_list = np.loadtxt(hkl_file, skiprows=1)
-                if hkl_list.ndim == 1:  # Ensure 2D array even for single row
-                    hkl_list = hkl_list.reshape(1, -1)
-            except Exception as e:
-                self.logger.warning(f"Failed to read hkl_list.dat from {eng_dir}: {e}. Skipping energy {energy} eV.")
-                continue
-                
-            number_of_vacancies = []
-            number_of_interstitials = []
-            number_of_vacancy_clusters = []
-            number_of_interstitial_clusters = []
-            time_data = []  # List of (times, vacancies, interstitials, temperatures) per hkl
+            hkl_file = os.path.join(self.calculation_dir, 'hkl_list.dat')
+            hkl_list = np.loadtxt(hkl_file, skiprows=1)
+            if hkl_list.ndim == 1:
+                hkl_list = hkl_list.reshape(1, -1)
             relaxed_file = os.path.join(eng_dir, 'relax.out')
-            if not os.path.exists(relaxed_file):
-                self.logger.info(f"Reference file {relaxed_file} not found for energy {energy} eV. Skipping.")
-                continue
             reference_pipeline = import_file(relaxed_file)
-            
-            for idx, hkl in enumerate(hkl_list):
+
+            cnt_vacancies_list = []
+            cnt_interstitials_list = []
+            cnt_defects_list = []
+            cluster_sizes_list = []
+            for idx, _ in enumerate(hkl_list):
                 eng_hkl_dir = os.path.join(eng_dir, str(idx))
                 trajectory_file = os.path.join(eng_hkl_dir, 'dump.PKA')
-                data_file = os.path.join(eng_hkl_dir, 'data.txt')
-                
-                # Check if simulation reached 30 ps
-                if os.path.exists(data_file):
-                    try:
-                        data = np.unique(np.loadtxt(data_file, skiprows=1), axis=0)
-                        Time = data[:, 1]  # Second column is Time
-                        if Time[-1] < 30:
-                            self.logger.info(f"Skipping hkl {hkl} (index {idx}) for energy {energy} eV: final time {Time[-1]} ps < 30 ps.")
-                            continue
-                    except Exception as e:
-                        self.logger.warning(f"Failed to read data.txt from {eng_hkl_dir}: {e}. Skipping.")
-                        continue
-                else:
-                    self.logger.info(f"data.txt not found for energy {energy} eV, hkl {hkl}. Skipping.")
-                    continue
-                
-                if not os.path.exists(trajectory_file):
-                    self.logger.info(f"Trajectory file {trajectory_file} not found for energy {energy} eV, hkl {hkl}. Skipping.")
-                    continue
                 all_pipeline = import_file(trajectory_file)
-                
-                # Time-dependent analysis
-                times, vacancies, interstitials, temperatures = self._timeDependentAnalysis(all_pipeline, reference_pipeline, eng_hkl_dir)
-                if not times:  # Skip if time-dependent analysis failed (e.g., time < 30 ps)
-                    continue
-                time_data.append((times, vacancies, interstitials, temperatures))
-                
-                # Analysis for last frame
                 last_frame = all_pipeline.compute(all_pipeline.source.num_frames-1)
                 pipeline = Pipeline(source=StaticSource(data=last_frame))
                 cnt_vacancies, cnt_interstitials = self._countVacAndInter(pipeline, reference_pipeline)
-                self.logger.info(f'index {idx}: hkl {hkl} ')
-                self.logger.info(f'Vacancies: {cnt_vacancies}, Interstitials: {cnt_interstitials}')
-                if cnt_vacancies != cnt_interstitials:
-                    self.logger.warning(f"!!!Mismatch in vacancies and interstitials, ignore.")
-                    # continue
-                num_correct_cluster += 1
-                number_of_vacancies.append(cnt_vacancies)
-                number_of_interstitials.append(cnt_interstitials)
-                expression = 'Occupancy == 0'
-                vac_clusters, total_line_length, cell_volume, dislocation_lines = self._clustersAndDXA(pipeline, reference_pipeline, expression)
-                self.logger.info(f'Vacancy Clusters: {vac_clusters}')
-                # sum_vac_clusters = sum(vac_clusters.keys())
-                bin_clusters(vac_clusters, sum_vac_cluster_sizes)
-                # number_of_vacancy_clusters.append(sum_vac_clusters)
-                self.logger.info(f'Total dislocation line length: {total_line_length}, Dislocation density: {total_line_length/cell_volume}')
-                self.logger.info(f'Number of dislocation lines: {len(dislocation_lines)}')
-                for line in dislocation_lines:
-                    self.logger.info(f'Dislocation line {line.id}: Length = {line.length}, Burgers vector = {line.true_burgers_vector}')
-                expression = 'Occupancy > 1'
-                inter_clusters, total_line_length, cell_volume, dislocation_lines = self._clustersAndDXA(pipeline, reference_pipeline, expression)
-                self.logger.info(f'Interstitial Clusters: {inter_clusters}')
-                # sum_inter_clusters = sum(inter_clusters.keys())
-                bin_clusters(inter_clusters, sum_inter_cluster_sizes)
-                # number_of_interstitial_clusters.append(sum_inter_clusters)
-                self.logger.info(f'Total dislocation line length: {total_line_length}, Dislocation density: {total_line_length/cell_volume}')
-                self.logger.info(f'Number of dislocation lines: {len(dislocation_lines)}')
-                for line in dislocation_lines:
-                    self.logger.info(f'Dislocation line {line.id}: Length = {line.length}, Burgers vector = {line.true_burgers_vector}')
+                cnt_defects = cnt_vacancies + cnt_interstitials
+                cnt_vacancies_list.append(cnt_vacancies)
+                cnt_interstitials_list.append(cnt_interstitials)
+                cnt_defects_list.append(cnt_defects)
+                defects_clusters = self._clusters(pipeline, reference_pipeline, cutoff=8.4, expression='Occupancy != 1')
+                cluster_sizes_list.append(defects_clusters)
+            cluster_sizes_lists.append(cluster_sizes_list)
             
-            eng_vac[energy] = number_of_vacancies
-            eng_inter[energy] = number_of_interstitials
-            eng_vac_cluster[energy] = sum_vac_cluster_sizes
-            eng_inter_cluster[energy] = sum_inter_cluster_sizes
-            self.logger.info(f'correct cluster count: {num_correct_cluster} for energy {energy} eV')
-            self.logger.info(f'Energy: {energy} eV, number of vac clusters by size: {sum_vac_cluster_sizes}')
-            self.logger.info(f'Energy: {energy} eV, number of inter clusters by size: {sum_inter_cluster_sizes}')
-            
-            # Aggregate time-dependent data
-            if time_data:
-                # Use the maximum number of frames from valid simulations
-                max_frames = max(len(t) for t, _, _, _ in time_data)
-                # Create a common time axis from 0 to 30 ps
-                common_times = np.linspace(0, 30, max_frames)
-                vac_time = []
-                inter_time = []
-                temp_time = []
-                
-                for times, vacancies, interstitials, temperatures in time_data:
-                    # Interpolate to common time axis
-                    try:
-                        interp_vac = np.interp(common_times, times, vacancies, left=vacancies[0], right=vacancies[-1])
-                        interp_inter = np.interp(common_times, times, interstitials, left=interstitials[0], right=interstitials[-1])
-                        interp_temp = np.interp(common_times, times, temperatures, left=temperatures[0], right=temperatures[-1])
-                    except Exception as e:
-                        self.logger.warning(f"Failed to interpolate data for {eng_hkl_dir}: {e}. Skipping.")
-                        continue
-                    vac_time.append(interp_vac)
-                    inter_time.append(interp_inter)
-                    temp_time.append(interp_temp)
-                
-                # Convert to numpy arrays for mean and std
-                vac_time = np.array(vac_time)
-                inter_time = np.array(inter_time)
-                temp_time = np.array(temp_time)
-                
-                # Compute mean and std
-                eng_vac_time[energy] = [(t, np.mean(v), np.std(v)) for t, v in zip(common_times, vac_time.T)]
-                eng_inter_time[energy] = [(t, np.mean(i), np.std(i)) for t, i in zip(common_times, inter_time.T)]
-                eng_temp_time[energy] = [(t, np.mean(temp), np.std(temp)) for t, temp in zip(common_times, temp_time.T)]
+            vac_data[energy] = cnt_vacancies_list
+            inter_data[energy] = cnt_interstitials_list
+            defect_data[energy] = cnt_defects_list
 
-        # Write existing outputs
-        def write_txt(vacancy_dict, interstitial_dict, file_name1, file_name2):
-            for energy in vacancy_dict:
-                output_dir = os.path.join(self.calculation_dir, f"{int(energy)}_postprocessing")
-                os.makedirs(output_dir, exist_ok=True)
-                num_vac = vacancy_dict.get(energy, [])
-                num_int = interstitial_dict.get(energy, [])
-                if num_vac:
-                    mean_vac, std_vac = np.mean(num_vac), np.std(num_vac)
-                    with open(os.path.join(output_dir, file_name1), 'w') as f:
-                        f.write("# Energy (eV)    Mean value    Std Dev value\n")
-                        f.write("# ---------------------------------------------\n")
-                        f.write(f"{energy:>10.1f} {mean_vac:>15} {std_vac:>15}\n")
-                if num_int:
-                    mean_int, std_int = np.mean(num_int), np.std(num_int)
-                    with open(os.path.join(output_dir, file_name2), 'w') as f:
-                        f.write("# Energy (eV)    Mean value    Std Dev value\n")
-                        f.write("# ----------------------------------------------------\n")
-                        f.write(f"{energy:>10.1f} {mean_int:>15} {std_int:>15}\n")
+        clusterhist = ClusterHistogram(cluster_sizes_lists, labels=self.energies, bins=cluster_bins)
+        fig_path = os.path.join(self.calculation_dir, 'cluster_histogram.png')
+        clusterhist.plot(fig_path, palette='pastel')
+        
+        vac_values = {energy: (np.mean(vac_data[energy]), np.std(vac_data[energy])) for energy in vac_data}
+        inter_values = {energy: (np.mean(inter_data[energy]), np.std(inter_data[energy])) for energy in inter_data}
+        defect_values = {energy: (np.mean(defect_data[energy]), np.std(defect_data[energy])) for energy in defect_data}
 
-        def write_txt_cluster(vacancy_dict, interstitial_dict, file_name1, file_name2, num_correct_cluster):
-            ranges = ['1 - 3', '4 - 6', '7 - 9', '10+']
-            for energy in vacancy_dict:
-                output_dir = os.path.join(self.calculation_dir, f"{int(energy)}_postprocessing")
-                os.makedirs(output_dir, exist_ok=True)
-                vac_cluster_num_by_size = vacancy_dict.get(energy)
-                inter_cluster_num_by_size = interstitial_dict.get(energy)
-                if vac_cluster_num_by_size:
-                    for i in range(len(vac_cluster_num_by_size)):
-                        mean_vac_cluster_num_by_size = vac_cluster_num_by_size[i] / len(self.hkl_list) 
-                        with open(os.path.join(output_dir, file_name1), 'a') as f:
-                            if i == 0:
-                                f.write("# Energy (eV)    Mean value\n")
-                                f.write("# ---------------------------------------------\n")
-                                f.write(f"{energy:>10.1f}\n")
-                            f.write(f"{ranges[i]} {mean_vac_cluster_num_by_size:>15}\n")
-                if inter_cluster_num_by_size:
-                    for i in range(len(inter_cluster_num_by_size)):
-                        mean_inter_cluster_num_by_size = inter_cluster_num_by_size[i] / len(self.hkl_list) 
-                        with open(os.path.join(output_dir, file_name2), 'a') as f:
-                            if i == 0:
-                                f.write("# Energy (eV)    Mean value\n")
-                                f.write("# ----------------------------------------------------\n")
-                                f.write(f"{energy:>10.1f}\n")
-                            f.write(f"{ranges[i]} {mean_inter_cluster_num_by_size:>15}\n")
-        
-        write_txt(eng_vac, eng_inter, 'eng_vac.txt', 'eng_inter.txt')
-        write_txt_cluster(eng_vac_cluster, eng_inter_cluster, 'eng_vac_cluster.txt', 'eng_inter_cluster.txt', num_correct_cluster)
-        
-        # Write time-dependent outputs
-        for energy in eng_vac_time:
-            output_dir = os.path.join(self.calculation_dir, f"{int(energy)}_postprocessing")
-            os.makedirs(output_dir, exist_ok=True)
-            with open(os.path.join(output_dir, 'eng_vac_time.txt'), 'w') as f:
-                f.write("# Time (ps)    Mean Vacancies    Std Dev Vacancies\n")
-                f.write("# ---------------------------------------------\n")
-                for t, mean_v, std_v in eng_vac_time[energy]:
-                    f.write(f"{t:>10.3f} {mean_v:>15} {std_v:>15}\n")
-            with open(os.path.join(output_dir, 'eng_inter_time.txt'), 'w') as f:
-                f.write("# Time (ps)    Mean Interstitials    Std Dev Interstitials\n")
-                f.write("# ---------------------------------------------\n")
-                for t, mean_i, std_i in eng_inter_time[energy]:
-                    f.write(f"{t:>10.3f} {mean_i:>15} {std_i:>15}\n")
-            with open(os.path.join(output_dir, 'eng_temp_time.txt'), 'w') as f:
-                f.write("# Time (ps)    Mean Temperature    Std Dev Temperature\n")
-                f.write("# ---------------------------------------------\n")
-                for t, mean_t, std_t in eng_temp_time[energy]:
-                    f.write(f"{t:>10.3f} {mean_t:>15} {std_t:>15}\n")
+        self.logger.info(f'{energy}-Postprocessing results: ')
+        self.logger.info(f'Vacancies (mean, std): {vac_values}')
+        self.logger.info(f'Interstitials (mean, std): {inter_values}')
+        self.logger.info(f'Defects (mean, std): {defect_values}')
+
+        return vac_values, inter_values, defect_values
 
     def _countVacAndInter(self, pipeline, reference_pipeline):
-        """
-        Count vacancies and interstitials using Wigner-Seitz analysis.
-        """
         wsam = WignerSeitzAnalysisModifier(per_type_occupancies=True, output_displaced=False)
         wsam.reference = reference_pipeline.source
         pipeline.modifiers.append(wsam)
@@ -550,33 +374,362 @@ class CascadeCalculator(LMPStaticCalculator):
         for occupancy in data.particles['Occupancy']:
             if occupancy == 0:
                 cnt_vacancies += 1
-            if occupancy > 1:
+            elif occupancy > 1:
                 cnt_interstitials += 1
         pipeline.modifiers.remove(wsam)
         return cnt_vacancies, cnt_interstitials
 
-    def _clustersAndDXA(self, pipeline, reference_pipeline, expression):
-        """
-        Perform cluster and dislocation analysis for vacancies or interstitials.
-        """
+    def _clusters(self, pipeline, reference_pipeline, cutoff=8.4, expression='Occupancy == 0'):
         wsam = WignerSeitzAnalysisModifier(per_type_occupancies=True, output_displaced=False)
         wsam.reference = reference_pipeline.source
         pipeline.modifiers.append(wsam)
         sel = ExpressionSelectionModifier(expression=expression)
         pipeline.modifiers.append(sel)
-        cls = ClusterAnalysisModifier(cutoff=8.4, sort_by_size=True, only_selected=True)
+        cls = ClusterAnalysisModifier(cutoff=cutoff, sort_by_size=True, only_selected=True)
         pipeline.modifiers.append(cls)
-        dxa = DislocationAnalysisModifier(only_selected=True)
-        dxa.input_crystal_structure = DislocationAnalysisModifier.Lattice.CubicDiamond
-        pipeline.modifiers.append(dxa)
         data = pipeline.compute(0)
         cluster_table = data.tables['clusters']
         cluster_sizes = cluster_table['Cluster Size']
-        total_line_length = data.attributes['DislocationAnalysis.total_line_length']
-        cell_volume = data.attributes['DislocationAnalysis.cell_volume']
         pipeline.modifiers.remove(wsam)
         pipeline.modifiers.remove(sel)
         pipeline.modifiers.remove(cls)
-        pipeline.modifiers.remove(dxa)
         count_dict = Counter(cluster_sizes)
-        return count_dict, total_line_length, cell_volume, data.dislocations.lines
+        return count_dict
+
+
+    # def postProcess(self):
+    #     """
+    #     Post-process LAMMPS simulation outputs to count vacancies, interstitials, their clusters,
+    #     dislocations, and time-dependent defects and temperature.
+    #     Excludes simulations with final time < 30 ps and reads hkl_list.dat from energy folder.
+    #     Aligns time-dependent data to a common 0-30 ps time axis.
+    #     """
+    #     eng_vac = {}             # {energy: list of number of vacancies}
+    #     eng_inter = {}           # {energy: list of number of interstitials}
+    #     eng_vac_cluster = {}     # {energy: list of number of vacancy clusters}
+    #     eng_inter_cluster = {}   # {energy: list of number of interstitial clusters}
+    #     eng_vac_time = {}        # {energy: list of (time, mean_vac, std_vac)}
+    #     eng_inter_time = {}      # {energy: list of (time, mean_inter, std_inter)}
+    #     eng_temp_time = {}       # {energy: list of (time, mean_temp, std_temp)}
+        
+    #     # bin clusters
+    #     def bin_clusters(cluster_dict, value_list):
+    #         for size, cnt in cluster_dict.items():
+    #             if 1 <= size < 3:
+    #                 value_list[0] += cnt
+    #             elif 4 <= size < 6:
+    #                 value_list[1] += cnt
+    #             elif 7 <= size < 9:
+    #                 value_list[2] += cnt
+    #             else:
+    #                 value_list[3] += cnt
+
+    #     for energy in self.energies:
+    #         num_correct_cluster = 0
+    #         eng_dir = os.path.join(self.calculation_dir, str(int(energy)))
+    #         sum_vac_cluster_sizes = [0] * 4
+    #         sum_inter_cluster_sizes = [0] * 4
+    #         self.logger.info(f'---------------------------------------------------')
+    #         self.logger.info(f'Post-processing for energy: {energy} eV')
+            
+    #         # Load hkl_list from eng_dir/hkl_list.dat
+    #         hkl_file = os.path.join(eng_dir, 'hkl_list.dat')
+    #         if not os.path.exists(hkl_file):
+    #             self.logger.warning(f"hkl_list.dat not found in {eng_dir}. Skipping energy {energy} eV.")
+    #             continue
+    #         try:
+    #             hkl_list = np.loadtxt(hkl_file, skiprows=1)
+    #             if hkl_list.ndim == 1:  # Ensure 2D array even for single row
+    #                 hkl_list = hkl_list.reshape(1, -1)
+    #         except Exception as e:
+    #             self.logger.warning(f"Failed to read hkl_list.dat from {eng_dir}: {e}. Skipping energy {energy} eV.")
+    #             continue
+                
+    #         number_of_vacancies = []
+    #         number_of_interstitials = []
+    #         number_of_vacancy_clusters = []
+    #         number_of_interstitial_clusters = []
+    #         time_data = []  # List of (times, vacancies, interstitials, temperatures) per hkl
+    #         relaxed_file = os.path.join(eng_dir, 'relax.out')
+    #         if not os.path.exists(relaxed_file):
+    #             self.logger.info(f"Reference file {relaxed_file} not found for energy {energy} eV. Skipping.")
+    #             continue
+    #         reference_pipeline = import_file(relaxed_file)
+            
+    #         for idx, hkl in enumerate(hkl_list):
+    #             eng_hkl_dir = os.path.join(eng_dir, str(idx))
+    #             trajectory_file = os.path.join(eng_hkl_dir, 'dump.PKA')
+    #             data_file = os.path.join(eng_hkl_dir, 'data.txt')
+                
+    #             # Check if simulation reached 30 ps
+    #             if os.path.exists(data_file):
+    #                 try:
+    #                     data = np.unique(np.loadtxt(data_file, skiprows=1), axis=0)
+    #                     Time = data[:, 1]  # Second column is Time
+    #                     if Time[-1] < 30:
+    #                         self.logger.info(f"Skipping hkl {hkl} (index {idx}) for energy {energy} eV: final time {Time[-1]} ps < 30 ps.")
+    #                         continue
+    #                 except Exception as e:
+    #                     self.logger.warning(f"Failed to read data.txt from {eng_hkl_dir}: {e}. Skipping.")
+    #                     continue
+    #             else:
+    #                 self.logger.info(f"data.txt not found for energy {energy} eV, hkl {hkl}. Skipping.")
+    #                 continue
+                
+    #             if not os.path.exists(trajectory_file):
+    #                 self.logger.info(f"Trajectory file {trajectory_file} not found for energy {energy} eV, hkl {hkl}. Skipping.")
+    #                 continue
+    #             all_pipeline = import_file(trajectory_file)
+                
+    #             # Time-dependent analysis
+    #             times, vacancies, interstitials, temperatures = self._timeDependentAnalysis(all_pipeline, reference_pipeline, eng_hkl_dir)
+    #             if not times:  # Skip if time-dependent analysis failed (e.g., time < 30 ps)
+    #                 continue
+    #             time_data.append((times, vacancies, interstitials, temperatures))
+                
+    #             # Analysis for last frame
+    #             last_frame = all_pipeline.compute(all_pipeline.source.num_frames-1)
+    #             pipeline = Pipeline(source=StaticSource(data=last_frame))
+    #             cnt_vacancies, cnt_interstitials = self._countVacAndInter(pipeline, reference_pipeline)
+    #             self.logger.info(f'index {idx}: hkl {hkl} ')
+    #             self.logger.info(f'Vacancies: {cnt_vacancies}, Interstitials: {cnt_interstitials}')
+    #             if cnt_vacancies != cnt_interstitials:
+    #                 self.logger.warning(f"!!!Mismatch in vacancies and interstitials, ignore.")
+    #                 # continue
+    #             num_correct_cluster += 1
+    #             number_of_vacancies.append(cnt_vacancies)
+    #             number_of_interstitials.append(cnt_interstitials)
+    #             expression = 'Occupancy == 0'
+    #             vac_clusters, total_line_length, cell_volume, dislocation_lines = self._clustersAndDXA(pipeline, reference_pipeline, expression)
+    #             self.logger.info(f'Vacancy Clusters: {vac_clusters}')
+    #             # sum_vac_clusters = sum(vac_clusters.keys())
+    #             bin_clusters(vac_clusters, sum_vac_cluster_sizes)
+    #             # number_of_vacancy_clusters.append(sum_vac_clusters)
+    #             self.logger.info(f'Total dislocation line length: {total_line_length}, Dislocation density: {total_line_length/cell_volume}')
+    #             self.logger.info(f'Number of dislocation lines: {len(dislocation_lines)}')
+    #             for line in dislocation_lines:
+    #                 self.logger.info(f'Dislocation line {line.id}: Length = {line.length}, Burgers vector = {line.true_burgers_vector}')
+    #             expression = 'Occupancy > 1'
+    #             inter_clusters, total_line_length, cell_volume, dislocation_lines = self._clustersAndDXA(pipeline, reference_pipeline, expression)
+    #             self.logger.info(f'Interstitial Clusters: {inter_clusters}')
+    #             # sum_inter_clusters = sum(inter_clusters.keys())
+    #             bin_clusters(inter_clusters, sum_inter_cluster_sizes)
+    #             # number_of_interstitial_clusters.append(sum_inter_clusters)
+    #             self.logger.info(f'Total dislocation line length: {total_line_length}, Dislocation density: {total_line_length/cell_volume}')
+    #             self.logger.info(f'Number of dislocation lines: {len(dislocation_lines)}')
+    #             for line in dislocation_lines:
+    #                 self.logger.info(f'Dislocation line {line.id}: Length = {line.length}, Burgers vector = {line.true_burgers_vector}')
+            
+    #         eng_vac[energy] = number_of_vacancies
+    #         eng_inter[energy] = number_of_interstitials
+    #         eng_vac_cluster[energy] = sum_vac_cluster_sizes
+    #         eng_inter_cluster[energy] = sum_inter_cluster_sizes
+    #         self.logger.info(f'correct cluster count: {num_correct_cluster} for energy {energy} eV')
+    #         self.logger.info(f'Energy: {energy} eV, number of vac clusters by size: {sum_vac_cluster_sizes}')
+    #         self.logger.info(f'Energy: {energy} eV, number of inter clusters by size: {sum_inter_cluster_sizes}')
+            
+    #         # Aggregate time-dependent data
+    #         if time_data:
+    #             # Use the maximum number of frames from valid simulations
+    #             max_frames = max(len(t) for t, _, _, _ in time_data)
+    #             # Create a common time axis from 0 to 30 ps
+    #             common_times = np.linspace(0, 30, max_frames)
+    #             vac_time = []
+    #             inter_time = []
+    #             temp_time = []
+                
+    #             for times, vacancies, interstitials, temperatures in time_data:
+    #                 # Interpolate to common time axis
+    #                 try:
+    #                     interp_vac = np.interp(common_times, times, vacancies, left=vacancies[0], right=vacancies[-1])
+    #                     interp_inter = np.interp(common_times, times, interstitials, left=interstitials[0], right=interstitials[-1])
+    #                     interp_temp = np.interp(common_times, times, temperatures, left=temperatures[0], right=temperatures[-1])
+    #                 except Exception as e:
+    #                     self.logger.warning(f"Failed to interpolate data for {eng_hkl_dir}: {e}. Skipping.")
+    #                     continue
+    #                 vac_time.append(interp_vac)
+    #                 inter_time.append(interp_inter)
+    #                 temp_time.append(interp_temp)
+                
+    #             # Convert to numpy arrays for mean and std
+    #             vac_time = np.array(vac_time)
+    #             inter_time = np.array(inter_time)
+    #             temp_time = np.array(temp_time)
+                
+    #             # Compute mean and std
+    #             eng_vac_time[energy] = [(t, np.mean(v), np.std(v)) for t, v in zip(common_times, vac_time.T)]
+    #             eng_inter_time[energy] = [(t, np.mean(i), np.std(i)) for t, i in zip(common_times, inter_time.T)]
+    #             eng_temp_time[energy] = [(t, np.mean(temp), np.std(temp)) for t, temp in zip(common_times, temp_time.T)]
+
+    #     # Write existing outputs
+    #     def write_txt(vacancy_dict, interstitial_dict, file_name1, file_name2):
+    #         for energy in vacancy_dict:
+    #             output_dir = os.path.join(self.calculation_dir, f"{int(energy)}_postprocessing")
+    #             os.makedirs(output_dir, exist_ok=True)
+    #             num_vac = vacancy_dict.get(energy, [])
+    #             num_int = interstitial_dict.get(energy, [])
+    #             if num_vac:
+    #                 mean_vac, std_vac = np.mean(num_vac), np.std(num_vac)
+    #                 with open(os.path.join(output_dir, file_name1), 'w') as f:
+    #                     f.write("# Energy (eV)    Mean value    Std Dev value\n")
+    #                     f.write("# ---------------------------------------------\n")
+    #                     f.write(f"{energy:>10.1f} {mean_vac:>15} {std_vac:>15}\n")
+    #             if num_int:
+    #                 mean_int, std_int = np.mean(num_int), np.std(num_int)
+    #                 with open(os.path.join(output_dir, file_name2), 'w') as f:
+    #                     f.write("# Energy (eV)    Mean value    Std Dev value\n")
+    #                     f.write("# ----------------------------------------------------\n")
+    #                     f.write(f"{energy:>10.1f} {mean_int:>15} {std_int:>15}\n")
+
+    #     def write_txt_cluster(vacancy_dict, interstitial_dict, file_name1, file_name2, num_correct_cluster):
+    #         ranges = ['1 - 3', '4 - 6', '7 - 9', '10+']
+    #         for energy in vacancy_dict:
+    #             output_dir = os.path.join(self.calculation_dir, f"{int(energy)}_postprocessing")
+    #             os.makedirs(output_dir, exist_ok=True)
+    #             vac_cluster_num_by_size = vacancy_dict.get(energy)
+    #             inter_cluster_num_by_size = interstitial_dict.get(energy)
+    #             if vac_cluster_num_by_size:
+    #                 for i in range(len(vac_cluster_num_by_size)):
+    #                     mean_vac_cluster_num_by_size = vac_cluster_num_by_size[i] / len(self.hkl_list) 
+    #                     with open(os.path.join(output_dir, file_name1), 'a') as f:
+    #                         if i == 0:
+    #                             f.write("# Energy (eV)    Mean value\n")
+    #                             f.write("# ---------------------------------------------\n")
+    #                             f.write(f"{energy:>10.1f}\n")
+    #                         f.write(f"{ranges[i]} {mean_vac_cluster_num_by_size:>15}\n")
+    #             if inter_cluster_num_by_size:
+    #                 for i in range(len(inter_cluster_num_by_size)):
+    #                     mean_inter_cluster_num_by_size = inter_cluster_num_by_size[i] / len(self.hkl_list) 
+    #                     with open(os.path.join(output_dir, file_name2), 'a') as f:
+    #                         if i == 0:
+    #                             f.write("# Energy (eV)    Mean value\n")
+    #                             f.write("# ----------------------------------------------------\n")
+    #                             f.write(f"{energy:>10.1f}\n")
+    #                         f.write(f"{ranges[i]} {mean_inter_cluster_num_by_size:>15}\n")
+        
+    #     write_txt(eng_vac, eng_inter, 'eng_vac.txt', 'eng_inter.txt')
+    #     write_txt_cluster(eng_vac_cluster, eng_inter_cluster, 'eng_vac_cluster.txt', 'eng_inter_cluster.txt', num_correct_cluster)
+        
+    #     # Write time-dependent outputs
+    #     for energy in eng_vac_time:
+    #         output_dir = os.path.join(self.calculation_dir, f"{int(energy)}_postprocessing")
+    #         os.makedirs(output_dir, exist_ok=True)
+    #         with open(os.path.join(output_dir, 'eng_vac_time.txt'), 'w') as f:
+    #             f.write("# Time (ps)    Mean Vacancies    Std Dev Vacancies\n")
+    #             f.write("# ---------------------------------------------\n")
+    #             for t, mean_v, std_v in eng_vac_time[energy]:
+    #                 f.write(f"{t:>10.3f} {mean_v:>15} {std_v:>15}\n")
+    #         with open(os.path.join(output_dir, 'eng_inter_time.txt'), 'w') as f:
+    #             f.write("# Time (ps)    Mean Interstitials    Std Dev Interstitials\n")
+    #             f.write("# ---------------------------------------------\n")
+    #             for t, mean_i, std_i in eng_inter_time[energy]:
+    #                 f.write(f"{t:>10.3f} {mean_i:>15} {std_i:>15}\n")
+    #         with open(os.path.join(output_dir, 'eng_temp_time.txt'), 'w') as f:
+    #             f.write("# Time (ps)    Mean Temperature    Std Dev Temperature\n")
+    #             f.write("# ---------------------------------------------\n")
+    #             for t, mean_t, std_t in eng_temp_time[energy]:
+    #                 f.write(f"{t:>10.3f} {mean_t:>15} {std_t:>15}\n")
+
+    # def _countVacAndInter(self, pipeline, reference_pipeline):
+    #     """
+    #     Count vacancies and interstitials using Wigner-Seitz analysis.
+    #     """
+    #     wsam = WignerSeitzAnalysisModifier(per_type_occupancies=True, output_displaced=False)
+    #     wsam.reference = reference_pipeline.source
+    #     pipeline.modifiers.append(wsam)
+    #     data = pipeline.compute(0)
+    #     cnt_vacancies = 0
+    #     cnt_interstitials = 0
+    #     for occupancy in data.particles['Occupancy']:
+    #         if occupancy == 0:
+    #             cnt_vacancies += 1
+    #         if occupancy > 1:
+    #             cnt_interstitials += 1
+    #     pipeline.modifiers.remove(wsam)
+    #     return cnt_vacancies, cnt_interstitials
+
+    # def _clustersAndDXA(self, pipeline, reference_pipeline, expression):
+    #     """
+    #     Perform cluster and dislocation analysis for vacancies or interstitials.
+    #     """
+    #     wsam = WignerSeitzAnalysisModifier(per_type_occupancies=True, output_displaced=False)
+    #     wsam.reference = reference_pipeline.source
+    #     pipeline.modifiers.append(wsam)
+    #     sel = ExpressionSelectionModifier(expression=expression)
+    #     pipeline.modifiers.append(sel)
+    #     cls = ClusterAnalysisModifier(cutoff=8.4, sort_by_size=True, only_selected=True)
+    #     pipeline.modifiers.append(cls)
+    #     dxa = DislocationAnalysisModifier(only_selected=True)
+    #     dxa.input_crystal_structure = DislocationAnalysisModifier.Lattice.CubicDiamond
+    #     pipeline.modifiers.append(dxa)
+    #     data = pipeline.compute(0)
+    #     cluster_table = data.tables['clusters']
+    #     cluster_sizes = cluster_table['Cluster Size']
+    #     total_line_length = data.attributes['DislocationAnalysis.total_line_length']
+    #     cell_volume = data.attributes['DislocationAnalysis.cell_volume']
+    #     pipeline.modifiers.remove(wsam)
+    #     pipeline.modifiers.remove(sel)
+    #     pipeline.modifiers.remove(cls)
+    #     pipeline.modifiers.remove(dxa)
+    #     count_dict = Counter(cluster_sizes)
+    #     return count_dict, total_line_length, cell_volume, data.dislocations.lines
+    
+class ClusterHistogram:
+    def __init__(self, cluster_sizes_lists, labels, bins):
+        self.cluster_sizes_lists = cluster_sizes_lists
+        self.labels = [f'{l} eV' for l in labels]
+        self.bins = bins
+        self.df = self._prepare_combined_data()
+    
+    def _assign_bin(self, size):
+        for b in self.bins:
+            if b[0] <= size <= b[1]:
+                return f'{b[0]}-{b[1]}'
+        return f'>{self.bins[-1][1]}'
+    
+    def _prepare_data(self, cluster_sizes_list, label):
+        all_sizes = set().union(*[d.keys() for d in cluster_sizes_list])
+        avg_counts = {c: np.mean([d.get(c,0) for d in cluster_sizes_list]) for c in all_sizes}
+
+        data_for_plot = []
+        for size, avg in avg_counts.items():
+            bin_label = self._assign_bin(size)
+            data_for_plot.append({
+                'cluster_bin': bin_label,
+                'avg_count': avg,
+                'energy': label
+            })
+        return pd.DataFrame(data_for_plot)
+    
+    def _prepare_combined_data(self):
+        dfs = []
+        for cls_list, label in zip(self.cluster_sizes_lists, self.labels):
+            dfs.append(self._prepare_data(cls_list, label))
+        return pd.concat(dfs)
+    
+    def plot(self, fig_path, palette='pastel'):
+        # assign a color to each energy
+        unique_energies = self.df['energy'].unique()
+        colors = sns.color_palette(palette, n_colors=len(unique_energies))
+        color_dict = dict(zip(unique_energies, colors))
+        
+        # plot each energy separately
+        plt.figure(figsize=(8,6))
+        for energy in unique_energies:
+            subset = self.df[self.df['energy'] == energy]
+            sns.barplot(
+                x='cluster_bin',
+                y='avg_count',
+                data=subset,
+                color=color_dict[energy],
+                errorbar=None
+            )
+        
+        # create a manual legend
+        handles = [plt.Rectangle((0,0),1,1, color=color_dict[e]) for e in unique_energies]
+        plt.legend(handles, unique_energies, title=None, fontsize=16)
+        
+        plt.xlabel('Cluster size', fontsize=16)
+        plt.ylabel('Average count', fontsize=16)
+        plt.tight_layout()
+        plt.savefig(fig_path)

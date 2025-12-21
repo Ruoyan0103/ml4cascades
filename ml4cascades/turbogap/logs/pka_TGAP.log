@@ -66,7 +66,8 @@
 2025-09-25 14:20 - ml4cascades.turbogap.calcs_base - INFO - PKA ID 2847 with old velocities [-0.00053115 -0.00098115  0.00240571] ang/fs
 2025-09-25 14:20 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 2847 with new Velocities: -0.12, -0.04, 0.11 ang/fs
 2025-09-26 08:05 - ml4cascades.turbogap.calcs_base - INFO - ------------------Postprocessing --------------------
-2025-09-26 08:05 - ml4cascades.turbogap.calcs_base - INFO - 100-Postprocessing results: 
-2025-09-26 08:05 - ml4cascades.turbogap.calcs_base - INFO - Vacancies (mean, std): {100: (2.272727272727273, 1.1084449186770837)}
-2025-09-26 08:05 - ml4cascades.turbogap.calcs_base - INFO - Interstitials (mean, std): {100: (2.242424242424242, 1.1017975128907784)}
-2025-09-26 08:05 - ml4cascades.turbogap.calcs_base - INFO - Defects (mean, std): {100: (4.515151515151516, 2.203595025781557)}
+2025-09-26 08:20 - ml4cascades.turbogap.calcs_base - INFO - 100-Postprocessing results: 
+2025-09-26 08:20 - ml4cascades.turbogap.calcs_base - INFO - Vacancies (mean, std): {100: (2.272727272727273, 1.1084449186770837)}
+2025-09-26 08:20 - ml4cascades.turbogap.calcs_base - INFO - Interstitials (mean, std): {100: (2.242424242424242, 1.1017975128907784)}
+2025-09-26 08:20 - ml4cascades.turbogap.calcs_base - INFO - Defects (mean, std): {100: (4.515151515151516, 2.203595025781557)}
+2025-09-26 08:28 - ml4cascades.turbogap.calcs_base - INFO - ------------------RELAXATION for energy: 400 eV, supercell size: 12 --------------------

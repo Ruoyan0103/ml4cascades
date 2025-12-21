@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 from ml4cascades.potentials import IPotential
 from ml4cascades.utils import BasicInput
 from ml4cascades.turbogap import CascadeCalculatorEPH
-# from ml4cascades.lammps.calcs import CascadeCalculator
+from ml4cascades.lammps.calcs import CascadeCalculator
 import numpy as np
 
 module_dir = os.path.dirname(__file__)
@@ -60,7 +60,7 @@ if __name__ == "__main__":
     gap = GAPotential.from_config(gap_file)
     gap.write_param(gap_file)
 
-    gap_file_folder = os.path.join(module_dir, 'params', 'TGAP') 
+
     gap_file = 'Ge-v10-gap'
     tgap = TGAPotential()
     tgap.write_param(gap_file)
@@ -102,34 +102,22 @@ if __name__ == "__main__":
         gap_file_folder=gap_file_folder
     )
     # each time set one flag True
-    cascade_eph_calc.calculate(relax_flag=False, simulation_flag=False, postprocess_flag=True)
+    cascade_eph_calc.calculate(relax_flag=True, simulation_flag=False, postprocess_flag=False)
 
-
-
-
-
-
- 
-
-
-    # for e in energies:
-    #     if e < 400:
-    #         sizes.append(int(np.ceil(np.cbrt(e*20/8))))
-    #         radius_fracs.append(0.5)
-    #     elif e >= 400 and e < 2000:
-    #         sizes.append(int(np.ceil(np.cbrt(e*30/8))))
-    #         radius_fracs.append(0.5)
-    #     elif e >= 2000 and e <= 5000:
-    #         sizes.append(int(np.ceil(np.cbrt(e*40/8))))
-    #         radius_fracs.append(0.8)
-    #     elif e > 5000 and e <= 20e3:
-    #         sizes.append(int(np.ceil(np.cbrt(e*55/8))))
-    #         radius_fracs.append(0.9)
-    # # thicknesses = [alat] * len(energies)
-    # thicknesses = [alat/2] * len(energies)
-
-    # cas_calc = CascadeCalculator(gap, mass, element, lattice, alat, sizes, thicknesses, radius_fracs, temperature,
-    #                             energies, num_directions)
+    # mass, element, lattice, alat, temperature = 72.64, 'Ge', 'diamond', 5.76, 300 
+    # thicknesses = [alat] * len(energies)
+    # num_directions = 30
+    # cas_calc = CascadeCalculator(gap,
+    #                              mass, 
+    #                             element, 
+    #                             lattice, 
+    #                             alat, 
+    #                             sizes, 
+    #                             thicknesses, 
+    #                             radius_fracs, 
+    #                             temperature,
+    #                             energies, 
+    #                             num_directions)
     # cas_calc.calculate(relax_flag=False, simulation_flag=False, check_flag=False, postprocess_flag=True) 
 
 

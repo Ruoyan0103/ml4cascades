@@ -1,16 +1,12 @@
-from ml4cascades.potentials import IPotential
-
-class BasicInput:
+class BasicCellInfo:
     def __init__(
         self, 
-        potential: IPotential, 
+        element: list[str], 
         mass: float, 
-        element: str, 
         lattice: str, 
         alat: list[float]
     ):
-        self.potential = potential
-        self.mass = mass
         self.element = element
+        self.mass = mass
         self.lattice = lattice
-        self.alat = alat
+        self.alat = alat 

@@ -1,21 +1,22 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 import os
 from ml4cascades.loggers.logger import AppLogger
-from ml4cascades.potentials import IPotential
 
 module_dir = os.path.dirname(__file__)
-result_dir = os.path.join(module_dir, 'results')
-log_dir = os.path.join(module_dir, 'logs')
 
 class TurboGAPCalculator(ABC):
-    def __init__(self, task_name: str, potential: IPotential):
+    def __init__(self, task_name: str, model_name: str):
         self.template_dir = os.path.join(module_dir, 'templates', task_name)
-        self.calculation_dir = os.path.join(result_dir, task_name, potential.name)
-        self.log_file = os.path.join(log_dir, f'{task_name}_{potential.name}.log')
+        self.result_dir = os.path.join(module_dir, 'results', task_name)
+        self.log_dir = os.path.join(module_dir, 'logs', task_name)
+
+        self.calculation_dir = os.path.join(self.result_dir, model_name)
+        self.log_file = os.path.join(self.log_dir, f'{model_name}.log')
         self.logger = AppLogger(__name__, self.log_file, overwrite=True).get_logger()
 
         os.makedirs(self.template_dir, exist_ok=True)
+        os.makedirs(self.result_dir, exist_ok=True)
+        os.makedirs(self.log_dir, exist_ok=True)
         os.makedirs(self.calculation_dir, exist_ok=True)
-        os.makedirs(log_dir, exist_ok=True)
         
 

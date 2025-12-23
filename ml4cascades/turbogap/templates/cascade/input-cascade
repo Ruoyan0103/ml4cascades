@@ -1,7 +1,6 @@
 ! TurboGAP input file for cascade simulation
 ! Parameters: atomsfile, ff_settings, element, mass, cascade_steps, Temp
 ! Parameters for EPH: beta_file, xlow, xhigh, ylow, yhigh, zlow, zhigh, eph_tout_file
-! lack of border monitor, dynamic
 
 atoms_file = "{atomsfile}"
 pot_file = "gap_files/{ff_settings}"
@@ -13,7 +12,7 @@ masses = {mass}
 md_nsteps = {cascade_steps}
 md_step = 1.
 
-! Adaptive timestep 
+! Adaptive timestep for cascade simulation 
 adaptive_time = .true.
 adapt_time_groupID = all
 adapt_tstep_interval = 1
@@ -24,17 +23,20 @@ adapt_emax = 10.0                  ! 10 eV
 
 ! Electronic system - EPH model
 nonadiabatic_processes = .true.
-eph_fdm_option = 1                ! update electronic temperature using FDM
 eph_friction_option = 1           ! calculate friction forces
-eph_random_option = 1             ! calculate random forces                                
+eph_random_option = 1             ! calculate random forces 
+eph_fdm_option = 1                ! update electronic temperature using FDM                               
 eph_betafile = '{beta_file}' 
-
-eph_box_limits = {xlow} {xhigh} {ylow} {yhigh} {zlow} {zhigh} ! electronic system size   
-
 eph_rho_e = 1.0                   ! scaling parameter for FDM mesh                
 eph_C_e = {eph_C_e}               ! electronic heat capacity (eV/A^3/K)               
 eph_kappa_e = {eph_kappa_e}       ! electronic thermal conductivity (eV/A/K/ps)
-eph_Ti_e = {Temp}                 ! initial electronic temperature (K)            
+eph_Ti_e = {Temp}                 ! initial electronic temperature (K)
+
+eph_box_limits = {xlow} {xhigh} {ylow} {yhigh} {zlow} {zhigh} ! electronic system size   
+eph_gsx = 1    !*
+eph_gsy = 1    !*
+eph_gsz = 1    !*              ! FDM grid size in each direction
+eph_fdm_steps = 1   !*         ! number of steps to perform in the integration of heat diffusion equation
 
 eph_freq_Tout = 10                ! frequency to output electronic temperature
 eph_freq_mesh_Tout = 1000 

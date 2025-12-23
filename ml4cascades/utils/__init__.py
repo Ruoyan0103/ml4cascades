@@ -1,3 +1,7 @@
+from .plots import CascadePloter
+
+__all__ = ["CascadePloter"]
+
 class BasicCellInfo:
     def __init__(
         self, 
@@ -10,3 +14,4 @@ class BasicCellInfo:
         self.mass = mass
         self.lattice = lattice
         self.alat = alat 
+

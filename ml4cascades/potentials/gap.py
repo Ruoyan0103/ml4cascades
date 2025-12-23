@@ -2,6 +2,7 @@ import os, time
 from ml4cascades.potentials import IPotential
 from ml4cascades.utils import BasicCellInfo
 from ml4cascades.turbogap import CascadeCalculator
+from ml4cascades.utils import CascadePloter
 
 AMU_TO_KG = 1.66053906660E-27 # Atomic mass unit to kg conversion factor
 JOULE_TO_EV = 6.241509074E18  # Joule to eV conversion factor
@@ -37,7 +38,13 @@ if __name__ == "__main__":
     xhi = bi.alat[0] * supercell_size[0] * 2
     yhi = bi.alat[1] * supercell_size[1] * 2
     zhi = bi.alat[2] * supercell_size[2] * 2
-    calc.thermalize_electronic(equ_md_steps=5000, temp=300,
-                               xlow=0, xhigh=xhi, ylow=0, yhigh=yhi, zlow=0, zhigh=zhi, 
-                               eph_C_e=Ce, eph_kappa_e=kappa_e, eph_tout_file='eph_tout.dat')
+    # calc.thermalize_electronic(equ_md_steps=5000, temp=300,
+    #                            xlow=0, xhigh=xhi, ylow=0, yhigh=yhi, zlow=0, zhigh=zhi, 
+    #                            eph_C_e=Ce, eph_kappa_e=kappa_e, eph_tout_file='eph_tout.dat')
+    
+    ploter = CascadePloter()
+    ploter.plot_eph_results(datafile=os.path.join(calc.calculation_dir, 'thermalize_electronic', 'eph-EnergySharingData.txt'),
+                            figfile=os.path.join(calc.calculation_dir, 'thermalize_electronic', 'eph-EnergySharingData.png'))
 
+    ploter.plot_thermo_results(datafile=os.path.join(calc.calculation_dir, 'thermalize_atomic', 'thermo.log'),
+                                figfile=os.path.join(calc.calculation_dir, 'thermalize_atomic', 'thermolog.png'))

@@ -30,9 +30,9 @@ eph_box_limits = {xlow} {xhigh} {ylow} {yhigh} {zlow} {zhigh} ! electronic syste
 ! eph_gsz = 1                    ! FDM grid size in each direction, no influence here.
 ! eph_fdm_steps = 1              ! number of steps to perform in the integration of heat diffusion equation, no influence here.
        
-eph_freq_Tout = 50               ! frequency to output electronic temperature
+eph_freq_Tout = 10               ! frequency to output electronic temperature
 eph_freq_mesh_Tout = 1000
 eph_Toutfile = '{eph_tout_file}'  ! electronic temperature map output file
 
 ! Output
-write_thermo = 50                 ! Write thermo every 10 steps, atomic temperature
+write_thermo = 10                 ! Write thermo every 10 steps, atomic temperature

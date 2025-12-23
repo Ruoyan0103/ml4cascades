@@ -1,3 +1,3 @@
-from .calcs_eph import CascadeCalculatorEPH
+from .calcs import CascadeCalculator
 
-__all__ = ["CascadeCalculatorEPH"]
+__all__ = ["CascadeCalculator"]

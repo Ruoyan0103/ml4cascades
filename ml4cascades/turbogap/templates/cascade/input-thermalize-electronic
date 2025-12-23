@@ -1,0 +1,38 @@
+! TurboGAP input file for thermalizing electronic system
+! Parameters: atomsfile, ff_settings, num_species, element, mass, equ_md_steps, temp
+! Parameters for EPH: beta_file, xlow, xhigh, ylow, yhigh, zlow, zhigh, eph_tout_file, eph_C_e, eph_kappa_e
+! Aiming to set electronic system temp, and make atomic system with boltzmann distribution at same temp. 
+
+atoms_file = "{atomsfile}"
+pot_file = "gap_files/{ff_settings}"
+n_species = {num_species}
+species = {element}
+masses = {mass}
+
+! MD options
+md_nsteps = {equ_md_steps} ! 5000 steps for 5 ps
+md_step = 1.                      ! fs
+
+! Electronic system - EPH model
+nonadiabatic_processes = .true.
+eph_friction_option = 0           ! calculate friction forces
+eph_random_option = 0             ! calculate random forces   
+eph_fdm_option = 1                ! update electronic temperature using FDM                             
+eph_betafile = '{beta_file}' 
+eph_rho_e = 1.0                   ! scaling parameter for FDM mesh  
+eph_C_e = {eph_C_e}               ! electronic heat capacity (eV/A^3/K), no influence here.               
+eph_kappa_e = {eph_kappa_e}       ! electronic thermal conductivity (eV/A/K/ps), no influence here.  
+eph_Ti_e = {temp}                 ! initial electronic temperature (K)     
+
+eph_box_limits = {xlow} {xhigh} {ylow} {yhigh} {zlow} {zhigh} ! electronic system size.   
+! eph_gsx = 1
+! eph_gsy = 1
+! eph_gsz = 1                    ! FDM grid size in each direction, no influence here.
+! eph_fdm_steps = 1              ! number of steps to perform in the integration of heat diffusion equation, no influence here.
+       
+eph_freq_Tout = 50               ! frequency to output electronic temperature
+eph_freq_mesh_Tout = 1000
+eph_Toutfile = '{eph_tout_file}'  ! electronic temperature map output file
+
+! Output
+write_thermo = 50                 ! Write thermo every 10 steps, atomic temperature

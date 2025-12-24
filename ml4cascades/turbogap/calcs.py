@@ -127,9 +127,9 @@ class CascadeCalculator(TurboGAPCalculator):
         dirs = self._get_PKA_directions(num_PKA_directions)
         atom_positions = thermalized_struct.get_positions()
         atom_velocities = thermalized_struct.get_array('velocities')
-        cell = thermalized_struct.get_cell()
-        center = 0.5 * (cell[0] + cell[1] + cell[2])
-        radius = 0.5 * min(cell[0], cell[1], cell[2]) * radius_frac
+        cell_lengths = thermalized_struct.cell.lengths()
+        radius = 0.5 * min(cell_lengths) * radius_frac
+        center = thermalized_struct.get_center_of_mass()
         for idx, xyz in enumerate(dirs):
             # PKA id
             target_position = xyz * radius + center # shape (3,)
@@ -137,7 +137,7 @@ class CascadeCalculator(TurboGAPCalculator):
             PKA_id = np.argmin(dists)
 
             # PKA velocity
-            velocity_value = np.sqrt(2 * PKA_kin_eng  / (self.mass * AMU_TO_KG * JOULE_TO_EV)) / (ANGSTROM_TO_METER/FS_TO_S)
+            velocity_value = np.sqrt(2 * PKA_kin_eng  / (self.bi.mass * AMU_TO_KG * JOULE_TO_EV)) / (ANGSTROM_TO_METER/FS_TO_S)
             velocity = velocity_value * -xyz        # shape (3,)
 
             # set PKA

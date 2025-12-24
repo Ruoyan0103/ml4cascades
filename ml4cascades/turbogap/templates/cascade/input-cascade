@@ -44,4 +44,4 @@ eph_Toutfile = '{eph_tout_file}'  ! electronic temperature map output file
 
 ! Output
 write_thermo = 10                 ! Write thermo every 10 steps
-write_xyz = {equilibration_steps} ! Write final structure
+write_xyz = 100                   ! Write final structure

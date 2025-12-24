@@ -36,8 +36,8 @@ if __name__ == "__main__":
 
     # 300 K Ce, kappa_e
     # from https://github.com/N-Medvedev/XTANT-3_coupling_data/blob/main/K_semiconductors/K_Ge.dat
-    Ce = 1.7674049595143981E+02 # J/(m^3*K)
-    Ce = Ce * JOULE_TO_EV / ((1/ANGSTROM_TO_METER)**3)  # eV/K/Ang^3
+    # Ce = 1.7674049595143981E+02 # J/(m^3*K)
+    # Ce = Ce * JOULE_TO_EV / ((1/ANGSTROM_TO_METER)**3)  # eV/K/Ang^3
 
     # from Nuclear Instruments and Methods in Physics Research B 485 (2020) 1–9
     rho = 1.0 # electrons/volume unit
@@ -45,8 +45,7 @@ if __name__ == "__main__":
 
     kappa_e = 4.0526892294595090E-01 # W/(K*m) or J/(K*m*s)
     kappa_e = kappa_e * JOULE_TO_EV / (1/ANGSTROM_TO_METER * (1/PS_TO_S))  # eV/(K*Ang*ps)
-    print('Converted Ce:', Ce)
-    print('Converted kappa_e:', kappa_e)
+  
     xhi = bi.alat[0] * supercell_size[0] * 2
     yhi = bi.alat[1] * supercell_size[1] * 2
     zhi = bi.alat[2] * supercell_size[2] * 2
@@ -72,7 +71,7 @@ if __name__ == "__main__":
     # ploter.plot_thermo_results(datafile=os.path.join(calc.calculation_dir, 'thermalize_atomic', 'thermo.log'),
     #                             figfile=os.path.join(calc.calculation_dir, 'thermalize_atomic', 'thermolog.png'))
 
-    num_PKA_directions = 30
+    num_PKA_directions = 2
     radius_frac = 0.8
     PKA_kin_eng = 400 # in eV
     input_config = {
@@ -91,7 +90,7 @@ if __name__ == "__main__":
         "eph_kappa_e": kappa_e,
         "eph_tout_file": 'eph-ToutData.txt'
     }
-    # calc.run_cascade_simulations(num_directions=num_PKA_directions,
-    #                              radius_frac=radius_frac,
-    #                              PKA_kin_eng=PKA_kin_eng,
-    #                              input_config=input_config)
+    calc.run_cascade(num_PKA_directions=num_PKA_directions,
+                    radius_frac=radius_frac,
+                    PKA_kin_eng=PKA_kin_eng,
+                    input_config=input_config)

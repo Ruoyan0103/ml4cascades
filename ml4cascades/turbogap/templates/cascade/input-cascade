@@ -1,6 +1,6 @@
 ! TurboGAP input file for cascade simulation
 ! Parameters: atomsfile, ff_settings, element, mass, cascade_steps, temp
-! Parameters for EPH: beta_file, xlow, xhigh, ylow, yhigh, zlow, zhigh, eph_tout_file
+! Parameters for EPH: beta_file, xlow, xhigh, ylow, yhigh, zlow, zhigh, eph_tout_file, gsx, gsy, gsz
 
 atoms_file = "{atomsfile}"
 pot_file = "gap_files/{ff_settings}"
@@ -33,10 +33,10 @@ eph_kappa_e = {eph_kappa_e}       ! electronic thermal conductivity (eV/A/K/ps)
 eph_Ti_e = {temp}                 ! initial electronic temperature (K)
 
 eph_box_limits = {xlow} {xhigh} {ylow} {yhigh} {zlow} {zhigh} ! electronic system size   
-eph_gsx = 1    !*
-eph_gsy = 1    !*
-eph_gsz = 1    !*              ! FDM grid size in each direction
-eph_fdm_steps = 1   !*         ! number of steps to perform in the integration of heat diffusion equation
+eph_gsx = {gsx}    
+eph_gsy = {gsy}    
+eph_gsz = {gsz}                  ! FDM grid size in each direction
+eph_fdm_steps = 1   !*           ! number of steps to perform in the integration of heat diffusion equation
 
 eph_freq_Tout = 10                ! frequency to output electronic temperature
 eph_freq_mesh_Tout = 1000 

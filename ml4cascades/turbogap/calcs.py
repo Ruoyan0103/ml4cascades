@@ -114,6 +114,9 @@ class CascadeCalculator(TurboGAPCalculator):
         yhigh = input_config["yhigh"]
         zlow = input_config["zlow"]
         zhigh = input_config["zhigh"]
+        gsx = input_config["gsx"]
+        gsy = input_config["gsy"]
+        gsz = input_config["gsz"]
         eph_C_e = input_config["eph_C_e"]
         eph_kappa_e = input_config["eph_kappa_e"]
         eph_tout_file = input_config["eph_tout_file"]
@@ -164,6 +167,7 @@ class CascadeCalculator(TurboGAPCalculator):
                                               num_species=len(self.bi.element), element=' '.join(self.bi.element), 
                                               mass=self.bi.mass, cascade_steps=cascade_steps, temp=temp, beta_file=beta_file,
                                               xlow=xlow, xhigh=xhigh, ylow=ylow, yhigh=yhigh, zlow=zlow, zhigh=zhigh,
+                                              gsx=gsx, gsy=gsy, gsz=gsz,
                                               eph_C_e=eph_C_e, eph_kappa_e=eph_kappa_e, eph_tout_file=eph_tout_file))
             subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
 

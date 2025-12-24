@@ -25,8 +25,13 @@ class CascadeCalculator(TurboGAPCalculator):
         self.tgap_files = potential.get_pot_files_path()
         self.bi = basicCellInfo
 
-    # -------------------------------------- Thermalize Steps --------------------------------------#
-    def thermalize_atomic(self, supercell_size: list[int], equ_md_steps: int, temp: float, taut: float) -> str:
+    # -------------------------------------- Atomic thermalize Steps --------------------------------------#
+    def thermalize_atomic(self, input_config: dict) -> str:
+        supercell_size = input_config["supercell_size"]
+        equ_md_steps = input_config["equ_md_steps"]
+        temp = input_config["temp"]
+        taut = input_config["taut"]
+
         thermalize_dir = os.path.join(self.calculation_dir, 'thermalize_atomic')
         os.makedirs(thermalize_dir, exist_ok=True)
         shutil.copy(os.path.join(self.template_dir, 'submit-thermo.sh'), thermalize_dir)
@@ -45,9 +50,21 @@ class CascadeCalculator(TurboGAPCalculator):
                                           mass=self.bi.mass, equ_md_steps=equ_md_steps, temp=temp, taut=taut)) 
         subprocess.run('sbatch submit-thermo.sh', shell=True, check=True, cwd=thermalize_dir)
 
-    def thermalize_electronic(self, equ_md_steps: int, temp: float, 
-                              xlow: float, xhigh: float, ylow: float, yhigh: float, zlow: float, zhigh: float,
-                              eph_C_e: float, eph_kappa_e: float, eph_tout_file: str, atomsfile: str=None):
+    # -------------------------------------- Electronic thermalize Steps --------------------------------------#
+    def thermalize_electronic(self, input_config: dict):  
+        equ_md_steps = input_config["equ_md_steps"]
+        temp = input_config["temp"]
+        xlow = input_config["xlow"]
+        xhigh = input_config["xhigh"]
+        ylow = input_config["ylow"]
+        yhigh = input_config["yhigh"]
+        zlow = input_config["zlow"]
+        zhigh = input_config["zhigh"]
+        eph_C_e = input_config["eph_C_e"]
+        eph_kappa_e = input_config["eph_kappa_e"]
+        eph_tout_file = input_config["eph_tout_file"]
+        atomsfile = input_config.get("atomsfile", None)
+
         thermalize_dir = os.path.join(self.calculation_dir, 'thermalize_electronic')
         os.makedirs(thermalize_dir, exist_ok=True)
         shutil.copy(os.path.join(self.template_dir, 'submit-thermo.sh'), thermalize_dir)
@@ -55,7 +72,7 @@ class CascadeCalculator(TurboGAPCalculator):
         with open(os.path.join(self.template_dir, 'input-thermalize-electronic'), 'r') as f:
             input_template = f.read()
         input_file = os.path.join(thermalize_dir, 'input')
-        beta_file = os.path.join(self.template_dir, 'betafile', 'beta-old.dat')
+        beta_file = os.path.join(self.template_dir, 'betafile', 'beta_Ge.dat')
         if atomsfile is None:
             thermalized_atoms = read(os.path.join(self.calculation_dir, 'thermalize_atomic', 'trajectory_out.xyz'), format='extxyz', index=-1)
             thermalized_atoms_file = os.path.join(self.calculation_dir, 'thermalize_atomic', 'thermalized_atoms.xyz')
@@ -69,7 +86,7 @@ class CascadeCalculator(TurboGAPCalculator):
                                           eph_C_e=eph_C_e, eph_kappa_e=eph_kappa_e, eph_tout_file=eph_tout_file)) 
         subprocess.run('sbatch submit-thermo.sh', shell=True, check=True, cwd=thermalize_dir)
 
-    # -------------------------------------- Cascade Steps --------------------------------------#
+    # -------------------------------------- PKA direction --------------------------------------#
     def _get_PKA_directions(self, num_PKA_directions: int) -> np.ndarray:
         # random directions uniformly distributed over a unit sphere
         rng = np.random.default_rng(42)
@@ -83,48 +100,74 @@ class CascadeCalculator(TurboGAPCalculator):
         dirs = np.column_stack((x, y, z))  # shape (num_PKA_directions, 3)
         return dirs
     
-    def _get_PKA_ids(self, 
-                     thermalized_struct: object, 
-                     dirs: np.ndarray, 
-                     radius_frac: float=0.8) -> list[int]:
-        # get PKA atom ids based on the given directions and the thermalized structure
-        # radius_frac: fraction of half the minimum lattice constant to define the sphere radius
+    # -------------------------------------- Cascade simulation --------------------------------------#
+    def run_cascade(self,
+                    num_PKA_directions: int,
+                    radius_frac: float,
+                    PKA_kin_eng: float,
+                    input_config: dict):
+        cascade_steps = input_config["cascade_steps"]
+        temp = input_config["temp"]
+        xlow = input_config["xlow"]
+        xhigh = input_config["xhigh"]
+        ylow = input_config["ylow"]
+        yhigh = input_config["yhigh"]
+        zlow = input_config["zlow"]
+        zhigh = input_config["zhigh"]
+        eph_C_e = input_config["eph_C_e"]
+        eph_kappa_e = input_config["eph_kappa_e"]
+        eph_tout_file = input_config["eph_tout_file"]
+        PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV')
+        os.makedirs(PKA_kin_eng_dir, exist_ok=True)
+
+        thermalized_struct = read(os.path.join(self.calculation_dir, 'thermalize_electronic', 'trajectory_out.xyz'), format='extxyz', index=-1)
+        dirs = self._get_PKA_directions(num_PKA_directions)
         atom_positions = thermalized_struct.get_positions()
-        radius = 0.5*min(self.bi.alat[0], self.bi.alat[1], self.bi.alat[2]) * radius_frac
+        atom_velocities = thermalized_struct.get_array('velocities')
         cell = thermalized_struct.get_cell()
         center = 0.5 * (cell[0] + cell[1] + cell[2])
-        PKA_ids = []
-        for xyz in dirs:
+        radius = 0.5 * min(cell[0], cell[1], cell[2]) * radius_frac
+        for idx, xyz in enumerate(dirs):
+            # PKA id
             target_position = xyz * radius + center # shape (3,)
             dists = np.linalg.norm(atom_positions - target_position, axis=1)
-            closest_idx = np.argmin(dists)
-            PKA_ids.append(closest_idx)
-        return PKA_ids
-    
+            PKA_id = np.argmin(dists)
 
-    ################################################## some logic issue here ##################################################
-    
-    def _set_PKA_velocity(self, 
-                          thermalized_struct: object, 
-                          PKA_ids: list[int], 
-                          dirs: np.ndarray,
-                          PKA_kin_eng: float) -> float:
-        atom_velocities = thermalized_struct.get_array('velocities')
-        velocity = np.sqrt(2 * PKA_kin_eng  / (self.mass * AMU_TO_KG * JOULE_TO_EV)) / (ANGSTROM_TO_METER/FS_TO_S) 
-        eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_eng_{int(PKA_kin_eng)}eV')
-        os.makedirs(eng_dir, exist_ok=True)
-        for idx, dir, pka_id in enumerate(zip(dirs, PKA_ids)):
-            PKA_thermalized_struct = copy.deepcopy(thermalized_struct)
-            Vx = velocity * -dir[0]
-            Vy = velocity * -dir[1]
-            Vz = velocity * -dir[2]
-            atom_velocities[pka_id]  = [Vx, Vy, Vz]  
-            self.logger.info(f'PKA ID: {pka_id} with Velocities: {Vx:.2f}, {Vy:.2f}, {Vz:.2f} ang/fs')
-            PKA_thermalized_struct.set_array('velocities', atom_velocities)
-            eng_run_dir = os.path.join(eng_dir, f'PKA_{idx+1}')
-            os.makedirs(eng_run_dir, exist_ok=True)
-            PKA_thermalized_file = os.path.join(eng_run_dir, 'PKA_thermalized.xyz')
-            write(PKA_thermalized_file, PKA_thermalized_struct, format='extxyz')
+            # PKA velocity
+            velocity_value = np.sqrt(2 * PKA_kin_eng  / (self.mass * AMU_TO_KG * JOULE_TO_EV)) / (ANGSTROM_TO_METER/FS_TO_S)
+            velocity = velocity_value * -xyz        # shape (3,)
+
+            # set PKA
+            cascade_struct = copy.deepcopy(thermalized_struct)
+            new_velocities = copy.deepcopy(atom_velocities)
+            new_velocities[PKA_id] = velocity
+            self.logger.info(f'PKA ID: {PKA_id}, direction: {xyz}, velocity: {velocity} ang/fs')
+            cascade_struct.set_array('velocities', new_velocities)
+            cascade_dir = os.path.join(PKA_kin_eng_dir, f'{idx+1}')
+            os.makedirs(cascade_dir, exist_ok=True)
+            cascade_file = os.path.join(cascade_dir, 'cascade_initial.xyz')
+            write(cascade_file, cascade_struct, format='extxyz')
+
+            # prepare input file
+            shutil.copytree(self.tgap_files, os.path.join(cascade_dir, 'gap_files'), dirs_exist_ok=True)
+            with open(os.path.join(self.template_dir, 'submit-cascade.sh'), 'r') as f:
+                submit_template = f.read()
+            submit_file = os.path.join(cascade_dir, 'submit-cascade.sh')
+            with open(submit_file, 'w') as f:
+                f.write(submit_template.format(num=idx+1))
+            beta_file = os.path.join(self.template_dir, 'betafile', 'beta_Ge.dat')
+            with open(os.path.join(self.template_dir, 'input-cascade'), 'r') as f:
+                input_template = f.read()
+            input_file = os.path.join(cascade_dir, 'input')
+            with open(input_file, 'w') as f:
+                f.write(input_template.format(atomsfile=cascade_file, ff_settings=self.potential.ff_settings, 
+                                              num_species=len(self.bi.element), element=' '.join(self.bi.element), 
+                                              mass=self.bi.mass, cascade_steps=cascade_steps, temp=temp, beta_file=beta_file,
+                                              xlow=xlow, xhigh=xhigh, ylow=ylow, yhigh=yhigh, zlow=zlow, zhigh=zhigh,
+                                              eph_C_e=eph_C_e, eph_kappa_e=eph_kappa_e, eph_tout_file=eph_tout_file))
+            subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
+
+
 
 
 

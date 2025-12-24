@@ -25,7 +25,14 @@ if __name__ == "__main__":
     bi = BasicCellInfo(element=['Ge'], mass=72.64, lattice='diamond', alat=[5.76]*3)
     supercell_size = [10]*3
     calc = CascadeCalculator(tgap, bi)
-    # calc.thermalize_atomic(supercell_size=supercell_size, equ_md_steps=5000, temp=300, taut=100)
+
+    input_config = {
+        "supercell_size": supercell_size,
+        "equ_md_steps": 5000,
+        "temp": 300,
+        "taut": 100
+    }
+    # calc.thermalize_atomic(**input_config)
 
     # 300 K Ce, kappa_e
     # from https://github.com/N-Medvedev/XTANT-3_coupling_data/blob/main/K_semiconductors/K_Ge.dat
@@ -38,13 +45,45 @@ if __name__ == "__main__":
     xhi = bi.alat[0] * supercell_size[0] * 2
     yhi = bi.alat[1] * supercell_size[1] * 2
     zhi = bi.alat[2] * supercell_size[2] * 2
-    # calc.thermalize_electronic(equ_md_steps=5000, temp=300,
-    #                            xlow=0, xhigh=xhi, ylow=0, yhigh=yhi, zlow=0, zhigh=zhi, 
-    #                            eph_C_e=Ce, eph_kappa_e=kappa_e, eph_tout_file='eph_tout.dat')
+    input_config = {
+        "equ_md_steps": 5000,
+        "temp": 300,
+        "xlow": 0,
+        "xhigh": xhi,
+        "ylow": 0,
+        "yhigh": yhi,
+        "zlow": 0,
+        "zhigh": zhi,
+        "eph_C_e": Ce,
+        "eph_kappa_e": kappa_e,
+        "eph_tout_file": 'eph-ToutData.txt'
+    }
+    # calc.thermalize_electronic(**input_config)
     
-    ploter = CascadePloter()
-    ploter.plot_eph_results(datafile=os.path.join(calc.calculation_dir, 'thermalize_electronic', 'eph-EnergySharingData.txt'),
-                            figfile=os.path.join(calc.calculation_dir, 'thermalize_electronic', 'eph-EnergySharingData.png'))
+    # ploter = CascadePloter()
+    # ploter.plot_eph_results(datafile=os.path.join(calc.calculation_dir, 'thermalize_electronic', 'eph-EnergySharingData.txt'),
+    #                         figfile=os.path.join(calc.calculation_dir, 'thermalize_electronic', 'eph-EnergySharingData.png'))
 
-    ploter.plot_thermo_results(datafile=os.path.join(calc.calculation_dir, 'thermalize_atomic', 'thermo.log'),
-                                figfile=os.path.join(calc.calculation_dir, 'thermalize_atomic', 'thermolog.png'))
+    # ploter.plot_thermo_results(datafile=os.path.join(calc.calculation_dir, 'thermalize_atomic', 'thermo.log'),
+    #                             figfile=os.path.join(calc.calculation_dir, 'thermalize_atomic', 'thermolog.png'))
+
+    num_PKA_directions = 30
+    radius_frac = 0.8
+    PKA_kin_eng = 400 # in eV
+    input_config = {
+        "cascade_steps": 30000,
+        "temp": 300,
+        "xlow": 0,
+        "xhigh": xhi,
+        "ylow": 0,
+        "yhigh": yhi,
+        "zlow": 0,
+        "zhigh": zhi,
+        "eph_C_e": Ce,
+        "eph_kappa_e": kappa_e,
+        "eph_tout_file": 'eph-ToutData.txt'
+    }
+    calc.run_cascade_simulations(num_directions=num_PKA_directions,
+                                 radius_frac=radius_frac,
+                                 PKA_kin_eng=PKA_kin_eng,
+                                 input_config=input_config)

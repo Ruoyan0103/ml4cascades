@@ -46,9 +46,9 @@ if __name__ == "__main__":
     kappa_e = 4.0526892294595090E-01 # W/(K*m) or J/(K*m*s)
     kappa_e = kappa_e * JOULE_TO_EV / (1/ANGSTROM_TO_METER * (1/PS_TO_S))  # eV/(K*Ang*ps)
   
-    xhi = bi.alat[0] * supercell_size[0] * 2
-    yhi = bi.alat[1] * supercell_size[1] * 2
-    zhi = bi.alat[2] * supercell_size[2] * 2
+    xhi = bi.alat[0] * supercell_size[0] * 4
+    yhi = bi.alat[1] * supercell_size[1] * 4
+    zhi = bi.alat[2] * supercell_size[2] * 4
     input_config = {
         "equ_md_steps": 5000,
         "temp": 300,
@@ -63,19 +63,12 @@ if __name__ == "__main__":
         "eph_tout_file": 'eph-ToutData.txt'
     }
     # calc.thermalize_electronic(**input_config)
-    
-    # ploter = CascadePloter()
-    # ploter.plot_eph_results(datafile=os.path.join(calc.calculation_dir, 'thermalize_electronic', 'eph-EnergySharingData.txt'),
-    #                         figfile=os.path.join(calc.calculation_dir, 'thermalize_electronic', 'eph-EnergySharingData.png'))
-
-    # ploter.plot_thermo_results(datafile=os.path.join(calc.calculation_dir, 'thermalize_atomic', 'thermo.log'),
-    #                             figfile=os.path.join(calc.calculation_dir, 'thermalize_atomic', 'thermolog.png'))
 
     num_PKA_directions = 2
     radius_frac = 0.8
     PKA_kin_eng = 400 # in eV
     input_config = {
-        "cascade_steps": 30000,
+        "cascade_steps": 40000,
         "temp": 300,
         "xlow": 0,
         "xhigh": xhi,
@@ -83,9 +76,9 @@ if __name__ == "__main__":
         "yhigh": yhi,
         "zlow": 0,
         "zhigh": zhi,
-        "gsx": supercell_size[0] // 2.5,
-        "gsy": supercell_size[1] // 2.5,
-        "gsz": supercell_size[2] // 2.5,
+        "gsx": int(supercell_size[0] // 2.5),
+        "gsy": int(supercell_size[1] // 2.5),
+        "gsz": int(supercell_size[2] // 2.5),
         "eph_C_e": Ce,
         "eph_kappa_e": kappa_e,
         "eph_tout_file": 'eph-ToutData.txt'
@@ -94,3 +87,13 @@ if __name__ == "__main__":
                     radius_frac=radius_frac,
                     PKA_kin_eng=PKA_kin_eng,
                     input_config=input_config)
+    
+    # ploter = CascadePloter()
+    # ploter.plot_eph_results(datafile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_400eV', '2', 'eph-EnergySharingData.txt'),
+    #                         figfile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_400eV', '2', 'eph-EnergySharingData.png'))
+
+    # ploter.plot_thermo_results(datafile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_400eV', '2', 'thermo.log'),
+    #                             figfile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_400eV', '2', 'thermolog.png'))
+    
+    # ploter.plot_mesh_Te(datafile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_400eV', '1', 'eph-ToutData.txt'),
+    #                     figfile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_400eV', '1', 'eph-TeMeshData.png'))

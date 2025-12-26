@@ -38,8 +38,8 @@ eph_gsy = {gsy}
 eph_gsz = {gsz}                  ! FDM grid size in each direction
 eph_fdm_steps = 1   !*           ! number of steps to perform in the integration of heat diffusion equation
 
-eph_freq_Tout = 10                ! frequency to output electronic temperature
-eph_freq_mesh_Tout = 1000 
+eph_freq_Tout = 10                ! frequency to output electronic temperature, to eph-EnergySharingData.txt 
+eph_freq_mesh_Tout = 100 
 eph_Toutfile = '{eph_tout_file}'  ! electronic temperature map output file
 
 ! Output

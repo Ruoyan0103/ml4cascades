@@ -7,7 +7,7 @@ class CascadePloter:
 
     def plot_eph_results(self, datafile: str, figfile: str):
         Time, E_fric, E_rand, E_net_cum, T_e, T_a, Kin_a, Pot_a = np.loadtxt(datafile, skiprows=1, unpack=True)
-        fig, axes = plt.subplots(3, 1, sharex=True, figsize=(8, 10))
+        fig, axes = plt.subplots(3, 1, figsize=(8, 10))
 
         # axes[0].plot(Time, E_fric, label='E_fric')
         # axes[0].plot(Time, E_rand, label='E_rand')
@@ -31,8 +31,7 @@ class CascadePloter:
         axes[2].legend()
         axes[2].grid(True)
         
-        for i in range(3):
-            axes[i].set_xscale('log')
+        axes[2].set_xscale('log')
         plt.tight_layout()
         fig.savefig(figfile, dpi=300)
 
@@ -64,7 +63,7 @@ class CascadePloter:
         fig.savefig(figfile, dpi=300)
         
 
-    def plot_mesh_Te(self, datafile: str, figfile: str):
+    def plot_mesh_Te(self, ni: int, nj: int, datafile: str, figfile: str):
         blocks = {}
         current_block = None
         current_data = []
@@ -86,7 +85,6 @@ class CascadePloter:
         last_block = max(blocks.keys())
         print(f"Plotting block {last_block}")
         data = blocks[last_block]
-        ni, nj = 4, 4
         T = np.zeros((ni, nj))
         k_slice = 1
         mask = data[:, 2] == k_slice

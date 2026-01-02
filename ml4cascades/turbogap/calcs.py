@@ -32,7 +32,7 @@ class CascadeCalculator(TurboGAPCalculator):
         temp = input_config["temp"]
         taut = input_config["taut"]
 
-        thermalize_dir = os.path.join(self.calculation_dir, 'thermalize_atomic')
+        thermalize_dir = os.path.join(self.calculation_dir, 'thermalize_atomic', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}')
         os.makedirs(thermalize_dir, exist_ok=True)
         shutil.copy(os.path.join(self.template_dir, 'submit-thermo.sh'), thermalize_dir)
         shutil.copytree(self.tgap_files, os.path.join(thermalize_dir, 'gap_files'), dirs_exist_ok=True)
@@ -52,6 +52,7 @@ class CascadeCalculator(TurboGAPCalculator):
 
     # -------------------------------------- Electronic thermalize Steps --------------------------------------#
     def thermalize_electronic(self, input_config: dict):  
+        supercell_size = input_config["supercell_size"]
         equ_md_steps = input_config["equ_md_steps"]
         temp = input_config["temp"]
         xlow = input_config["xlow"]
@@ -65,7 +66,7 @@ class CascadeCalculator(TurboGAPCalculator):
         eph_tout_file = input_config["eph_tout_file"]
         atomsfile = input_config.get("atomsfile", None)
 
-        thermalize_dir = os.path.join(self.calculation_dir, 'thermalize_electronic')
+        thermalize_dir = os.path.join(self.calculation_dir, 'thermalize_electronic', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}')
         os.makedirs(thermalize_dir, exist_ok=True)
         shutil.copy(os.path.join(self.template_dir, 'submit-thermo.sh'), thermalize_dir)
         shutil.copytree(self.tgap_files, os.path.join(thermalize_dir, 'gap_files'), dirs_exist_ok=True)
@@ -74,8 +75,8 @@ class CascadeCalculator(TurboGAPCalculator):
         input_file = os.path.join(thermalize_dir, 'input')
         beta_file = os.path.join(self.template_dir, 'betafile', 'beta_Ge.dat')
         if atomsfile is None:
-            thermalized_atoms = read(os.path.join(self.calculation_dir, 'thermalize_atomic', 'trajectory_out.xyz'), format='extxyz', index=-1)
-            thermalized_atoms_file = os.path.join(self.calculation_dir, 'thermalize_atomic', 'thermalized_atoms.xyz')
+            thermalized_atoms = read(os.path.join(self.calculation_dir, 'thermalize_atomic', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}', 'trajectory_out.xyz'), format='extxyz', index=-1)
+            thermalized_atoms_file = os.path.join(self.calculation_dir, 'thermalize_atomic', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}', 'thermalized_atoms.xyz')
             write(thermalized_atoms_file, thermalized_atoms, format='extxyz')
             atomsfile = thermalized_atoms_file
         with open(input_file, 'w') as f:
@@ -106,6 +107,7 @@ class CascadeCalculator(TurboGAPCalculator):
                     radius_frac: float,
                     PKA_kin_eng: float,
                     input_config: dict):
+        supercell_size = input_config["supercell_size"]
         cascade_steps = input_config["cascade_steps"]
         temp = input_config["temp"]
         xlow = input_config["xlow"]
@@ -123,7 +125,7 @@ class CascadeCalculator(TurboGAPCalculator):
         PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV')
         os.makedirs(PKA_kin_eng_dir, exist_ok=True)
 
-        thermalized_struct = read(os.path.join(self.calculation_dir, 'thermalize_electronic', 'trajectory_out.xyz'), format='extxyz', index=-1)
+        thermalized_struct = read(os.path.join(self.calculation_dir, 'thermalize_electronic', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}', 'trajectory_out.xyz'), format='extxyz', index=-1)
         dirs = self._get_PKA_directions(num_PKA_directions)
         atom_positions = thermalized_struct.get_positions()
         atom_velocities = thermalized_struct.get_array('velocities')
@@ -144,6 +146,7 @@ class CascadeCalculator(TurboGAPCalculator):
             cascade_struct = copy.deepcopy(thermalized_struct)
             new_velocities = copy.deepcopy(atom_velocities)
             new_velocities[PKA_id] = velocity
+            self.logger.info(f'--------------------------------- Ekin: {int(PKA_kin_eng)} eV ---------------------------------')
             self.logger.info(f'PKA ID: {PKA_id}, direction: {xyz}, velocity: {velocity} ang/fs')
             cascade_struct.set_array('velocities', new_velocities)
             cascade_dir = os.path.join(PKA_kin_eng_dir, f'{idx+1}')

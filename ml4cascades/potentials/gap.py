@@ -23,7 +23,7 @@ if __name__ == "__main__":
     gap_file = 'Ge-v10-gap'
     tgap = TGAPotential(gap_file)
     bi = BasicCellInfo(element=['Ge'], mass=72.64, lattice='diamond', alat=[5.76]*3)
-    supercell_size = [10]*3
+    supercell_size = [16]*3
     calc = CascadeCalculator(tgap, bi)
 
     input_config = {
@@ -32,24 +32,33 @@ if __name__ == "__main__":
         "temp": 300,
         "taut": 100
     }
-    # calc.thermalize_atomic(**input_config)
+    # calc.thermalize_atomic(input_config)
 
     # 300 K Ce, kappa_e
     # from https://github.com/N-Medvedev/XTANT-3_coupling_data/blob/main/K_semiconductors/K_Ge.dat
     # Ce = 1.7674049595143981E+02 # J/(m^3*K)
     # Ce = Ce * JOULE_TO_EV / ((1/ANGSTROM_TO_METER)**3)  # eV/K/Ang^3
+    # kappa_e = 4.0526892294595090E-01 # W/(K*m) or J/(K*m*s)
+    # kappa_e = kappa_e * JOULE_TO_EV / (1/ANGSTROM_TO_METER * (1/PS_TO_S))  # eV/(K*Ang*ps)
 
     # from Nuclear Instruments and Methods in Physics Research B 485 (2020) 1–9
     rho = 1.0 # electrons/volume unit
-    Ce = 1e-6 # eV/(electrons*K)  at low temperature, per electron 
-
-    kappa_e = 4.0526892294595090E-01 # W/(K*m) or J/(K*m*s)
-    kappa_e = kappa_e * JOULE_TO_EV / (1/ANGSTROM_TO_METER * (1/PS_TO_S))  # eV/(K*Ang*ps)
+    # from PHYSICAL REVIEW B 104, 195203 (2021)
+    # option 1: low Ce, low kappa_e
+    # Ce = 5e-6
+    # kappa_e = 5e-3
+    # option 2: high Ce, high kappa_e
+    Ce = 1.29e-4
+    kappa_e = 1.29e-1
+    # option 3: high Ce, low kappa_e
+    # Ce = 1.29e-4
+    # kappa_e = 5e-3
   
-    xhi = bi.alat[0] * supercell_size[0] * 4
-    yhi = bi.alat[1] * supercell_size[1] * 4
-    zhi = bi.alat[2] * supercell_size[2] * 4
+    xhi = bi.alat[0] * supercell_size[0] * 2
+    yhi = bi.alat[1] * supercell_size[1] * 2
+    zhi = bi.alat[2] * supercell_size[2] * 2
     input_config = {
+        "supercell_size": supercell_size,
         "equ_md_steps": 5000,
         "temp": 300,
         "xlow": 0,
@@ -62,12 +71,13 @@ if __name__ == "__main__":
         "eph_kappa_e": kappa_e,
         "eph_tout_file": 'eph-ToutData.txt'
     }
-    # calc.thermalize_electronic(**input_config)
+    # calc.thermalize_electronic(input_config)
 
-    num_PKA_directions = 2
+    num_PKA_directions = 20
     radius_frac = 0.8
-    PKA_kin_eng = 400 # in eV
+    PKA_kin_eng = 1000 # in eV
     input_config = {
+        "supercell_size": supercell_size,
         "cascade_steps": 40000,
         "temp": 300,
         "xlow": 0,
@@ -76,9 +86,9 @@ if __name__ == "__main__":
         "yhigh": yhi,
         "zlow": 0,
         "zhigh": zhi,
-        "gsx": int(supercell_size[0] // 2.5),
-        "gsy": int(supercell_size[1] // 2.5),
-        "gsz": int(supercell_size[2] // 2.5),
+        "gsx": int(xhi // 21),
+        "gsy": int(yhi // 21),
+        "gsz": int(zhi // 21),
         "eph_C_e": Ce,
         "eph_kappa_e": kappa_e,
         "eph_tout_file": 'eph-ToutData.txt'
@@ -89,11 +99,11 @@ if __name__ == "__main__":
                     input_config=input_config)
     
     # ploter = CascadePloter()
-    # ploter.plot_eph_results(datafile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_400eV', '2', 'eph-EnergySharingData.txt'),
-    #                         figfile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_400eV', '2', 'eph-EnergySharingData.png'))
+    # ploter.plot_eph_results(datafile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV', '3', 'eph-EnergySharingData.txt'),
+    #                         figfile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV', '3', 'eph-EnergySharingData5.png'))
 
-    # ploter.plot_thermo_results(datafile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_400eV', '2', 'thermo.log'),
-    #                             figfile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_400eV', '2', 'thermolog.png'))
+    # ploter.plot_thermo_results(datafile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV', '3', 'thermo.log'),
+    #                             figfile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV', '3', 'thermolog5.png'))
     
-    # ploter.plot_mesh_Te(datafile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_400eV', '1', 'eph-ToutData.txt'),
-    #                     figfile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_400eV', '1', 'eph-TeMeshData.png'))
+    # ploter.plot_mesh_Te(ni=6, nj=6, datafile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV', '3', 'eph-ToutData.txt'), 
+    #                     figfile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV', '3', 'eph-TeMeshData5.png'))

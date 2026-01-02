@@ -16,9 +16,9 @@ md_step = 1.
 adaptive_time = .true.
 adapt_time_groupID = all
 adapt_tstep_interval = 1
-adapt_tmin = 1.0E-10
+adapt_tmin = 1.0E-03
 adapt_tmax = 1.0E-00               ! 1 fs after energy conservation test (8000 K)
-adapt_xmax = 1.0E-02               ! 0.01 Angstrom
+adapt_xmax = 2.0E-02               ! 0.02 Angstrom
 adapt_emax = 10.0                  ! 10 eV
 
 ! Electronic system - EPH model

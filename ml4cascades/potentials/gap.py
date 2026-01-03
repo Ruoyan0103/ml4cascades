@@ -1,7 +1,7 @@
 import os, time
 from ml4cascades.potentials import IPotential
 from ml4cascades.utils import BasicCellInfo
-from ml4cascades.turbogap import CascadeCalculator
+from ml4cascades.turbogap import CascadeCalculator, CascadeProcessor
 from ml4cascades.utils import CascadePloter
 
 AMU_TO_KG = 1.66053906660E-27 # Atomic mass unit to kg conversion factor
@@ -22,7 +22,7 @@ class TGAPotential(IPotential):
 if __name__ == "__main__":
     gap_file = 'Ge-v10-gap'
     tgap = TGAPotential(gap_file)
-    bi = BasicCellInfo(element=['Ge'], mass=72.64, lattice='diamond', alat=[5.76]*3)
+    bi = BasicCellInfo(element=['Ge'], atomic_num=[32], mass=72.64, lattice='diamond', alat=[5.76]*3)
     supercell_size = [16]*3
     calc = CascadeCalculator(tgap, bi)
 
@@ -93,10 +93,10 @@ if __name__ == "__main__":
         "eph_kappa_e": kappa_e,
         "eph_tout_file": 'eph-ToutData.txt'
     }
-    calc.run_cascade(num_PKA_directions=num_PKA_directions,
-                    radius_frac=radius_frac,
-                    PKA_kin_eng=PKA_kin_eng,
-                    input_config=input_config)
+    # calc.run_cascade(num_PKA_directions=num_PKA_directions,
+    #                 radius_frac=radius_frac,
+    #                 PKA_kin_eng=PKA_kin_eng,
+    #                 input_config=input_config)
     
     # ploter = CascadePloter()
     # ploter.plot_eph_results(datafile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV', '3', 'eph-EnergySharingData.txt'),
@@ -107,3 +107,9 @@ if __name__ == "__main__":
     
     # ploter.plot_mesh_Te(ni=6, nj=6, datafile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV', '3', 'eph-ToutData.txt'), 
     #                     figfile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV', '3', 'eph-TeMeshData5.png'))
+
+    traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV')
+    processor = CascadeProcessor(bi, traj_folder)
+    # processor.cal_ibm(num_trajs=1, n0=1, ed=1)
+    # processor.cal_wsDefect(num_trajs=2)
+    processor.cal_cluster(num_trajs=1, expression='Occupancy == 0')

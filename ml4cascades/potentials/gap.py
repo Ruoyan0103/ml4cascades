@@ -111,5 +111,5 @@ if __name__ == "__main__":
     traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV')
     processor = CascadeProcessor(bi, traj_folder)
     # processor.cal_ibm(num_trajs=1, n0=1, ed=1)
-    # processor.cal_wsDefect(num_trajs=2)
-    processor.cal_cluster(num_trajs=1, expression='Occupancy == 0')
+    # processor.cal_WSDefect(num_trajs=2)
+    processor.cal_cluster(num_trajs=1, expression='Occupancy != 1')

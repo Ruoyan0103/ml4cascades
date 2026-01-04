@@ -1,0 +1,26 @@
+# LAMMPS input for equilibrating the cell atomic temperature
+# Parameters: atomsfile, ff_settings, mass, temp, taut, equ_md_steps
+
+#-------------------------INITIALIZATION--------------------------
+units           metal
+boundary        p p p
+atom_style      atomic
+read_data       {atomsfile}
+
+#---------------------------FORCE FIELD---------------------------
+{ff_settings}
+mass            1  {mass}
+
+#----------------------Berendsen thermostat-----------------------
+timestep        0.001
+velocity        all create {temp} 12345 mom yes
+fix             1 all temp/berendsen {temp} {temp} {taut}
+thermo		    10
+thermo_style    custom step time temp press pe ke etotal 
+fix             out all print 1 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal)" file thermo.out screen no
+
+run             {equ_md_steps}
+unfix           1
+unfix           out
+write_data      atoms.atomic
+

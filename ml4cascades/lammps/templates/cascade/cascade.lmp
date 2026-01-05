@@ -1,5 +1,6 @@
 # LAMMPS input for simulating collision cascade
-# Parameters: atomsfile, ff_settings, mass, tinfile, betafile, cascade_steps 
+# Parameters: atomsfile, ff_settings, mass, pka_id, v_x, v_y, v_z,
+# eph_C_e, eph_kappa_e, temp, gsx, gsy, gsz, tinfile, betafile, cascade_steps 
 
 #-------------------------INITIALIZATION--------------------------
 units           metal
@@ -11,20 +12,43 @@ read_data       {atomsfile}
 {ff_settings}
 mass            1  {mass}
 
+#----------------------------PKA SETTING-------------------------
+group           PKA id == {pka_id}
+velocity        PKA set {v_x} {v_y} {v_z} units box
+
 #--------------------------ADAPTIVE TIMESTEP----------------------
-fix             1  all dt/reset 1 1e-6 1e-3 2e-2 emax 10 
-
-#------------------------------USER EPH---------------------------
-fix             friction all eph 12345 7 4 1.0 1.0e-5 1.0e-9 300.0 9 9 9 {tinfile} 100 T_out {betafile} Ge   # rho_e, c_e, k_e, t_e, nx, ny, nz are read from tinfile 
-fix             out all print 1 "$(step) $(time) $(temp) $(f_friction[1]) $(f_friction[2])" file eng.out screen no
-
+fix             1 all dt/reset 1 1e-6 1e-3 2e-2 emax 10 
 thermo          10
 thermo_style    custom step time temp press pe ke etotal
-fix             out all print 1 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal)" file thermo.out screen no
-dump            2 all 100 output.data 
-run             {cascade_steps}
-unfix           friction
-unfix           out
-undump          2
+
+#--------------------------BORDER MONITOR-----------------------
+variable        br internal {border_thickness}
+region          xrdown block $(xlo) $(xlo+v_br) $(ylo) $(yhi) $(zlo) $(zhi) units box
+group           xdown region xrdown
+region          xrup block $(xhi-v_br) $(xhi) $(ylo) $(yhi) $(zlo) $(zhi) units box
+group           xup region xrup
+region          yrdown block $(xlo) $(xhi) $(ylo) $(ylo+v_br) $(zlo) $(zhi) units box
+group           ydown region yrdown
+region          yrup block $(xlo) $(xhi) $(yhi-v_br) $(yhi) $(zlo) $(zhi) units box
+group           yup region yrup
+region          zrdown block $(xlo) $(xhi) $(ylo) $(yhi) $(zlo) $(zlo+v_br) units box
+group           zdown region zrdown
+region          zrup block $(xlo) $(xhi) $(ylo) $(yhi) $(zhi-v_br) $(zhi) units box
+group           zup region zrup
+group           border union xdown xup ydown yup zdown zup
+
+compute         ep all pe/atom
+compute         ek all ke/atom
+compute         emax border reduce max c_ek
+variable        emaxbrdr equal c_emax
+variable        t equal "time"
+
+#------------------------------USER EPH---------------------------
+fix             friction all eph 12345 7 4 1.0 {eph_C_e} {eph_kappa_e} {temp} {gsx} {gsy} {gsz} {tinfile} 0 T_out {betafile} Ge   # rho_e, c_e, k_e, t_e, nx, ny, nz are read from tinfile 
+fix             out1 all print 1 "$(step) $(time) $(temp) $(f_friction[1]) $(f_friction[2])" file eng.out screen no
+fix             out2 all print 1 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal)" file thermo.out screen no
+dump            2 all custom 100 data.output id x y z vx vy vz c_ep c_ek
+
+run             {cascade_steps} every 100  " if '(${{emaxbrdr}} > 5 || $t >= 35.0)' then 'quit' "
 
 

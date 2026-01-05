@@ -25,7 +25,7 @@ fix             out1 all print 10 "$(step) $(time) $(temp) $(f_friction[1]) $(f_
 fix             out2 all print 10 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal)" file thermo.out screen no
 
 run             {equ_md_steps}
-write_data      out.atoms
+write_data      data.output
 
 
 

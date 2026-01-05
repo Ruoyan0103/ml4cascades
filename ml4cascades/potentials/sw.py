@@ -54,5 +54,32 @@ if __name__ == "__main__":
         "eph_kappa_e": kappa_e,
         "tinfile": 'NULL'
     }
-    calc.thermalize(input_config)
+    # calc.thermalize(input_config)
+
+    num_PKA_directions = 2
+    radius_frac = 0.8
+    PKA_kin_eng = 1000 # in eV
+    input_config = {
+        "supercell_size": supercell_size,
+        "border_thickness": 5.76,
+        "cascade_steps": 40000,
+        "temp": 300,
+        "xlow": 0,
+        "xhigh": xhi,
+        "ylow": 0,
+        "yhigh": yhi,
+        "zlow": 0,
+        "zhigh": zhi,
+        "gsx": int(xhi // 21),
+        "gsy": int(yhi // 21),
+        "gsz": int(zhi // 21),
+        "eph_C_e": Ce,
+        "eph_kappa_e": kappa_e,
+        "tinfile": 'NULL'
+    }
+    calc.run_cascade(num_PKA_directions=num_PKA_directions,
+                    radius_frac=radius_frac,
+                    PKA_kin_eng=PKA_kin_eng,
+                    input_config=input_config)
+    
     

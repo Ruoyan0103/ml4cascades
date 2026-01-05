@@ -10,6 +10,7 @@ AMU_TO_KG = 1.66053906660E-27 # Atomic mass unit to kg conversion factor
 JOULE_TO_EV = 6.241509074E18  # Joule to eV conversion factor
 ANGSTROM_TO_METER = 1E-10     # Angstroms/picosecond to meters/second conversion factor
 FS_TO_S = 1E-15               # Picoseconds to seconds conversion factor
+PS_TO_S = 1E-12               # Picoseconds to seconds conversion factor
 module_dir = os.path.dirname(__file__)
 
 class CascadeCalculator(LMPSCalculator): 
@@ -111,14 +112,16 @@ class CascadeCalculator(LMPSCalculator):
         gsz = input_config["gsz"]
         eph_C_e = input_config["eph_C_e"]
         eph_kappa_e = input_config["eph_kappa_e"]
-        eph_tout_file = input_config["eph_tout_file"]
+        border_thickness = input_config["border_thickness"]
+        tinfile = input_config.get("tinfile", None)
+
         PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV')
         os.makedirs(PKA_kin_eng_dir, exist_ok=True)
 
-        thermalized_struct = read(os.path.join(self.calculation_dir, 'thermalize_electronic', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}', 'trajectory_out.xyz'), format='extxyz', index=-1)
+        atomsfile = os.path.join(self.calculation_dir, 'thermalize', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}', 'data.output')
+        thermalized_struct = read(atomsfile, format='lammps-data')
         dirs = self._get_PKA_directions(num_PKA_directions)
         atom_positions = thermalized_struct.get_positions()
-        atom_velocities = thermalized_struct.get_array('velocities')
         cell_lengths = thermalized_struct.cell.lengths()
         radius = 0.5 * min(cell_lengths) * radius_frac
         center = thermalized_struct.get_center_of_mass()
@@ -129,37 +132,43 @@ class CascadeCalculator(LMPSCalculator):
             PKA_id = np.argmin(dists)
 
             # PKA velocity
-            velocity_value = np.sqrt(2 * PKA_kin_eng  / (self.bi.mass * AMU_TO_KG * JOULE_TO_EV)) / (ANGSTROM_TO_METER/FS_TO_S)
+            velocity_value = np.sqrt(2 * PKA_kin_eng  / (self.bi.mass * AMU_TO_KG * JOULE_TO_EV)) / (ANGSTROM_TO_METER/PS_TO_S)
             velocity = velocity_value * -xyz        # shape (3,)
-
-            # set PKA
-            cascade_struct = copy.deepcopy(thermalized_struct)
-            new_velocities = copy.deepcopy(atom_velocities)
-            new_velocities[PKA_id] = velocity
             self.logger.info(f'--------------------------------- Ekin: {int(PKA_kin_eng)} eV ---------------------------------')
-            self.logger.info(f'PKA ID: {PKA_id}, direction: {xyz}, velocity: {velocity} ang/fs')
-            cascade_struct.set_array('velocities', new_velocities)
+            self.logger.info(f'PKA ID: {PKA_id}, direction: {xyz}, velocity: {velocity} ang/ps')
+
             cascade_dir = os.path.join(PKA_kin_eng_dir, f'{idx+1}')
             os.makedirs(cascade_dir, exist_ok=True)
-            cascade_file = os.path.join(cascade_dir, 'cascade_initial.xyz')
-            write(cascade_file, cascade_struct, format='extxyz')
 
             # prepare input file
-            shutil.copytree(self.tgap_files, os.path.join(cascade_dir, 'gap_files'), dirs_exist_ok=True)
+            shutil.copytree(self.pot_files, cascade_dir, dirs_exist_ok=True)
             with open(os.path.join(self.template_dir, 'submit-cascade.sh'), 'r') as f:
                 submit_template = f.read()
             submit_file = os.path.join(cascade_dir, 'submit-cascade.sh')
             with open(submit_file, 'w') as f:
                 f.write(submit_template.format(num=idx+1))
-            beta_file = os.path.join(self.template_dir, 'betafile', 'beta_Ge.dat')
-            with open(os.path.join(self.template_dir, 'input-cascade'), 'r') as f:
+            betafile = os.path.join(self.template_dir, 'betafile', 'beta_Ge.dat')
+            with open(os.path.join(self.template_dir, 'cascade.lmp'), 'r') as f:
                 input_template = f.read()
-            input_file = os.path.join(cascade_dir, 'input')
+            input_file = os.path.join(cascade_dir, 'input.lmp')
+            if tinfile is None:
+                tinfile = os.path.join(cascade_dir, 'T.in')
+                with open(tinfile, 'w') as f:
+                    f.write('# comment1 \n# comment2 \n# comment3 \n')
+                    f.write(f'{gsx} {gsy} {gsz} 1\n')
+                    f.write(f'{xlow} {xhigh} \n')
+                    f.write(f'{ylow} {yhigh} \n')
+                    f.write(f'{zlow} {zhigh} \n')
+                    f.write('i j k T_e S_e rho_e C_e K_e flag T_dyn_flag\n')
+                    for iz in range(gsz):
+                        for iy in range(gsy):
+                            for ix in range(gsx):
+                                f.write(f'{ix} {iy} {iz} {temp} 0 1 {eph_C_e} {eph_kappa_e} 0 0\n')
             with open(input_file, 'w') as f:
-                f.write(input_template.format(atomsfile=cascade_file, ff_settings=self.potential.ff_settings, 
-                                              num_species=len(self.bi.element), element=' '.join(self.bi.element), 
-                                              mass=self.bi.mass, cascade_steps=cascade_steps, temp=temp, beta_file=beta_file,
+                f.write(input_template.format(atomsfile=atomsfile, ff_settings=self.potential.ff_settings, border_thickness=border_thickness, 
+                                              pka_id=PKA_id, v_x=velocity[0], v_y=velocity[1], v_z=velocity[2],
+                                              mass=self.bi.mass, cascade_steps=cascade_steps, temp=temp, betafile=betafile,
+                                              eph_C_e=eph_C_e, eph_kappa_e=eph_kappa_e,
                                               xlow=xlow, xhigh=xhigh, ylow=ylow, yhigh=yhigh, zlow=zlow, zhigh=zhigh,
-                                              gsx=gsx, gsy=gsy, gsz=gsz,
-                                              eph_C_e=eph_C_e, eph_kappa_e=eph_kappa_e, eph_tout_file=eph_tout_file))
+                                              gsx=gsx, gsy=gsy, gsz=gsz, tinfile=tinfile))
             subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)

@@ -1,0 +1,22 @@
+2026-01-05 16:31 - ml4cascades.lammps.calcs_base - INFO - --------------------------------- Ekin: 1000 eV ---------------------------------
+2026-01-05 16:31 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 16871, direction: [ 0.10449769 -0.68899228  0.71719584], velocity: [-0.05385976  0.35511751 -0.36965407] ang/fs
+2026-01-05 16:32 - ml4cascades.lammps.calcs_base - INFO - --------------------------------- Ekin: 1000 eV ---------------------------------
+2026-01-05 16:32 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 16871, direction: [ 0.10449769 -0.68899228  0.71719584], velocity: [-0.05385976  0.35511751 -0.36965407] ang/fs
+2026-01-05 16:32 - ml4cascades.lammps.calcs_base - INFO - --------------------------------- Ekin: 1000 eV ---------------------------------
+2026-01-05 16:32 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 5460, direction: [-0.85186888  0.34424243  0.39473606], velocity: [ 0.43906668 -0.17742799 -0.2034532 ] ang/fs
+2026-01-05 16:34 - ml4cascades.lammps.calcs_base - INFO - --------------------------------- Ekin: 1000 eV ---------------------------------
+2026-01-05 16:34 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 16871, direction: [ 0.10449769 -0.68899228  0.71719584], velocity: [-0.05385976  0.35511751 -0.36965407] ang/fs
+2026-01-05 16:34 - ml4cascades.lammps.calcs_base - INFO - --------------------------------- Ekin: 1000 eV ---------------------------------
+2026-01-05 16:34 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 5460, direction: [-0.85186888  0.34424243  0.39473606], velocity: [ 0.43906668 -0.17742799 -0.2034532 ] ang/fs
+2026-01-05 16:38 - ml4cascades.lammps.calcs_base - INFO - --------------------------------- Ekin: 1000 eV ---------------------------------
+2026-01-05 16:38 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 16871, direction: [ 0.10449769 -0.68899228  0.71719584], velocity: [-0.05385976  0.35511751 -0.36965407] ang/fs
+2026-01-05 16:38 - ml4cascades.lammps.calcs_base - INFO - --------------------------------- Ekin: 1000 eV ---------------------------------
+2026-01-05 16:38 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 5460, direction: [-0.85186888  0.34424243  0.39473606], velocity: [ 0.43906668 -0.17742799 -0.2034532 ] ang/fs
+2026-01-05 16:58 - ml4cascades.lammps.calcs_base - INFO - --------------------------------- Ekin: 1000 eV ---------------------------------
+2026-01-05 16:58 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 16871, direction: [ 0.10449769 -0.68899228  0.71719584], velocity: [ -53.85976198  355.11750678 -369.65406802] ang/fs
+2026-01-05 16:58 - ml4cascades.lammps.calcs_base - INFO - --------------------------------- Ekin: 1000 eV ---------------------------------
+2026-01-05 16:58 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 5460, direction: [-0.85186888  0.34424243  0.39473606], velocity: [ 439.06668248 -177.42798747 -203.45320145] ang/fs
+2026-01-05 17:09 - ml4cascades.lammps.calcs_base - INFO - --------------------------------- Ekin: 1000 eV ---------------------------------
+2026-01-05 17:09 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 16871, direction: [ 0.10449769 -0.68899228  0.71719584], velocity: [ -53.85976198  355.11750678 -369.65406802] ang/ps
+2026-01-05 17:09 - ml4cascades.lammps.calcs_base - INFO - --------------------------------- Ekin: 1000 eV ---------------------------------
+2026-01-05 17:09 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 5460, direction: [-0.85186888  0.34424243  0.39473606], velocity: [ 439.06668248 -177.42798747 -203.45320145] ang/ps

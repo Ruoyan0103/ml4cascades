@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#SBATCH --time=04:00:00
+#SBATCH --time=20:00:00
 #SBATCH --partition=sumo
 #SBATCH --account=sumo
 #SBATCH --nodes=1
 #SBATCH --ntasks=40
 #SBATCH --cpus-per-task=1
-#SBATCH --mem-per-cpu=4G
+#SBATCH --mem-per-cpu=8G
 #SBATCH --job-name=thermo
 #SBATCH --error=job.error
 #SBATCH --output=job.output

@@ -32,14 +32,6 @@ if __name__ == "__main__":
     supercell_size = [16]*3
     calc = CascadeCalculator(sw, bi)
 
-    input_config = {
-        "supercell_size": supercell_size,
-        "equ_md_steps": 5000,
-        "temp": 300,
-        "taut": 100
-    }
-    # calc.thermalize_atomic(input_config)
-
     xhi = bi.alat[0] * supercell_size[0] * 2
     yhi = bi.alat[1] * supercell_size[1] * 2
     zhi = bi.alat[2] * supercell_size[2] * 2
@@ -47,7 +39,7 @@ if __name__ == "__main__":
     kappa_e = 1.29e-1
     input_config = {
         "supercell_size": supercell_size,
-        "equ_md_steps": 5000,
+        "equ_md_steps": 10000,
         "temp": 300,
         "xlow": 0,
         "xhigh": xhi,
@@ -62,5 +54,5 @@ if __name__ == "__main__":
         "eph_kappa_e": kappa_e,
         "tinfile": 'NULL'
     }
-    # calc.thermalize_electronic(input_config)
+    calc.thermalize(input_config)
     

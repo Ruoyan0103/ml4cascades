@@ -25,32 +25,8 @@ class CascadeCalculator(LMPSCalculator):
         self.pot_files = potential.get_pot_files_path()
         self.bi = basicCellInfo
 
-    # -------------------------------------- Atomic thermalize Steps --------------------------------------#
-    def thermalize_atomic(self, input_config: dict) -> str:
-        supercell_size = input_config["supercell_size"]
-        equ_md_steps = input_config["equ_md_steps"]
-        temp = input_config["temp"]
-        taut = input_config["taut"]
-
-        thermalize_dir = os.path.join(self.calculation_dir, 'thermalize_atomic', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}')
-        os.makedirs(thermalize_dir, exist_ok=True)
-        shutil.copy(os.path.join(self.template_dir, 'submit-thermo.sh'), thermalize_dir)
-        shutil.copytree(self.pot_files, thermalize_dir, dirs_exist_ok=True)
-        with open(os.path.join(self.template_dir, 'thermalize-atomic.lmp'), 'r') as f:
-            input_template = f.read()
-        input_file = os.path.join(thermalize_dir, 'input.lmp')
-        unit_cell = bulk(''.join(self.bi.element), self.bi.lattice, 
-                         a=self.bi.alat[0], b=self.bi.alat[1], c=self.bi.alat[2], cubic=True)
-        supercell = unit_cell * supercell_size
-        atomsfile = os.path.join(thermalize_dir, 'data.input')
-        write(atomsfile, supercell, format='lammps-data')
-        with open(input_file, 'w') as f:
-            f.write(input_template.format(atomsfile=atomsfile, ff_settings=self.potential.ff_settings, 
-                                          mass=self.bi.mass, equ_md_steps=equ_md_steps, temp=temp, taut=taut)) 
-        subprocess.run('sbatch submit-thermo.sh', shell=True, check=True, cwd=thermalize_dir)
-
-    # -------------------------------------- Electronic thermalize Steps --------------------------------------#
-    def thermalize_electronic(self, input_config: dict):  
+    # -------------------------------------- Thermalize Steps --------------------------------------#
+    def thermalize(self, input_config: dict):  
         supercell_size = input_config["supercell_size"]
         equ_md_steps = input_config["equ_md_steps"]
         temp = input_config["temp"]
@@ -67,16 +43,21 @@ class CascadeCalculator(LMPSCalculator):
         eph_kappa_e = input_config["eph_kappa_e"]
         atomsfile = input_config.get("atomsfile", None)
         tinfile = input_config.get("tinfile", None)
-        thermalize_dir = os.path.join(self.calculation_dir, 'thermalize_electronic', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}')
+        thermalize_dir = os.path.join(self.calculation_dir, 'thermalize', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}')
         os.makedirs(thermalize_dir, exist_ok=True)
         shutil.copy(os.path.join(self.template_dir, 'submit-thermo.sh'), thermalize_dir)
         shutil.copytree(self.pot_files, thermalize_dir, dirs_exist_ok=True)
-        with open(os.path.join(self.template_dir, 'thermalize-electronic.lmp'), 'r') as f:
+
+        with open(os.path.join(self.template_dir, 'thermalize.lmp'), 'r') as f:
             input_template = f.read()
         input_file = os.path.join(thermalize_dir, 'input.lmp')
         beta_file = os.path.join(self.template_dir, 'betafile', 'beta_Ge.dat')
         if atomsfile is None:
-            atomsfile = os.path.join(self.calculation_dir, 'thermalize_atomic', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}', 'atoms.atomic')
+            unit_cell = bulk(''.join(self.bi.element), self.bi.lattice, 
+                             a=self.bi.alat[0], b=self.bi.alat[1], c=self.bi.alat[2], cubic=True)
+            supercell = unit_cell * supercell_size
+            atomsfile = os.path.join(thermalize_dir, 'data.input')
+            write(atomsfile, supercell, format='lammps-data')
         if tinfile is None:
             tinfile = os.path.join(thermalize_dir, 'T.in')
             with open(tinfile, 'w') as f:
@@ -94,7 +75,7 @@ class CascadeCalculator(LMPSCalculator):
             f.write(input_template.format(atomsfile=atomsfile, ff_settings=self.potential.ff_settings, tinfile=tinfile, 
                                           eph_C_e=eph_C_e, eph_kappa_e=eph_kappa_e, gsx=gsx, gsy=gsy, gsz=gsz,
                                           mass=self.bi.mass, equ_md_steps=equ_md_steps, temp=temp, beta_file=beta_file)) 
-        # subprocess.run('sbatch submit-thermo.sh', shell=True, check=True, cwd=thermalize_dir)
+        subprocess.run('sbatch submit-thermo.sh', shell=True, check=True, cwd=thermalize_dir)
 
     # -------------------------------------- PKA direction --------------------------------------#
     def _get_PKA_directions(self, num_PKA_directions: int) -> np.ndarray:

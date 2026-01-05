@@ -23,7 +23,7 @@ if __name__ == "__main__":
     gap_file = 'Ge-v10-gap'
     tgap = TGAPotential(gap_file)
     bi = BasicCellInfo(element=['Ge'], atomic_num=[32], mass=72.64, lattice='diamond', alat=[5.76]*3)
-    supercell_size = [22]*3
+    supercell_size = [40]*3
     calc = CascadeCalculator(tgap, bi)
 
     input_config = {
@@ -32,7 +32,7 @@ if __name__ == "__main__":
         "temp": 300,
         "taut": 100
     }
-    calc.thermalize_atomic(input_config)
+    # calc.thermalize_atomic(input_config)
 
     # 300 K Ce, kappa_e
     # from https://github.com/N-Medvedev/XTANT-3_coupling_data/blob/main/K_semiconductors/K_Ge.dat
@@ -71,7 +71,7 @@ if __name__ == "__main__":
         "eph_kappa_e": kappa_e,
         "eph_tout_file": 'eph-ToutData.txt'
     }
-    # calc.thermalize_electronic(input_config)
+    calc.thermalize_electronic(input_config)
 
     num_PKA_directions = 20
     radius_frac = 0.8

@@ -57,7 +57,7 @@ if __name__ == "__main__":
     # calc.thermalize(input_config)
 
     num_PKA_directions = 2
-    radius_frac = 0.8
+    radius_frac = 0.6
     PKA_kin_eng = 1000 # in eV
     input_config = {
         "supercell_size": supercell_size,
@@ -75,7 +75,7 @@ if __name__ == "__main__":
         "gsz": int(zhi // 21),
         "eph_C_e": Ce,
         "eph_kappa_e": kappa_e,
-        "tinfile": 'NULL'
+        # "tinfile": 'NULL'
     }
     calc.run_cascade(num_PKA_directions=num_PKA_directions,
                     radius_frac=radius_frac,

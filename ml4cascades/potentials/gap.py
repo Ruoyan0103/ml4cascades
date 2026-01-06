@@ -23,7 +23,7 @@ if __name__ == "__main__":
     gap_file = 'Ge-v10-gap'
     tgap = TGAPotential(gap_file)
     bi = BasicCellInfo(element=['Ge'], atomic_num=[32], mass=72.64, lattice='diamond', alat=[5.76]*3)
-    supercell_size = [40]*3
+    supercell_size = [16]*3
     calc = CascadeCalculator(tgap, bi)
 
     input_config = {
@@ -71,11 +71,11 @@ if __name__ == "__main__":
         "eph_kappa_e": kappa_e,
         "eph_tout_file": 'eph-ToutData.txt'
     }
-    calc.thermalize_electronic(input_config)
+    # calc.thermalize_electronic(input_config)
 
-    num_PKA_directions = 20
+    num_PKA_directions = 3
     radius_frac = 0.8
-    PKA_kin_eng = 1000 # in eV
+    PKA_kin_eng = 2000 # in eV
     input_config = {
         "supercell_size": supercell_size,
         "cascade_steps": 40000,
@@ -110,6 +110,6 @@ if __name__ == "__main__":
 
     traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV')
     processor = CascadeProcessor(bi, traj_folder)
-    # processor.cal_ibm(num_trajs=1, n0=1, ed=1)
-    # processor.cal_WSDefect(num_trajs=2)
-    # processor.cal_cluster(num_trajs=1, expression='Occupancy!=1')
+    processor.cal_ibm(num_trajs=20, n0=1, ed=1)
+    processor.cal_WSDefect(num_trajs=20)
+    processor.cal_cluster(num_trajs=10, expression='Occupancy!=1')

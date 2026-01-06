@@ -29,8 +29,8 @@ class CascadeProcessor:
         for num_traj in range(num_trajs):
             time = [0]
             R2 = [0]
-            traj_file = os.path.join(self.traj_folder, f'{num_traj+1}', 'trajectory_out.xyz')
-            traj_frames = read(traj_file, format='extxyz', index=":")
+            traj_file = os.path.join(self.traj_folder, f'{num_traj+1}', 'data.output')
+            traj_frames = read(traj_file, format='lammps-data', index=":")
             init_pos = traj_frames[0].get_positions()
             for frame in traj_frames[1:]:              # loop over frames 
                 R2_val = 0
@@ -53,7 +53,7 @@ class CascadeProcessor:
             R2_interp_all.append(R2_interp)
         R2_avg = np.mean(R2_interp_all, axis=0)
         with open(os.path.join(self.traj_folder, 'R2.txt'), 'w') as f:
-            f.write('Time (fs)\tR^2 (Å²)\n')
+            f.write('Time (fs)\tR^2 (ang^2)\n')
             for t, r2 in zip(time_all[0], R2_avg):
                 f.write(f'{t}\t{r2}\n')
         fig, ax = plt.subplots(figsize=(6, 4))
@@ -86,8 +86,8 @@ class CascadeProcessor:
             num_vac = [0]
             num_int = [0]
             num_def = [0]
-            traj_file = os.path.join(self.traj_folder, f'{num_traj+1}', 'trajectory_out.xyz')
-            traj_frames = read(traj_file, format='extxyz', index=":")
+            traj_file = os.path.join(self.traj_folder, f'{num_traj+1}', 'data.output')
+            traj_frames = read(traj_file, format='lammps-data', index=":")
             all_pipeline = import_file(traj_file)
             init_frame = all_pipeline.compute(0)
             reference_pipeline = Pipeline(source=StaticSource(data=init_frame))
@@ -164,8 +164,8 @@ class CascadeProcessor:
             max_cluster_size = [0]
             num_point_defect = [0]
             num_cluster_defect = [0]
-            traj_file = os.path.join(self.traj_folder, f'{num_traj+1}', 'trajectory_out.xyz')
-            traj_frames = read(traj_file, format='extxyz', index=":")
+            traj_file = os.path.join(self.traj_folder, f'{num_traj+1}', 'data.output')
+            traj_frames = read(traj_file, format='lammps-data', index=":")
             all_pipeline = import_file(traj_file)
             init_frame = all_pipeline.compute(0)
             reference_pipeline = Pipeline(source=StaticSource(data=init_frame))
@@ -252,4 +252,3 @@ class CascadeProcessor:
         ax.legend()
         plt.tight_layout()
         fig.savefig(os.path.join(self.traj_folder, 'defect_cluster.png'), dpi=300)
-

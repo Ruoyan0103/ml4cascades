@@ -33,7 +33,7 @@ class CascadeCalculator(LMPSCalculator):
         temp = input_config["temp"]
         xlow = input_config["xlow"]
         xhigh = input_config["xhigh"]
-        ylow = input_config["ylow"]
+        ylow = input_config["ylow"] 
         yhigh = input_config["yhigh"]
         zlow = input_config["zlow"]
         zhigh = input_config["zhigh"]
@@ -67,11 +67,11 @@ class CascadeCalculator(LMPSCalculator):
                 f.write(f'{xlow} {xhigh} \n')
                 f.write(f'{ylow} {yhigh} \n')
                 f.write(f'{zlow} {zhigh} \n')
-                f.write('i j k T_e S_e rho_e C_e K_e flag T_dyn_flag\n')
+                f.write('NULL\n')
                 for iz in range(gsz):
                     for iy in range(gsy):
                         for ix in range(gsx):
-                            f.write(f'{ix} {iy} {iz} {temp} 0 1 {eph_C_e} {eph_kappa_e} 0 0\n')
+                            f.write(f'{ix} {iy} {iz} {temp} 0 1 {eph_C_e} {eph_kappa_e} 1 0\n')
         with open(input_file, 'w') as f:
             f.write(input_template.format(atomsfile=atomsfile, ff_settings=self.potential.ff_settings, tinfile=tinfile, 
                                           eph_C_e=eph_C_e, eph_kappa_e=eph_kappa_e, gsx=gsx, gsy=gsy, gsz=gsz,
@@ -114,7 +114,7 @@ class CascadeCalculator(LMPSCalculator):
         eph_kappa_e = input_config["eph_kappa_e"]
         border_thickness = input_config["border_thickness"]
         tinfile = input_config.get("tinfile", None)
-
+        PKA_id_list = []
         PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV')
         os.makedirs(PKA_kin_eng_dir, exist_ok=True)
 
@@ -130,7 +130,8 @@ class CascadeCalculator(LMPSCalculator):
             target_position = xyz * radius + center # shape (3,)
             dists = np.linalg.norm(atom_positions - target_position, axis=1)
             PKA_id = np.argmin(dists)
-
+            PKA_id_list.append(PKA_id)
+            
             # PKA velocity
             velocity_value = np.sqrt(2 * PKA_kin_eng  / (self.bi.mass * AMU_TO_KG * JOULE_TO_EV)) / (ANGSTROM_TO_METER/PS_TO_S)
             velocity = velocity_value * -xyz        # shape (3,)
@@ -159,11 +160,11 @@ class CascadeCalculator(LMPSCalculator):
                     f.write(f'{xlow} {xhigh} \n')
                     f.write(f'{ylow} {yhigh} \n')
                     f.write(f'{zlow} {zhigh} \n')
-                    f.write('i j k T_e S_e rho_e C_e K_e flag T_dyn_flag\n')
+                    f.write('NULL\n') # non temperature-dependent
                     for iz in range(gsz):
                         for iy in range(gsy):
                             for ix in range(gsx):
-                                f.write(f'{ix} {iy} {iz} {temp} 0 1 {eph_C_e} {eph_kappa_e} 0 0\n')
+                                f.write(f'{ix} {iy} {iz} {temp} 0 1 {eph_C_e} {eph_kappa_e} 1 0\n')
             with open(input_file, 'w') as f:
                 f.write(input_template.format(atomsfile=atomsfile, ff_settings=self.potential.ff_settings, border_thickness=border_thickness, 
                                               pka_id=PKA_id, v_x=velocity[0], v_y=velocity[1], v_z=velocity[2],
@@ -171,4 +172,9 @@ class CascadeCalculator(LMPSCalculator):
                                               eph_C_e=eph_C_e, eph_kappa_e=eph_kappa_e,
                                               xlow=xlow, xhigh=xhigh, ylow=ylow, yhigh=yhigh, zlow=zlow, zhigh=zhigh,
                                               gsx=gsx, gsy=gsy, gsz=gsz, tinfile=tinfile))
-            subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
+            # subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
+            
+        # mystr = ''
+        # for idx, pid in enumerate(PKA_id_list):
+        #     mystr += f'ParticleIdentifier == {pid} || '
+        # print(mystr)

@@ -23,23 +23,18 @@ thermo_style    custom step time temp press pe ke etotal
 
 #--------------------------BORDER MONITOR-----------------------
 variable        br internal {border_thickness}
-region          xrdown block $(xlo) $(xlo+v_br) $(ylo) $(yhi) $(zlo) $(zhi) units box
-group           xdown region xrdown
-region          xrup block $(xhi-v_br) $(xhi) $(ylo) $(yhi) $(zlo) $(zhi) units box
-group           xup region xrup
-region          yrdown block $(xlo) $(xhi) $(ylo) $(ylo+v_br) $(zlo) $(zhi) units box
-group           ydown region yrdown
-region          yrup block $(xlo) $(xhi) $(yhi-v_br) $(yhi) $(zlo) $(zhi) units box
-group           yup region yrup
-region          zrdown block $(xlo) $(xhi) $(ylo) $(yhi) $(zlo) $(zlo+v_br) units box
-group           zdown region zrdown
-region          zrup block $(xlo) $(xhi) $(ylo) $(yhi) $(zhi-v_br) $(zhi) units box
-group           zup region zrup
-group           border union xdown xup ydown yup zdown zup
+region          in_region block $(xlo+v_br) $(xhi-v_br) $(ylo+v_br) $(yhi-v_br) $(zlo+v_br) $(zhi-v_br) 
+region          br_region block $(xlo+v_br) $(xhi-v_br) $(ylo+v_br) $(yhi-v_br) $(zlo+v_br) $(zhi-v_br) side out
+
+fix             prop all property/atom i_myflag
+set             region in_region i_myflag 10          # for visual checking region
+set             region br_region i_myflag 20          # can be deleted if sure the region is correct 
+group           border dynamic all region br_region every 100 # for atoms in this region, monitoring their velocity
 
 compute         ep all pe/atom
 compute         ek all ke/atom
 compute         emax border reduce max c_ek
+compute         myflag_val all property/atom i_myflag
 variable        emaxbrdr equal c_emax
 variable        t equal "time"
 
@@ -47,7 +42,7 @@ variable        t equal "time"
 fix             friction all eph 12345 7 4 1.0 {eph_C_e} {eph_kappa_e} {temp} {gsx} {gsy} {gsz} {tinfile} 0 T_out {betafile} Ge   # rho_e, c_e, k_e, t_e, nx, ny, nz are read from tinfile 
 fix             out1 all print 1 "$(step) $(time) $(temp) $(f_friction[1]) $(f_friction[2])" file eng.out screen no
 fix             out2 all print 1 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal)" file thermo.out screen no
-dump            2 all custom 100 data.output id x y z vx vy vz c_ep c_ek
+dump            2 all custom 100 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val 
 
 run             {cascade_steps} every 100  " if '(${{emaxbrdr}} > 5 || $t >= 35.0)' then 'quit' "
 

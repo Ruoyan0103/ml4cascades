@@ -53,7 +53,7 @@ class CascadeProcessor:
             R2_interp_all.append(R2_interp)
         R2_avg = np.mean(R2_interp_all, axis=0)
         with open(os.path.join(self.traj_folder, 'R2.txt'), 'w') as f:
-            f.write('Time (fs)\tR^2 (Å²)\n')
+            f.write('Time (fs)\tR^2 (ang^2)\n')
             for t, r2 in zip(time_all[0], R2_avg):
                 f.write(f'{t}\t{r2}\n')
         fig, ax = plt.subplots(figsize=(6, 4))

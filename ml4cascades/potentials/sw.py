@@ -1,7 +1,7 @@
 import os, time
 from ml4cascades.potentials import IPotential
 from ml4cascades.utils import BasicCellInfo
-from ml4cascades.lammps import CascadeCalculator
+from ml4cascades.lammps import CascadeCalculator, CascadeProcessor
 from ml4cascades.utils import CascadePloter
 
 AMU_TO_KG = 1.66053906660E-27 # Atomic mass unit to kg conversion factor
@@ -56,8 +56,8 @@ if __name__ == "__main__":
     }
     # calc.thermalize(input_config)
 
-    num_PKA_directions = 2
-    radius_frac = 0.6
+    num_PKA_directions = 20
+    radius_frac = 0.7
     PKA_kin_eng = 1000 # in eV
     input_config = {
         "supercell_size": supercell_size,
@@ -77,9 +77,15 @@ if __name__ == "__main__":
         "eph_kappa_e": kappa_e,
         # "tinfile": 'NULL'
     }
-    calc.run_cascade(num_PKA_directions=num_PKA_directions,
-                    radius_frac=radius_frac,
-                    PKA_kin_eng=PKA_kin_eng,
-                    input_config=input_config)
+    # calc.run_cascade(num_PKA_directions=num_PKA_directions,
+    #                 radius_frac=radius_frac,
+    #                 PKA_kin_eng=PKA_kin_eng,
+    #                 input_config=input_config)
+    
+    traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV')
+    processor = CascadeProcessor(bi, traj_folder)
+    processor.cal_ibm(num_trajs=1, n0=1, ed=1)
+    processor.cal_WSDefect(num_trajs=1)
+    processor.cal_cluster(num_trajs=1, expression='Occupancy!=1')
     
     

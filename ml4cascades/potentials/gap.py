@@ -112,4 +112,4 @@ if __name__ == "__main__":
     processor = CascadeProcessor(bi, traj_folder)
     processor.cal_ibm(num_trajs=20, n0=1, ed=1)
     processor.cal_WSDefect(num_trajs=20)
-    processor.cal_cluster(num_trajs=10, expression='Occupancy!=1')
+    processor.cal_cluster(num_trajs=20, expression='Occupancy!=1')

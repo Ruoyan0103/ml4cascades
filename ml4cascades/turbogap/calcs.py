@@ -146,7 +146,7 @@ class CascadeCalculator(TurboGAPCalculator):
             cascade_struct = copy.deepcopy(thermalized_struct)
             new_velocities = copy.deepcopy(atom_velocities)
             new_velocities[PKA_id] = velocity
-            self.logger.info(f'--------------------------------- Ekin: {int(PKA_kin_eng)} eV ---------------------------------')
+            self.logger.info(f'--------------------------------- Ekin: {int(PKA_kin_eng)} eV size: {supercell_size[0]}*{supercell_size[1]}*{supercell_size[2]}---------------------------------')
             self.logger.info(f'PKA ID: {PKA_id}, direction: {xyz}, velocity: {velocity} ang/fs')
             cascade_struct.set_array('velocities', new_velocities)
             cascade_dir = os.path.join(PKA_kin_eng_dir, f'{idx+1}')

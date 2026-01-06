@@ -1,4 +1,4 @@
-2026-01-02 11:32 - ml4cascades.turbogap.calcs_base - INFO - --------------------------------- Ekin: 1000 eV ---------------------------------
+2026-01-02 11:32 - ml4cascades.turbogap.calcs_base - INFO - --------------------------------- Ekin: 1000 eV size: 16*16*16---------------------------------
 2026-01-02 11:32 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 16735, direction: [ 0.1284318  -0.84679876  0.51617548], velocity: [-0.06619578  0.43645346 -0.266045  ] ang/fs
 2026-01-02 11:32 - ml4cascades.turbogap.calcs_base - INFO - --------------------------------- Ekin: 1000 eV ---------------------------------
 2026-01-02 11:32 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 5425, direction: [-0.88704928  0.35845892 -0.29094806], velocity: [ 0.45719922 -0.18475539  0.14995923] ang/fs
@@ -38,7 +38,7 @@
 2026-01-02 11:32 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 20900, direction: [ 0.39257937 -0.73997799 -0.5461813 ], velocity: [-0.20234161  0.38139635  0.28151047] ang/fs
 2026-01-02 11:32 - ml4cascades.turbogap.calcs_base - INFO - --------------------------------- Ekin: 1000 eV ---------------------------------
 2026-01-02 11:32 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 6615, direction: [-0.63665222 -0.69233429  0.33962799], velocity: [ 0.32814062  0.35684003 -0.17504963] ang/fs
-2026-01-05 17:56 - ml4cascades.turbogap.calcs_base - INFO - --------------------------------- Ekin: 2000 eV ---------------------------------
+2026-01-05 17:56 - ml4cascades.turbogap.calcs_base - INFO - --------------------------------- Ekin: 2000 eV size: 22*22*22---------------------------------
 2026-01-05 17:56 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 47108, direction: [ 0.1377756  -0.90840593  0.39473606], velocity: [-0.10042574  0.66214436 -0.28772628] ang/fs
 2026-01-05 17:56 - ml4cascades.turbogap.calcs_base - INFO - --------------------------------- Ekin: 2000 eV ---------------------------------
 2026-01-05 17:56 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 25371, direction: [-0.54160062  0.21886222 -0.8116453 ], velocity: [ 0.39477703 -0.15953042  0.59161477] ang/fs

@@ -135,7 +135,7 @@ class CascadeCalculator(LMPSCalculator):
             # PKA velocity
             velocity_value = np.sqrt(2 * PKA_kin_eng  / (self.bi.mass * AMU_TO_KG * JOULE_TO_EV)) / (ANGSTROM_TO_METER/PS_TO_S)
             velocity = velocity_value * -xyz        # shape (3,)
-            self.logger.info(f'--------------------------------- Ekin: {int(PKA_kin_eng)} eV ---------------------------------')
+            self.logger.info(f'--------------------------------- Ekin: {int(PKA_kin_eng)} eV size: {supercell_size[0]}*{supercell_size[1]}*{supercell_size[2]}---------------------------------')
             self.logger.info(f'PKA ID: {PKA_id}, direction: {xyz}, velocity: {velocity} ang/ps')
 
             cascade_dir = os.path.join(PKA_kin_eng_dir, f'{idx+1}')
@@ -172,7 +172,7 @@ class CascadeCalculator(LMPSCalculator):
                                               eph_C_e=eph_C_e, eph_kappa_e=eph_kappa_e,
                                               xlow=xlow, xhigh=xhigh, ylow=ylow, yhigh=yhigh, zlow=zlow, zhigh=zhigh,
                                               gsx=gsx, gsy=gsy, gsz=gsz, tinfile=tinfile))
-            # subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
+            subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
             
         # mystr = ''
         # for idx, pid in enumerate(PKA_id_list):

@@ -26,6 +26,22 @@ if __name__ == "__main__":
     supercell_size = [16]*3
     calc = CascadeCalculator(tgap, bi)
 
+    '''
+    Parameter testing  
+    '''
+    # ploter = CascadePloter()
+    # ploter.plot_eph_results(datafile=os.path.join(calc.calculation_dir, 'cascade', 'Test-Ce-kappae', '3', 'eph-EnergySharingData.txt'),
+    #                         figfile=os.path.join(calc.calculation_dir, 'cascade', 'Test-Ce-kappae', '3', 'eph-EnergySharingData.png'))
+
+    # ploter.plot_thermo_results(datafile=os.path.join(calc.calculation_dir, 'cascade', 'Test-Ce-kappae', '3', 'thermo.log'),
+    #                             figfile=os.path.join(calc.calculation_dir, 'cascade', 'Test-Ce-kappae', '3', 'thermolog.png'))
+    
+    # ploter.plot_mesh_Te(ni=6, nj=6, datafile=os.path.join(calc.calculation_dir, 'cascade', 'Test-Ce-kappae', '3', 'eph-ToutData.txt'), 
+    #                     figfile=os.path.join(calc.calculation_dir, 'cascade', 'Test-Ce-kappae', '3', 'eph-TeMeshData.png'))
+
+    '''
+    Cascade simulation
+    '''
     input_config = {
         "supercell_size": supercell_size,
         "equ_md_steps": 5000,
@@ -73,9 +89,9 @@ if __name__ == "__main__":
     }
     # calc.thermalize_electronic(input_config)
 
-    num_PKA_directions = 3
-    radius_frac = 0.8
-    PKA_kin_eng = 2000 # in eV
+    num_PKA_directions = 20
+    radius_frac = 0.7
+    PKA_kin_eng = 1000 # in eV
     input_config = {
         "supercell_size": supercell_size,
         "cascade_steps": 40000,
@@ -93,23 +109,16 @@ if __name__ == "__main__":
         "eph_kappa_e": kappa_e,
         "eph_tout_file": 'eph-ToutData.txt'
     }
-    # calc.run_cascade(num_PKA_directions=num_PKA_directions,
-    #                 radius_frac=radius_frac,
-    #                 PKA_kin_eng=PKA_kin_eng,
-    #                 input_config=input_config)
+    calc.run_cascade(num_PKA_directions=num_PKA_directions,
+                    radius_frac=radius_frac,
+                    PKA_kin_eng=PKA_kin_eng,
+                    input_config=input_config)
     
-    # ploter = CascadePloter()
-    # ploter.plot_eph_results(datafile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV', '3', 'eph-EnergySharingData.txt'),
-    #                         figfile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV', '3', 'eph-EnergySharingData5.png'))
-
-    # ploter.plot_thermo_results(datafile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV', '3', 'thermo.log'),
-    #                             figfile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV', '3', 'thermolog5.png'))
-    
-    # ploter.plot_mesh_Te(ni=6, nj=6, datafile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV', '3', 'eph-ToutData.txt'), 
-    #                     figfile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV', '3', 'eph-TeMeshData5.png'))
-
-    traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV')
-    processor = CascadeProcessor(bi, traj_folder)
-    processor.cal_ibm(num_trajs=20, n0=1, ed=1)
-    processor.cal_WSDefect(num_trajs=20)
-    processor.cal_cluster(num_trajs=20, expression='Occupancy!=1')
+    '''
+    Cascade data processing
+    '''
+    # traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV')
+    # processor = CascadeProcessor(bi, PKA_kin_eng=1000, traj_folder=traj_folder)
+    # processor.cal_ibm(num_trajs=20, n0=1, ed=1)
+    # processor.cal_WSDefect(num_trajs=20)
+    # processor.cal_cluster(start_traj=3, num_trajs=2, expression='Occupancy!=1')

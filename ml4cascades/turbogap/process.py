@@ -7,13 +7,24 @@ from ovito.io import import_file
 from ovito.pipeline import StaticSource, Pipeline
 from ovito.modifiers import WignerSeitzAnalysisModifier, ExpressionSelectionModifier, ClusterAnalysisModifier
 from collections import Counter
+from ml4cascades.loggers.logger import AppLogger
+
+module_dir = os.path.dirname(__file__)
 
 class CascadeProcessor:
     def __init__(self,
                  basicCellInfo: BasicCellInfo,
-                 traj_folder: str):
+                 PKA_kin_eng: float,
+                 traj_folder: str,
+                 task_name='processing',
+                 model_name='EPH'):
         self.bi = basicCellInfo
+        self.PKA_kin_eng = PKA_kin_eng
         self.traj_folder = traj_folder
+        self.log_dir = os.path.join(module_dir, 'logs', task_name)
+        self.log_file = os.path.join(self.log_dir, f'{model_name}.log')
+        self.logger = AppLogger(__name__, self.log_file, overwrite=True).get_logger()
+        os.makedirs(self.log_dir, exist_ok=True)
         
     '''
     lack of damage energy calculation
@@ -154,17 +165,20 @@ class CascadeProcessor:
         fig.savefig(os.path.join(self.traj_folder, 'defects.png'), dpi=300)
 
     # cutoff from 10.1103/PhysRevB.57.7556
-    def cal_cluster(self, num_trajs: int, expression: str, cutoff: float=8.1):
+    def cal_cluster(self, start_traj: int, num_trajs: int, expression: str, cutoff: float=8.1):
         time_all = []
         max_cluster_size_all = []
         num_point_defect_all = []
         num_cluster_defect_all = []
+        
+        self.logger.info(f'#------------Cluster analysis, PKA_kin_eng: {self.PKA_kin_eng} eV, cutoff: {cutoff} Å------------#')
         for num_traj in range(num_trajs):
+            self.logger.info(f'Processing trajectory {num_traj}/{num_trajs}... folder number: {start_traj+num_traj}')
             time = [0]
             max_cluster_size = [0]
             num_point_defect = [0]
             num_cluster_defect = [0]
-            traj_file = os.path.join(self.traj_folder, f'{num_traj+1}', 'trajectory_out.xyz')
+            traj_file = os.path.join(self.traj_folder, f'{start_traj+num_traj}', 'trajectory_out.xyz')
             traj_frames = read(traj_file, format='extxyz', index=":")
             all_pipeline = import_file(traj_file)
             init_frame = all_pipeline.compute(0)
@@ -186,7 +200,10 @@ class CascadeProcessor:
                 cur_pipeline.modifiers.remove(cls)
                 time.append(traj_frames[frame_idx].info['time'])
                 # max cluster size 
-                max_cluster_size.append(next(iter(count_dict)))
+                if count_dict:
+                    max_cluster_size.append(next(iter(count_dict)))
+                else:
+                    max_cluster_size.append(0)
                 # number of defects 
                 sum = 0
                 sum_pdefect = 0
@@ -197,8 +214,12 @@ class CascadeProcessor:
                     elif key >= 6:
                         sum_cdefect += count
                     sum += count
-                num_point_defect.append(sum_pdefect/sum*100)    # percentage
-                num_cluster_defect.append(sum_cdefect/sum*100)  # percentage
+                if sum == 0:
+                    num_point_defect.append(0)
+                    num_cluster_defect.append(0)
+                else:
+                    num_point_defect.append(sum_pdefect/sum*100)    # percentage
+                    num_cluster_defect.append(sum_cdefect/sum*100)  # percentage
             time_all.append(time)
             max_cluster_size_all.append(max_cluster_size)
             num_point_defect_all.append(num_point_defect)

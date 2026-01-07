@@ -44,3 +44,45 @@
 2026-01-05 17:56 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 25371, direction: [-0.54160062  0.21886222 -0.8116453 ], velocity: [ 0.39477703 -0.15953042  0.59161477] ang/fs
 2026-01-05 17:56 - ml4cascades.turbogap.calcs_base - INFO - --------------------------------- Ekin: 2000 eV ---------------------------------
 2026-01-05 17:56 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 48031, direction: [ 0.19450405 -0.23937771  0.9512447 ], velocity: [-0.14177556  0.17448433 -0.69336989] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - #--------------------------------- Ekin: 2000 eV size: 16*16*16---------------------------------#
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 16853, direction: [ 0.1284318  -0.84679876  0.51617548], velocity: [-0.09361497  0.61723841 -0.37624444] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 7473, direction: [-0.88704928  0.35845892 -0.29094806], velocity: [ 0.64657733 -0.26128358  0.21207438] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 19305, direction: [ 0.2127073  -0.2617806   0.94139605], velocity: [-0.15504406  0.19081398 -0.68619113] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 12903, direction: [-0.20063921 -0.58443737  0.78624224], velocity: [ 0.14624753  0.42600109 -0.57309827] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 23903, direction: [0.68943414 0.46334768 0.55676699], velocity: [-0.50253407 -0.33773784 -0.40583192] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 25508, direction: [ 0.78257411 -0.12081258 -0.61072258], velocity: [-0.57042454  0.08806126  0.44516059] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 16710, direction: [ 0.0697806  -0.99533949 -0.06655799], velocity: [-0.05086364  0.72551093  0.04851465] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 17054, direction: [ 0.09195888 -0.39885279 -0.91239247], velocity: [-0.06702956  0.290727    0.66505018] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 21799, direction: [ 0.50075959  0.5207464  -0.69142102], velocity: [-0.36500768 -0.37957623  0.50398232] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 7371, direction: [-0.88572541  0.28541693  0.36609791], velocity: [ 0.64561235 -0.20804269 -0.2668517 ] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 9694, direction: [-0.60009772  0.63265209  0.48952431], velocity: [ 0.43741604 -0.46114518 -0.35681819] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 19311, direction: [ 0.3177135  -0.15746978  0.93501946], velocity: [-0.23158392  0.11478099 -0.68154318] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 8631, direction: [-0.57978427 -0.73654801 -0.34834928], velocity: [0.4226094  0.53687575 0.25391459] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 20916, direction: [ 0.42634293 -0.86666542 -0.25908059], velocity: [-0.31076478  0.63171937  0.18884592] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 5436, direction: [-0.9357196   0.34744991 -0.06088838], velocity: [ 0.68205351 -0.25325903  0.04438203] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 17957, direction: [ 0.11170717  0.77576373 -0.62105728], velocity: [-0.08142425 -0.5654604   0.45269363] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 8987, direction: [-0.63327241 -0.22612758 -0.74015699], velocity: [0.46159734 0.16482621 0.53950636] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 27968, direction: [ 0.91959311  0.38985574 -0.04859015], velocity: [-0.67029879 -0.28416898  0.03541775] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 20899, direction: [ 0.39257937 -0.73997799 -0.5461813 ], velocity: [-0.28615425  0.53937589  0.39811593] ang/fs
+2026-01-07 17:01 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 8781, direction: [-0.63665222 -0.69233429  0.33962799], velocity: [ 0.46406091  0.50464802 -0.24755756] ang/fs
+2026-01-07 17:03 - ml4cascades.turbogap.calcs_base - INFO - #--------------------------------- Ekin: 1000 eV size: 16*16*16---------------------------------#
+2026-01-07 17:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 16853, direction: [ 0.1284318  -0.84679876  0.51617548], velocity: [-0.06619578  0.43645346 -0.266045  ] ang/fs
+2026-01-07 17:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 7473, direction: [-0.88704928  0.35845892 -0.29094806], velocity: [ 0.45719922 -0.18475539  0.14995923] ang/fs
+2026-01-07 17:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 19305, direction: [ 0.2127073  -0.2617806   0.94139605], velocity: [-0.1096327   0.13492586 -0.4852104 ] ang/fs
+2026-01-07 17:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 12903, direction: [-0.20063921 -0.58443737  0.78624224], velocity: [ 0.10341262  0.30122826 -0.40524168] ang/fs
+2026-01-07 17:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 23903, direction: [0.68943414 0.46334768 0.55676699], velocity: [-0.35534525 -0.23881672 -0.28696651] ang/fs
+2026-01-07 17:03 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 25508, direction: [ 0.78257411 -0.12081258 -0.61072258], velocity: [-0.40335106  0.06226871  0.31477607] ang/fs
+2026-01-07 17:04 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 16710, direction: [ 0.0697806  -0.99533949 -0.06655799], velocity: [-0.03596602  0.5130137   0.03430504] ang/fs
+2026-01-07 17:04 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 17054, direction: [ 0.09195888 -0.39885279 -0.91239247], velocity: [-0.04739706  0.20557503  0.47026149] ang/fs
+2026-01-07 17:04 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 21799, direction: [ 0.50075959  0.5207464  -0.69142102], velocity: [-0.2580994  -0.26840092  0.35636932] ang/fs
+2026-01-07 17:04 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 7371, direction: [-0.88572541  0.28541693  0.36609791], velocity: [ 0.45651687 -0.1471084  -0.18869265] ang/fs
+2026-01-07 17:04 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 9694, direction: [-0.60009772  0.63265209  0.48952431], velocity: [ 0.30929985 -0.32607888 -0.25230857] ang/fs
+2026-01-07 17:04 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 19311, direction: [ 0.3177135  -0.15746978  0.93501946], velocity: [-0.16375456  0.08116241 -0.48192381] ang/fs
+2026-01-07 17:04 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 8631, direction: [-0.57978427 -0.73654801 -0.34834928], velocity: [0.29882997 0.37962848 0.17954472] ang/fs
+2026-01-07 17:04 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 20916, direction: [ 0.42634293 -0.86666542 -0.25908059], velocity: [-0.21974388  0.44669305  0.13353423] ang/fs
+2026-01-07 17:04 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 5436, direction: [-0.9357196   0.34744991 -0.06088838], velocity: [ 0.48228467 -0.17908117  0.03138283] ang/fs
+2026-01-07 17:04 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 17957, direction: [ 0.11170717  0.77576373 -0.62105728], velocity: [-0.05757564 -0.39984088  0.32010274] ang/fs
+2026-01-07 17:04 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 8987, direction: [-0.63327241 -0.22612758 -0.74015699], velocity: [0.32639861 0.11654973 0.38148861] ang/fs
+2026-01-07 17:04 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 27968, direction: [ 0.91959311  0.38985574 -0.04859015], velocity: [-0.47397282 -0.20093781  0.02504413] ang/fs
+2026-01-07 17:04 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 20899, direction: [ 0.39257937 -0.73997799 -0.5461813 ], velocity: [-0.20234161  0.38139635  0.28151047] ang/fs
+2026-01-07 17:04 - ml4cascades.turbogap.calcs_base - INFO - PKA ID: 8781, direction: [-0.63665222 -0.69233429  0.33962799], velocity: [ 0.32814062  0.35684003 -0.17504963] ang/fs

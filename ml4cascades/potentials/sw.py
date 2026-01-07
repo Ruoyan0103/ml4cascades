@@ -32,6 +32,9 @@ if __name__ == "__main__":
     supercell_size = [16]*3
     calc = CascadeCalculator(sw, bi)
 
+    '''
+    Cascade simulation
+    '''
     xhi = bi.alat[0] * supercell_size[0] * 2
     yhi = bi.alat[1] * supercell_size[1] * 2
     zhi = bi.alat[2] * supercell_size[2] * 2
@@ -81,11 +84,14 @@ if __name__ == "__main__":
     #                 radius_frac=radius_frac,
     #                 PKA_kin_eng=PKA_kin_eng,
     #                 input_config=input_config)
-    
+
+    '''
+    Cascade data processing
+    '''
     traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV')
-    processor = CascadeProcessor(bi, traj_folder)
-    processor.cal_ibm(num_trajs=1, n0=1, ed=1)
-    processor.cal_WSDefect(num_trajs=1)
-    processor.cal_cluster(num_trajs=1, expression='Occupancy!=1')
+    processor = CascadeProcessor(bi, 1000, traj_folder)
+    # processor.cal_ibm(num_trajs=1, n0=1, ed=1)
+    # processor.cal_WSDefect(start_traj=2, num_trajs=1)
+    processor.cal_cluster(start_traj=2, num_trajs=5, expression='Occupancy!=1')
     
     

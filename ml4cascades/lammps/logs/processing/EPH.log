@@ -1,0 +1,24 @@
+2026-01-07 18:27 - ml4cascades.lammps.process - INFO - #------------Defect analysis, PKA_kin_eng: 1000 eV------------#
+2026-01-07 18:27 - ml4cascades.lammps.process - INFO - Processing trajectory 0/1... folder number: 2
+2026-01-07 18:30 - ml4cascades.lammps.process - INFO - #------------Cluster analysis, PKA_kin_eng: 1000 eV, cutoff: 8.1 Å------------#
+2026-01-07 18:30 - ml4cascades.lammps.process - INFO - Processing trajectory 0/1... folder number: 2
+2026-01-07 18:31 - ml4cascades.lammps.process - INFO - #------------Cluster analysis, PKA_kin_eng: 1000 eV, cutoff: 8.1 Å------------#
+2026-01-07 18:31 - ml4cascades.lammps.process - INFO - Processing trajectory 0/1... folder number: 2
+2026-01-07 18:33 - ml4cascades.lammps.process - INFO - #------------Cluster analysis, PKA_kin_eng: 1000 eV, cutoff: 8.1 Å------------#
+2026-01-07 18:33 - ml4cascades.lammps.process - INFO - Processing trajectory 0/1... folder number: 2
+2026-01-07 18:35 - ml4cascades.lammps.process - INFO - #------------Cluster analysis, PKA_kin_eng: 1000 eV, cutoff: 8.1 Å------------#
+2026-01-07 18:35 - ml4cascades.lammps.process - INFO - Processing trajectory 0/1... folder number: 2
+2026-01-07 18:35 - ml4cascades.lammps.process - INFO - #------------Cluster analysis, PKA_kin_eng: 1000 eV, cutoff: 8.1 Å------------#
+2026-01-07 18:35 - ml4cascades.lammps.process - INFO - Processing trajectory 0/1... folder number: 2
+2026-01-07 18:36 - ml4cascades.lammps.process - INFO - #------------Cluster analysis, PKA_kin_eng: 1000 eV, cutoff: 8.1 Å------------#
+2026-01-07 18:36 - ml4cascades.lammps.process - INFO - Processing trajectory 0/1... folder number: 2
+2026-01-07 18:37 - ml4cascades.lammps.process - INFO - #------------Cluster analysis, PKA_kin_eng: 1000 eV, cutoff: 8.1 Å------------#
+2026-01-07 18:37 - ml4cascades.lammps.process - INFO - Processing trajectory 0/1... folder number: 2
+2026-01-07 18:39 - ml4cascades.lammps.process - INFO - #------------Cluster analysis, PKA_kin_eng: 1000 eV, cutoff: 8.1 Å------------#
+2026-01-07 18:39 - ml4cascades.lammps.process - INFO - Processing trajectory 0/1... folder number: 2
+2026-01-07 18:40 - ml4cascades.lammps.process - INFO - #------------Cluster analysis, PKA_kin_eng: 1000 eV, cutoff: 8.1 Å------------#
+2026-01-07 18:40 - ml4cascades.lammps.process - INFO - Processing trajectory 0/5... folder number: 2
+2026-01-07 18:41 - ml4cascades.lammps.process - INFO - Processing trajectory 1/5... folder number: 3
+2026-01-07 18:41 - ml4cascades.lammps.process - INFO - Processing trajectory 2/5... folder number: 4
+2026-01-07 18:41 - ml4cascades.lammps.process - INFO - Processing trajectory 3/5... folder number: 5
+2026-01-07 18:41 - ml4cascades.lammps.process - INFO - Processing trajectory 4/5... folder number: 6

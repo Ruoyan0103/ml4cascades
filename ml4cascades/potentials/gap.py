@@ -1,13 +1,13 @@
 import os, time
 from ml4cascades.potentials import IPotential
 from ml4cascades.utils import BasicCellInfo
-from ml4cascades.turbogap import CascadeCalculator, CascadeProcessor
+from ml4cascades.turbogap import CascadeCalculator, CascadeProcessor, CascadeChecker
 from ml4cascades.utils import CascadePloter
 
 AMU_TO_KG = 1.66053906660E-27 # Atomic mass unit to kg conversion factor
 JOULE_TO_EV = 6.241509074E18  # Joule to eV conversion factor
-ANGSTROM_TO_METER = 1E-10     # Angstroms/picosecond to meters/second conversion factor
-PS_TO_S = 1E-12               # Picoseconds to seconds conversion factor
+ANGSTROM_TO_METER = 1E-10     # Angstrom to meter conversion factor
+PS_TO_S = 1E-12               # Picosecond to second conversion factor
 
 module_dir = os.path.dirname(__file__)
 
@@ -109,11 +109,21 @@ if __name__ == "__main__":
         "eph_kappa_e": kappa_e,
         "eph_tout_file": 'eph-ToutData.txt'
     }
-    calc.run_cascade(num_PKA_directions=num_PKA_directions,
-                    radius_frac=radius_frac,
-                    PKA_kin_eng=PKA_kin_eng,
-                    input_config=input_config)
+    # calc.run_cascade(num_PKA_directions=num_PKA_directions,
+    #                 radius_frac=radius_frac,
+    #                 PKA_kin_eng=PKA_kin_eng,
+    #                 input_config=input_config)
     
+    '''
+    Supercell size checking
+    '''
+    traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV-0.8')
+    checker = CascadeChecker(PKA_kin_eng=1000, 
+                             supercell_size=supercell_size, 
+                             radius_frac=0.8, 
+                             traj_folder=traj_folder)
+    checker.check_structure(start_traj=1, num_trajs=20, border_thickness=5.76, pot_eng_threshold=-4, kin_eng_threshold=5)
+                 
     '''
     Cascade data processing
     '''

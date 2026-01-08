@@ -8,8 +8,8 @@ from ase.io import write, read
 
 AMU_TO_KG = 1.66053906660E-27 # Atomic mass unit to kg conversion factor
 JOULE_TO_EV = 6.241509074E18  # Joule to eV conversion factor
-ANGSTROM_TO_METER = 1E-10     # Angstroms/picosecond to meters/second conversion factor
-FS_TO_S = 1E-15               # Picoseconds to seconds conversion factor
+ANGSTROM_TO_METER = 1E-10     # Angstrom to meter conversion factor
+FS_TO_S = 1E-15               # Picosecond to second conversion factor
 module_dir = os.path.dirname(__file__)
 
 class CascadeCalculator(TurboGAPCalculator): 

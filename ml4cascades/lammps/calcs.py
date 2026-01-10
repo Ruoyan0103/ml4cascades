@@ -63,7 +63,7 @@ class CascadeCalculator(LMPSCalculator):
             tinfile = os.path.join(thermalize_dir, 'T.in')
             with open(tinfile, 'w') as f:
                 f.write('# comment1 \n# comment2 \n# comment3 \n')
-                f.write(f'{gsx} {gsy} {gsz} 1\n')
+                f.write(f'{gsx} {gsy} {gsz} 10\n')
                 f.write(f'{xlow} {xhigh} \n')
                 f.write(f'{ylow} {yhigh} \n')
                 f.write(f'{zlow} {zhigh} \n')
@@ -94,6 +94,7 @@ class CascadeCalculator(LMPSCalculator):
     
     # -------------------------------------- Cascade simulation --------------------------------------#
     def run_cascade(self,
+                    running_dir: str,
                     num_PKA_directions: int,
                     radius_frac: float,
                     PKA_kin_eng: float,
@@ -115,7 +116,10 @@ class CascadeCalculator(LMPSCalculator):
         border_thickness = input_config["border_thickness"]
         tinfile = input_config.get("tinfile", None)
         PKA_id_list = []
-        PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV')
+        if running_dir is not None:
+            PKA_kin_eng_dir = running_dir
+        else:
+            PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV')
         os.makedirs(PKA_kin_eng_dir, exist_ok=True)
 
         atomsfile = os.path.join(self.calculation_dir, 'thermalize', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}', 'data.output')
@@ -165,6 +169,7 @@ class CascadeCalculator(LMPSCalculator):
                         for iy in range(gsy):
                             for ix in range(gsx):
                                 f.write(f'{ix} {iy} {iz} {temp} 0 1 {eph_C_e} {eph_kappa_e} 1 0\n')
+                tinfile = 'T.in'
             with open(input_file, 'w') as f:
                 f.write(input_template.format(atomsfile=atomsfile, ff_settings=self.potential.ff_settings, border_thickness=border_thickness, 
                                               pka_id=PKA_id, v_x=velocity[0], v_y=velocity[1], v_z=velocity[2],

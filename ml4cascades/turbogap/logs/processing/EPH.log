@@ -10,3 +10,12 @@
 2026-01-07 16:06 - ml4cascades.turbogap.process - INFO - Processing trajectory 0/2... folder number: 3
 2026-01-07 16:07 - ml4cascades.turbogap.process - INFO - #------------Cluster analysis, PKA_kin_eng: 1000 eV, cutoff: 8.1 Å------------#
 2026-01-07 16:07 - ml4cascades.turbogap.process - INFO - Processing trajectory 0/2... folder number: 3
+2026-01-08 23:09 - ml4cascades.turbogap.process - INFO - #------------Cluster analysis, PKA_kin_eng: 1000 eV, cutoff: 8.1 Å------------#
+2026-01-08 23:09 - ml4cascades.turbogap.process - INFO - Processing trajectory 0/4... folder number: 14
+2026-01-08 23:10 - ml4cascades.turbogap.process - INFO - Processing trajectory 1/4... folder number: 15
+2026-01-08 23:11 - ml4cascades.turbogap.process - INFO - Processing trajectory 2/4... folder number: 16
+2026-01-08 23:13 - ml4cascades.turbogap.process - INFO - Processing trajectory 3/4... folder number: 17
+2026-01-09 09:02 - ml4cascades.turbogap.process - INFO - #------------Cluster analysis, PKA_kin_eng: 1000 eV, cutoff: 8.1 Å------------#
+2026-01-09 09:02 - ml4cascades.turbogap.process - INFO - Processing trajectory 0/3... folder number: 1
+2026-01-09 09:04 - ml4cascades.turbogap.process - INFO - Processing trajectory 1/3... folder number: 2
+2026-01-09 09:05 - ml4cascades.turbogap.process - INFO - Processing trajectory 2/3... folder number: 3

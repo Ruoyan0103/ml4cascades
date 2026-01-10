@@ -61,11 +61,11 @@ if __name__ == "__main__":
     rho = 1.0 # electrons/volume unit
     # from PHYSICAL REVIEW B 104, 195203 (2021)
     # option 1: low Ce, low kappa_e
-    # Ce = 5e-6
-    # kappa_e = 5e-3
+    Ce = 5e-6
+    kappa_e = 5e-3
     # option 2: high Ce, high kappa_e
-    Ce = 1.29e-4
-    kappa_e = 1.29e-1
+    # Ce = 1.29e-4
+    # kappa_e = 1.29e-1
     # option 3: high Ce, low kappa_e
     # Ce = 1.29e-4
     # kappa_e = 5e-3
@@ -117,18 +117,18 @@ if __name__ == "__main__":
     '''
     Supercell size checking
     '''
-    traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV-0.8')
-    checker = CascadeChecker(PKA_kin_eng=1000, 
-                             supercell_size=supercell_size, 
-                             radius_frac=0.8, 
-                             traj_folder=traj_folder)
-    checker.check_structure(start_traj=1, num_trajs=20, border_thickness=5.76, pot_eng_threshold=-4, kin_eng_threshold=5)
+    # traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV')
+    # checker = CascadeChecker(PKA_kin_eng=1000, 
+    #                          supercell_size=supercell_size, 
+    #                          radius_frac=0.7, 
+    #                          traj_folder=traj_folder)
+    # checker.check_structure(start_traj=1, num_trajs=3, border_thickness=5.76, pot_eng_threshold=-4, kin_eng_threshold=5)
                  
     '''
     Cascade data processing
     '''
-    # traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV')
-    # processor = CascadeProcessor(bi, PKA_kin_eng=1000, traj_folder=traj_folder)
+    traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV')
+    processor = CascadeProcessor(bi, PKA_kin_eng=1000, traj_folder=traj_folder)
     # processor.cal_ibm(num_trajs=20, n0=1, ed=1)
-    # processor.cal_WSDefect(num_trajs=20)
-    # processor.cal_cluster(start_traj=3, num_trajs=2, expression='Occupancy!=1')
+    processor.cal_WSDefect(start_traj=1, num_trajs=3)
+    processor.cal_cluster(start_traj=1, num_trajs=3, expression='Occupancy!=1')

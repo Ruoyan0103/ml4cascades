@@ -44,6 +44,5 @@ fix             out1 all print 1 "$(step) $(time) $(temp) $(f_friction[1]) $(f_f
 fix             out2 all print 1 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal)" file thermo.out screen no
 dump            2 all custom 100 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val 
 
-run             {cascade_steps} every 100  " if '(${{emaxbrdr}} > 5 || $t >= 35.0)' then 'quit' "
-
-
+# run             {cascade_steps} every 100  " if '(${{emaxbrdr}} > 5 || $t >= 35.0)' then 'quit' "
+run             {cascade_steps} every 100  " if '($t >= 3)' then 'quit' "

@@ -88,3 +88,17 @@
 2026-01-08 16:18 - ml4cascades.turbogap.check - INFO - Checking trajectory 20, total frames: 60.
 2026-01-08 16:18 - ml4cascades.turbogap.check - INFO - Trajectory 20 failed on the 25 frame, pot_eng: -4.33241925 eV, kin_eng: 10.018639087780832 eV.
 2026-01-08 16:18 - ml4cascades.turbogap.check - INFO - #---------8/20 cases failed.---------#
+2026-01-08 19:25 - ml4cascades.turbogap.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 16-16-16, radius_frac: 0.7---------#
+2026-01-08 19:26 - ml4cascades.turbogap.check - INFO - Checking trajectory 3, total frames: 48.
+2026-01-08 19:26 - ml4cascades.turbogap.check - INFO - #---------0/1 cases failed.---------#
+2026-01-08 19:26 - ml4cascades.turbogap.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 16-16-16, radius_frac: 0.7---------#
+2026-01-08 19:26 - ml4cascades.turbogap.check - INFO - Checking trajectory 7, total frames: 50.
+2026-01-08 19:27 - ml4cascades.turbogap.check - INFO - Trajectory 7 failed on the 37 frame, pot_eng: -3.48830163 eV, kin_eng: 21.80069552310028 eV.
+2026-01-08 19:27 - ml4cascades.turbogap.check - INFO - #---------1/1 cases failed.---------#
+
+
+2026-01-08 22:56 - ml4cascades.turbogap.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 16-16-16, radius_frac: 0.7---------#
+2026-01-08 22:56 - ml4cascades.turbogap.check - INFO - Checking trajectory 1, total frames: 60.
+2026-01-08 22:57 - ml4cascades.turbogap.check - INFO - Checking trajectory 2, total frames: 60.
+2026-01-08 22:58 - ml4cascades.turbogap.check - INFO - Checking trajectory 3, total frames: 60.
+2026-01-08 22:59 - ml4cascades.turbogap.check - INFO - #---------0/3 cases failed.---------#

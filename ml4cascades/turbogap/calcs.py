@@ -172,7 +172,7 @@ class CascadeCalculator(TurboGAPCalculator):
                                               xlow=xlow, xhigh=xhigh, ylow=ylow, yhigh=yhigh, zlow=zlow, zhigh=zhigh,
                                               gsx=gsx, gsy=gsy, gsz=gsz,
                                               eph_C_e=eph_C_e, eph_kappa_e=eph_kappa_e, eph_tout_file=eph_tout_file))
-            # subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
+            subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
 
 
 

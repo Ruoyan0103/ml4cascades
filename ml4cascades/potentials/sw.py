@@ -6,8 +6,8 @@ from ml4cascades.utils import CascadePloter
 
 AMU_TO_KG = 1.66053906660E-27 # Atomic mass unit to kg conversion factor
 JOULE_TO_EV = 6.241509074E18  # Joule to eV conversion factor
-ANGSTROM_TO_METER = 1E-10     # Angstroms/picosecond to meters/second conversion factor
-PS_TO_S = 1E-12               # Picoseconds to seconds conversion factor
+ANGSTROM_TO_METER = 1E-10     # Angstrom to meter conversion factor
+PS_TO_S = 1E-12               # Picosecond to second conversion factor
 
 module_dir = os.path.dirname(__file__)
 
@@ -38,8 +38,9 @@ if __name__ == "__main__":
     xhi = bi.alat[0] * supercell_size[0] * 2
     yhi = bi.alat[1] * supercell_size[1] * 2
     zhi = bi.alat[2] * supercell_size[2] * 2
-    Ce = 1.29e-4
-    kappa_e = 1.29e-1
+    Ce = 1e-8  # eV/ps/A^3/K
+    kappa_e = 1e-5  # eV/ps/A/K
+
     input_config = {
         "supercell_size": supercell_size,
         "equ_md_steps": 10000,
@@ -59,7 +60,7 @@ if __name__ == "__main__":
     }
     # calc.thermalize(input_config)
 
-    num_PKA_directions = 20
+    num_PKA_directions = 1
     radius_frac = 0.7
     PKA_kin_eng = 1000 # in eV
     input_config = {
@@ -88,10 +89,50 @@ if __name__ == "__main__":
     '''
     Cascade data processing
     '''
-    traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV')
-    processor = CascadeProcessor(bi, 1000, traj_folder)
-    # processor.cal_ibm(num_trajs=1, n0=1, ed=1)
-    # processor.cal_WSDefect(start_traj=2, num_trajs=1)
-    processor.cal_cluster(start_traj=2, num_trajs=5, expression='Occupancy!=1')
+    # traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV')
+    # processor = CascadeProcessor(bi, 1000, traj_folder)
+    # # processor.cal_ibm(num_trajs=1, n0=1, ed=1)    # not working for LAMMPS data format
+    # processor.cal_WSDefect(start_traj=1, num_trajs=20)
+    # processor.cal_cluster(start_traj=1, num_trajs=20, expression='Occupancy!=1')
+
+
+    '''
+    Test gsx gsy gsz 
+    '''
+    grid_size = set()
+    for space in range(21, 31):
+        grid_size.add((int(xhi // space)))
+    Ce_list = [1.1e-9, 5e-9, 1e-8, 5e-8, 1e-7, 5e-7, 1e-6, 5e-6]
+    kappa_e_list = [2.52e-4, 5e-6, 1e-5, 5e-5, 1e-4, 5e-4, 1e-3, 5e-3]
+    for Ce, kappa_e in zip(Ce_list, kappa_e_list):
+        for grid in grid_size:
+            running_dir = os.path.join(calc.calculation_dir, 'Test-grid-size', 'Electronic_step_1', f'Ce_{Ce}', f'{grid}-{grid}-{grid}')
+            print(f'{running_dir}')
+            num_PKA_directions = 1
+            radius_frac = 0.7
+            PKA_kin_eng = 1000 # in eV
+            input_config = {
+                "supercell_size": supercell_size,
+                "border_thickness": 5.76,
+                "cascade_steps": 40000,
+                "temp": 300,
+                "xlow": 0,
+                "xhigh": xhi,
+                "ylow": 0,
+                "yhigh": yhi,
+                "zlow": 0,
+                "zhigh": zhi,
+                "gsx": grid,
+                "gsy": grid,
+                "gsz": grid,
+                "eph_C_e": Ce,
+                "eph_kappa_e": kappa_e,
+                # "tinfile": 'NULL'
+            }
+            calc.run_cascade(running_dir=running_dir,
+                            num_PKA_directions=num_PKA_directions,
+                            radius_frac=radius_frac,
+                            PKA_kin_eng=PKA_kin_eng,
+                            input_config=input_config)
     
     

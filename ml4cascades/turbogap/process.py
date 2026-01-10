@@ -87,7 +87,7 @@ class CascadeProcessor:
     lack of other methods for defect analysis
     '''
     # Wigner-Seitz method
-    def cal_WSDefect(self, num_trajs: int):
+    def cal_WSDefect(self, start_traj: int, num_trajs: int):
         time_all = []
         num_vac_all = []
         num_int_all = []
@@ -97,7 +97,7 @@ class CascadeProcessor:
             num_vac = [0]
             num_int = [0]
             num_def = [0]
-            traj_file = os.path.join(self.traj_folder, f'{num_traj+1}', 'trajectory_out.xyz')
+            traj_file = os.path.join(self.traj_folder, f'{start_traj+num_traj}', 'trajectory_out.xyz')
             traj_frames = read(traj_file, format='extxyz', index=":")
             all_pipeline = import_file(traj_file)
             init_frame = all_pipeline.compute(0)
@@ -153,11 +153,12 @@ class CascadeProcessor:
         int_high = int_avg + int_std
         def_low = def_avg - def_std
         def_high = def_avg + def_std
-        ax.plot(time_all[0], def_avg, label='Defects')
-        ax.fill_between(time_all[0], def_low, def_high, alpha=0.3)
-        # ax.plot(time_all[0], int_avg, label='Interstitial')
-        # ax.fill_between(time_all[0], int_low, int_high, alpha=0.3)
-        ax.set_xlabel('Time (fs)')
+        time_arr = np.array(time_all[0]) / 1000  # convert to ps
+        ax.plot(time_arr, def_avg, label='Defects')
+        ax.fill_between(time_arr, def_low, def_high, alpha=0.3)
+        # ax.plot(time_arr, int_avg, label='Interstitial')
+        # ax.fill_between(time_arr, int_low, int_high, alpha=0.3)
+        ax.set_xlabel('Time (ps)')
         ax.set_ylabel('Number of Defects')
         ax.set_xscale('log')
         ax.legend()
@@ -247,9 +248,10 @@ class CascadeProcessor:
         max_cluster_high = max_cluster_avg + max_cluster_std
         fig, ax = plt.subplots(figsize=(6, 4))
         ax.set_xscale('log')
-        ax.plot(time_all[0], max_cluster_avg)
-        ax.fill_between(time_all[0], max_cluster_low, max_cluster_high, alpha=0.3)
-        ax.set_xlabel('Time (fs)')
+        time_arr = np.array(time_all[0]) / 1000  # convert to ps
+        ax.plot(time_arr, max_cluster_avg)
+        ax.fill_between(time_arr, max_cluster_low, max_cluster_high, alpha=0.3)
+        ax.set_xlabel('Time (ps)')
         ax.set_ylabel('Max Cluster Size')
         plt.tight_layout()
         fig.savefig(os.path.join(self.traj_folder, 'max_cluster.png'), dpi=300)
@@ -264,11 +266,11 @@ class CascadeProcessor:
                 f.write(f'{t}\t{npd}\t{npd_std}\t{ncd}\t{ncd_std}\n')
         fig, ax = plt.subplots(figsize=(6, 4))
         ax.set_xscale('log')
-        ax.plot(time_all[0], num_pdefect_avg, label='Point Defects')
-        ax.fill_between(time_all[0], num_pdefect_avg - num_pdefect_std, num_pdefect_avg + num_pdefect_std, alpha=0.3)
-        ax.plot(time_all[0], num_cdefect_avg, label='Cluster Defects')
-        ax.fill_between(time_all[0], num_cdefect_avg - num_cdefect_std, num_cdefect_avg + num_cdefect_std, alpha=0.3)
-        ax.set_xlabel('Time (fs)')
+        ax.plot(time_arr, num_pdefect_avg, label='Point Defects')
+        ax.fill_between(time_arr, num_pdefect_avg - num_pdefect_std, num_pdefect_avg + num_pdefect_std, alpha=0.3)
+        ax.plot(time_arr, num_cdefect_avg, label='Cluster Defects')
+        ax.fill_between(time_arr, num_cdefect_avg - num_cdefect_std, num_cdefect_avg + num_cdefect_std, alpha=0.3)
+        ax.set_xlabel('Time (ps)')
         ax.set_ylabel('Number of Defects (%)')
         ax.legend()
         plt.tight_layout()

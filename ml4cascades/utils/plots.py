@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-class CascadePloter:
+class TurbogapCascadePloter:
     def __init__(self):
         pass
 
@@ -107,5 +107,38 @@ class CascadePloter:
         ax.set_aspect("equal")
         plt.tight_layout()
         fig.savefig(figfile, dpi=300)
+
+class LammpsCascadePloter:
+    def __init__(self):
+        pass
+
+    def plot_mesh_Te(self, ni: int, nj: int, datafile: str, figfile: str):
+        data = np.loadtxt(datafile, skiprows=1)
+        fig, axes = plt.subplots(1, 3, figsize=(12, 4))
+        axis = ['x', 'y', 'z']
+        for i in range(3):
+            ax = axes[i]
+            mask = data[:, i] == 0  
+            slice_data = data[mask]
+            Te = slice_data[:, 3]
+            T = Te.reshape((ni, nj))
+            x = np.arange(ni + 1)
+            y = np.arange(nj + 1)
+            pcm = ax.pcolormesh(
+                x, y, T.T,
+                shading='flat'
+            )
+            cbar = ax.figure.colorbar(pcm, ax=ax)
+            cbar.set_label("Electronic Temperature (K)")
+            # ax.set_xlabel("X")
+            # ax.set_ylabel("Y")
+            ax.set_aspect("equal")
+            ax.set_title(f"{axis[i]}=0")
+        plt.tight_layout()
+        fig.savefig(figfile, dpi=300)
+
+
+
+
 
 

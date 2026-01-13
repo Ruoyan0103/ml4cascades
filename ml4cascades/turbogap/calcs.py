@@ -106,8 +106,11 @@ class CascadeCalculator(TurboGAPCalculator):
                     num_PKA_directions: int,
                     radius_frac: float,
                     PKA_kin_eng: float,
-                    input_config: dict):
+                    input_config: dict,
+                    running_case_list: list[int],
+                    running_dir: str=None):
         supercell_size = input_config["supercell_size"]
+        border_thickness = input_config["border_thickness"]
         cascade_steps = input_config["cascade_steps"]
         temp = input_config["temp"]
         xlow = input_config["xlow"]
@@ -122,7 +125,10 @@ class CascadeCalculator(TurboGAPCalculator):
         eph_C_e = input_config["eph_C_e"]
         eph_kappa_e = input_config["eph_kappa_e"]
         eph_tout_file = input_config["eph_tout_file"]
-        PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV')
+        if running_dir is not None:
+            PKA_kin_eng_dir = running_dir
+        else:
+            PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV-{radius_frac}')
         os.makedirs(PKA_kin_eng_dir, exist_ok=True)
 
         thermalized_struct = read(os.path.join(self.calculation_dir, 'thermalize_electronic', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}', 'trajectory_out.xyz'), format='extxyz', index=-1)
@@ -150,10 +156,15 @@ class CascadeCalculator(TurboGAPCalculator):
             self.logger.info(f'PKA ID: {PKA_id}, direction: {xyz}, velocity: {velocity} ang/fs')
             cascade_struct.set_array('velocities', new_velocities)
             cascade_dir = os.path.join(PKA_kin_eng_dir, f'{idx+1}')
+            if os.path.isdir(cascade_dir):
+                if (idx + 1) in running_case_list:
+                    subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
+                continue
+
+            # start from scratch
             os.makedirs(cascade_dir, exist_ok=True)
             cascade_file = os.path.join(cascade_dir, 'cascade_initial.xyz')
             write(cascade_file, cascade_struct, format='extxyz')
-
             # prepare input file
             shutil.copytree(self.tgap_files, os.path.join(cascade_dir, 'gap_files'), dirs_exist_ok=True)
             with open(os.path.join(self.template_dir, 'submit-cascade.sh'), 'r') as f:
@@ -171,21 +182,9 @@ class CascadeCalculator(TurboGAPCalculator):
                                               mass=self.bi.mass, cascade_steps=cascade_steps, temp=temp, beta_file=beta_file,
                                               xlow=xlow, xhigh=xhigh, ylow=ylow, yhigh=yhigh, zlow=zlow, zhigh=zhigh,
                                               gsx=gsx, gsy=gsy, gsz=gsz,
-                                              eph_C_e=eph_C_e, eph_kappa_e=eph_kappa_e, eph_tout_file=eph_tout_file))
-            subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
-
-
-
-
-
-        
-
-
-   
-
-
-
-
-
-
-
+                                              eph_C_e=eph_C_e, eph_kappa_e=eph_kappa_e, eph_tout_file=eph_tout_file,
+                                              in_xlow=border_thickness, in_xhigh=cell_lengths[0]-border_thickness, 
+                                              in_ylow=border_thickness, in_yhigh=cell_lengths[1]-border_thickness, 
+                                              in_zlow=border_thickness, in_zhigh=cell_lengths[2]-border_thickness))
+            if (idx + 1) in running_case_list:
+                subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)

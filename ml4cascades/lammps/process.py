@@ -96,9 +96,15 @@ class CascadeProcessor:
         num_int_all = []
         num_def_all = []
         self.logger.info(f'#------------Defect analysis, PKA_kin_eng: {self.PKA_kin_eng} eV------------#')
-        for num_traj in range(num_trajs):
-            self.logger.info(f'Processing trajectory {num_traj}/{num_trajs}... folder number: {start_traj+num_traj}')
+        cnt = 0
+        for num_traj in range(22):
             eng_out = os.path.join(self.traj_folder, f'{start_traj+num_traj}', 'eng.out')
+            if not os.path.exists(eng_out):
+                continue
+            cnt += 1
+            if cnt > num_trajs:
+                break
+            self.logger.info(f'Starting the {cnt}th trajectory in folder {start_traj+num_traj}...')
             data = np.loadtxt(eng_out, skiprows=1)
             data = data[::101]   
             timestep, time, _, _, _ = data.T
@@ -170,6 +176,7 @@ class CascadeProcessor:
         ax.legend()
         plt.tight_layout()
         fig.savefig(os.path.join(self.traj_folder, 'defects.png'), dpi=300)
+        self.logger.info('#------------ Defect analysis completed. ------------#')
 
     # cutoff from 10.1103/PhysRevB.57.7556
     def cal_cluster(self, start_traj: int, num_trajs: int, expression: str, cutoff: float=8.1):
@@ -178,9 +185,15 @@ class CascadeProcessor:
         num_point_defect_all = []
         num_cluster_defect_all = []
         self.logger.info(f'#------------Cluster analysis, PKA_kin_eng: {self.PKA_kin_eng} eV, cutoff: {cutoff} Å------------#')
+        cnt = 0
         for num_traj in range(num_trajs):
-            self.logger.info(f'Processing trajectory {num_traj}/{num_trajs}... folder number: {start_traj+num_traj}')
             eng_out = os.path.join(self.traj_folder, f'{start_traj+num_traj}', 'eng.out')
+            if not os.path.exists(eng_out):
+                continue
+            cnt += 1
+            if cnt > num_trajs:
+                break
+            self.logger.info(f'Starting the {cnt}th trajectory in folder {start_traj+num_traj}...')
             data = np.loadtxt(eng_out, skiprows=1)
             data = data[::101]   
             timestep, time, _, _, _ = data.T
@@ -281,3 +294,4 @@ class CascadeProcessor:
         ax.legend()
         plt.tight_layout()
         fig.savefig(os.path.join(self.traj_folder, 'defect_cluster.png'), dpi=300)
+        self.logger.info('#------------ Cluster analysis completed. ------------#')

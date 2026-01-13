@@ -1,8 +1,8 @@
-import os, time
+import os, time, sys, argparse
 from ml4cascades.potentials import IPotential
 from ml4cascades.utils import BasicCellInfo
-from ml4cascades.lammps import CascadeCalculator, CascadeProcessor
-from ml4cascades.utils import LammpsCascadePloter, ParameterGetter
+from ml4cascades.lammps import CascadeCalculator, CascadeProcessor, CascadeChecker
+from ml4cascades.utils import LammpsCascadePlotter, ParameterGetter
 
 module_dir = os.path.dirname(__file__)
 
@@ -19,6 +19,35 @@ class SWPotential(IPotential):
         return os.path.join(module_dir, 'params', 'SW')
     
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="SW cascade workflow controller"
+    )
+    parser.add_argument(
+        "--choice",
+        type=int,
+        help="Select workflow step (1–7)"
+    )
+    args = parser.parse_args()
+    if args.choice is None:
+        print("\n################### Enter option: #######################\n")
+        print("1: Get Ce and Ke")
+        print("2: Test parameters")
+        print("3: Thermalization")
+        print("4: Cascade simulation")
+        print("5: Cascade checker")
+        print("6: Cascade data plotting")
+        print("7: Cascade output processing")
+        print("\n##########################################################\n")
+        choice = input("Enter number: ").strip()
+    else:
+        # print("\n################### Background running example: #######################\n")
+        # print("\npython -m ml4cascades.potentials.sw --choice 4 > cascade_choice4.log 2>&1 &\n")
+        choice = str(args.choice)
+    VALID_CHOICES = {str(i) for i in range(1, 8)}
+    if choice not in VALID_CHOICES:
+        print(f"Invalid choice '{choice}'. Valid options are 1–7.")
+        sys.exit(1)
+
     pair_style = 'hybrid/overlay table linear 100000000 sw'
     pair_coeff1 = '* * table nlh-SW.table NLH_GE'
     pair_coeff2 = '* * sw Ge_3body.sw Ge'
@@ -28,124 +57,171 @@ if __name__ == "__main__":
     calc = CascadeCalculator(sw, bi)
 
     '''
-    ######################################### Cascade simulation #########################################
+    ######################################### 1. Get Ce and Ke ########################################## 
+    '''
+    if choice == '1':
+        print("Getting Ce and Ke...")
+        Ce, Ke = ParameterGetter(temp=300).get_data1()
+        ParameterGetter(temp=900).get_data2()
+
+    '''
+    ######################################### 2. Test parameters ######################################### 
     '''
     xhi = bi.alat[0] * supercell_size[0] * 2
     yhi = bi.alat[1] * supercell_size[1] * 2
     zhi = bi.alat[2] * supercell_size[2] * 2
-    Ce = 1e-8  # eV/ps/A^3/K
-    kappa_e = 1e-5  # eV/ps/A/K
-
-    input_config = {
-        "supercell_size": supercell_size,
-        "equ_md_steps": 10000,
-        "temp": 300,
-        "xlow": 0,
-        "xhigh": xhi,
-        "ylow": 0,
-        "yhigh": yhi,
-        "zlow": 0,
-        "zhigh": zhi,
-        "gsx": int(xhi // 21),
-        "gsy": int(yhi // 21),
-        "gsz": int(zhi // 21),
-        "eph_C_e": Ce,
-        "eph_kappa_e": kappa_e,
-        "tinfile": 'NULL'
-    }
-    # calc.thermalize(input_config)
-
-    num_PKA_directions = 1
-    radius_frac = 0.7
-    PKA_kin_eng = 1000 # in eV
-    input_config = {
-        "supercell_size": supercell_size,
-        "border_thickness": 5.76,
-        "cascade_steps": 40000,
-        "temp": 300,
-        "xlow": 0,
-        "xhigh": xhi,
-        "ylow": 0,
-        "yhigh": yhi,
-        "zlow": 0,
-        "zhigh": zhi,
-        "gsx": int(xhi // 21),
-        "gsy": int(yhi // 21),
-        "gsz": int(zhi // 21),
-        "eph_C_e": Ce,
-        "eph_kappa_e": kappa_e,
-        # "tinfile": 'NULL'
-    }
-    # calc.run_cascade(num_PKA_directions=num_PKA_directions,
-    #                 radius_frac=radius_frac,
-    #                 PKA_kin_eng=PKA_kin_eng,
-    #                 input_config=input_config)
-
-    '''
-    ######################################### Get Ce and Ke ########################################## 
-    '''
-    ParameterGetter(temp=900).get_data1()
-    ParameterGetter(temp=900).get_data2()
-
-    '''
-    ######################################### Test parameters ######################################### 
-    '''
-    grid_size = set()
-    for space in range(21, 22):
-        grid_size.add((int(xhi // space)))
-    # -------------------- for timestep -------------------- 
-    # Ce_list = [1.1e-9, 5e-9, 1e-8, 5e-8, 1e-7, 5e-7, 1e-6, 5e-6]
-    # kappa_e_list = [2.52e-4, 5e-6, 1e-5, 5e-5, 1e-4, 5e-4, 1e-3, 5e-3]
-    # -------------------- for constant Ce -------------------- 
-    Ce_list = [5e-8, 5e-8, 5e-8, 5e-8, 5e-8, 5e-8, 5e-8, 5e-8, 5e-8]
-    kappa_e_list = [2.52e-4, 5e-6, 1e-5, 5e-5, 1e-4, 5e-4, 1e-3, 5e-3, 5e-2]
-    Ce_list = [5e-8]
-    kappa_e_list = [5e-2]
-    # -------------------- for constant ke -------------------- 
-    # Ce_list = [1.1e-9, 5e-9, 1e-8, 5e-8, 1e-7, 5e-7, 1e-6, 5e-6]
-    # kappa_e_list = [5e-3] * 8
-    for Ce, kappa_e in zip(Ce_list, kappa_e_list):
-        for grid in grid_size:
-            running_dir = os.path.join(calc.calculation_dir, 'Test-grid-size', 'Electronic_step_1-constant_Ce', f'Ke_{kappa_e}', f'{grid}-{grid}-{grid}')
-            num_PKA_directions = 1
-            radius_frac = 0.7
-            PKA_kin_eng = 1000 # in eV
-            input_config = {
-                "supercell_size": supercell_size,
-                "border_thickness": 5.76,
-                "cascade_steps": 40000,
-                "temp": 300,
-                "xlow": 0,
-                "xhigh": xhi,
-                "ylow": 0,
-                "yhigh": yhi,
-                "zlow": 0,
-                "zhigh": zhi,
-                "gsx": grid,
-                "gsy": grid,
-                "gsz": grid,
-                "eph_C_e": Ce,
-                "eph_kappa_e": kappa_e,
-                # "tinfile": 'NULL'
-            }
-            # calc.run_cascade(running_dir=running_dir,
-            #                 num_PKA_directions=num_PKA_directions,
-            #                 radius_frac=radius_frac,
-            #                 PKA_kin_eng=PKA_kin_eng,
-            #                 input_config=input_config)
-
-    '''
-    ######################################### Cascade data processing ##########################################
-    '''
-    # traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV')
-    # processor = CascadeProcessor(bi, 1000, traj_folder)
-    # # processor.cal_ibm(num_trajs=1, n0=1, ed=1)    # not working for LAMMPS data format
-    # processor.cal_WSDefect(start_traj=1, num_trajs=20)
-    # processor.cal_cluster(start_traj=1, num_trajs=20, expression='Occupancy!=1')
-    # ploter = LammpsCascadePloter()
-    # ploter.plot_mesh_Te(ni=8, nj=8, datafile=os.path.join(calc.calculation_dir, 'Test-grid-size', 'Electronic_step_1-constant_Ce', 'Ke_5e-06', '8-8-8', '1', 'T_out_000006'), 
-    #                      figfile=os.path.join(calc.calculation_dir, 'Test-grid-size', 'Electronic_step_1-constant_Ce', 'Ke_5e-06', '8-8-8', '1', 'T_out_000006.png'))
+    if choice == '2':
+        print("Testing parameters...")
+        # -------------------- for grid size -------------------- 
+        grid_size = set()
+        for space in range(21, 22):
+            grid_size.add((int(xhi // space)))
+        # -------------------- for timestep -------------------- 
+        # Ce_list = [1.1e-9, 5e-9, 1e-8, 5e-8, 1e-7, 5e-7, 1e-6, 5e-6]
+        # kappa_e_list = [2.52e-4, 5e-6, 1e-5, 5e-5, 1e-4, 5e-4, 1e-3, 5e-3]
+        # -------------------- for constant Ce -------------------- 
+        Ce_list = [5e-8] * 9
+        kappa_e_list = [2.52e-4, 5e-6, 1e-5, 5e-5, 1e-4, 5e-4, 1e-3, 5e-3, 5e-2]
+        # -------------------- for constant ke -------------------- 
+        # Ce_list = [1.1e-9, 5e-9, 1e-8, 5e-8, 1e-7, 5e-7, 1e-6, 5e-6]
+        # kappa_e_list = [5e-3] * 8
+        for Ce, kappa_e in zip(Ce_list, kappa_e_list):
+            for grid in grid_size:
+                running_dir = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-Ke', f'Ke_{kappa_e}', f'{grid}-{grid}-{grid}')
+                num_PKA_directions = 1
+                radius_frac = 0.7
+                PKA_kin_eng = 1000 # in eV
+                input_config = {
+                    "supercell_size": supercell_size,
+                    "border_thickness": 5.76,
+                    "cascade_steps": 40000,
+                    "temp": 300,
+                    "xlow": 0,
+                    "xhigh": xhi,
+                    "ylow": 0,
+                    "yhigh": yhi,
+                    "zlow": 0,
+                    "zhigh": zhi,
+                    "gsx": grid,
+                    "gsy": grid,
+                    "gsz": grid,
+                    "eph_C_e": Ce,
+                    "eph_kappa_e": kappa_e,
+                    # "tinfile": 'NULL'
+                }
+                # calc.run_cascade(running_dir=running_dir,
+                #                 num_PKA_directions=num_PKA_directions,
+                #                 radius_frac=radius_frac,
+                #                 PKA_kin_eng=PKA_kin_eng,
+                #                 input_config=input_config)
     
+    # Final chosen parameters
+    # Ce = 5e-8           # eV/ps/A^3/K, value an order of magnitude higher than that at 300 K
+    # kappa_e = 2.529e-4  # eV/ps/A/K, value at 300 K
+
+    '''
+    ######################################### 3. Thermalization #########################################
+    '''
+    Ce = 5e-8           # eV/ps/A^3/K
+    kappa_e = 2.529e-4  # eV/ps/A/K
+    if choice == '3':
+        print("Thermalizing...")
+        input_config = {
+            "supercell_size": supercell_size,
+            "equ_md_steps": 10000,
+            "temp": 300,
+            "xlow": 0,
+            "xhigh": xhi,
+            "ylow": 0,
+            "yhigh": yhi,
+            "zlow": 0,
+            "zhigh": zhi,
+            "gsx": int(xhi // 21),
+            "gsy": int(yhi // 21),
+            "gsz": int(zhi // 21),
+            "eph_C_e": Ce,
+            "eph_kappa_e": kappa_e,
+            "tinfile": 'NULL'
+        }
+        # calc.thermalize(input_config)
+
+    '''
+    ######################################### 4. Cascade simulation #########################################
+    '''
+    num_PKA_directions = 22
+    radius_frac = 0.8
+    PKA_kin_eng = 1000 # in eV
+    if choice == '4':
+        print("Cascade simulation...")
+        input_config = {
+            "supercell_size": supercell_size,
+            "border_thickness": 5.76/2,
+            "cascade_steps": 40000,
+            "temp": 300,
+            "xlow": 0,
+            "xhigh": xhi,
+            "ylow": 0,
+            "yhigh": yhi,
+            "zlow": 0,
+            "zhigh": zhi,
+            "gsx": int(xhi // 25),
+            "gsy": int(yhi // 25),
+            "gsz": int(zhi // 25),
+            "eph_C_e": Ce,
+            "eph_kappa_e": kappa_e,
+            # "tinfile": 'NULL'
+        }
+        PKA_kin_eng_dir = calc.run_cascade(num_PKA_directions=num_PKA_directions,
+                                            radius_frac=radius_frac,
+                                            PKA_kin_eng=PKA_kin_eng,
+                                            input_config=input_config)
+    
+    '''
+    ######################################### 5. Cascade checker #########################################
+    '''
+    if choice == '5':
+        print("Cascade checking...")
+        PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', f'PKA_1000eV-{radius_frac}')
+        checker = CascadeChecker(PKA_kin_eng=PKA_kin_eng, 
+                                 supercell_size=supercell_size, 
+                                 radius_frac=radius_frac,
+                                 traj_folder=PKA_kin_eng_dir,
+                                 successful_folder=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV-suc'))
+        checker.check_output(start_output=1, num_outputs=22, running_time=35) # in ps 
+
+    '''
+    ######################################### 6. Cascade data plotting ####################################
+    '''
+    if choice == '6':
+        print("Cascade data plotting...")
+        plotter = LammpsCascadePlotter()
+        # plotter.plot_eph_results(datafile1=os.path.join(calc.calculation_dir, 'thermalize', '16-16-16', 'eng.out'), 
+        #                          datafile2=os.path.join(calc.calculation_dir, 'thermalize', '16-16-16', 'thermo.out'),
+        #                          figfile=os.path.join(calc.calculation_dir, 'thermalize', '16-16-16', 'eph_results.png'))
+        plotter.plot_eph_results(datafile1=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV-suc', '6', 'eng.out'),
+                                datafile2=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV-suc', '6', 'thermo.out'),
+                                figfile=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV-suc', '6', 'eph_results.png'))
+        # plotter.plot_eph_results(datafile1=os.path.join(calc.calculation_dir, 'cascade', 'save', '1', 'eng.out'), 
+        #                          datafile2=os.path.join(calc.calculation_dir, 'cascade', 'save', '1', 'thermo.out'),
+        #                          figfile=os.path.join(calc.calculation_dir, 'cascade', 'save', '1', 'eph_results.png'))
+        # plotter.plot_eph_results(datafile1=os.path.join(calc.calculation_dir, 'thermalize', '16-16-16', 'eng.out'), 
+        #                          datafile2=os.path.join(calc.calculation_dir, 'thermalize', '16-16-16', 'thermo.out'),
+        #                          figfile=os.path.join(calc.calculation_dir, 'thermalize', '16-16-16', 'eph_results.png'))
+        # plotter.plot_mesh_Te(ni=8, nj=8, datafile=os.path.join(calc.calculation_dir, 'Test-grid-size', 'Electronic_step_1-constant_Ce', 'Ke_5e-06', '8-8-8', '1', 'T_out_000006'), 
+        #                      figfile=os.path.join(calc.calculation_dir, 'Test-grid-size', 'Electronic_step_1-constant_Ce', 'Ke_5e-06', '8-8-8', '1', 'T_out_000006.png'))
+
+    '''
+    ######################################### 7. Cascade output processing ####################################
+    '''
+    if choice == '7':
+        print("Cascade output processing...")
+        PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV-suc')
+        processor = CascadeProcessor(bi, PKA_kin_eng=1000, traj_folder=PKA_kin_eng_dir)
+        # # processor.cal_ibm(num_trajs=1, n0=1, ed=1)    # not working for LAMMPS data format
+        # processor.cal_WSDefect(start_traj=1, num_trajs=20)
+        processor.cal_cluster(start_traj=1, num_trajs=20, expression='Occupancy!=1')
+
+
 
     
     

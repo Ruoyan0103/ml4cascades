@@ -1,6 +1,7 @@
 ! TurboGAP input file for cascade simulation
 ! Parameters: atomsfile, ff_settings, element, mass, cascade_steps, temp
 ! Parameters for EPH: beta_file, xlow, xhigh, ylow, yhigh, zlow, zhigh, eph_tout_file, gsx, gsy, gsz
+! eph_C_e, eph_kappa_e, in_xlow, in_xhigh, in_ylow, in_yhigh, in_zlow, in_zhigh, num_species
 
 atoms_file = "{atomsfile}"
 pot_file = "gap_files/{ff_settings}"
@@ -41,6 +42,14 @@ eph_fdm_steps = 1   !*           ! number of steps to perform in the integration
 eph_freq_Tout = 10                ! frequency to output electronic temperature, to eph-EnergySharingData.txt 
 eph_freq_mesh_Tout = 100 
 eph_Toutfile = '{eph_tout_file}'  ! electronic temperature map output file
+
+make_group = inside block 6 {in_xlow} {in_xhigh} {in_ylow} {in_yhigh} {in_zlow} {in_zhigh}
+make_group = border subtract 2 all inside
+thermostat = "berendsen"
+thermostat_groupID = border
+t_beg = {temp}
+t_end = {temp}
+tau_t = 100
 
 ! Output
 write_thermo = 10                 ! Write thermo every 10 steps

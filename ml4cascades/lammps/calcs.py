@@ -94,11 +94,11 @@ class CascadeCalculator(LMPSCalculator):
     
     # -------------------------------------- Cascade simulation --------------------------------------#
     def run_cascade(self,
-                    running_dir: str,
                     num_PKA_directions: int,
                     radius_frac: float,
                     PKA_kin_eng: float,
-                    input_config: dict):
+                    input_config: dict,
+                    running_dir: str=None) -> str:
         supercell_size = input_config["supercell_size"]
         cascade_steps = input_config["cascade_steps"]
         temp = input_config["temp"]
@@ -119,7 +119,7 @@ class CascadeCalculator(LMPSCalculator):
         if running_dir is not None:
             PKA_kin_eng_dir = running_dir
         else:
-            PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV')
+            PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV-{radi}')
         os.makedirs(PKA_kin_eng_dir, exist_ok=True)
 
         atomsfile = os.path.join(self.calculation_dir, 'thermalize', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}', 'data.output')
@@ -177,9 +177,6 @@ class CascadeCalculator(LMPSCalculator):
                                               eph_C_e=eph_C_e, eph_kappa_e=eph_kappa_e,
                                               xlow=xlow, xhigh=xhigh, ylow=ylow, yhigh=yhigh, zlow=zlow, zhigh=zhigh,
                                               gsx=gsx, gsy=gsy, gsz=gsz, tinfile=tinfile))
-            subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
-            
-        # mystr = ''
-        # for idx, pid in enumerate(PKA_id_list):
-        #     mystr += f'ParticleIdentifier == {pid} || '
-        # print(mystr)
+            # subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
+            tinfile = None  # reset tinfile for next direction
+        return PKA_kin_eng_dir

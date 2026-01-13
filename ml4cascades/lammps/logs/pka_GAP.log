@@ -1,6 +1,0 @@
-2025-09-26 09:05 - ml4cascades.lammps - INFO - Saved hkl_list.dat to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/pka/GAP/100/hkl_list.dat
-2025-09-26 09:05 - ml4cascades.lammps - INFO - --------------------------------------Post-processing simulations ----------------------------------------
-2025-09-26 09:05 - ml4cascades.lammps - INFO - 100-Postprocessing results: 
-2025-09-26 09:05 - ml4cascades.lammps - INFO - Vacancies (mean, std): {100: (1.7, 0.9)}
-2025-09-26 09:05 - ml4cascades.lammps - INFO - Interstitials (mean, std): {100: (1.6666666666666667, 0.8299933065325821)}
-2025-09-26 09:05 - ml4cascades.lammps - INFO - Defects (mean, std): {100: (3.3666666666666667, 1.7220788470785984)}

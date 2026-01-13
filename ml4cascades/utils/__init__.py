@@ -1,6 +1,6 @@
-from .plots import TurbogapCascadePloter, LammpsCascadePloter
+from .plots import TurbogapCascadePlotter, LammpsCascadePlotter
 from .param import ParameterGetter
-__all__ = ["TurbogapCascadePloter", "LammpsCascadePloter", "ParameterGetter"]
+__all__ = ["TurbogapCascadePlotter", "LammpsCascadePlotter", "ParameterGetter"]
 
 class BasicCellInfo:
     def __init__(

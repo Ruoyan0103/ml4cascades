@@ -27,15 +27,20 @@ region          in_region block $(xlo+v_br) $(xhi-v_br) $(ylo+v_br) $(yhi-v_br) 
 region          br_region block $(xlo+v_br) $(xhi-v_br) $(ylo+v_br) $(yhi-v_br) $(zlo+v_br) $(zhi-v_br) side out
 
 fix             prop all property/atom i_myflag
-set             region in_region i_myflag 10          # for visual checking region
-set             region br_region i_myflag 20          # can be deleted if sure the region is correct 
+set             region in_region i_myflag 10                  # for visual checking region
+set             region br_region i_myflag 20                  # can be deleted if sure the region is correct 
 group           border dynamic all region br_region every 100 # for atoms in this region, monitoring their velocity
+
+#--------------------------BORDER THERMOSTAT-----------------------
+fix             2 border temp/berendsen {temp} {temp} 0.1
 
 compute         ep all pe/atom
 compute         ek all ke/atom
-compute         emax border reduce max c_ek
+compute         ekmax border reduce max c_ek
+compute         epmax border reduce max c_ep
 compute         myflag_val all property/atom i_myflag
-variable        emaxbrdr equal c_emax
+variable        ekmaxbrdr equal c_ekmax
+variable        epmaxbrdr equal c_epmax
 variable        t equal "time"
 
 #------------------------------USER EPH---------------------------
@@ -44,5 +49,5 @@ fix             out1 all print 1 "$(step) $(time) $(temp) $(f_friction[1]) $(f_f
 fix             out2 all print 1 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal)" file thermo.out screen no
 dump            2 all custom 100 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val 
 
-# run             {cascade_steps} every 100  " if '(${{emaxbrdr}} > 5 || $t >= 35.0)' then 'quit' "
-run             {cascade_steps} every 100  " if '($t >= 3)' then 'quit' "
+run             {cascade_steps} every 100  " if '(${{epmaxbrdr}} > -2.5 || ${{ekmaxbrdr}} > 5 || $t >= 35.0)' then 'quit' "
+# run             {cascade_steps} every 100  " if '($t >= 3)' then 'quit' "  # for Ce, Ke testing

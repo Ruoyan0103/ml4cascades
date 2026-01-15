@@ -16,12 +16,15 @@ class CascadeChecker:
                  supercell_size: list[int],
                  radius_frac: float,
                  traj_folder: str,
+                 successful_folder: str,
                  task_name='checking',
                  model_name='EPH'):
         self.PKA_kin_eng = PKA_kin_eng
         self.supercell_size = supercell_size
         self.radius_frac = radius_frac
         self.traj_folder = traj_folder
+        self.successful_folder = successful_folder
+        os.makedirs(self.successful_folder, exist_ok=True)
         self.log_dir = os.path.join(module_dir, 'logs', task_name)
         self.log_file = os.path.join(self.log_dir, f'{model_name}.log')
         self.logger = AppLogger(__name__, self.log_file, overwrite=True).get_logger()
@@ -57,8 +60,7 @@ class CascadeChecker:
                         mass = struct.get_masses()[idx]*AMU_TO_KG                              # in kg
                         vel = np.array([v*ANGSTROM_TO_METER/FS_TO_S for v in velocities[idx]]) # in m/s
                         kin_eng = 0.5 * mass * (vel @ vel) * JOULE_TO_EV                       # in eV
-                        # if pot_eng > pot_eng_threshold or kin_eng > kin_eng_threshold:
-                        if kin_eng > kin_eng_threshold:
+                        if pot_eng > pot_eng_threshold or kin_eng > kin_eng_threshold:
                             self.logger.info(f'Trajectory {start_traj+num_traj} failed on the {i} frame, pot_eng: {pot_eng} eV, kin_eng: {kin_eng} eV.')
                             failed_flag = True
                             break
@@ -66,7 +68,6 @@ class CascadeChecker:
                     break
             if failed_flag: 
                 failed_case += 1
-                continue 
         self.logger.info(f'#---------{failed_case}/{num_trajs} cases failed.---------#')
 
             

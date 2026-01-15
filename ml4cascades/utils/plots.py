@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import os, re
 
 class TurbogapCascadePlotter:
     def __init__(self):
@@ -9,12 +10,13 @@ class TurbogapCascadePlotter:
         Time, E_fric, E_rand, E_net_cum, T_e, T_a, Kin_a, Pot_a = np.loadtxt(datafile, skiprows=1, unpack=True)
         fig, axes = plt.subplots(3, 1, figsize=(8, 10))
 
-        # axes[0].plot(Time, E_fric, label='E_fric')
+        # axes[0].plot(Time, E_fric+E_rand, label='E_fric')
         # axes[0].plot(Time, E_rand, label='E_rand')
-        pot_shift = -np.min(Pot_a) + np.min(Kin_a)
-        # axes[0].plot(Time, Kin_a+Pot_a+pot_shift, label='Tot_a')
-        # axes[0].plot(Time, E_net_cum, label='E_net_cum')
-        axes[0].plot(Time, E_net_cum+Kin_a+Pot_a+pot_shift, label='E_net_cum + Tot_a')
+        pot_shift = -np.min(Pot_a) + np.min(Kin_a) 
+        # axes[0].plot(Time, E_net_cum+Kin_a+Pot_a+pot_shift, label='Tot_a')
+        axes[0].plot(Time, E_net_cum, label='E_net_cum')
+
+        # axes[0].plot(Time, E_net_cum+Kin_a+Pot_a+pot_shift, label='E_net_cum + Tot_a')
         axes[0].set_ylabel('Energy (eV)')
         axes[0].legend()
         axes[0].grid(True)
@@ -33,7 +35,7 @@ class TurbogapCascadePlotter:
         axes[2].legend()
         axes[2].grid(True)
         
-        axes[2].set_xscale('log')
+        # axes[2].set_xscale('log')
         plt.tight_layout()
         fig.savefig(figfile, dpi=300)
 
@@ -115,24 +117,34 @@ class LammpsCascadePlotter:
         pass
 
     def plot_eph_results(self, datafile1: str, datafile2: str, figfile: str):
-        step, Time, Ta, friction1, Te = np.loadtxt(datafile1, skiprows=1, unpack=True)
+        step, Time, Ta, friction1, Te, Tbr, Tin = np.loadtxt(datafile1, skiprows=1, unpack=True)
         step, _, _, Epot, Ekin, Etotal = np.loadtxt(datafile2, skiprows=1, unpack=True)
-        fig, axes = plt.subplots(1, 2, figsize=(15, 8))
-        axes[0].plot(Time, Ta, label='Ta')
-        axes[0].plot(Time, Te, label='Te')
-        axes[0].set_xlabel('Time (ps)', fontsize=15)
-        axes[0].set_ylabel('Temperature (K)', fontsize=15)
+        fig, axes = plt.subplots(3, 1, figsize=(8, 10))
+        axes[0].plot(Time, friction1, color='red')
+        axes[0].set_ylabel('E_transfer (eV)', fontsize=15)
         axes[0].legend(fontsize=15)
         axes[0].grid(True)
 
-        pot_shift = -np.min(Epot) + np.min(Ekin)
-        axes[1].plot(Time, Ekin, label='Ekin')
-        axes[1].plot(Time, Epot+pot_shift, label='Epot')
-        axes[1].plot(Time, Etotal+pot_shift, label='Etotal')
-        axes[1].set_xlabel('Time (ps)', fontsize=15)
-        axes[1].set_ylabel('Energy (eV)', fontsize=15)
+        # axes[1].plot(Time, Ta, label='Ta')
+        axes[1].plot(Time, Te, label='Te')
+        axes[1].plot(Time, Tbr, label='Tborder')
+        axes[1].plot(Time, Ta, label='Tinside')
+        axes[1].set_ylabel('Temperature (K)', fontsize=15)
         axes[1].legend(fontsize=15)
         axes[1].grid(True)
+        # add text, 2 decimal
+        # axes[1].text(0.05, 0.9, f"Average Ta: {np.mean(Ta[int(0.9*len(Ta)):]):.2f} K", transform=axes[1].transAxes, fontsize=15, bbox=dict(facecolor='white', alpha=0.5))  
+        # axes[1].text(0.05, 0.8, f"Average Te: {np.mean(Te[int(0.9*len(Te)):]):.2f} K", transform=axes[1].transAxes, fontsize=15, bbox=dict(facecolor='white', alpha=0.5))
+        # axes[1].text(0.05, 0.7, f"Average Tbr: {np.mean(Tbr[int(0.9*len(Tbr)):]):.2f} K", transform=axes[1].transAxes, fontsize=15, bbox=dict(facecolor='white', alpha=0.5))
+        
+        pot_shift = -np.min(Epot) + np.min(Ekin)
+        axes[2].plot(Time, Ekin, label='Ekin')
+        axes[2].plot(Time, Epot+pot_shift, label='Epot')
+        axes[2].plot(Time, Etotal+pot_shift, label='Etotal')
+        axes[2].set_xlabel('Time (ps)', fontsize=15)
+        axes[2].set_ylabel('Energy (eV)', fontsize=15)
+        axes[2].legend(fontsize=15)
+        axes[2].grid(True)
         
         # increase ticks size
         for ax in axes:
@@ -150,32 +162,197 @@ class LammpsCascadePlotter:
         fig.savefig(figfile, dpi=300)
         # average Ta and Te over last 10% of time
         print(f"Average Ta: {np.mean(Ta[int(0.9*len(Ta)):])} K")
-        print(f"Average Te: {np.mean(Te[int(0.9*len(Te)):])} K")
+        print(f"Average Te: {np.mean(Te[int(0.9*len(Te)):])} K")    
 
-    def plot_mesh_Te(self, ni: int, nj: int, datafile: str, figfile: str):
-        data = np.loadtxt(datafile, skiprows=1)
-        fig, axes = plt.subplots(1, 3, figsize=(12, 4))
-        axis = ['x', 'y', 'z']
-        for i in range(3):
-            ax = axes[i]
-            mask = data[:, i] == 0  
-            slice_data = data[mask]
-            Te = slice_data[:, 3]
-            T = Te.reshape((ni, nj))
-            x = np.arange(ni + 1)
-            y = np.arange(nj + 1)
-            pcm = ax.pcolormesh(
-                x, y, T.T,
-                shading='flat'
-            )
-            cbar = ax.figure.colorbar(pcm, ax=ax)
-            cbar.set_label("Electronic Temperature (K)")
-            # ax.set_xlabel("X")
-            # ax.set_ylabel("Y")
-            ax.set_aspect("equal")
-            ax.set_title(f"{axis[i]}=0")
-        plt.tight_layout()
-        fig.savefig(figfile, dpi=300)
+    def get_grid_Ta_Te(self, 
+                       dump_file: str,  
+                       T_out_folder: str,
+                       new_dump_file: str,
+                       new_tout_file: str,
+                       avg_Ta_file: str,
+                       avg_Te_file: str,
+                       flag: int):
+        # ----------------------------- Delete existing files -------------------------
+        if flag == 1 or flag == 5:
+            if os.path.exists(new_dump_file):
+                os.remove(new_dump_file)
+        elif flag == 2 or flag == 5:
+            if os.path.exists(new_tout_file):
+                os.remove(new_tout_file)
+        elif flag == 3 or flag == 5:
+            if os.path.exists(avg_Ta_file):
+                os.remove(avg_Ta_file)
+        elif flag == 4 or flag == 5:
+            if os.path.exists(avg_Te_file):
+                os.remove(avg_Te_file)
+        
+        # ----------------------------- Get header info -------------------------
+        with open(dump_file, 'r') as fin:
+            dump_lines = fin.readlines()
+        header = dump_lines[:8]
+
+        # ----------------------------- Process T_out files -------------------------
+        tout_files = [os.path.join(T_out_folder, f) for f in os.listdir(T_out_folder)]
+        tout_files.sort(key=lambda f: int(os.path.basename(f).split('_')[-1]))
+
+        # grids from electronic system
+        data = np.loadtxt(tout_files[0], skiprows=1)
+        mask = (data[:, 0] == 0) & (data[:, 1] == 0)
+        slice_data = data[mask]
+        z = slice_data[:, 2]
+        step_z = z[1] - z[0]
+        mask = (data[:, 0] == 0) & (data[:, 2] == 0)
+        slice_data = data[mask]
+        y = slice_data[:, 1]
+        step_y = y[1] - y[0]
+        mask = (data[:, 1] == 0) & (data[:, 2] == 0)
+        slice_data = data[mask]
+        x = slice_data[:, 0]
+        step_x = x[1] - x[0]
+
+        x_length = max(x) - min(x) + step_x
+        y_length = max(y) - min(y) + step_y
+        z_length = max(z) - min(z) + step_z
+
+        x_grids = int(x_length/step_x)
+        y_grids = int(y_length/step_y)
+        z_grids = int(z_length/step_z)
+
+        with open(new_tout_file, 'w') as fout:
+            for timestep, tout_file in enumerate(tout_files):
+                print(f"======= Electronic system, processing timestep: {timestep} ========")
+                avg_temp = 0
+                if flag == 2 or flag == 5:
+                    fout.write(header[0])  # ITEM: TIMESTEP
+                    fout.write(f"{timestep}\n") 
+                    fout.write(header[2])  # ITEM: NUMBER OF ATOMS
+                    fout.write(f"{x_grids * y_grids * z_grids}\n")
+                    fout.write(header[4])  # ITEM: BOX BOUNDS pp pp pp
+                    fout.write(f"0.0 {x_length}\n")
+                    fout.write(f"0.0 {y_length}\n")
+                    fout.write(f"0.0 {z_length}\n")
+                    new_line = 'ITEM: ATOMS grid_id x y z Te\n'
+                    fout.write(new_line)
+                with open(tout_file, 'r') as fin:
+                    lines = fin.readlines()
+                    for idx, line in enumerate(lines[1:]):
+                        x, y, z, Te = line.strip().split()
+                        if flag == 2 or flag == 5:
+                            fout.write(f'{idx} {float(x)+step_x/2} {float(y)+step_y/2} {float(z)+step_z/2} {Te}\n')
+                        avg_temp += float(Te) / (x_grids * y_grids * z_grids)
+                if flag == 4 or flag == 5:
+                    with open(avg_Te_file, 'a') as favg:
+                        favg.write(f"{timestep} {avg_temp}\n")
+
+        # ----------------------------- Process dump file -------------------------
+        # grids from atomic system
+        num_atoms = int(header[3].strip())
+        xlo, xhi = header[5].split()
+        ylo, yhi = header[6].split()
+        zlo, zhi = header[7].split()
+        x_grids = int((float(xhi)-float(xlo))/step_x)
+        y_grids = int((float(yhi)-float(ylo))/step_y)
+        z_grids = int((float(zhi)-float(zlo))/step_z)
+        
+        block_length = num_atoms + 9  
+        num_blocks = len(dump_lines) // block_length
+        for block_idx in range(1, num_blocks):
+            grids_val = [[[0 for _ in range(z_grids)] for _ in range(y_grids)] for _ in range(x_grids)]
+            grids_cnt = [[[0 for _ in range(z_grids)] for _ in range(y_grids)] for _ in range(x_grids)]
+            start_line = block_idx * block_length
+            end_line = start_line + block_length
+            block_lines = dump_lines[start_line:end_line]
+            print(f"======= Atomic system, processing block: {block_idx}/{num_blocks-1} ========")
+            for line in block_lines[9:]:
+                data = line.strip().split()
+                x = float(data[2])
+                y = float(data[3])
+                z = float(data[4])
+                ek = float(data[9])
+
+                ix = min(int((x - float(xlo)) / step_x), x_grids - 1)
+                iy = min(int((y - float(ylo)) / step_y), y_grids - 1)
+                iz = min(int((z - float(zlo)) / step_z), z_grids - 1)
+                grids_val[ix][iy][iz] += ek
+                grids_cnt[ix][iy][iz] += 1
+    
+            # convert to temperature, average temp for one grid
+            for ix in range(x_grids):
+                for iy in range(y_grids):
+                    for iz in range(z_grids):
+                        factor = 2.0 / (3.0 * 8.617333262145e-5)
+                        grids_val[ix][iy][iz] *= factor/max(grids_cnt[ix][iy][iz], 1)
+            # average temperature for the whole system
+            if flag == 3 or flag == 5:
+                avg_temp = 0
+                for ix in range(x_grids):
+                    for iy in range(y_grids):
+                        for iz in range(z_grids):
+                            avg_temp += grids_val[ix][iy][iz] / (x_grids * y_grids * z_grids)
+                with open(avg_Ta_file, 'a') as favg:
+                    favg.write(f"{block_idx} {avg_temp}\n")
+
+            # write to newe dump file
+            if flag == 1 or flag == 5:
+                with open(new_dump_file, 'a') as fout:
+                    fout.writelines(header)
+                    new_line = block_lines[8].rstrip('\n') + ' Ta\n'
+                    fout.write(new_line)
+                    for line in block_lines[9:]:
+                        data = line.strip().split()
+                        x = float(data[2])
+                        y = float(data[3])
+                        z = float(data[4])
+                        ix = min(int((x - float(xlo)) / step_x), x_grids - 1)
+                        iy = min(int((y - float(ylo)) / step_y), y_grids - 1)
+                        iz = min(int((z - float(zlo)) / step_z), z_grids - 1)
+                        Ta = grids_val[ix][iy][iz]
+                        new_line = ' '.join(data + [f"{Ta:.6f}"]) + '\n'
+                        fout.write(new_line)
+
+
+
+
+
+                  
+                
+
+
+
+
+   
+                       
+                        
+
+
+      
+                    
+        
+        
+
+
+        
+
+
+            
+
+
+        
+
+                        
+
+
+            
+        
+
+
+
+          
+
+        
+
+
+
 
 
 

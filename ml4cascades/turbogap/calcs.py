@@ -156,12 +156,6 @@ class CascadeCalculator(TurboGAPCalculator):
             self.logger.info(f'PKA ID: {PKA_id}, direction: {xyz}, velocity: {velocity} ang/fs')
             cascade_struct.set_array('velocities', new_velocities)
             cascade_dir = os.path.join(PKA_kin_eng_dir, f'{idx+1}')
-            if os.path.isdir(cascade_dir):
-                if (idx + 1) in running_case_list:
-                    subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
-                continue
-
-            # start from scratch
             os.makedirs(cascade_dir, exist_ok=True)
             cascade_file = os.path.join(cascade_dir, 'cascade_initial.xyz')
             write(cascade_file, cascade_struct, format='extxyz')

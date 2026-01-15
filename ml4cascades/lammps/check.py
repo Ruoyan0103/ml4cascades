@@ -10,7 +10,7 @@ class CascadeChecker:
                  supercell_size: list[int],
                  radius_frac: float,
                  traj_folder: str,
-                 successful_folder: str,
+                 successful_folder: str, 
                  task_name='checking',
                  model_name='EPH'):
         self.PKA_kin_eng = PKA_kin_eng

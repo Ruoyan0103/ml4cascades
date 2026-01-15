@@ -159,7 +159,7 @@ if __name__ == "__main__":
         input_config = {
             "supercell_size": supercell_size,
             "border_thickness": border_thickness,
-            "cascade_steps": 5000,
+            "cascade_steps": 40000,
             "temp": 300,
             "xlow": 0,
             "xhigh": xhi,
@@ -174,8 +174,8 @@ if __name__ == "__main__":
             "eph_kappa_e": kappa_e,
             "eph_tout_file": 'eph-ToutData.txt'
         }
-        # running_case_list = np.arange(1, 23)
-        running_case_list = np.arange(13, 23)
+        running_case_list = np.arange(1, 4)
+        # running_case_list = np.arange(13, 23)
         calc.run_cascade(num_PKA_directions=num_PKA_directions,
                         radius_frac=radius_frac,
                         PKA_kin_eng=PKA_kin_eng,
@@ -191,8 +191,9 @@ if __name__ == "__main__":
         checker = CascadeChecker(PKA_kin_eng=1000, 
                                 supercell_size=supercell_size, 
                                 radius_frac=0.7, 
-                                traj_folder=traj_folder)
-        checker.check_structure(start_traj=1, num_trajs=6, border_thickness=border_thickness, pot_eng_threshold=-4, kin_eng_threshold=5)
+                                traj_folder=traj_folder,
+                                successful_folder=os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV-suc'))
+        checker.check_structure(start_traj=1, num_trajs=3, border_thickness=border_thickness, pot_eng_threshold=-4, kin_eng_threshold=5)
 
     '''
     ######################################### 6. Cascade data plotting ####################################

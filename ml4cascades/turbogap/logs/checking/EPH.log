@@ -7,3 +7,23 @@
 2026-01-13 16:12 - ml4cascades.turbogap.check - INFO - Checking trajectory 5, total frames: 51.
 2026-01-13 16:13 - ml4cascades.turbogap.check - INFO - Checking trajectory 6, total frames: 51.
 2026-01-13 16:13 - ml4cascades.turbogap.check - INFO - #---------0/6 cases failed.---------#
+2026-01-13 22:58 - ml4cascades.turbogap.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 16-16-16, radius_frac: 0.7---------#
+2026-01-13 22:59 - ml4cascades.turbogap.check - INFO - Checking trajectory 7, total frames: 51.
+2026-01-13 22:59 - ml4cascades.turbogap.check - INFO - Checking trajectory 8, total frames: 51.
+2026-01-13 22:59 - ml4cascades.turbogap.check - INFO - Checking trajectory 9, total frames: 51.
+2026-01-13 23:00 - ml4cascades.turbogap.check - INFO - Checking trajectory 10, total frames: 51.
+2026-01-13 23:00 - ml4cascades.turbogap.check - INFO - Checking trajectory 11, total frames: 51.
+2026-01-13 23:00 - ml4cascades.turbogap.check - INFO - Trajectory 11 failed on the 26 frame, pot_eng: -3.84647767 eV, kin_eng: 11.183231568577154 eV.
+2026-01-13 23:00 - ml4cascades.turbogap.check - INFO - Checking trajectory 12, total frames: 51.
+2026-01-13 23:01 - ml4cascades.turbogap.check - INFO - Checking trajectory 13, total frames: 51.
+2026-01-13 23:01 - ml4cascades.turbogap.check - INFO - Checking trajectory 14, total frames: 51.
+2026-01-13 23:01 - ml4cascades.turbogap.check - INFO - Checking trajectory 15, total frames: 51.
+2026-01-13 23:02 - ml4cascades.turbogap.check - INFO - Checking trajectory 16, total frames: 51.
+2026-01-13 23:02 - ml4cascades.turbogap.check - INFO - Trajectory 16 failed on the 35 frame, pot_eng: -3.68988193 eV, kin_eng: 13.273818448854003 eV.
+2026-01-13 23:02 - ml4cascades.turbogap.check - INFO - Checking trajectory 17, total frames: 51.
+2026-01-13 23:02 - ml4cascades.turbogap.check - INFO - Checking trajectory 18, total frames: 51.
+2026-01-13 23:02 - ml4cascades.turbogap.check - INFO - Trajectory 18 failed on the 20 frame, pot_eng: -3.42477256 eV, kin_eng: 58.68477194683986 eV.
+2026-01-13 23:02 - ml4cascades.turbogap.check - INFO - Checking trajectory 19, total frames: 51.
+2026-01-13 23:03 - ml4cascades.turbogap.check - INFO - Checking trajectory 20, total frames: 51.
+2026-01-13 23:03 - ml4cascades.turbogap.check - INFO - Checking trajectory 21, total frames: 51.
+2026-01-13 23:03 - ml4cascades.turbogap.check - INFO - #---------3/15 cases failed.---------#

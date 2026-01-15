@@ -66,14 +66,14 @@ class CascadeProcessor:
             R2_interp_all.append(R2_interp)
         R2_avg = np.mean(R2_interp_all, axis=0)
         with open(os.path.join(self.traj_folder, 'R2.txt'), 'w') as f:
-            f.write('Time (fs)\tR^2 (ang^2)\n')
+            f.write('Time (ps)\tR^2 (ang^2)\n')
             for t, r2 in zip(time_all[0], R2_avg):
                 f.write(f'{t}\t{r2}\n')
         fig, ax = plt.subplots(figsize=(6, 4))
         ax.set_xscale('log')
         ax.set_yscale('log')
         ax.plot(time_all[0], R2_avg)
-        ax.set_xlabel('Time (fs)')
+        ax.set_xlabel('Time (ps)')
         ax.set_ylabel(r'$\mathrm{R}^2 (\mathrm{Å}^2)$')
         plt.tight_layout()
         fig.savefig(os.path.join(self.traj_folder, 'R2.png'), dpi=300)
@@ -156,7 +156,7 @@ class CascadeProcessor:
         def_avg = np.mean(def_interp_all, axis=0)
         def_std = np.std(def_interp_all, axis=0)
         with open(os.path.join(self.traj_folder, 'defect.txt'), 'w') as f:
-            f.write('Time (fs)\tnum_vac\tstd_vac\tnum_int\tstd_int\tnum_def\tstd_def\n')
+            f.write('Time (ps)\tnum_vac\tstd_vac\tnum_int\tstd_int\tnum_def\tstd_def\n')
             for t, v, vstd, i, istd, d, dstd in zip(time_all[0], vac_avg, vac_std, int_avg, int_std, def_avg, def_std):
                 f.write(f'{t:.3f}\t{int(v)}\t{int(vstd)}\t{int(i)}\t{int(istd)}\t{int(d)}\t{int(dstd)}\n')
         fig, ax = plt.subplots(figsize=(6, 4))
@@ -261,7 +261,7 @@ class CascadeProcessor:
         max_cluster_avg = np.mean(max_cluster_interp_all, axis=0)
         max_cluster_std = np.std(max_cluster_interp_all, axis=0)
         with open(os.path.join(self.traj_folder, 'max_cluster.txt'), 'w') as f:
-            f.write('Time (fs)\tMax_Cluster_Size\tMax_Cluster_Size_std\n')
+            f.write('Time (ps)\tMax_Cluster_Size\tMax_Cluster_Size_std\n')
             for t, mcs, mcs_std in zip(time_all[0], max_cluster_avg, max_cluster_std):
                 f.write(f'{t}\t{int(mcs)}\t{int(mcs_std)}\n')
         max_cluster_low = max_cluster_avg - max_cluster_std
@@ -280,7 +280,7 @@ class CascadeProcessor:
         num_cdefect_avg = np.mean(num_cluster_defect_interp_all, axis=0)
         num_cdefect_std = np.std(num_cluster_defect_interp_all, axis=0)
         with open(os.path.join(self.traj_folder, 'defect_cluster.txt'), 'w') as f:
-            f.write('Time (fs)\tNum_Point_Defect\tNum_Point_Defect_std\tNum_Cluster_Defect\tNum_Cluster_Defect_std\n')
+            f.write('Time (ps)\tNum_Point_Defect\tNum_Point_Defect_std\tNum_Cluster_Defect\tNum_Cluster_Defect_std\n')
             for t, npd, npd_std, ncd, ncd_std in zip(time_all[0], num_pdefect_avg, num_pdefect_std, num_cdefect_avg, num_cdefect_std):
                 f.write(f'{t}\t{npd}\t{npd_std}\t{ncd}\t{ncd_std}\n')
         fig, ax = plt.subplots(figsize=(6, 4))
@@ -289,7 +289,7 @@ class CascadeProcessor:
         ax.fill_between(time_all[0], num_pdefect_avg - num_pdefect_std, num_pdefect_avg + num_pdefect_std, alpha=0.3)
         ax.plot(time_all[0], num_cdefect_avg, label='Cluster Defects')
         ax.fill_between(time_all[0], num_cdefect_avg - num_cdefect_std, num_cdefect_avg + num_cdefect_std, alpha=0.3)
-        ax.set_xlabel('Time (fs)')
+        ax.set_xlabel('Time (ps)')
         ax.set_ylabel('Number of Defects (%)')
         ax.legend()
         plt.tight_layout()

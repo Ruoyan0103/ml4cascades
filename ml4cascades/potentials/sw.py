@@ -204,9 +204,9 @@ if __name__ == "__main__":
         # plotter.plot_eph_results(datafile1=os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'langevin', '1', 'eng.out'), 
         #                          datafile2=os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'langevin', '1', 'thermo.out'),
         #                          figfile=os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'langevin', '1', 'eph_results.png'))
-        # plotter.plot_eph_results(datafile1=os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', '1', 'eng.out'), 
-        #                          datafile2=os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', '1', 'thermo.out'),
-        #                          figfile=os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', '1', 'eph_results.png'))
+        # plotter.plot_eph_results(datafile1=os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', '1-center', 'eng.out'), 
+        #                          datafile2=os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', '1-center', 'thermo.out'),
+        #                          figfile=os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', '1-center', 'eph_results.png'))
         # plotter.plot_eph_results(datafile1=os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'nose', '1', 'eng.out'), 
         #                          datafile2=os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'nose', '1', 'thermo.out'),
         #                          figfile=os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'nose', '1', 'eph_results.png'))
@@ -219,20 +219,23 @@ if __name__ == "__main__":
         # plotter.plot_mesh_Te(ni=8, nj=8, datafile=os.path.join(calc.calculation_dir, 'Test-grid-size', 'Electronic_step_1-constant_Ce', 'Ke_5e-06', '8-8-8', '1', 'T_out_000006'), 
         #                      figfile=os.path.join(calc.calculation_dir, 'Test-grid-size', 'Electronic_step_1-constant_Ce', 'Ke_5e-06', '8-8-8', '1', 'T_out_000006.png'))
 
-        dump_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'nothermo', '1', 'data.output')
-        T_out_folder = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'nothermo', '1', 'T_out')
-        new_dump_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'nothermo', '1', 'data.output.modified') 
-        new_tout_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'nothermo', '1', 'T_out.modified') 
-        avg_Ta_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'nothermo', '1', 'avg_Ta.out')
-        avg_Te_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'nothermo', '1', 'avg_Te.out')  
+        dump_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', '1-center', 'data.output')
+        T_out_folder = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', '1-center', 'T_out')
+        new_dump_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', '1-center', 'data.output.modified') 
+        new_tout_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', '1-center', 'T_out.modified') 
+        avg_Ta_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', '1-center', 'avg_Ta.out')
+        avg_Te_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', '1-center', 'avg_Te.out')  
         flag = 5 # 1: new_dump_file, 2: new_tout_file, 3: avg_Ta_file, 4: avg_Te_file, 5: all
-        plotter.get_grid_Ta_Te(dump_file=dump_file, 
-                               T_out_folder=T_out_folder, 
-                               new_dump_file=new_dump_file, 
-                               new_tout_file=new_tout_file, 
-                               avg_Ta_file=avg_Ta_file, 
-                               avg_Te_file=avg_Te_file,
-                               flag=flag)
+        # plotter.get_grid_Ta_Te(dump_file=dump_file, 
+        #                        T_out_folder=T_out_folder, 
+        #                        new_dump_file=new_dump_file, 
+        #                        new_tout_file=new_tout_file, 
+        #                        avg_Ta_file=avg_Ta_file, 
+        #                        avg_Te_file=avg_Te_file,
+        #                        flag=flag)
+        # plotter.get_hottest_Ta_Te(new_tout_file, 10)
+        grid_list = [282, 283, 284, 285]
+        plotter.plot_te_ta_along_x(new_tout_file, new_dump_file, 40, grid_list, os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', '1-center', 'Te_along_x_40.png'))
     '''
     ######################################### 7. Cascade output processing ####################################
     '''

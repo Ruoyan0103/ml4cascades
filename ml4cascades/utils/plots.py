@@ -238,13 +238,12 @@ class LammpsCascadePlotter:
                     fout.write(f"{min_z} {max_z+step_z}\n")
                     new_line = 'ITEM: ATOMS grid_id x y z Te\n'
                     fout.write(new_line)
-                with open(tout_file, 'r') as fin:
-                    lines = fin.readlines()
-                    for idx, line in enumerate(lines[1:]):
-                        x, y, z, Te = line.strip().split()
-                        if flag == 2 or flag == 5:
-                            fout.write(f'{idx} {float(x)+step_x/2} {float(y)+step_y/2} {float(z)+step_z/2} {Te}\n')
-                        avg_temp += float(Te) / (x_grids * y_grids * z_grids)
+                    with open(tout_file, 'r') as fin:
+                        lines = fin.readlines()
+                        for idx, line in enumerate(lines[1:]):
+                            x, y, z, Te = line.strip().split()
+                            fout.write(f'{idx} {float(x)+step_x/2} {float(y)+step_y/2} {float(z)+step_z/2} {Te}\n') # the center of the grid
+                            avg_temp += float(Te) / (x_grids * y_grids * z_grids)
                 if flag == 4 or flag == 5:
                     with open(avg_Te_file, 'a') as favg:
                         favg.write(f"{timestep} {avg_temp}\n")
@@ -299,27 +298,39 @@ class LammpsCascadePlotter:
                         factor = 2.0 / (3.0 * 8.617333262145e-5)
                         grids_val[ix][iy][iz] *= factor/max(grids_cnt[ix][iy][iz], 1)
 
-            with open(new_dump_file, 'a') as fout:
-                fout.write(header[0])  # ITEM: TIMESTEP
-                fout.write(f"{block_idx}\n")
-                fout.write(header[2])  # ITEM: NUMBER OF ATOMS
-                fout.write(f"{x_grids * y_grids * z_grids}\n")
-                fout.write(header[4])  # ITEM: BOX BOUNDS pp pp pp
-                fout.write(f"{min_x} {max_x+step_x}\n")
-                fout.write(f"{min_y} {max_y+step_y}\n")
-                fout.write(f"{min_z} {max_z+step_z}\n")
-                new_line = 'ITEM: ATOMS grid_id idx idy idz x y z Ta\n'
-                fout.write(new_line)
-                for iz in range(z_grids):
+            # average temperature for the whole system
+            if flag == 3 or flag == 5:
+                avg_temp = 0
+                for ix in range(x_grids):
                     for iy in range(y_grids):
-                        for ix in range(x_grids):
-                            grid_id = iz * (x_grids * y_grids) + iy * x_grids + ix
-                            x_center = min_x + ix * step_x + step_x / 2
-                            y_center = min_y + iy * step_y + step_y / 2
-                            z_center = min_z + iz * step_z + step_z / 2
-                            Ta = grids_val[ix][iy][iz]
-                            new_line = f"{grid_id} {ix} {iy} {iz} {x_center} {y_center} {z_center} {Ta:.6f}\n"
-                            fout.write(new_line)
+                        for iz in range(z_grids):
+                            avg_temp += grids_val[ix][iy][iz] / (x_grids * y_grids * z_grids)
+                        with open(avg_Ta_file, 'a') as favg:
+                            favg.write(f"{block_idx} {avg_temp}\n")
+            
+            # write to newe dump file
+            if flag == 1 or flag == 5: 
+                with open(new_dump_file, 'a') as fout:
+                    fout.write(header[0])  # ITEM: TIMESTEP
+                    fout.write(f"{block_idx}\n")
+                    fout.write(header[2])  # ITEM: NUMBER OF ATOMS
+                    fout.write(f"{x_grids * y_grids * z_grids}\n")
+                    fout.write(header[4])  # ITEM: BOX BOUNDS pp pp pp
+                    fout.write(f"{min_x} {max_x+step_x}\n")
+                    fout.write(f"{min_y} {max_y+step_y}\n")
+                    fout.write(f"{min_z} {max_z+step_z}\n")
+                    new_line = 'ITEM: ATOMS grid_id idx idy idz x y z Ta\n'
+                    fout.write(new_line)
+                    for iz in range(z_grids):
+                        for iy in range(y_grids):
+                            for ix in range(x_grids):
+                                grid_id = iz * (x_grids * y_grids) + iy * x_grids + ix
+                                x_center = min_x + ix * step_x + step_x / 2
+                                y_center = min_y + iy * step_y + step_y / 2
+                                z_center = min_z + iz * step_z + step_z / 2
+                                Ta = grids_val[ix][iy][iz]
+                                new_line = f"{grid_id} {ix} {iy} {iz} {x_center} {y_center} {z_center} {Ta:.6f}\n"
+                                fout.write(new_line)
 
 
                 # for ix in range(x_grids):
@@ -439,31 +450,37 @@ class LammpsCascadePlotter:
         # plot te along x axis 
 
     def plot_te_ta_along_x(self, 
-                        tout_file: str, 
-                        dump_file: str,
-                        frame_idx: int,
-                        grid_list: list[int],
-                        figfile: str):
-        elec_pipeline = import_file(tout_file)
-        elec_data = elec_pipeline.compute(frame_idx)
-        elec_grids = elec_data.particles
-        atmo_pipeline = import_file(dump_file)
-        atmo_data = atmo_pipeline.compute(frame_idx)
-        atmo_grids = atmo_data.particles
-        te_list = []
-        ta_list = []
-        x_list = []
-        for grid_id in grid_list:
-            te_list.append(elec_grids['te'][grid_id])
-            x_list.append(elec_grids.positions[grid_id][0])
-            ta_list.append(atmo_grids['ta'][grid_id])
+                           tout_file: str, 
+                           dump_file: str,
+                           frame_idx_list: list[int],
+                           grid_list: list[int],
+                           figfile: str):
+        # list of colors for different frames, the same length as frame_idx_list
+        length = len(frame_idx_list)
+        colors = plt.cm.viridis(np.linspace(0, 1, length))  
         fig, ax = plt.subplots(figsize=(8, 6))
-        ax.plot(x_list, te_list, marker='o', label='T_e')
-        ax.plot(x_list, ta_list, marker='s', label='T_a')
+        for i, frame_idx in enumerate(frame_idx_list):
+            elec_pipeline = import_file(tout_file)
+            elec_data = elec_pipeline.compute(frame_idx)
+            elec_grids = elec_data.particles
+            atmo_pipeline = import_file(dump_file)
+            atmo_data = atmo_pipeline.compute(frame_idx)
+            atmo_grids = atmo_data.particles
+            te_list = []
+            ta_list = []
+            x_list = []
+            for grid_id in grid_list:
+                te_list.append(elec_grids['te'][grid_id])
+                x_list.append(elec_grids.positions[grid_id][0])
+                ta_list.append(atmo_grids['ta'][grid_id])
+        
+            ax.plot(x_list, te_list, color=colors[i], label=f'T_e-{frame_idx}')
+            ax.plot(x_list, ta_list, linestyle='--', color=colors[i], label=f'T_a-{frame_idx}')
+
         ax.legend()
         ax.set_xlabel('X Position (Angstrom)')
         ax.set_ylabel('Temperature (K)')
-        ax.set_title(f'Temperature along X for grids: {grid_list} at frame {frame_idx}')
+        ax.set_title(f'Temperature along X for grids: {grid_list}')
         ax.grid(True)
         plt.tight_layout()
         fig.savefig(figfile, dpi=300)

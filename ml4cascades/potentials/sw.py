@@ -130,12 +130,12 @@ if __name__ == "__main__":
             "supercell_size": supercell_size,
             "equ_md_steps": 10000,
             "temp": 300,
-            "xlow": 0,
-            "xhigh": xhi,
-            "ylow": 0,
-            "yhigh": yhi,
-            "zlow": 0,
-            "zhigh": zhi,
+            "xlow": -xhi/2+bi.alat[0]*supercell_size[0]/2,
+            "xhigh": xhi/2+bi.alat[0]*supercell_size[0]/2,
+            "ylow": -yhi/2+bi.alat[1]*supercell_size[1]/2,
+            "yhigh": yhi/2+bi.alat[1]*supercell_size[1]/2,
+            "zlow": -zhi/2+bi.alat[2]*supercell_size[2]/2,
+            "zhigh": zhi/2+bi.alat[2]*supercell_size[2]/2,
             "gsx": int(xhi // 21),
             "gsy": int(yhi // 21),
             "gsz": int(zhi // 21),
@@ -158,12 +158,12 @@ if __name__ == "__main__":
             "border_thickness": 5.76/2,
             "cascade_steps": 40000,
             "temp": 300,
-            "xlow": 0,
-            "xhigh": xhi,
-            "ylow": 0,
-            "yhigh": yhi,
-            "zlow": 0,
-            "zhigh": zhi,
+            "xlow": -xhi/2+bi.alat[0]*supercell_size[0]/2,
+            "xhigh": xhi/2+bi.alat[0]*supercell_size[0]/2,
+            "ylow": -yhi/2+bi.alat[1]*supercell_size[1]/2,
+            "yhigh": yhi/2+bi.alat[1]*supercell_size[1]/2,
+            "zlow": -zhi/2+bi.alat[2]*supercell_size[2]/2,
+            "zhigh": zhi/2+bi.alat[2]*supercell_size[2]/2,
             "gsx": int(xhi // 25),
             "gsy": int(yhi // 25),
             "gsz": int(zhi // 25),
@@ -235,7 +235,7 @@ if __name__ == "__main__":
         #                        flag=flag)
         # plotter.get_hottest_Ta_Te(new_tout_file, 10)
         grid_list = [282, 283, 284, 285]
-        plotter.plot_te_ta_along_x(new_tout_file, new_dump_file, 40, grid_list, os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', '1-center', 'Te_along_x_40.png'))
+        plotter.plot_te_ta_along_x(new_tout_file, new_dump_file, [40, 80, 90], grid_list, os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', '1-center', 'Te_along_x_40.png'))
     '''
     ######################################### 7. Cascade output processing ####################################
     '''

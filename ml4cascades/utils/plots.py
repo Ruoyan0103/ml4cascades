@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import os, re
+import os, re, math
 from ovito.io import import_file
 from ovito.pipeline import StaticSource, Pipeline
 
@@ -120,7 +120,8 @@ class LammpsCascadePlotter:
 
     def plot_eph_results(self, datafile1: str, datafile2: str, figfile: str):
         step, Time, Ta, friction1, Te, Tbr, Tin = np.loadtxt(datafile1, skiprows=1, unpack=True)
-        step, _, _, Epot, Ekin, Etotal = np.loadtxt(datafile2, skiprows=1, unpack=True)
+        data = np.loadtxt(datafile2, skiprows=1)
+        step, Epot, Ekin, Etotal = data[:,0], data[:,3], data[:,4], data[:,5]
         fig, axes = plt.subplots(3, 1, figsize=(8, 10))
         axes[0].plot(Time, friction1, color='red')
         axes[0].set_ylabel('E_transfer (eV)', fontsize=15)
@@ -196,6 +197,7 @@ class LammpsCascadePlotter:
         # ----------------------------- Process T_out files -------------------------
         tout_files = [os.path.join(T_out_folder, f) for f in os.listdir(T_out_folder)]
         tout_files.sort(key=lambda f: int(os.path.basename(f).split('_')[-1]))
+        epsilon = 1e-9
 
         # grids from electronic system
         data = np.loadtxt(tout_files[0], skiprows=1)
@@ -219,9 +221,9 @@ class LammpsCascadePlotter:
         y_length = max_y - min_y + step_y
         z_length = max_z - min_z + step_z
 
-        x_grids = int(x_length/step_x)
-        y_grids = int(y_length/step_y)
-        z_grids = int(z_length/step_z)
+        x_grids = math.floor(x_length/step_x + epsilon)
+        y_grids = math.floor(y_length/step_y + epsilon)
+        z_grids = math.floor(z_length/step_z + epsilon)
 
         with open(new_tout_file, 'w') as fout:
             for timestep, tout_file in enumerate(tout_files):
@@ -253,17 +255,18 @@ class LammpsCascadePlotter:
         atomic_xlo, atomic_xhi = header[5].split()
         atomic_ylo, atomic_yhi = header[6].split()
         atomic_zlo, atomic_zhi = header[7].split()
-        atomic_x_grids = int((float(atomic_xhi)-float(atomic_xlo))/step_x)
-        atomic_y_grids = int((float(atomic_yhi)-float(atomic_ylo))/step_y)
-        atomic_z_grids = int((float(atomic_zhi)-float(atomic_zlo))/step_z)
+
+        atomic_x_grids = math.floor((float(atomic_xhi) - float(atomic_xlo)) / step_x + epsilon)
+        atomic_y_grids = math.floor((float(atomic_yhi) - float(atomic_ylo)) / step_y + epsilon)
+        atomic_z_grids = math.floor((float(atomic_zhi) - float(atomic_zlo)) / step_z + epsilon)
 
         shift_x = float(atomic_xlo) - min_x 
         shift_y = float(atomic_ylo) - min_y
         shift_z = float(atomic_zlo) - min_z
 
-        shift_grid_x = int(shift_x / step_x)
-        shift_grid_y = int(shift_y / step_y)
-        shift_grid_z = int(shift_z / step_z)
+        shift_grid_x = math.floor(shift_x / step_x + epsilon)
+        shift_grid_y = math.floor(shift_y / step_y + epsilon)
+        shift_grid_z = math.floor(shift_z / step_z + epsilon)
 
         block_length = num_atoms + 9  
         num_blocks = len(dump_lines) // block_length
@@ -282,9 +285,9 @@ class LammpsCascadePlotter:
                 z = float(data[4])
                 ek = float(data[9])
 
-                ix = min(int((x - min_x) / step_x), shift_grid_x + atomic_x_grids - 1)
-                iy = min(int((y - min_y) / step_y), shift_grid_y + atomic_y_grids - 1)
-                iz = min(int((z - min_z) / step_z), shift_grid_z + atomic_z_grids - 1)
+                ix = min(math.floor((x - min_x) / step_x + epsilon), shift_grid_x + atomic_x_grids - 1)
+                iy = min(math.floor((y - min_y) / step_y + epsilon), shift_grid_y + atomic_y_grids - 1)
+                iz = min(math.floor((z - min_z) / step_z + epsilon), shift_grid_z + atomic_z_grids - 1)
                 ix = max(ix, shift_grid_x)
                 iy = max(iy, shift_grid_y)
                 iz = max(iz, shift_grid_z)
@@ -297,6 +300,15 @@ class LammpsCascadePlotter:
                     for iz in range(z_grids):
                         factor = 2.0 / (3.0 * 8.617333262145e-5)
                         grids_val[ix][iy][iz] *= factor/max(grids_cnt[ix][iy][iz], 1)
+
+            # with open(cnt_atom_file, 'a') as fout:
+            #     fout.write(f"block: {block_idx} \n")
+            #     fout.write("grid_id atom_count\n")
+            #     for ix in range(x_grids):
+            #         for iy in range(y_grids):
+            #             for iz in range(z_grids):
+            #                 grid_id = iz * (x_grids * y_grids) + iy * x_grids + ix
+            #                 fout.write(f"{grid_id} {grids_cnt[ix][iy][iz]} \n")
 
             # average temperature for the whole system
             if flag == 3 or flag == 5:
@@ -453,12 +465,19 @@ class LammpsCascadePlotter:
                            tout_file: str, 
                            dump_file: str,
                            frame_idx_list: list[int],
+                           time_list: list[float],
                            grid_list: list[int],
-                           figfile: str):
+                           electron_grid_list: list[int],
+                           figfile: str,
+                           tout_file2: str=None,
+                           dump_file2: str=None,
+                           name_case2: str=None):
         # list of colors for different frames, the same length as frame_idx_list
         length = len(frame_idx_list)
-        colors = plt.cm.viridis(np.linspace(0, 1, length))  
-        fig, ax = plt.subplots(figsize=(8, 6))
+        colors = plt.cm.viridis(np.linspace(0, 1, length+1))  
+        min_limit = 10000
+        max_limit = 0
+        fig, ax = plt.subplots(1, 2, figsize=(10, 6), sharey=True)
         for i, frame_idx in enumerate(frame_idx_list):
             elec_pipeline = import_file(tout_file)
             elec_data = elec_pipeline.compute(frame_idx)
@@ -466,22 +485,89 @@ class LammpsCascadePlotter:
             atmo_pipeline = import_file(dump_file)
             atmo_data = atmo_pipeline.compute(frame_idx)
             atmo_grids = atmo_data.particles
+
             te_list = []
             ta_list = []
             x_list = []
+            electron_x_list = []
             for grid_id in grid_list:
-                te_list.append(elec_grids['te'][grid_id])
                 x_list.append(elec_grids.positions[grid_id][0])
                 ta_list.append(atmo_grids['ta'][grid_id])
-        
-            ax.plot(x_list, te_list, color=colors[i], label=f'T_e-{frame_idx}')
-            ax.plot(x_list, ta_list, linestyle='--', color=colors[i], label=f'T_a-{frame_idx}')
+            for grid_id in electron_grid_list:
+                te_list.append(elec_grids['te'][grid_id])
+                electron_x_list.append(elec_grids.positions[grid_id][0])
 
-        ax.legend()
-        ax.set_xlabel('X Position (Angstrom)')
-        ax.set_ylabel('Temperature (K)')
-        ax.set_title(f'Temperature along X for grids: {grid_list}')
-        ax.grid(True)
+            if tout_file2 is not None and dump_file2 is not None:
+                elec_pipeline2 = import_file(tout_file2)
+                elec_data2 = elec_pipeline2.compute(frame_idx)
+                elec_grids2 = elec_data2.particles
+                atmo_pipeline2 = import_file(dump_file2)
+                atmo_data2 = atmo_pipeline2.compute(frame_idx)
+                atmo_grids2 = atmo_data2.particles
+
+                te_list2 = []
+                ta_list2 = []
+                x_list2 = []
+                electron_x_list2 = []
+                for grid_id in grid_list:
+                    x_list2.append(atmo_grids2.positions[grid_id][0])
+                    ta_list2.append(atmo_grids2['ta'][grid_id])
+                for grid_id in electron_grid_list:  
+                    te_list2.append(elec_grids2['te'][grid_id])
+                    electron_x_list2.append(elec_grids2.positions[grid_id][0])
+            
+
+            ax[0].plot(electron_x_list, te_list, color=colors[i], marker='D', markersize=4, label=f'{time_list[i]} ps')
+            ax[1].plot(x_list, ta_list, linestyle='--', color=colors[i], marker='D', markersize=4, label=f'{time_list[i]} ps')
+            if tout_file2 is not None and dump_file2 is not None:
+                ax[0].plot(
+                    electron_x_list2, te_list2,
+                    linestyle='None',
+                    marker='o',
+                    markersize=4,
+                    markerfacecolor='none',
+                    color=colors[i],
+                    # label=f'{time_list[i]} ps ({name_case2})'
+                )
+                ax[1].plot(
+                    x_list2, ta_list2,
+                    linestyle='None',
+                    marker='o',
+                    markerfacecolor='none',
+                    markersize=4,
+                    color=colors[i],
+                    # label=f'{time_list[i]} ps ({name_case2})'
+                )
+
+            min_limit = min(min(te_list), min(ta_list), min_limit) 
+            max_limit = max(max(te_list), max(ta_list), max_limit) 
+        
+        ax[0].set_ylim(min_limit, max_limit)
+        ax[1].set_ylim(min_limit, max_limit)
+        ax[1].set_ylabel('')
+
+        # set a horizontal line at y=300K
+        ax[0].axhline(y=300, color='red', label='300 K')
+        ax[1].axhline(y=300, color='red', label='300 K')
+    
+        ax[0].legend()
+        # ax[1].legend()
+        ax[0].set_xlabel('X Position (Angstrom)')
+        ax[1].set_xlabel('X Position (Angstrom)')
+        ax[0].set_ylabel('Temperature (K)')
+
+        ax[0].set_title(f'Electronic system ')
+        ax[1].set_title(f'Atomic system ')
+
+        ax[0].grid(True)
+        ax[1].grid(True)
+
+        # set y axis to log scale
+        # ax[0].set_yscale('log')
+        # ax[1].set_yscale('log')
+  
+
+        fig.subplots_adjust(hspace=0)
         plt.tight_layout()
         fig.savefig(figfile, dpi=300)
             

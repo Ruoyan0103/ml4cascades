@@ -1,7 +1,7 @@
 import os, shutil, subprocess, copy
 import numpy as np  
 from .calcs_base import LMPSCalculator
-from ml4cascades.utils import BasicCellInfo
+from ml4cascades.utils import BasicCellInfo, ParameterGetter
 from ml4cascades.potentials import IPotential
 from ase.build import bulk
 from ase.io import write, read
@@ -11,6 +11,8 @@ JOULE_TO_EV = 6.241509074E18  # Joule to eV conversion factor
 ANGSTROM_TO_METER = 1E-10     # Angstroms/picosecond to meters/second conversion factor
 FS_TO_S = 1E-15               # Picoseconds to seconds conversion factor
 PS_TO_S = 1E-12               # Picoseconds to seconds conversion factor
+kB = 8.617333262145e-5        # Boltzmann constant, eV/K
+
 module_dir = os.path.dirname(__file__)
 
 class CascadeCalculator(LMPSCalculator): 
@@ -114,7 +116,8 @@ class CascadeCalculator(LMPSCalculator):
         eph_C_e = input_config["eph_C_e"]
         eph_kappa_e = input_config["eph_kappa_e"]
         border_thickness = input_config["border_thickness"]
-        tinfile = input_config.get("tinfile", None)
+        tinfile = input_config.get("tinfile", None)                              
+        temperature_dependent = input_config.get("temperature_dependent", False) 
         PKA_id_list = []
         if running_dir is not None:
             PKA_kin_eng_dir = running_dir
@@ -164,12 +167,24 @@ class CascadeCalculator(LMPSCalculator):
                     f.write(f'{xlow} {xhigh} \n')
                     f.write(f'{ylow} {yhigh} \n')
                     f.write(f'{zlow} {zhigh} \n')
-                    f.write('NULL\n') # non temperature-dependent
-                    for iz in range(gsz):
-                        for iy in range(gsy):
-                            for ix in range(gsx):
-                                f.write(f'{ix} {iy} {iz} {temp} 0 1 {eph_C_e} {eph_kappa_e} 1 0\n')
+                    if not temperature_dependent:
+                        f.write('NULL\n') # non temperature-dependent
+                        for iz in range(gsz):
+                            for iy in range(gsy):
+                                for ix in range(gsx):
+                                    f.write(f'{ix} {iy} {iz} {temp} 0 1 {eph_C_e} {eph_kappa_e} 1 0\n')
+                    else:
+                        f.write('Parameters.data\n')
+                        for iz in range(gsz):
+                            for iy in range(gsy):
+                                for ix in range(gsx):
+                                    f.write(f'{ix} {iy} {iz} {temp} 0 1 {eph_C_e} {eph_kappa_e} 1 1\n')
+                        param_file = os.path.join(cascade_dir, 'Parameters.data')
+                        param_getter = ParameterGetter()
+                        param_getter.write_data1(outputfile=param_file)
                 tinfile = 'T.in'
+            T_out_folder = os.path.join(cascade_dir, 'T_out')
+            os.makedirs(T_out_folder, exist_ok=True)
             with open(input_file, 'w') as f:
                 f.write(input_template.format(atomsfile=atomsfile, ff_settings=self.potential.ff_settings, border_thickness=border_thickness, 
                                               pka_id=PKA_id, v_x=velocity[0], v_y=velocity[1], v_z=velocity[2],

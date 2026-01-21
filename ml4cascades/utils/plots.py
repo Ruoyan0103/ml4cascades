@@ -4,6 +4,7 @@ import os, re, math
 from ovito.io import import_file
 from ovito.pipeline import StaticSource, Pipeline
 
+kB = 8.617333262145e-5      # Boltzmann constant, eV/K
 class TurbogapCascadePlotter:
     def __init__(self):
         pass
@@ -119,7 +120,8 @@ class LammpsCascadePlotter:
         pass
 
     def plot_eph_results(self, datafile1: str, datafile2: str, figfile: str):
-        step, Time, Ta, friction1, Te, Tbr, Tin = np.loadtxt(datafile1, skiprows=1, unpack=True)
+        data = np.loadtxt(datafile1, skiprows=1)
+        step, Time, Ta, friction1, Te, Tbr, Tin = data[:,0], data[:,1], data[:,2], data[:,3], data[:,4], data[:,5], data[:,6]
         data = np.loadtxt(datafile2, skiprows=1)
         step, Epot, Ekin, Etotal = data[:,0], data[:,3], data[:,4], data[:,5]
         fig, axes = plt.subplots(3, 1, figsize=(8, 10))
@@ -131,7 +133,7 @@ class LammpsCascadePlotter:
         # axes[1].plot(Time, Ta, label='Ta')
         axes[1].plot(Time, Te, label='Te')
         axes[1].plot(Time, Tbr, label='Tborder')
-        axes[1].plot(Time, Ta, label='Tinside')
+        axes[1].plot(Time, Tin, label='Tin')
         axes[1].set_ylabel('Temperature (K)', fontsize=15)
         axes[1].legend(fontsize=15)
         axes[1].grid(True)
@@ -298,7 +300,7 @@ class LammpsCascadePlotter:
             for ix in range(x_grids):
                 for iy in range(y_grids):
                     for iz in range(z_grids):
-                        factor = 2.0 / (3.0 * 8.617333262145e-5)
+                        factor = 2.0 / (3.0 * kB)
                         grids_val[ix][iy][iz] *= factor/max(grids_cnt[ix][iy][iz], 1)
 
             # with open(cnt_atom_file, 'a') as fout:
@@ -447,17 +449,35 @@ class LammpsCascadePlotter:
         #                 fout.write(new_line)
 
     
-    # def get_hottest_Ta_Te(self, 
-    #                       tout_file: str,
-    #                       frame_idx: int):
-        # rank hottest grids based on Te
-        # all_pipeline = import_file(tout_file)
-        # data = all_pipeline.compute(frame_idx)
-        # grids = data.particles
-        # te_list = grids['te']
-        # sorted_grid_ids = np.argsort(-te_list)
-        # for i in range(10):
-        #     print(sorted_grid_ids[i], te_list[sorted_grid_ids[i]], grids.positions[sorted_grid_ids[i]])
+    def get_extreme_Ta_Te(self, 
+                          tout_file: str,
+                          frame_idx_list: list[int],
+                          time_list: list[float],
+                          figfile: str):
+        assert len(frame_idx_list) == len(time_list)
+        hottest = []
+        coldest = []
+        for frame_idx in frame_idx_list:
+            all_pipeline = import_file(tout_file)
+            data = all_pipeline.compute(frame_idx)
+            grids = data.particles
+            te_list = grids['te']
+            decend_T_grid_ids = np.argsort(-te_list)
+            ascend_T_grid_ids = np.argsort(te_list)
+            hottest.append(te_list[decend_T_grid_ids[0]])
+            coldest.append(te_list[ascend_T_grid_ids[0]])
+            # for i in range(1):
+            #     print(sorted_grid_ids[i], te_list[sorted_grid_ids[i]], grids.positions[sorted_grid_ids[i]])
+        figure, ax = plt.subplots(figsize=(8, 6))
+        ax.plot(time_list, hottest, label='Hottest', marker='o')
+        ax.plot(time_list, coldest, label='Coldest', marker='D')
+        ax.axhline(y=300, color='red', linestyle='--', label='300 K')
+        ax.set_xlabel('Time (ps)')
+        ax.set_ylabel('Te (K)')
+        ax.legend()
+        ax.grid(True)
+        plt.tight_layout()
+        figure.savefig(figfile, dpi=300)
 
         # plot te along x axis 
 
@@ -470,8 +490,7 @@ class LammpsCascadePlotter:
                            electron_grid_list: list[int],
                            figfile: str,
                            tout_file2: str=None,
-                           dump_file2: str=None,
-                           name_case2: str=None):
+                           dump_file2: str=None):
         # list of colors for different frames, the same length as frame_idx_list
         length = len(frame_idx_list)
         colors = plt.cm.viridis(np.linspace(0, 1, length+1))  
@@ -527,7 +546,6 @@ class LammpsCascadePlotter:
                     markersize=4,
                     markerfacecolor='none',
                     color=colors[i],
-                    # label=f'{time_list[i]} ps ({name_case2})'
                 )
                 ax[1].plot(
                     x_list2, ta_list2,
@@ -536,10 +554,9 @@ class LammpsCascadePlotter:
                     markerfacecolor='none',
                     markersize=4,
                     color=colors[i],
-                    # label=f'{time_list[i]} ps ({name_case2})'
                 )
 
-            min_limit = min(min(te_list), min(ta_list), min_limit) 
+            min_limit = min(min(te_list), min(ta_list), min_limit, 295) 
             max_limit = max(max(te_list), max(ta_list), max_limit) 
         
         ax[0].set_ylim(min_limit, max_limit)

@@ -29,7 +29,9 @@ region          br_region block $(xlo+v_br) $(xhi-v_br) $(ylo+v_br) $(yhi-v_br) 
 fix             prop all property/atom i_myflag
 set             region in_region i_myflag 10                  # for visual checking region
 set             region br_region i_myflag 20                  # can be deleted if sure the region is correct 
-group           border dynamic all region br_region every 100 # for atoms in this region, monitoring their velocity
+#group           border dynamic all region br_region every 100 # for atoms in this region, monitoring their velocity
+group           border region br_region
+group           inside region in_region
 
 #--------------------------BORDER THERMOSTAT-----------------------
 fix             2 border temp/berendsen {temp} {temp} 0.1
@@ -43,11 +45,16 @@ variable        ekmaxbrdr equal c_ekmax
 variable        epmaxbrdr equal c_epmax
 variable        t equal "time"
 
+compute         brtemp border temp/region br_region
+variable        brtemp_val equal c_brtemp
+compute         intemp inside temp/region in_region
+variable        intemp_val equal c_intemp
+
 #------------------------------USER EPH---------------------------
-fix             friction all eph 12345 7 4 1.0 {eph_C_e} {eph_kappa_e} {temp} {gsx} {gsy} {gsz} {tinfile} 0 T_out {betafile} Ge   # rho_e, c_e, k_e, t_e, nx, ny, nz are read from tinfile 
-fix             out1 all print 1 "$(step) $(time) $(temp) $(f_friction[1]) $(f_friction[2])" file eng.out screen no
-fix             out2 all print 1 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal)" file thermo.out screen no
+fix             friction all eph 12345 7 4 1.0 {eph_C_e} {eph_kappa_e} {temp} {gsx} {gsy} {gsz} {tinfile} 100 T_out/T_out {betafile} Ge   # rho_e, c_e, k_e, t_e, nx, ny, nz are read from tinfile 
+fix             out1 all print 100 "$(step) $(time) $(temp) $(f_friction[1]) $(f_friction[2]) ${{brtemp_val}} ${{intemp_val}}" file eng.out screen no
+fix             out2 all print 100 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal) ${{epmaxbrdr}} ${{ekmaxbrdr}}" file thermo.out screen no
 dump            2 all custom 100 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val 
 
-run             {cascade_steps} every 100  " if '(${{epmaxbrdr}} > -2.5 || ${{ekmaxbrdr}} > 5 || $t >= 35.0)' then 'quit' "
+run             {cascade_steps} every 100  " if '(${{epmaxbrdr}} > -2.5 || ${{ekmaxbrdr}} > 5 || $t >= 30.0)' then 'quit' "
 # run             {cascade_steps} every 100  " if '($t >= 3)' then 'quit' "  # for Ce, Ke testing

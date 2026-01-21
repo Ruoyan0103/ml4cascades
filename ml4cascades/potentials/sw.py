@@ -196,44 +196,54 @@ if __name__ == "__main__":
     ######################################### 6. Cascade data plotting ####################################
     '''
     if choice == '6':
-        print(os.path.join(calc.calculation_dir, 'cascade', 'test', '1', 'eng.out'))
         print("Cascade data plotting...")
         plotter = LammpsCascadePlotter()
-        fig_file1 = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', 'Test-Ce/5e-6/nothermostat', 'eph_results.png')
-        plotter.plot_eph_results(datafile1=os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', 'Test-Ce/5e-6/nothermostat', 'eng.out'), 
-                                 datafile2=os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', 'Test-Ce/5e-6/nothermostat', 'thermo.out'),
+
+        subfolder = 'Test-Ce/5e-8'
+        print("Plotting eph results without thermostat...")
+        fig_file1 = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', f'{subfolder}', 'eph_results.png')
+        plotter.plot_eph_results(datafile1=os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', f'{subfolder}', 'eng.out'), 
+                                 datafile2=os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', f'{subfolder}', 'thermo.out'),
                                  figfile=fig_file1)
         
-        dump_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', 'Test-Ce/5e-6/berendsen', 'data.output')
-        T_out_folder = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', 'Test-Ce/5e-6/berendsen', 'T_out')
-        new_dump_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', 'Test-Ce/5e-6/berendsen', 'data.output.modified') 
-        new_tout_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', 'Test-Ce/5e-6/berendsen', 'T_out.modified') 
-        avg_Ta_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', 'Test-Ce/5e-6/berendsen', 'avg_Ta.out')
-        avg_Te_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', 'Test-Ce/5e-6/berendsen', 'avg_Te.out')  
+        dump_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', f'{subfolder}', 'data.output')
+        T_out_folder = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', f'{subfolder}', 'T_out')
+        new_dump_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', f'{subfolder}', 'data.output.modified') 
+        new_tout_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', f'{subfolder}', 'T_out.modified') 
+        avg_Ta_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', f'{subfolder}', 'avg_Ta.out')
+        avg_Te_file = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', f'{subfolder}', 'avg_Te.out')  
 
         flag = 5 # 1: new_dump_file, 2: new_tout_file, 3: avg_Ta_file, 4: avg_Te_file, 5: all
-        plotter.get_grid_Ta_Te(dump_file=dump_file, 
-                               T_out_folder=T_out_folder, 
-                               new_dump_file=new_dump_file, 
-                               new_tout_file=new_tout_file, 
-                               avg_Ta_file=avg_Ta_file, 
-                               avg_Te_file=avg_Te_file,
-                               flag=flag)
+        # plotter.get_grid_Ta_Te(dump_file=dump_file, 
+        #                        T_out_folder=T_out_folder, 
+        #                        new_dump_file=new_dump_file, 
+        #                        new_tout_file=new_tout_file, 
+        #                        avg_Ta_file=avg_Ta_file, 
+        #                        avg_Te_file=avg_Te_file,
+        #                        flag=flag)
         
-        frame_id_list = [3, 17, 25, 35, 45, 65, 105, 174]
-        time_list = [0.01, 0.1, 0.2, 1, 2, 4, 8, 15]  # in ps
-        fig_file2 = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', 'Test-Ce/5e-6/berendsen', 'extreme_Te.png')
-        plotter.get_extreme_Ta_Te(new_tout_file, frame_id_list, time_list, fig_file2) 
+        print("Plotting extreme Ta and Te...")
+        frame_id_list = [9, 25, 35, 45, 65, 105, 174]
+        time_list = [0.04, 0.2, 1, 2, 4, 8, 15]  # in ps
+        fig_file2 = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', f'{subfolder}', 'extreme_Te_Ta.png')
+        plotter.get_extreme_Te_Ta(new_tout_file, new_dump_file, frame_id_list, time_list, fig_file2) 
         
+        # for grid size 8, electronic system twice size of atomic system
         grid_list = [282, 283, 284, 285]
         electron_grid_list = [280, 281, 282, 283, 284, 285, 286, 287]
+        # for grid size 8, electronic system forth size of atomic system 
         # grid_list = [283, 284]
         # electron_grid_list = [280, 281, 282, 283, 284, 285, 286, 287]
+        # for grid size 16, electronic system forth size as atomic system
         # grid_list = [2166, 2167, 2168, 2169]
         # electron_grid_list = [2163, 2164, 2165, 2166, 2167, 2168, 2169, 2170, 2171, 2172]
-        fig_file3 = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', 'Test-Ce/5e-6/berendsen', 'Te_along_x.png')
+        # for grid size 8, electronic system same size as atomic system
+        # grid_list = [280, 281, 282, 283, 284, 285, 286, 287]
+        # electron_grid_list = [280, 281, 282, 283, 284, 285, 286, 287]
+        print("Plotting Te and Ta along x...")
+        fig_file3 = os.path.join(calc.calculation_dir, 'Test-CascadeProcess', 'Test-thermostat', 'berendsen', f'{subfolder}', 'Te_Ta_along_x.png')
         plotter.plot_te_ta_along_x(new_tout_file, new_dump_file, 
-                                   [26, 66, 106], [0.2, 4, 8], 
+                                   [9, 26, 66, 106], [0.04, 0.2, 4, 8], 
                                    grid_list, electron_grid_list, 
                                    fig_file3)
     '''

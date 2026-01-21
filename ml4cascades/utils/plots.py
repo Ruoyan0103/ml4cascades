@@ -127,20 +127,20 @@ class LammpsCascadePlotter:
         fig, axes = plt.subplots(3, 1, figsize=(8, 10))
         axes[0].plot(Time, friction1, color='red')
         axes[0].set_ylabel('E_transfer (eV)', fontsize=15)
-        axes[0].legend(fontsize=15)
+        # axes[0].legend(fontsize=15)
         axes[0].grid(True)
 
         # axes[1].plot(Time, Ta, label='Ta')
+        axes[1].plot(Time, Tin, label='Ta-inside')
+        axes[1].plot(Time, Tbr, label='Ta-border')
         axes[1].plot(Time, Te, label='Te')
-        axes[1].plot(Time, Tbr, label='Tborder')
-        axes[1].plot(Time, Tin, label='Tin')
         axes[1].set_ylabel('Temperature (K)', fontsize=15)
         axes[1].legend(fontsize=15)
         axes[1].grid(True)
         # add text, 2 decimal
-        # axes[1].text(0.05, 0.9, f"Average Ta: {np.mean(Ta[int(0.9*len(Ta)):]):.2f} K", transform=axes[1].transAxes, fontsize=15, bbox=dict(facecolor='white', alpha=0.5))  
-        # axes[1].text(0.05, 0.8, f"Average Te: {np.mean(Te[int(0.9*len(Te)):]):.2f} K", transform=axes[1].transAxes, fontsize=15, bbox=dict(facecolor='white', alpha=0.5))
-        # axes[1].text(0.05, 0.7, f"Average Tbr: {np.mean(Tbr[int(0.9*len(Tbr)):]):.2f} K", transform=axes[1].transAxes, fontsize=15, bbox=dict(facecolor='white', alpha=0.5))
+        axes[1].text(0.05, 0.9, f"Average Ta-inside: {np.mean(Tin[int(0.9*len(Tin)):]):.2f} K", transform=axes[1].transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))  
+        axes[1].text(0.05, 0.8, f"Average Ta-border: {np.mean(Tbr[int(0.9*len(Te)):]):.2f} K", transform=axes[1].transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))
+        axes[1].text(0.05, 0.7, f"Average Te: {np.mean(Te[int(0.9*len(Te)):]):.2f} K", transform=axes[1].transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))
         
         pot_shift = -np.min(Epot) + np.min(Ekin)
         axes[2].plot(Time, Ekin, label='Ekin')
@@ -166,8 +166,8 @@ class LammpsCascadePlotter:
         plt.tight_layout()
         fig.savefig(figfile, dpi=300)
         # average Ta and Te over last 10% of time
-        print(f"Average Ta: {np.mean(Ta[int(0.9*len(Ta)):])} K")
-        print(f"Average Te: {np.mean(Te[int(0.9*len(Te)):])} K")    
+        # print(f"Average Ta: {np.mean(Ta[int(0.9*len(Ta)):])} K")
+        # print(f"Average Te: {np.mean(Te[int(0.9*len(Te)):])} K")    
 
     def get_grid_Ta_Te(self, 
                        dump_file: str,  
@@ -273,7 +273,7 @@ class LammpsCascadePlotter:
         block_length = num_atoms + 9  
         num_blocks = len(dump_lines) // block_length
         for block_idx in range(1, num_blocks):
-            grids_val = [[[0 for _ in range(z_grids)] for _ in range(y_grids)] for _ in range(x_grids)]
+            grids_val = [[[-epsilon for _ in range(z_grids)] for _ in range(y_grids)] for _ in range(x_grids)]  # grid out of atomic region will have -epsilon value
             grids_cnt = [[[0 for _ in range(z_grids)] for _ in range(y_grids)] for _ in range(x_grids)]
             start_line = block_idx * block_length
             end_line = start_line + block_length
@@ -449,23 +449,84 @@ class LammpsCascadePlotter:
         #                 fout.write(new_line)
 
     
-    def get_extreme_Ta_Te(self, 
-                          tout_file: str,
-                          frame_idx_list: list[int],
-                          time_list: list[float],
-                          figfile: str):
+    def get_extreme_Te_Ta(self, 
+                         tout_file: str,
+                         dump_file: str,
+                         frame_idx_list: list[int],
+                         time_list: list[float],
+                         figfile: str):
         assert len(frame_idx_list) == len(time_list)
-        hottest = []
-        coldest = []
+        hottest_Te = []
+        coldest_Te = []
+        hottest_Ta = []
+        coldest_Ta = []
         for frame_idx in frame_idx_list:
             all_pipeline = import_file(tout_file)
             data = all_pipeline.compute(frame_idx)
             grids = data.particles
             te_list = grids['te']
-            decend_T_grid_ids = np.argsort(-te_list)
-            ascend_T_grid_ids = np.argsort(te_list)
-            hottest.append(te_list[decend_T_grid_ids[0]])
-            coldest.append(te_list[ascend_T_grid_ids[0]])
+
+            all_pipeline = import_file(dump_file)
+            data = all_pipeline.compute(frame_idx)
+            grids = data.particles
+            ta_list = grids['ta']
+
+            descend_Te_grid_ids = np.argsort(-te_list)
+            hottest_Te.append(te_list[descend_Te_grid_ids[0]])
+            coldest_Te.append(te_list[descend_Te_grid_ids[-1]])
+            # print(descend_Te_grid_ids[-1], te_list[descend_Te_grid_ids[-1]], grids.positions[descend_Te_grid_ids[-1]])
+            # descend_Ta_grid_ids = np.argsort(-ta_list)
+            # hottest_Ta.append(ta_list[descend_Ta_grid_ids[0]])
+            # coldest_Ta.append(ta_list[descend_Ta_grid_ids[-1]])
+
+            ta_array = np.array(ta_list)
+            positive_ids = np.where(ta_array > 0)[0]
+            positive_values = ta_array[positive_ids]
+            descend_ids = positive_ids[np.argsort(-positive_values)]
+            hottest_Ta.append(ta_array[descend_ids[0]])
+            coldest_Ta.append(ta_array[descend_ids[-1]])
+
+        # print("hottest_Te:", hottest_Te)
+        # print("coldest_Te:", coldest_Te)
+        figure, axes = plt.subplots(1, 2, figsize=(10, 6), sharey=True)
+        axes[0].plot(time_list, hottest_Te, label='Hottest', marker='o', color='orange')
+        axes[0].plot(time_list, coldest_Te, label='Coldest', marker='D', color='blue')
+        axes[0].set_ylabel('Temperature (K)')
+        axes[0].set_title('Electronic Temperature (Te)')
+
+        axes[1].plot(time_list, hottest_Ta, label='Hottest', marker='o', color='orange')
+        axes[1].plot(time_list, coldest_Ta, label='Coldest', marker='D', color='blue')
+        axes[1].set_title('Atomic Temperature (Ta)')
+
+        for i in [0, 1]:
+            axes[i].set_xticks(time_list[1:])
+            axes[i].set_xticklabels(time_list[1:], fontsize=10)
+            axes[i].set_yscale('log')
+            axes[i].axhline(y=300, color='red', linestyle='--', label='300 K')
+            axes[i].set_xlabel('Time (ps)')
+            axes[i].legend()
+            axes[i].grid(True)
+
+        plt.tight_layout()
+        figure.savefig(figfile, dpi=300)
+
+    def get_extreme_Ta(self, 
+                       dump_file: str,
+                       frame_idx_list: list[int],
+                       time_list: list[float],
+                       figfile: str):
+        assert len(frame_idx_list) == len(time_list)
+        hottest = [] 
+        coldest = []
+        for frame_idx in frame_idx_list:
+            all_pipeline = import_file(dump_file)
+            data = all_pipeline.compute(frame_idx)
+            grids = data.particles
+            ta_list = grids['ta']
+            decend_T_grid_ids = np.argsort(-ta_list)
+            ascend_T_grid_ids = np.argsort(ta_list)
+            hottest.append(ta_list[decend_T_grid_ids[0]])
+            coldest.append(ta_list[ascend_T_grid_ids[0]])
             # for i in range(1):
             #     print(sorted_grid_ids[i], te_list[sorted_grid_ids[i]], grids.positions[sorted_grid_ids[i]])
         figure, ax = plt.subplots(figsize=(8, 6))
@@ -473,13 +534,11 @@ class LammpsCascadePlotter:
         ax.plot(time_list, coldest, label='Coldest', marker='D')
         ax.axhline(y=300, color='red', linestyle='--', label='300 K')
         ax.set_xlabel('Time (ps)')
-        ax.set_ylabel('Te (K)')
+        ax.set_ylabel('Ta (K)')
         ax.legend()
         ax.grid(True)
         plt.tight_layout()
         figure.savefig(figfile, dpi=300)
-
-        # plot te along x axis 
 
     def plot_te_ta_along_x(self, 
                            tout_file: str, 
@@ -580,8 +639,8 @@ class LammpsCascadePlotter:
         ax[1].grid(True)
 
         # set y axis to log scale
-        # ax[0].set_yscale('log')
-        # ax[1].set_yscale('log')
+        ax[0].set_yscale('log')
+        ax[1].set_yscale('log')
   
 
         fig.subplots_adjust(hspace=0)

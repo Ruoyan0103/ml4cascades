@@ -1,6 +1,6 @@
 # LAMMPS input for simulating collision cascade
 # Parameters: atomsfile, ff_settings, mass, pka_id, v_x, v_y, v_z,
-# eph_C_e, eph_kappa_e, temp, gsx, gsy, gsz, tinfile, betafile, cascade_steps 
+# stopping_eng, stoppingfile, cascade_steps, temp
 
 #-------------------------INITIALIZATION--------------------------
 units           metal
@@ -34,7 +34,7 @@ group           border region br_region
 group           inside region in_region
 
 #--------------------------BORDER THERMOSTAT-----------------------
-fix             2 border temp/berendsen {temp} {temp} 0.1
+# fix             2 border temp/berendsen {temp} {temp} 0.1
 
 compute         ep all pe/atom
 compute         ek all ke/atom
@@ -50,11 +50,12 @@ variable        brtemp_val equal c_brtemp
 compute         intemp inside temp/region in_region
 variable        intemp_val equal c_intemp
 
-#------------------------------USER EPH---------------------------
-fix             friction all eph 12345 7 4 1.0 {eph_C_e} {eph_kappa_e} {temp} {gsx} {gsy} {gsz} {tinfile} 100 T_out/T_out {betafile} Ge   # rho_e, c_e, k_e, t_e, nx, ny, nz are read from tinfile 
-fix             out1 all print 100 "$(step) $(time) $(temp) $(f_friction[1]) $(f_friction[2]) ${{brtemp_val}} ${{intemp_val}}" file eng.out screen no
-fix             out2 all print 100 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal) ${{epmaxbrdr}} ${{ekmaxbrdr}}" file thermo.out screen no
+compute         ekmax_all all reduce max c_ek
+variable        ekmaxall equal c_ekmax_all
+
+#------------------------------ STOPPING ---------------------------
+fix             stopping all electron/stopping {cutoff_eng} {stoppingfile}
+fix             out1 all print 100 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal) ${{ekmaxall}} ${{epmaxbrdr}} ${{ekmaxbrdr}}" file thermo.out screen no
 dump            2 all custom 100 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val 
 
-run             {cascade_steps} every 100  " if '(${{epmaxbrdr}} > -2.5 || ${{ekmaxbrdr}} > 5 || $t >= 30.0)' then 'quit' "
-# run             {cascade_steps} every 100  " if '($t >= 3)' then 'quit' "  # for Ce, Ke testing
+run             {cascade_steps} every 100  " if '(${{ekmaxbrdr}} > 5 || $t >= 70.0)' then 'quit' "

@@ -9,6 +9,8 @@ class LMPSCalculator(ABC):
         self.template_dir = os.path.join(module_dir, 'templates', task_name)
         self.result_dir = os.path.join(module_dir, 'results', task_name)
         self.log_dir = os.path.join(module_dir, 'logs', task_name)
+        self.model_name = model_name
+        self.task_name = task_name
 
         self.calculation_dir = os.path.join(self.result_dir, model_name)
         self.log_file = os.path.join(self.log_dir, f'{model_name}.log')

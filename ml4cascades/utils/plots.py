@@ -1,8 +1,10 @@
+from cProfile import label
 import numpy as np
 import matplotlib.pyplot as plt
 import os, re, math
 from ovito.io import import_file
 from ovito.pipeline import StaticSource, Pipeline
+from sympy import E
 
 kB = 8.617333262145e-5      # Boltzmann constant, eV/K
 class TurbogapCascadePlotter:
@@ -121,32 +123,54 @@ class LammpsCascadePlotter:
 
     def plot_eph_results(self, datafile1: str, datafile2: str, figfile: str):
         data = np.loadtxt(datafile1, skiprows=1)
-        step, Time, Ta, friction1, Te, Tbr, Tin = data[:,0], data[:,1], data[:,2], data[:,3], data[:,4], data[:,5], data[:,6]
+        # step, Time, Ta, Te = data[:,0], data[:,1], data[:,2], data[:,3]
+        # Ee, E_random, E_friction = data[:,4], data[:,5], data[:,6]
+        # dT_e, ddT_e, S_e = data[:,7], data[:,8], data[:,9]
+        step, Time, Ta, transferred_eng, Te = data[:,0], data[:,1], data[:,2], data[:,3], data[:,4]
+        # Tborder, Tinside = data[:,5], data[:,6]
+        # T_br, T_in = data[:,10], data[:,11]
         data = np.loadtxt(datafile2, skiprows=1)
         step, Epot, Ekin, Etotal = data[:,0], data[:,3], data[:,4], data[:,5]
+
         fig, axes = plt.subplots(3, 1, figsize=(8, 10))
-        axes[0].plot(Time, friction1, color='red')
+        axes[0].plot(Time, transferred_eng, color='red', label='E_transfer')
+        # axes[0].plot(Time, E_friction+E_random, color='blue', label='E_transfer2')
         axes[0].set_ylabel('E_transfer (eV)', fontsize=15)
-        # axes[0].legend(fontsize=15)
+        axes[0].legend(fontsize=15)
         axes[0].grid(True)
 
-        # axes[1].plot(Time, Ta, label='Ta')
-        axes[1].plot(Time, Tin, label='Ta-inside')
-        axes[1].plot(Time, Tbr, label='Ta-border')
+        #axes[1].plot(Time, T_in, label='Ta-inside')
+        #axes[1].plot(Time, T_br, label='Ta-border')
+        axes[1].plot(Time, Ta, label='Ta')
         axes[1].plot(Time, Te, label='Te')
+        #axes[1].plot(Time[1:], Te_after[1:], label='Te_after')
+        #axes[1].plot(Time[1:], Te_before[1:], label='Te_before')
         axes[1].set_ylabel('Temperature (K)', fontsize=15)
         axes[1].legend(fontsize=15)
         axes[1].grid(True)
         # add text, 2 decimal
-        axes[1].text(0.05, 0.9, f"Average Ta-inside: {np.mean(Tin[int(0.9*len(Tin)):]):.2f} K", transform=axes[1].transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))  
-        axes[1].text(0.05, 0.8, f"Average Ta-border: {np.mean(Tbr[int(0.9*len(Te)):]):.2f} K", transform=axes[1].transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))
-        axes[1].text(0.05, 0.7, f"Average Te: {np.mean(Te[int(0.9*len(Te)):]):.2f} K", transform=axes[1].transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))
+        #axes[1].text(0.05, 0.9, f"Average Ta-inside: {np.mean(T_in[int(0.9*len(T_in)):]):.2f} K", transform=axes[1].transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))  
+        #axes[1].text(0.05, 0.8, f"Average Ta-border: {np.mean(T_br[int(0.9*len(T_br)):]):.2f} K", transform=axes[1].transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))
+        axes[1].text(0.05, 0.9, f"Average Ta: {np.mean(Ta[int(0.9*len(Ta)):]):.2f} K", transform=axes[1].transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))
+        axes[1].text(0.05, 0.8, f"Average Te: {np.mean(Te[int(0.9*len(Te)):]):.2f} K", transform=axes[1].transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))
         
-        pot_shift = -np.min(Epot) + np.min(Ekin)
-        axes[2].plot(Time, Ekin, label='Ekin')
-        axes[2].plot(Time, Epot+pot_shift, label='Epot')
-        axes[2].plot(Time, Etotal+pot_shift, label='Etotal')
+        #pot_shift = -np.min(Epot) + np.min(Ekin)
+        #axes[2].plot(Time, Ekin, label='Ekin')
+        #axes[2].plot(Time, Epot+pot_shift, label='Epot')
+        axes[2].plot(Time, Etotal, label='Etotal(Atomic)')
+        axes[2].plot(Time, Etotal+transferred_eng, label='Etotal(Electronic+Atomic)')
+        axes[2].text(0.05, 0.9, f"Energy loss: {abs(min(Etotal+transferred_eng)-max(Etotal+transferred_eng)):.2f} eV", transform=axes[2].transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))  
+        # record these two columns into a text file  
+        # with open(figfile.replace('.png', '_dT_ddT.txt'), 'w') as fout:
+        #     fout.write('Time(ps) dT_e(eV/Angstrom^3/ps) ddT_e(eV/Angstrom^3/ps)\n')
+        #     for t, dte, ddte in zip(Time[1:], dT_e[1:], ddT_e[1:]):
+        #         fout.write(f"{t} {dte} {ddte}\n")
+
+        # axes[2].plot(Time, S_e, label='S_e')
+        # axes[2].set_yscale('log')
+      
         axes[2].set_xlabel('Time (ps)', fontsize=15)
+        # axes[2].set_ylabel('Power density (eV/Å³/ps)', fontsize=15)
         axes[2].set_ylabel('Energy (eV)', fontsize=15)
         axes[2].legend(fontsize=15)
         axes[2].grid(True)
@@ -555,7 +579,11 @@ class LammpsCascadePlotter:
         colors = plt.cm.viridis(np.linspace(0, 1, length+1))  
         min_limit = 10000
         max_limit = 0
-        fig, ax = plt.subplots(1, 2, figsize=(10, 6), sharey=True)
+        min_te_limit = 10000
+        max_te_limit = 0
+        min_ta_limit = 10000
+        max_ta_limit = 0
+        fig, ax = plt.subplots(1, 2, figsize=(10, 6), sharey=False)
         for i, frame_idx in enumerate(frame_idx_list):
             elec_pipeline = import_file(tout_file)
             elec_data = elec_pipeline.compute(frame_idx)
@@ -615,11 +643,17 @@ class LammpsCascadePlotter:
                     color=colors[i],
                 )
 
+            # for sharey limit 
             min_limit = min(min(te_list), min(ta_list), min_limit, 295) 
-            max_limit = max(max(te_list), max(ta_list), max_limit) 
+            max_limit = max(max(te_list), max(ta_list), max_limit)
+
+            min_te_limit = min(min(te_list), min_te_limit, 295)
+            max_te_limit = max(max(te_list), max_te_limit,305)
+            min_ta_limit = min(min(ta_list), min_ta_limit, 295)
+            max_ta_limit = max(max(ta_list), max_ta_limit, 305)
         
-        ax[0].set_ylim(min_limit, max_limit)
-        ax[1].set_ylim(min_limit, max_limit)
+        ax[0].set_ylim(min_te_limit, max_te_limit)
+        ax[1].set_ylim(min_ta_limit, max_ta_limit)
         ax[1].set_ylabel('')
 
         # set a horizontal line at y=300K
@@ -639,8 +673,8 @@ class LammpsCascadePlotter:
         ax[1].grid(True)
 
         # set y axis to log scale
-        ax[0].set_yscale('log')
-        ax[1].set_yscale('log')
+        # ax[0].set_yscale('log')
+        # ax[1].set_yscale('log')
   
 
         fig.subplots_adjust(hspace=0)

@@ -97,7 +97,7 @@ class CascadeProcessor:
         num_def_all = []
         self.logger.info(f'#------------Defect analysis, PKA_kin_eng: {self.PKA_kin_eng} eV------------#')
         cnt = 0
-        for num_traj in range(22):
+        for num_traj in range(num_trajs):
             eng_out = os.path.join(self.traj_folder, f'{start_traj+num_traj}', 'eng.out')
             if not os.path.exists(eng_out):
                 continue
@@ -106,8 +106,9 @@ class CascadeProcessor:
                 break
             self.logger.info(f'Starting the {cnt}th trajectory in folder {start_traj+num_traj}...')
             data = np.loadtxt(eng_out, skiprows=1)
-            data = data[::101]   
-            timestep, time, _, _, _ = data.T
+            data = data[::11]
+            timestep = data.T[0]
+            time = data.T[1]
             num_vac = [0]
             num_int = [0]
             num_def = [0]
@@ -158,7 +159,7 @@ class CascadeProcessor:
         with open(os.path.join(self.traj_folder, 'defect.txt'), 'w') as f:
             f.write('Time (ps)\tnum_vac\tstd_vac\tnum_int\tstd_int\tnum_def\tstd_def\n')
             for t, v, vstd, i, istd, d, dstd in zip(time_all[0], vac_avg, vac_std, int_avg, int_std, def_avg, def_std):
-                f.write(f'{t:.3f}\t{int(v)}\t{int(vstd)}\t{int(i)}\t{int(istd)}\t{int(d)}\t{int(dstd)}\n')
+                f.write(f'{t:.3f}\t{v:.2f}\t{vstd:.2f}\t{i:.2f}\t{istd:.2f}\t{d:.2f}\t{dstd:.2f}\n')
         fig, ax = plt.subplots(figsize=(6, 4))
         vac_low = vac_avg - vac_std
         vac_high = vac_avg + vac_std
@@ -195,8 +196,9 @@ class CascadeProcessor:
                 break
             self.logger.info(f'Starting the {cnt}th trajectory in folder {start_traj+num_traj}...')
             data = np.loadtxt(eng_out, skiprows=1)
-            data = data[::101]   
-            timestep, time, _, _, _ = data.T
+            data = data[::11]   
+            timestep = data.T[0]
+            time = data.T[1]    
             max_cluster_size = [0]
             num_point_defect = [0]
             num_cluster_defect = [0]

@@ -15,9 +15,10 @@ class ParameterGetter:
         pass
 
     def get_data1(self, temp: float, 
-                  filename: str=os.path.join(module_dir, 'parameters', 'K_Ge.dat')) -> tuple[float, float]:
+                  filename: str=os.path.join(module_dir, 'parameters', 'K_GaAs.dat')) -> tuple[float, float]:
         # data from https://github.com/N-Medvedev/XTANT-3_coupling_data/blob/main/K_semiconductors/K_Ge.dat
         # linear interpolation
+        element = os.path.basename(filename).split('_')[1].split('.')[0]
         data = np.loadtxt(filename, skiprows=2)
         Te = data[:, 0]  
         kappa_e = np.array(data[:, 1]) * JOULE_TO_EV / (1/ANGSTROM_TO_METER * (1/PS_TO_S))  
@@ -49,6 +50,10 @@ class ParameterGetter:
         )
         ax[0].axvline(x=temp, color='gray', linestyle='--', linewidth=1)
         ax[0].axhline(y=C_e_temp, color='gray', linestyle='--', linewidth=1)
+        # add text for largest and smallest Ce, and the corresponding temperature (Te, Ce)
+        ax[0].text(Te[0], C_e[0], f"{Te[0]}, {C_e[0]:.2e}", fontsize=10, verticalalignment='top', horizontalalignment='left')
+        ax[0].text(Te[-1], C_e[-1], f"{Te[-1]}, {C_e[-1]:.2e}", fontsize=10, verticalalignment='bottom', horizontalalignment='right')
+        
         # Right subplot: Electron thermal conductivity
         ax[1].set_yscale('log')
         ax[1].set_xscale('log')
@@ -60,13 +65,17 @@ class ParameterGetter:
         )
         ax[1].axvline(x=temp, color='gray', linestyle='--', linewidth=1)
         ax[1].axhline(y=kappa_e_temp, color='gray', linestyle='--', linewidth=1)
+        # add text for largest and smallest kappa_e, and the corresponding temperature (Te, ke)
+        ax[1].text(Te[0], kappa_e[0], f"{Te[0]}, {kappa_e[0]:.2e}", fontsize=10, verticalalignment='bottom', horizontalalignment='left')
+        ax[1].text(Te[-1], kappa_e[-1], f"{Te[-1]}, {kappa_e[-1]:.2e}", fontsize=10, verticalalignment='bottom', horizontalalignment='right')
+
         ax[0].tick_params(axis='both', which='major', labelsize=12, length=6, width=1.2)
         ax[0].tick_params(axis='both', which='minor', labelsize=10, length=3, width=1.0)
         ax[1].tick_params(axis='both', which='major', labelsize=12, length=6, width=1.2)
         ax[1].tick_params(axis='both', which='minor', labelsize=10, length=3, width=1.0)
         ax[0].set_title(f'Temp: {temp} K, Ce: {C_e_temp:.3e} eV/K/A^3, kappa_e: {kappa_e_temp:.3e} eV/K/A/ps', fontsize=12)
         fig.tight_layout()
-        fig.savefig(os.path.join(module_dir, 'parameters', 'thermal_properties.png'), dpi=300)
+        fig.savefig(os.path.join(module_dir, 'parameters', 'figs', f'thermal_properties_{element}.png'), dpi=300)
         return C_e_temp, kappa_e_temp
 
     def write_data1(self, outputfile: str,
@@ -95,9 +104,10 @@ class ParameterGetter:
                     f.write(f"{C_e[i]:.6e} {kappa_e[i]:.6e}\n")
 
     def get_data2(self, temp: float, 
-                  filename: str=os.path.join(module_dir, 'parameters', 'Ce_Ge.txt')):
+                  filename: str=os.path.join(module_dir, 'parameters', 'Ce_W.txt')):
         # data from https://github.com/N-Medvedev/XTANT-3_coupling_data/blob/main/Ce_semiconductors/Ce_Ge.txt
         # linear interpolation
+        element = os.path.basename(filename).split('_')[1].split('.')[0]
         data = np.loadtxt(filename, skiprows=2)
         Te = data[:, 0]
         C_e = np.array(data[:, 1]) * JOULE_TO_EV / ((1/ANGSTROM_TO_METER)**3)
@@ -124,10 +134,30 @@ class ParameterGetter:
         plt.tick_params(axis='both', which='minor', labelsize=10, length=3, width=1.0)  
         plt.axvline(x=temp, color='gray', linestyle='--', linewidth=1)
         plt.axhline(y=C_e_temp, color='gray', linestyle='--', linewidth=1)
+        # add text for smallest and largest Ce, and the corresponding temperature (Te, Ce)
+        plt.text(Te[0], C_e[0], f"{Te[0]}, {C_e[0]:.2e}", fontsize=10, verticalalignment='bottom', horizontalalignment='left')
+        plt.text(Te[-1], C_e[-1], f"{Te[-1]}, {C_e[-1]:.2e}", fontsize=10, verticalalignment='bottom', horizontalalignment='right')
+
         plt.title(f'Temp: {temp} K, Ce: {C_e_temp:.3e} eV/K/A^3', fontsize=12)
         plt.tight_layout()
-        plt.savefig(os.path.join(module_dir, 'parameters', 'heat_capacity.png'), dpi=300)
+        plt.savefig(os.path.join(module_dir, 'parameters', 'figs', f'heat_capacity_{element}.png'), dpi=300)
         return C_e_temp
+
+    def estimate_Ce(self, PKA_energy_eV, band_gap_eV, volume_A3, fe=1.0):
+        kB_eV_per_K = 8.617333e-5 
+        E_elec = fe * PKA_energy_eV 
+        n_eh = E_elec / band_gap_eV  
+        n_density = n_eh / volume_A3  
+        Ce = n_density * kB_eV_per_K
+        return Ce
     
     
-    
+# if __name__ == "__main__":
+#     getter = ParameterGetter()
+#     # Ce, ke = getter.get_data1(900)
+#     # print(f"Ce: {Ce:.3e} eV/K/A^3, ke: {ke:.3e} eV/K/A/ps")
+#     # Ce = getter.get_data2(900)
+#     Ce = getter.estimate_Ce(PKA_energy_eV=1000, band_gap_eV=0.67, volume_A3=778688, fe=1)
+#     print(f"Estimated Ce: {Ce:.3e} eV/K/A^3")
+
+   

@@ -1,49 +1,13 @@
-
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 16-16-16, radius_frac: 0.7---------#
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Output 1 failed, running time: 0.2259376266077358 ps.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7/2 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/2.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7/3 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/3.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Output 4 failed, running time: 0.41100310191384226 ps.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Output 5 failed, running time: 0.3333128088018222 ps.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Output 6 failed, running time: 15.138605443864833 ps.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7/7 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/7.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7/8 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/8.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7/9 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/9.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7/10 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/10.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7/11 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/11.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7/12 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/12.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7/13 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/13.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7/14 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/14.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7/15 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/15.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7/16 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/16.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7/17 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/17.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7/18 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/18.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7/19 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/19.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7/20 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/20.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7/21 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/21.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7/22 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/22.
-2026-01-13 17:12 - ml4cascades.lammps.check - INFO - #---------4/22 cases failed.---------#
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 16-16-16, radius_frac: 0.8---------#
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.8/1 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/1.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Output 2 not found.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Output 3 not found.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.8/4 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/4.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Output 5 failed, running time: 0.6185762604407765 ps.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Moving from /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.8/6 to /scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-suc/6.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Output 7 not found.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Output 8 not found.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Output 9 not found.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Output 10 not found.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Output 11 not found.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Output 12 not found.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Output 13 not found.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Output 14 not found.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Output 15 not found.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Output 16 not found.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Output 17 not found.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Output 18 not found.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Output 19 not found.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Output 20 not found.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Output 21 not found.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - Output 22 not found.
-2026-01-13 17:13 - ml4cascades.lammps.check - INFO - #---------1/22 cases failed.---------#
+2026-02-03 13:12 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 18-18-18, radius_frac: 0.7, grid: 1---------#
+2026-02-03 13:12 - ml4cascades.lammps.check - INFO - Output 9 failed, running time: 0.40656413464243024 ps.
+2026-02-03 13:12 - ml4cascades.lammps.check - INFO - #---------1/22 cases failed.---------#
+2026-02-03 13:14 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 18-18-18, radius_frac: 0.7, grid: 2---------#
+2026-02-03 13:14 - ml4cascades.lammps.check - INFO - Output 9 failed, running time: 0.3049598857831308 ps.
+2026-02-03 13:14 - ml4cascades.lammps.check - INFO - #---------1/22 cases failed.---------#
+2026-02-03 13:14 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 18-18-18, radius_frac: 0.7, grid: 4---------#
+2026-02-03 13:14 - ml4cascades.lammps.check - INFO - #---------0/22 cases failed.---------#
+2026-02-03 13:58 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 18-18-18, radius_frac: 0.7, grid: 8---------#
+2026-02-03 13:58 - ml4cascades.lammps.check - INFO - #---------0/22 cases failed.---------#
+2026-02-03 13:58 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 18-18-18, radius_frac: 0.7, grid: 16---------#
+2026-02-03 13:58 - ml4cascades.lammps.check - INFO - Output 9 failed, running time: 0.32097495693329936 ps.
+2026-02-03 13:58 - ml4cascades.lammps.check - INFO - #---------1/22 cases failed.---------#

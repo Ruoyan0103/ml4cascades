@@ -57,7 +57,8 @@ if __name__ == "__main__":
     bi = BasicCellInfo(element=['Ge'], atomic_num=[32], mass=72.64, lattice='diamond', alat=[5.76]*3)
     # supercell_size = [16]*3
     supercell_size = [18]*3
-    calc = CascadeCalculator(sw, bi, model_name='STOPPING')
+    model_name  = 'STOPPING'
+    calc = CascadeCalculator(sw, bi, model_name=model_name)
 
     '''
     ######################################### 1. Get Ce and Ke ########################################## 
@@ -177,7 +178,7 @@ if __name__ == "__main__":
             "gsz": grid_value,
             "eph_C_e": Ce,
             "eph_kappa_e": kappa_e,
-            "cutoff_eng": 1,
+            "cutoff_eng": 10,
             # "tinfile": 'NULL',
             # "temperature_dependent": False
         }
@@ -191,91 +192,101 @@ if __name__ == "__main__":
     '''
     if choice == '5':
         print("Cascade checking...")
-        PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', f'PKA_1000eV-{radius_frac}-16')
+        grid_value = 16
+        PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', f'PKA_1000eV-{radius_frac}-10')
         checker = CascadeChecker(PKA_kin_eng=PKA_kin_eng, 
                                  supercell_size=supercell_size, 
                                  radius_frac=radius_frac,
                                  traj_folder=PKA_kin_eng_dir,
-                                 grid=16)
-        checker.check_output(start_output=1, num_outputs=22, running_time=25) # in ps 
+                                 grid=grid_value)
+        checker.check_output(start_output=1, num_outputs=30, running_time=65) # in ps 
 
     '''
     ######################################### 6. Cascade data plotting ####################################
     '''
     if choice == '6':
-        print("Cascade data plotting...")
-        plotter = LammpsCascadePlotter()
-        print("Plotting eph results...")
-        folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/Test-CascadeProcess/Test-num_grid_points/32-32-32/1'
-        fig_file1 = f'{folder}/eph_results.png'
-        plotter.plot_eph_results(datafile1=f'{folder}/eng.out', 
-                                 datafile2=f'{folder}/thermo.out', figfile=fig_file1)
+        if model_name == 'STOPPING':
+            print("Cascade data plotting...")
+            plotter = LammpsCascadePlotter()
+            print("Plotting stopping results...")
+            folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/STOPPING/Test-CascadeProcess/Test-border-10/berendsen'
+            fig_file = f'{folder}/stopping_results.png'
+            plotter.plot_stopping_results(datafile=f'{folder}/thermo.out', figfile=fig_file, ecut=10)
+    
+        elif model_name == 'EPH':
+            print("Cascade data plotting...")
+            plotter = LammpsCascadePlotter()
+            print("Plotting eph results...")
+            folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/Test-CascadeProcess/Test-num_grid_points/32-32-32/1'
+            fig_file1 = f'{folder}/eph_results.png'
+            plotter.plot_eph_results(datafile1=f'{folder}/eng.out', 
+                                    datafile2=f'{folder}/thermo.out', figfile=fig_file1)
 
-        dump_file = f'{folder}/data.output'
-        T_out_folder = f'{folder}/T_out'
-        new_dump_file = f'{folder}/data.output.modified'
-        new_tout_file = f'{folder}/T_out.modified'
-        avg_Ta_file = f'{folder}/avg_Ta.out'
-        avg_Te_file = f'{folder}/avg_Te.out'
-        flag = 5 # 1: new_dump_file, 2: new_tout
-        # plotter.get_grid_Ta_Te(dump_file=dump_file, 
-        #                        T_out_folder=T_out_folder, 
-        #                        new_dump_file=new_dump_file, 
-        #                        new_tout_file=new_tout_file, 
-        #                        avg_Ta_file=avg_Ta_file, 
-        #                        avg_Te_file=avg_Te_file,
-        #                        flag=flag)
-        
-        print("Plotting extreme Ta and Te...")
-        frame_id_list = [9, 25, 35, 45, 65, 105, 174]
-        time_list = [0.04, 0.2, 1, 2, 4, 8, 15]  # in ps
-        fig_file2 = f'{folder}/extreme_Te_Ta.png'
-        # plotter.get_extreme_Te_Ta(new_tout_file, new_dump_file, frame_id_list, time_list, fig_file2) 
-        
-        #---------------------- for grid size 8, electronic system twice size of atomic system ----------------------#
-        # grid_list = [282, 283, 284, 285]
-        # electron_grid_list = [280, 281, 282, 283, 284, 285, 286, 287]
-        #---------------------- for grid size 4, electronic system twice size of atomic system ----------------------#
-        # grid_list = [21, 22]
-        # electron_grid_list = [20, 21, 22, 23]
-        #---------------------- for grid size 8, electronic system forth size of atomic system ----------------------#
-        # grid_list = [283, 284]
-        # electron_grid_list = [278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289]
-        #---------------------- for grid size 16, electronic system forth size as atomic system ----------------------#
-        # grid_list = [2166, 2167, 2168, 2169]
-        # electron_grid_list = [2163, 2164, 2165, 2166, 2167, 2168, 2169, 2170, 2171, 2172]
-        #---------------------- for grid size 16, electronic system double size as atomic system ----------------------#
-        # grid_list = [1908, 1909, 1910, 1911, 1912, 1913, 1914, 1915]
-        # electron_grid_list = [1904, 1905, 1906, 1907, 1908, 1909, 1910, 1911, 1912, 1913, 1914, 1915, 1916, 1917, 1918, 1919]
-        #---------------------- for grid size 16, electronic system double size as atomic system ----------------------#
-        # grid_list = [1908, 1909, 1910, 1911, 1912, 1913, 1914, 1915]
-        # electron_grid_list = [1904, 1905, 1906, 1907, 1908, 1909, 1910, 1911, 1912, 1913, 1914, 1915, 1916, 1917, 1918, 1919]
-        # ---------------------- for grid size 32, electronic system double size as atomic system ----------------------#
-        grid_list = range(16872, 16888)
-        electron_grid_list = range(16864, 16896)
-        #---------------------- for grid size 64, electronic system double size as atomic system ----------------------#
-        # grid_list = range(128976, 129008)
-        # electron_grid_list = range(124864, 124928)
-        # for grid size 8, electronic system same size as atomic system
-        # grid_list = [280, 281, 282, 283, 284, 285, 286, 287]
-        # electron_grid_list = [280, 281, 282, 283, 284, 285, 286, 287]
-        print("Plotting Te and Ta along x...")
-        fig_file3 = f'{folder}/Te_Ta_along_x.png'
-        plotter.plot_te_ta_along_x(new_tout_file, new_dump_file, 
-                                   [9, 26, 66, 106], [0.04, 0.2, 4, 8], 
-                                   grid_list, electron_grid_list, 
-                                   fig_file3)
+            dump_file = f'{folder}/data.output'
+            T_out_folder = f'{folder}/T_out'
+            new_dump_file = f'{folder}/data.output.modified'
+            new_tout_file = f'{folder}/T_out.modified'
+            avg_Ta_file = f'{folder}/avg_Ta.out'
+            avg_Te_file = f'{folder}/avg_Te.out'
+            flag = 5 # 1: new_dump_file, 2: new_tout
+            # plotter.get_grid_Ta_Te(dump_file=dump_file, 
+            #                        T_out_folder=T_out_folder, 
+            #                        new_dump_file=new_dump_file, 
+            #                        new_tout_file=new_tout_file, 
+            #                        avg_Ta_file=avg_Ta_file, 
+            #                        avg_Te_file=avg_Te_file,
+            #                        flag=flag)
+            
+            print("Plotting extreme Ta and Te...")
+            frame_id_list = [9, 25, 35, 45, 65, 105, 174]
+            time_list = [0.04, 0.2, 1, 2, 4, 8, 15]  # in ps
+            fig_file2 = f'{folder}/extreme_Te_Ta.png'
+            # plotter.get_extreme_Te_Ta(new_tout_file, new_dump_file, frame_id_list, time_list, fig_file2) 
+            
+            #---------------------- for grid size 8, electronic system twice size of atomic system ----------------------#
+            # grid_list = [282, 283, 284, 285]
+            # electron_grid_list = [280, 281, 282, 283, 284, 285, 286, 287]
+            #---------------------- for grid size 4, electronic system twice size of atomic system ----------------------#
+            # grid_list = [21, 22]
+            # electron_grid_list = [20, 21, 22, 23]
+            #---------------------- for grid size 8, electronic system forth size of atomic system ----------------------#
+            # grid_list = [283, 284]
+            # electron_grid_list = [278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289]
+            #---------------------- for grid size 16, electronic system forth size as atomic system ----------------------#
+            # grid_list = [2166, 2167, 2168, 2169]
+            # electron_grid_list = [2163, 2164, 2165, 2166, 2167, 2168, 2169, 2170, 2171, 2172]
+            #---------------------- for grid size 16, electronic system double size as atomic system ----------------------#
+            # grid_list = [1908, 1909, 1910, 1911, 1912, 1913, 1914, 1915]
+            # electron_grid_list = [1904, 1905, 1906, 1907, 1908, 1909, 1910, 1911, 1912, 1913, 1914, 1915, 1916, 1917, 1918, 1919]
+            #---------------------- for grid size 16, electronic system double size as atomic system ----------------------#
+            # grid_list = [1908, 1909, 1910, 1911, 1912, 1913, 1914, 1915]
+            # electron_grid_list = [1904, 1905, 1906, 1907, 1908, 1909, 1910, 1911, 1912, 1913, 1914, 1915, 1916, 1917, 1918, 1919]
+            # ---------------------- for grid size 32, electronic system double size as atomic system ----------------------#
+            grid_list = range(16872, 16888)
+            electron_grid_list = range(16864, 16896)
+            #---------------------- for grid size 64, electronic system double size as atomic system ----------------------#
+            # grid_list = range(128976, 129008)
+            # electron_grid_list = range(124864, 124928)
+            # for grid size 8, electronic system same size as atomic system
+            # grid_list = [280, 281, 282, 283, 284, 285, 286, 287]
+            # electron_grid_list = [280, 281, 282, 283, 284, 285, 286, 287]
+            print("Plotting Te and Ta along x...")
+            fig_file3 = f'{folder}/Te_Ta_along_x.png'
+            plotter.plot_te_ta_along_x(new_tout_file, new_dump_file, 
+                                    [9, 26, 66, 106], [0.04, 0.2, 4, 8], 
+                                    grid_list, electron_grid_list, 
+                                    fig_file3)
      
     '''
     ######################################### 7. Cascade output processing ####################################
     '''
     if choice == '7':
         print("Cascade output processing...")
-        PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV-0.7-1')
+        PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV-0.7-10')
         processor = CascadeProcessor(bi, PKA_kin_eng=1000, traj_folder=PKA_kin_eng_dir)
         # # processor.cal_ibm(num_trajs=1, n0=1, ed=1)    # not working for LAMMPS data format
-        processor.cal_WSDefect(start_traj=1, num_trajs=1)
-        processor.cal_cluster(start_traj=1, num_trajs=1, expression='Occupancy!=1')
+        processor.cal_WSDefect(start_traj=1, num_trajs=30, exclude_list=[])  
+        # processor.cal_cluster(start_traj=1, num_trajs=30, expression='Occupancy!=1')
    
     
   

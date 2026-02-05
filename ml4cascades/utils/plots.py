@@ -121,6 +121,62 @@ class LammpsCascadePlotter:
     def __init__(self):
         pass
 
+    def plot_stopping_results(self, datafile: str, figfile: str, ecut: float=1.0):
+        data = np.loadtxt(datafile, skiprows=1)
+        step, Time, temp, pe, ke, etotal, ekmaxall, e_stopping_loss = data[:,0], data[:,1], data[:,2], data[:,3], data[:,4], data[:,5], data[:,6], data[:,7]
+        border_temp, inside_temp, border_etotal, inside_etotal = data[:,8], data[:,9], data[:,10], data[:,11]
+
+        fig, axes = plt.subplots(3, 1, figsize=(8, 10))
+        axes[0].plot(Time, ekmaxall, label='E_kin_max')
+        axes[0].set_ylabel('Energy (eV)', fontsize=15)
+        axes[0].legend(fontsize=15)
+        axes[0].set_yscale('log')
+        # add horizontal line for ekmaxall == 1, and a corresponding vertical line for the time when ekmaxall first drops below 1 eV
+        axes[0].axhline(ecut, color='gray', linestyle='--', linewidth=1)
+        below_1_indices = np.where(ekmaxall < ecut)[0]
+        if len(below_1_indices) > 0:
+            first_below_1_time = Time[below_1_indices[0]]
+            axes[0].axvline(first_below_1_time, color='gray', linestyle='--', linewidth=1)
+            axes[1].axvline(first_below_1_time, color='gray', linestyle='--', linewidth=1)
+            axes[2].axvline(first_below_1_time, color='gray', linestyle='--', linewidth=1)
+
+        init_etotal = etotal[0]
+        energy_loss = [init_etotal - e for e in etotal]
+        axes[1].plot(Time, energy_loss, label='Energy loss')
+        axes[1].plot(Time, e_stopping_loss, label='E_stopping_loss')
+        axes[1].set_ylabel('Energy (eV)', fontsize=15)
+        axes[1].legend(fontsize=15)
+        
+
+        # axes[2].plot(Time, temp, label='Temperature')
+        axes[2].plot(Time, border_temp, label='T_border')
+        axes[2].plot(Time, inside_temp, label='T_inside')
+        axes[2].set_xlabel('Time (ps)', fontsize=15)
+        axes[2].set_ylabel('Temperature (K)', fontsize=15)
+        axes[2].legend(fontsize=15)
+        axes[2].text(0.05, 0.9, f"Last 10 ps average Tborder: {np.mean(border_temp[int(0.9*len(border_temp)):]):.2f} K", transform=axes[2].transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))
+        axes[2].text(0.05, 0.8, f"Last 10 ps average Tinside: {np.mean(inside_temp[int(0.9*len(inside_temp)):]):.2f} K", transform=axes[2].transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))
+
+        # axes[3].plot(Time, inside_etotal, label='E_inside')
+        # axes[3].set_xlabel('Time (ps)', fontsize=15)
+        # axes[3].set_ylabel('Energy (eV)', fontsize=15)
+        # axes[3].set_xscale('log')
+        # axes[3].legend(fontsize=15)
+
+        # axes[4].plot(Time, border_etotal, label='E_border')
+        # axes[4].set_xlabel('Time (ps)', fontsize=15)
+        # axes[4].set_ylabel('Energy (eV)', fontsize=15)
+        # axes[4].set_xscale('log')
+        # axes[4].legend(fontsize=15)
+
+        # increase ticks size
+        for ax in axes:
+            ax.tick_params(axis='both', which='major', labelsize=15)
+            ax.set_xscale('log')
+        
+        plt.tight_layout()
+        fig.savefig(figfile, dpi=300)
+  
     def plot_eph_results(self, datafile1: str, datafile2: str, figfile: str):
         data = np.loadtxt(datafile1, skiprows=1)
         # step, Time, Ta, Te = data[:,0], data[:,1], data[:,2], data[:,3]

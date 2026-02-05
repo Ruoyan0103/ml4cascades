@@ -34,7 +34,7 @@ group           border region br_region
 group           inside region in_region
 
 #--------------------------BORDER THERMOSTAT-----------------------
-# fix             2 border temp/berendsen {temp} {temp} 0.1
+fix             2 border temp/berendsen {temp} {temp} 0.1
 
 compute         ep all pe/atom
 compute         ek all ke/atom
@@ -54,8 +54,12 @@ compute         ekmax_all all reduce max c_ek
 variable        ekmaxall equal c_ekmax_all
 
 #------------------------------ STOPPING ---------------------------
+fix             NVE_thermo all nve       
 fix             stopping all electron/stopping {cutoff_eng} {stoppingfile}
-fix             out1 all print 100 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal) ${{ekmaxall}} ${{epmaxbrdr}} ${{ekmaxbrdr}}" file thermo.out screen no
+fix             out1 all print 100 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal) ${{ekmaxall}} $(f_stopping)" file thermo.out screen no
 dump            2 all custom 100 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val 
 
-run             {cascade_steps} every 100  " if '(${{ekmaxbrdr}} > 5 || $t >= 70.0)' then 'quit' "
+variable        stopcond equal "v_ekmaxbrdr>5 || v_t>=70"
+fix             terminate all halt 50 v_stopcond == 1 error hard
+run             80000
+

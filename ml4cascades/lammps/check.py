@@ -12,7 +12,7 @@ class CascadeChecker:
                  traj_folder: str,
                  grid: int, 
                  task_name='checking',
-                 model_name='EPH'):
+                 model_name='STOPPING'):
         self.PKA_kin_eng = PKA_kin_eng
         self.supercell_size = supercell_size
         self.radius_frac = radius_frac
@@ -27,7 +27,7 @@ class CascadeChecker:
                      start_output: int,
                      num_outputs: int, 
                      running_time: float):
-        self.logger.info(f'#---------Checking, PKA energy: {self.PKA_kin_eng}, supercellsize: {self.supercell_size[0]}-{self.supercell_size[1]}-{self.supercell_size[2]}, radius_frac: {self.radius_frac}, grid: {self.grid}---------#')
+        self.logger.info(f'#---------Checking, PKA energy: {self.PKA_kin_eng}, supercellsize: {self.supercell_size[0]}-{self.supercell_size[1]}-{self.supercell_size[2]}, radius_frac: {self.radius_frac}---------#')
         failed_case = 0
         for num_output in range(num_outputs):
             output_file = os.path.join(self.traj_folder, f'{start_output+num_output}', 'thermo.out')

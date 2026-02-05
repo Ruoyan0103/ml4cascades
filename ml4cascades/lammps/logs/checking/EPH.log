@@ -11,3 +11,21 @@
 2026-02-03 13:58 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 18-18-18, radius_frac: 0.7, grid: 16---------#
 2026-02-03 13:58 - ml4cascades.lammps.check - INFO - Output 9 failed, running time: 0.32097495693329936 ps.
 2026-02-03 13:58 - ml4cascades.lammps.check - INFO - #---------1/22 cases failed.---------#
+
+
+2026-02-05 17:52 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 18-18-18, radius_frac: 0.7, grid: 1---------#
+2026-02-05 17:52 - ml4cascades.lammps.check - INFO - Output 14 failed, running time: 0.38338414968214346 ps.
+2026-02-05 17:52 - ml4cascades.lammps.check - INFO - #---------1/30 cases failed.---------#
+2026-02-05 17:53 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 18-18-18, radius_frac: 0.7, grid: 2---------#
+2026-02-05 17:53 - ml4cascades.lammps.check - INFO - Output 14 failed, running time: 0.41282813446123806 ps.
+2026-02-05 17:53 - ml4cascades.lammps.check - INFO - #---------1/30 cases failed.---------#
+2026-02-05 17:53 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 18-18-18, radius_frac: 0.7, grid: 4---------#
+2026-02-05 17:53 - ml4cascades.lammps.check - INFO - Output 14 failed, running time: 0.4130672559208486 ps.
+2026-02-05 17:53 - ml4cascades.lammps.check - INFO - Output 15 failed, running time: 0.3002241402304512 ps.
+2026-02-05 17:53 - ml4cascades.lammps.check - INFO - #---------2/30 cases failed.---------#
+2026-02-05 17:53 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 18-18-18, radius_frac: 0.7, grid: 8---------#
+2026-02-05 17:53 - ml4cascades.lammps.check - INFO - #---------0/30 cases failed.---------#
+2026-02-05 17:54 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 18-18-18, radius_frac: 0.7, grid: 16---------#
+2026-02-05 17:54 - ml4cascades.lammps.check - INFO - Output 7 failed, running time: 0.2796060047775101 ps.
+2026-02-05 17:54 - ml4cascades.lammps.check - INFO - Output 24 failed, running time: 0.31407947209823994 ps.
+2026-02-05 17:54 - ml4cascades.lammps.check - INFO - #---------2/30 cases failed.---------#

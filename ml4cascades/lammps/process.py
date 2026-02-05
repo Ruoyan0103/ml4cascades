@@ -17,7 +17,7 @@ class CascadeProcessor:
                  PKA_kin_eng: float,
                  traj_folder: str,
                  task_name='processing',
-                 model_name='EPH'):
+                 model_name='STOPPING'):
         self.bi = basicCellInfo
         self.PKA_kin_eng = PKA_kin_eng
         self.traj_folder = traj_folder
@@ -90,7 +90,7 @@ class CascadeProcessor:
     lack of other methods for defect analysis
     '''
     # Wigner-Seitz method
-    def cal_WSDefect(self, start_traj: int, num_trajs: int):
+    def cal_WSDefect(self, start_traj: int, num_trajs: int, exclude_list: list[int]):
         time_all = []
         num_vac_all = []
         num_int_all = []
@@ -98,8 +98,8 @@ class CascadeProcessor:
         self.logger.info(f'#------------Defect analysis, PKA_kin_eng: {self.PKA_kin_eng} eV------------#')
         cnt = 0
         for num_traj in range(num_trajs):
-            eng_out = os.path.join(self.traj_folder, f'{start_traj+num_traj}', 'eng.out')
-            if not os.path.exists(eng_out):
+            eng_out = os.path.join(self.traj_folder, f'{start_traj+num_traj}', 'thermo.out')
+            if not os.path.exists(eng_out) or (start_traj+num_traj) in exclude_list:
                 continue
             cnt += 1
             if cnt > num_trajs:

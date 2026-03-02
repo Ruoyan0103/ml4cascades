@@ -55,7 +55,7 @@ compute         ekmax_all all reduce max c_ek
 variable        ekmaxall equal c_ekmax_all
 
 #------------------------------USER EPH---------------------------
-fix             friction all eph 12345 7 4 1.0 {eph_C_e} {eph_kappa_e} {temp} {gsx} {gsy} {gsz} {tinfile} 100 T_out/T_out {betafile} Ge   # rho_e, c_e, k_e, t_e, nx, ny, nz are read from tinfile 
+fix             friction all eph 12345 3 4 1.0 {eph_C_e} {eph_kappa_e} {temp} {gsx} {gsy} {gsz} {tinfile} 100 T_out/T_out {betafile} Ge   # rho_e, c_e, k_e, t_e, nx, ny, nz are read from tinfile 
 fix             out1 all print 100 "$(step) $(time) $(temp) $(f_friction[1]) $(f_friction[2]) ${{brtemp_val}} ${{intemp_val}}" file eng.out screen no
 fix             out2 all print 100 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal) ${{ekmaxall}} ${{epmaxbrdr}} ${{ekmaxbrdr}}" file thermo.out screen no
 dump            2 all custom 100 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val 

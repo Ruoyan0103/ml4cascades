@@ -1,4 +1,5 @@
 import os
+from typing import Optional
 import numpy as np
 from ase.io.lammpsrun import read_lammps_dump_text
 from matplotlib import pyplot as plt
@@ -16,8 +17,8 @@ class CascadeProcessor:
                  basicCellInfo: BasicCellInfo,
                  PKA_kin_eng: float,
                  traj_folder: str,
-                 task_name='processing',
-                 model_name='STOPPING'):
+                 model_name: str,
+                 task_name='processing'):
         self.bi = basicCellInfo
         self.PKA_kin_eng = PKA_kin_eng
         self.traj_folder = traj_folder
@@ -90,34 +91,50 @@ class CascadeProcessor:
     lack of other methods for defect analysis
     '''
     # Wigner-Seitz method
-    def cal_WSDefect(self, start_traj: int, num_trajs: int, exclude_list: list[int]):
+    def cal_WSDefect(
+        self,
+        start_traj: int,
+        num_trajs: int,
+        exclude_list: list[int],
+        single_traj_dir: Optional[str] = None,
+    ):
         time_all = []
         num_vac_all = []
         num_int_all = []
         num_def_all = []
         self.logger.info(f'#------------Defect analysis, PKA_kin_eng: {self.PKA_kin_eng} eV------------#')
         cnt = 0
-        for num_traj in range(num_trajs):
-            eng_out = os.path.join(self.traj_folder, f'{start_traj+num_traj}', 'thermo.out')
-            if not os.path.exists(eng_out) or (start_traj+num_traj) in exclude_list:
+        traj_dirs = []
+        if single_traj_dir is not None:
+            traj_dirs.append((single_traj_dir, os.path.basename(single_traj_dir.rstrip(os.sep)), None))
+        else:
+            for num_traj in range(num_trajs):
+                traj_dir = os.path.join(self.traj_folder, f'{start_traj+num_traj}')
+                traj_id = start_traj + num_traj
+                traj_dirs.append((traj_dir, f'{traj_id}', traj_id))
+
+        for traj_dir, traj_label, traj_id in traj_dirs:
+            eng_out = os.path.join(traj_dir, 'thermo.out')
+            if not os.path.exists(eng_out) or (traj_id is not None and traj_id in exclude_list):
                 continue
             cnt += 1
             if cnt > num_trajs:
                 break
-            self.logger.info(f'Starting the {cnt}th trajectory in folder {start_traj+num_traj}...')
+            self.logger.info(f'Starting the {cnt}th trajectory in folder {traj_label}...')
             data = np.loadtxt(eng_out, skiprows=1)
-            data = data[::11]
-            timestep = data.T[0]
-            time = data.T[1]
-            num_vac = [0]
-            num_int = [0]
-            num_def = [0]
+            interval = 11
+            mydata = data[::interval]
+            timestep = mydata.T[0]
+            time = mydata.T[1]
+            num_vac = []
+            num_int = []
+            num_def = []
 
-            traj_file = os.path.join(self.traj_folder, f'{start_traj+num_traj}', 'data.output')
+            traj_file = os.path.join(traj_dir, 'data.output')
             all_pipeline = import_file(traj_file)
             init_frame = all_pipeline.compute(0)
             reference_pipeline = Pipeline(source=StaticSource(data=init_frame))
-            for frame_idx in range(1, len(timestep)):
+            for frame_idx in range(0, len(data), interval):
                 cur_pipeline = Pipeline(source=StaticSource(data=all_pipeline.compute(frame_idx)))
                 wsam = WignerSeitzAnalysisModifier(per_type_occupancies=True, output_displaced=False)
                 wsam.reference = reference_pipeline.source
@@ -133,11 +150,15 @@ class CascadeProcessor:
                 cur_pipeline.modifiers.remove(wsam)
                 num_vac.append(cnt_vacancies)
                 num_int.append(cnt_interstitials)
-                num_def.append(cnt_vacancies + cnt_interstitials) 
+                num_def.append(cnt_vacancies + cnt_interstitials)
             time_all.append(time)
-            num_vac_all.append(num_vac)
+            num_vac_all.append(num_vac) 
             num_int_all.append(num_int)
             num_def_all.append(num_def)
+
+        if not time_all:
+            self.logger.warning('No valid trajectories found for defect analysis.')
+            return
 
         # for defect plot: averaging defect over trajectories (interpolating to the first trajectory's time points)
         vac_interp_all = []
@@ -156,7 +177,8 @@ class CascadeProcessor:
         int_std = np.std(int_interp_all, axis=0)
         def_avg = np.mean(def_interp_all, axis=0)
         def_std = np.std(def_interp_all, axis=0)
-        with open(os.path.join(self.traj_folder, 'defect.txt'), 'w') as f:
+        output_dir = single_traj_dir if single_traj_dir is not None else self.traj_folder
+        with open(os.path.join(output_dir, 'defect.txt'), 'w') as f:
             f.write('Time (ps)\tnum_vac\tstd_vac\tnum_int\tstd_int\tnum_def\tstd_def\n')
             for t, v, vstd, i, istd, d, dstd in zip(time_all[0], vac_avg, vac_std, int_avg, int_std, def_avg, def_std):
                 f.write(f'{t:.3f}\t{v:.2f}\t{vstd:.2f}\t{i:.2f}\t{istd:.2f}\t{d:.2f}\t{dstd:.2f}\n')
@@ -176,7 +198,7 @@ class CascadeProcessor:
         ax.set_xscale('log')
         ax.legend()
         plt.tight_layout()
-        fig.savefig(os.path.join(self.traj_folder, 'defects.png'), dpi=300)
+        fig.savefig(os.path.join(output_dir, 'defects.png'), dpi=300)
         self.logger.info('#------------ Defect analysis completed. ------------#')
 
     # cutoff from 10.1103/PhysRevB.57.7556

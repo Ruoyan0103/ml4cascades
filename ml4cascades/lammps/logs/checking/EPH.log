@@ -29,3 +29,20 @@
 2026-02-05 17:54 - ml4cascades.lammps.check - INFO - Output 7 failed, running time: 0.2796060047775101 ps.
 2026-02-05 17:54 - ml4cascades.lammps.check - INFO - Output 24 failed, running time: 0.31407947209823994 ps.
 2026-02-05 17:54 - ml4cascades.lammps.check - INFO - #---------2/30 cases failed.---------#
+
+
+2026-02-27 08:20 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 18-18-18, radius_frac: 0.7, grid: 1---------#
+2026-02-27 08:20 - ml4cascades.lammps.check - INFO - Output 14 failed, running time: 0.3912492617487028 ps.
+2026-02-27 08:20 - ml4cascades.lammps.check - INFO - #---------1/30 cases failed.---------#
+2026-02-27 08:23 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 18-18-18, radius_frac: 0.7, grid: 2---------#
+2026-02-27 08:23 - ml4cascades.lammps.check - INFO - Output 14 failed, running time: 0.3912492617487028 ps.
+2026-02-27 08:23 - ml4cascades.lammps.check - INFO - #---------1/30 cases failed.---------#
+2026-02-27 08:23 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 18-18-18, radius_frac: 0.7, grid: 4---------#
+2026-02-27 08:23 - ml4cascades.lammps.check - INFO - Output 14 failed, running time: 0.3912492617487028 ps.
+2026-02-27 08:23 - ml4cascades.lammps.check - INFO - #---------1/30 cases failed.---------#
+2026-02-27 08:24 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 18-18-18, radius_frac: 0.7, grid: 8---------#
+2026-02-27 08:24 - ml4cascades.lammps.check - INFO - Output 14 failed, running time: 0.3912492617487028 ps.
+2026-02-27 08:24 - ml4cascades.lammps.check - INFO - #---------1/30 cases failed.---------#
+2026-02-27 08:24 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 1000, supercellsize: 18-18-18, radius_frac: 0.7, grid: 16---------#
+2026-02-27 08:24 - ml4cascades.lammps.check - INFO - Output 14 failed, running time: 0.3912492617487028 ps.
+2026-02-27 08:24 - ml4cascades.lammps.check - INFO - #---------1/30 cases failed.---------#

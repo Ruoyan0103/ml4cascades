@@ -57,7 +57,7 @@ if __name__ == "__main__":
     bi = BasicCellInfo(element=['Ge'], atomic_num=[32], mass=72.64, lattice='diamond', alat=[5.76]*3)
     # supercell_size = [16]*3
     supercell_size = [18]*3
-    model_name  = 'STOPPING'
+    model_name  = 'EPH'
     calc = CascadeCalculator(sw, bi, model_name=model_name)
 
     '''
@@ -193,13 +193,14 @@ if __name__ == "__main__":
     if choice == '5':
         print("Cascade checking...")
         grid_value = 16
-        PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', f'PKA_1000eV-{radius_frac}-10')
+        PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', f'PKA_1000eV-{radius_frac}-{grid_value}')
         checker = CascadeChecker(PKA_kin_eng=PKA_kin_eng, 
                                  supercell_size=supercell_size, 
                                  radius_frac=radius_frac,
                                  traj_folder=PKA_kin_eng_dir,
-                                 grid=grid_value)
-        checker.check_output(start_output=1, num_outputs=30, running_time=65) # in ps 
+                                 grid=grid_value,
+                                 model_name=model_name)
+        checker.check_output(start_output=1, num_outputs=30, running_time=65) # in ps  
 
     '''
     ######################################### 6. Cascade data plotting ####################################
@@ -282,11 +283,11 @@ if __name__ == "__main__":
     '''
     if choice == '7':
         print("Cascade output processing...")
-        PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV-0.7-10')
-        processor = CascadeProcessor(bi, PKA_kin_eng=1000, traj_folder=PKA_kin_eng_dir)
+        PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV-0.7-1')
+        processor = CascadeProcessor(bi, PKA_kin_eng=1000, traj_folder=PKA_kin_eng_dir, model_name=model_name)
         # # processor.cal_ibm(num_trajs=1, n0=1, ed=1)    # not working for LAMMPS data format
-        processor.cal_WSDefect(start_traj=1, num_trajs=30, exclude_list=[])  
-        # processor.cal_cluster(start_traj=1, num_trajs=30, expression='Occupancy!=1')
+        processor.cal_WSDefect(start_traj=1, num_trajs=30, exclude_list=[14])   
+        # processor.cal_cluster(start_traj=1, num_trajs=30, expression='Occupancy!=1') 
    
     
   

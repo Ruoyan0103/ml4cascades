@@ -106,25 +106,25 @@ class CascadeProcessor:
         cnt = 0
         traj_dirs = []
         if single_traj_dir is not None:
-            traj_dirs.append((single_traj_dir, os.path.basename(single_traj_dir.rstrip(os.sep)), None))
+            traj_dirs.append((single_traj_dir, os.path.basename(single_traj_dir.rstrip(os.sep))))
         else:
             for num_traj in range(num_trajs):
-                traj_dir = os.path.join(self.traj_folder, f'{start_traj+num_traj}')
                 traj_id = start_traj + num_traj
-                traj_dirs.append((traj_dir, f'{traj_id}', traj_id))
+                if traj_id in exclude_list:
+                    self.logger.info(f'Skipping trajectory {traj_id} as it is in the exclude list.')
+                    continue
+                traj_dir = os.path.join(self.traj_folder, f'{traj_id}')
+                traj_dirs.append((traj_dir, traj_id))
 
-        for traj_dir, traj_label, traj_id in traj_dirs:
+        for traj_dir, traj_id in traj_dirs:
             eng_out = os.path.join(traj_dir, 'thermo.out')
-            if not os.path.exists(eng_out) or (traj_id is not None and traj_id in exclude_list):
+            if not os.path.exists(eng_out):
                 continue
             cnt += 1
-            if cnt > num_trajs:
-                break
-            self.logger.info(f'Starting the {cnt}th trajectory in folder {traj_label}...')
+            self.logger.info(f'Starting the {cnt}th trajectory in folder {traj_id}...')
             data = np.loadtxt(eng_out, skiprows=1)
-            interval = 11
-            mydata = data[::interval]
-            timestep = mydata.T[0]
+            interval = 1
+            mydata = data[::interval] 
             time = mydata.T[1]
             num_vac = []
             num_int = []
@@ -151,6 +151,11 @@ class CascadeProcessor:
                 num_vac.append(cnt_vacancies)
                 num_int.append(cnt_interstitials)
                 num_def.append(cnt_vacancies + cnt_interstitials)
+                with open(os.path.join(traj_dir, 'defect.txt'), 'w') as f:
+                    f.write('Time (ps)\tnum_vac\tnum_int\tnum_def\n')
+                    for t, v, i, d in zip(time, num_vac, num_int, num_def):
+                        f.write(f'{t:.3f}\t{v:.2f}\t{i:.2f}\t{d:.2f}\n') 
+
             time_all.append(time)
             num_vac_all.append(num_vac) 
             num_int_all.append(num_int)
@@ -161,10 +166,12 @@ class CascadeProcessor:
             return
 
         # for defect plot: averaging defect over trajectories (interpolating to the first trajectory's time points)
+
         vac_interp_all = []
         int_interp_all = []
         def_interp_all = []
         for time, num_vac_val, num_int_val, num_def_val in zip(time_all, num_vac_all, num_int_all, num_def_all):
+            # interpolate the number of vac/int/def to the first trajectory's time points
             vac_interp = np.interp(time_all[0], time, num_vac_val)
             int_interp = np.interp(time_all[0], time, num_int_val)
             def_interp = np.interp(time_all[0], time, num_def_val)
@@ -182,24 +189,24 @@ class CascadeProcessor:
             f.write('Time (ps)\tnum_vac\tstd_vac\tnum_int\tstd_int\tnum_def\tstd_def\n')
             for t, v, vstd, i, istd, d, dstd in zip(time_all[0], vac_avg, vac_std, int_avg, int_std, def_avg, def_std):
                 f.write(f'{t:.3f}\t{v:.2f}\t{vstd:.2f}\t{i:.2f}\t{istd:.2f}\t{d:.2f}\t{dstd:.2f}\n')
-        fig, ax = plt.subplots(figsize=(6, 4))
-        vac_low = vac_avg - vac_std
-        vac_high = vac_avg + vac_std
-        int_low = int_avg - int_std
-        int_high = int_avg + int_std
-        def_low = def_avg - def_std
-        def_high = def_avg + def_std
-        ax.plot(time_all[0], def_avg, label='Defects')
-        ax.fill_between(time_all[0], def_low, def_high, alpha=0.3)
-        # ax.plot(time_all[0], int_avg, label='Interstitial')
-        # ax.fill_between(time_all[0], int_low, int_high, alpha=0.3)
-        ax.set_xlabel('Time (ps)')
-        ax.set_ylabel('Number of Defects')
-        ax.set_xscale('log')
-        ax.legend()
-        plt.tight_layout()
-        fig.savefig(os.path.join(output_dir, 'defects.png'), dpi=300)
-        self.logger.info('#------------ Defect analysis completed. ------------#')
+        # fig, ax = plt.subplots(figsize=(6, 4))
+        # vac_low = vac_avg - vac_std
+        # vac_high = vac_avg + vac_std
+        # int_low = int_avg - int_std
+        # int_high = int_avg + int_std
+        # def_low = def_avg - def_std
+        # def_high = def_avg + def_std
+        # ax.plot(time_all[0], def_avg, label='Defects')
+        # ax.fill_between(time_all[0], def_low, def_high, alpha=0.3)
+        # # ax.plot(time_all[0], int_avg, label='Interstitial')
+        # # ax.fill_between(time_all[0], int_low, int_high, alpha=0.3)
+        # ax.set_xlabel('Time (ps)')
+        # ax.set_ylabel('Number of Defects')
+        # ax.set_xscale('log')
+        # ax.legend()
+        # plt.tight_layout()
+        # fig.savefig(os.path.join(output_dir, 'defects.png'), dpi=300)
+        self.logger.info('#------------ Defect analysis completed. ------------#\n')
 
     # cutoff from 10.1103/PhysRevB.57.7556
     def cal_cluster(self, start_traj: int, num_trajs: int, expression: str, cutoff: float=8.1):
@@ -218,18 +225,18 @@ class CascadeProcessor:
                 break
             self.logger.info(f'Starting the {cnt}th trajectory in folder {start_traj+num_traj}...')
             data = np.loadtxt(eng_out, skiprows=1)
-            data = data[::11]   
-            timestep = data.T[0]
-            time = data.T[1]    
-            max_cluster_size = [0]
-            num_point_defect = [0]
-            num_cluster_defect = [0]
+            interval = 1
+            mydata = data[::interval]   
+            time = mydata.T[1]    
+            max_cluster_size = []
+            num_point_defect = []
+            num_cluster_defect = []
 
             traj_file = os.path.join(self.traj_folder, f'{start_traj+num_traj}', 'data.output')
             all_pipeline = import_file(traj_file)
             init_frame = all_pipeline.compute(0)
             reference_pipeline = Pipeline(source=StaticSource(data=init_frame))
-            for frame_idx in range(1, len(timestep)):
+            for frame_idx in range(0, len(data), interval): 
                 cur_pipeline = Pipeline(source=StaticSource(data=all_pipeline.compute(frame_idx)))
                 wsam = WignerSeitzAnalysisModifier(per_type_occupancies=True, output_displaced=False)
                 wsam.reference = reference_pipeline.source
@@ -319,3 +326,180 @@ class CascadeProcessor:
         plt.tight_layout()
         fig.savefig(os.path.join(self.traj_folder, 'defect_cluster.png'), dpi=300)
         self.logger.info('#------------ Cluster analysis completed. ------------#')
+
+    def cal_liquid_atoms(
+        self,
+        start_traj: int,
+        num_trajs: int,
+        expression: str,
+        exclude_list: list[int],
+        single_traj_dir: Optional[str] = None,
+    ):
+        time_all = []
+        num_liquid_all = []
+        self.logger.info(f'#------------Liquid atom analysis, PKA_kin_eng: {self.PKA_kin_eng} eV------------#')
+        cnt = 0
+        traj_dirs = []
+        if single_traj_dir is not None:
+            traj_dirs.append((single_traj_dir, os.path.basename(single_traj_dir.rstrip(os.sep))))
+        else:
+            for num_traj in range(num_trajs):
+                traj_id = start_traj + num_traj
+                if traj_id in exclude_list:
+                    self.logger.info(f'Skipping trajectory {traj_id} as it is in the exclude list.')
+                    continue
+                traj_dir = os.path.join(self.traj_folder, f'{traj_id}')
+                traj_dirs.append((traj_dir, traj_id))
+
+        for traj_dir, traj_id in traj_dirs:
+            eng_out = os.path.join(traj_dir, 'thermo.out')
+            if not os.path.exists(eng_out):
+                continue
+            cnt += 1
+            self.logger.info(f'Starting the {cnt}th trajectory in folder {traj_id}...')
+            
+            if os.path.exists(os.path.join(traj_dir, 'liquid.txt')):
+                self.logger.info(f'liquid.txt already exists in folder {traj_id}, skipping liquid atom analysis for this trajectory. Reading...')
+                time, num_sec = np.loadtxt(os.path.join(traj_dir, 'liquid.txt'), skiprows=1, unpack=True)
+                self.logger.warning(f'Time array length in folder {traj_id}: {len(time)} frames are read.')
+                time_all.append(time)
+                num_liquid_all.append(num_sec)
+                continue
+
+            data = np.loadtxt(eng_out, skiprows=1)
+            interval = 1
+            mydata = data[::interval] 
+            time = mydata.T[1]
+            num_sec = []
+            traj_file = os.path.join(traj_dir, 'data.output')
+            all_pipeline = import_file(traj_file)
+            for frame_idx in range(0, len(data), interval):
+                cur_pipeline = Pipeline(source=StaticSource(data=all_pipeline.compute(frame_idx)))
+                sel = ExpressionSelectionModifier(expression=expression)
+                cur_pipeline.modifiers.append(sel)
+                data = cur_pipeline.compute()
+                selection = data.particles['Selection']
+                num_selected = np.count_nonzero(selection)
+                num_sec.append(num_selected)
+ 
+                with open(os.path.join(traj_dir, 'liquid.txt'), 'w') as f:
+                    f.write('Time (ps)\tnum_selected\n')
+                    for t, s in zip(time, num_sec):
+                        f.write(f'{t:.3f}\t{s:.2f}\n')
+
+            time_all.append(time)
+            num_liquid_all.append(num_sec)
+
+        if not time_all:
+            self.logger.warning('No valid trajectories found for liquid atom analysis.')
+            return
+
+        # for liquid atom plot: averaging liquid atoms over trajectories (interpolating to the first trajectory's time points)
+        liquid_interp_all = []
+        for time, num_liquid_val in zip(time_all, num_liquid_all):
+            # interpolate the number of liquid atoms to the first trajectory's time points
+            liquid_interp = np.interp(time_all[0], time, num_liquid_val)
+            liquid_interp_all.append(liquid_interp)
+        liquid_avg = np.mean(liquid_interp_all, axis=0)
+        liquid_std = np.std(liquid_interp_all, axis=0)
+        output_dir = single_traj_dir if single_traj_dir is not None else self.traj_folder
+        with open(os.path.join(output_dir, 'liquid.txt'), 'w') as f:
+            f.write('Time (ps)\tnum_liquid\tstd_liquid\n')
+            for t, l, lstd in zip(time_all[0], liquid_avg, liquid_std):
+                f.write(f'{t:.3f}\t{l:.2f}\t{lstd:.2f}\n')
+        self.logger.info('#------------ Liquid atom analysis completed. ------------#/n')
+
+    def cal_R2(
+        self,
+        start_traj: int,
+        num_trajs: int,
+        exclude_list: list[int],
+        n0: float, # atomic density in atoms/Å³
+        ed: float, # deposited nuclear energy in eV
+        single_traj_dir: Optional[str] = None,
+    ):
+        time_all = []
+        R2_all = []
+        self.logger.info(f'#------------R2 analysis, PKA_kin_eng: {self.PKA_kin_eng} eV------------#')
+        cnt = 0
+        traj_dirs = []
+        if single_traj_dir is not None:
+            traj_dirs.append((single_traj_dir, os.path.basename(single_traj_dir.rstrip(os.sep))))
+        else:
+            for num_traj in range(num_trajs):
+                traj_id = start_traj + num_traj
+                if traj_id in exclude_list:
+                    self.logger.info(f'Skipping trajectory {traj_id} as it is in the exclude list.')
+                    continue
+                traj_dir = os.path.join(self.traj_folder, f'{traj_id}')
+                traj_dirs.append((traj_dir, traj_id))
+
+        for traj_dir, traj_id in traj_dirs:
+            eng_out = os.path.join(traj_dir, 'thermo.out')
+            if not os.path.exists(eng_out):
+                continue
+            cnt += 1
+            self.logger.info(f'Starting the {cnt}th trajectory in folder {traj_id}...')
+            data = np.loadtxt(eng_out, skiprows=1)
+            interval = 1
+            mydata = data[::interval] 
+            time = mydata.T[1]
+            R_frame_values = []
+            Q_frame_values = []
+            traj_file = os.path.join(traj_dir, 'data.output')
+            all_pipeline = import_file(traj_file)
+            init_frame = all_pipeline.compute(0)
+            init_pos = np.asarray(init_frame.particles.positions).copy()
+            init_ids = np.asarray(init_frame.particles['Particle Identifier']).copy()
+
+            init_order = np.argsort(init_ids)
+            init_ids_sorted = init_ids[init_order]
+            init_pos_sorted = init_pos[init_order]
+
+            for frame_idx in range(0, len(data), interval):
+                R2_val = 0
+                cur_frame = all_pipeline.compute(frame_idx)
+                cur_pos = np.asarray(cur_frame.particles.positions)
+                cur_ids = np.asarray(cur_frame.particles['Particle Identifier'])
+
+                cur_order = np.argsort(cur_ids)
+                cur_ids_sorted = cur_ids[cur_order]
+                cur_pos_sorted = cur_pos[cur_order]
+                
+                dr = cur_pos_sorted - init_pos_sorted
+                cell = np.asarray(cur_frame.cell.matrix)
+                Lx, Ly, Lz = cell[0, 0], cell[1, 1], cell[2, 2]
+                dr[:, 0] -= Lx * np.round(dr[:, 0] / Lx)
+                dr[:, 1] -= Ly * np.round(dr[:, 1] / Ly)
+                dr[:, 2] -= Lz * np.round(dr[:, 2] / Lz)
+
+                dr2 = np.sum(dr**2, axis=1)
+                R2_val = np.sum(dr2)
+                Q_val = R2_val / (6.0 * n0 * ed)
+                R_frame_values.append(R2_val)
+                Q_frame_values.append(Q_val)
+            
+            time_all.append(time)
+            R2_all.append(R_frame_values)
+            with open(os.path.join(traj_dir, 'R2.txt'), 'w') as f:
+                f.write('Time (ps)\tR2_val\n')
+                for t, r in zip(time, R_frame_values):
+                    f.write(f'{t:.3f}\t{r:.2f}\n') 
+            with open(os.path.join(traj_dir, 'Q.txt'), 'w') as f:
+                f.write('Time (ps)\tQ_val\n')
+                for t, q in zip(time, Q_frame_values):
+                    f.write(f'{t:.3f}\t{q:.2f}\n')
+
+        R2_interp_all = []
+        for time, R2_val in zip(time_all, R2_all):
+            R2_interp = np.interp(time_all[0], time, R2_val)
+            R2_interp_all.append(R2_interp)
+
+        R2_avg = np.mean(R2_interp_all, axis=0)
+        R2_std = np.std(R2_interp_all, axis=0)
+        output_dir = single_traj_dir if single_traj_dir is not None else self.traj_folder
+        with open(os.path.join(output_dir, 'R2.txt'), 'w') as f:
+            f.write('Time (ps)\tavg_R2\tstd_R2\t\n')
+            for t, r, rstd in zip(time_all[0], R2_avg, R2_std):
+                f.write(f'{t:.3f}\t{r:.2f}\t{rstd:.2f}\n')
+        self.logger.info('#------------ Liquid atom analysis completed. ------------#/n')

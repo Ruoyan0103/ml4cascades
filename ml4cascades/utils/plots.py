@@ -35,7 +35,7 @@ class TurbogapCascadePlotter:
         axes[2].plot(Time, Kin_a, label='Kin_a')
         axes[2].plot(Time, Pot_a+pot_shift, label='Pot_a')
         axes[2].plot(Time, Kin_a+Pot_a+pot_shift, label='Tot_a')
-        axes[2].set_xlabel('Time (fs)')
+        axes[2].set_xlabel('Time (ps)')
         axes[2].set_ylabel('Energy (eV)')
         axes[2].legend()
         axes[2].grid(True)
@@ -61,7 +61,7 @@ class TurbogapCascadePlotter:
         axes[1].grid(True)
 
         axes[2].plot(Time, Pressure, label='Pressure')
-        axes[2].set_xlabel('Time (fs)')
+        axes[2].set_xlabel('Time (ps)')
         axes[2].set_ylabel('Pressure (bar)')
         axes[2].legend()
         axes[2].grid(True)
@@ -182,13 +182,13 @@ class LammpsCascadePlotter:
         # step, Time, Ta, Te = data[:,0], data[:,1], data[:,2], data[:,3]
         # Ee, E_random, E_friction = data[:,4], data[:,5], data[:,6]
         # dT_e, ddT_e, S_e = data[:,7], data[:,8], data[:,9]
-        step, Time, Ta, transferred_eng, Te = data[:,0], data[:,1], data[:,2], data[:,3], data[:,4]
+        step, Time, Ta, transferred_eng, Te = data[:,0], data[:,1], data[:,2], data[:,3], data[:,4] 
         # Tborder, Tinside = data[:,5], data[:,6]
         # T_br, T_in = data[:,10], data[:,11]
         data = np.loadtxt(datafile2, skiprows=1)
         step, Epot, Ekin, Etotal = data[:,0], data[:,3], data[:,4], data[:,5]
 
-        fig, axes = plt.subplots(3, 1, figsize=(8, 10))
+        fig, axes = plt.subplots(4, 1, figsize=(8, 12))
         axes[0].plot(Time, transferred_eng, color='red', label='E_transfer')
         # axes[0].plot(Time, E_friction+E_random, color='blue', label='E_transfer2')
         axes[0].set_ylabel('E_transfer (eV)', fontsize=15)
@@ -225,15 +225,22 @@ class LammpsCascadePlotter:
         # axes[2].plot(Time, S_e, label='S_e')
         # axes[2].set_yscale('log')
       
-        axes[2].set_xlabel('Time (ps)', fontsize=15)
+        # axes[2].set_xlabel('Time (ps)', fontsize=15)
         # axes[2].set_ylabel('Power density (eV/Å³/ps)', fontsize=15)
         axes[2].set_ylabel('Energy (eV)', fontsize=15)
         axes[2].legend(fontsize=15)
         axes[2].grid(True)
         
+        axes[3].plot(Time, Epot-Epot[0], label='Epot')
+        axes[3].set_xlabel('Time (ps)', fontsize=15)
+        axes[3].set_ylabel('Energy (eV)', fontsize=15)
+        axes[3].legend(fontsize=15)
+        axes[3].grid(True)
+
         # increase ticks size
         for ax in axes:
             ax.tick_params(axis='both', which='major', labelsize=15)
+            ax.set_xscale('log')
         
         # axes[1].set_xscale('log')
         # fig, ax = plt.subplots(figsize=(6, 6))
@@ -639,7 +646,8 @@ class LammpsCascadePlotter:
         max_te_limit = 0
         min_ta_limit = 10000
         max_ta_limit = 0
-        fig, ax = plt.subplots(1, 2, figsize=(10, 6), sharey=False)
+        fig, ax = plt.subplots(1, 2, figsize=(10, 6), sharey=True)
+        fig2, ax2 = plt.subplots(figsize=(6, 6))
         for i, frame_idx in enumerate(frame_idx_list):
             elec_pipeline = import_file(tout_file)
             elec_data = elec_pipeline.compute(frame_idx)
@@ -678,9 +686,12 @@ class LammpsCascadePlotter:
                     te_list2.append(elec_grids2['te'][grid_id])
                     electron_x_list2.append(elec_grids2.positions[grid_id][0])
             
+            ax[0].plot(x_list, ta_list, color=colors[i], marker='D', markersize=3, label=f'{time_list[i]} ps')
+            ax[1].plot(electron_x_list, te_list, linestyle='--', color=colors[i], marker='D', markersize=3, label=f'{time_list[i]} ps')
 
-            ax[0].plot(electron_x_list, te_list, color=colors[i], marker='D', markersize=4, label=f'{time_list[i]} ps')
-            ax[1].plot(x_list, ta_list, linestyle='--', color=colors[i], marker='D', markersize=4, label=f'{time_list[i]} ps')
+            ax2.plot(x_list, ta_list, color=colors[i], marker='D', markersize=3, label=f'{time_list[i]} ps Ta')
+            ax2.plot(electron_x_list, te_list, linestyle='--',color=colors[i], marker='D', markersize=3, label=f'{time_list[i]} ps Te')
+
             if tout_file2 is not None and dump_file2 is not None:
                 ax[0].plot(
                     electron_x_list2, te_list2,
@@ -699,6 +710,23 @@ class LammpsCascadePlotter:
                     color=colors[i],
                 )
 
+                ax2.plot(
+                    electron_x_list2, te_list2,
+                    linestyle='None',
+                    marker='o',
+                    markersize=4,
+                    markerfacecolor='none',
+                    color=colors[i],
+                )
+                ax2.plot(
+                    x_list2, ta_list2,
+                    linestyle='None',
+                    marker='o',
+                    markerfacecolor='none',
+                    markersize=4,
+                    color=colors[i],
+                )
+
             # for sharey limit 
             min_limit = min(min(te_list), min(ta_list), min_limit, 295) 
             max_limit = max(max(te_list), max(ta_list), max_limit)
@@ -707,14 +735,17 @@ class LammpsCascadePlotter:
             max_te_limit = max(max(te_list), max_te_limit,305)
             min_ta_limit = min(min(ta_list), min_ta_limit, 295)
             max_ta_limit = max(max(ta_list), max_ta_limit, 305)
-        
-        ax[0].set_ylim(min_te_limit, max_te_limit)
-        ax[1].set_ylim(min_ta_limit, max_ta_limit)
+            share_min_limit = min(min_te_limit, min_ta_limit)
+            share_max_limit = max(max_te_limit, max_ta_limit)
+
+        ax[0].set_ylim(share_min_limit, share_max_limit)
+        ax[1].set_ylim(share_min_limit, share_max_limit)
         ax[1].set_ylabel('')
 
         # set a horizontal line at y=300K
         ax[0].axhline(y=300, color='red', label='300 K')
         ax[1].axhline(y=300, color='red', label='300 K')
+        ax2.axhline(y=300, color='red', label='300 K')
     
         ax[0].legend()
         # ax[1].legend()
@@ -722,11 +753,16 @@ class LammpsCascadePlotter:
         ax[1].set_xlabel('X Position (Angstrom)')
         ax[0].set_ylabel('Temperature (K)')
 
-        ax[0].set_title(f'Electronic system ')
-        ax[1].set_title(f'Atomic system ')
+        ax[0].set_title(f'Atomic system ')
+        ax[1].set_title(f'Electronic system ')
 
         ax[0].grid(True)
         ax[1].grid(True)
+
+        ax2.set_xlabel('X Position (Angstrom)')
+        ax2.set_ylabel('Temperature (K)')
+        ax2.legend()
+        ax2.grid(True)
 
         # set y axis to log scale
         # ax[0].set_yscale('log')
@@ -734,8 +770,10 @@ class LammpsCascadePlotter:
   
 
         fig.subplots_adjust(hspace=0)
-        plt.tight_layout()
+        fig.tight_layout()
+        fig2.tight_layout()
         fig.savefig(figfile, dpi=300)
+        fig2.savefig(figfile.replace('.png', '_combined.png'), dpi=300)
             
 
 

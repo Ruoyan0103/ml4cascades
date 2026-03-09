@@ -44,4 +44,4 @@ class CascadeChecker:
             #     dst_folder = os.path.join(self.successful_folder, f'{start_output+num_output}')
             #     shutil.move(src_folder, dst_folder)
             #     self.logger.info(f'Moving from {src_folder} to {dst_folder}.')
-        self.logger.info(f'#---------{failed_case}/{num_outputs} cases failed.---------#')
+        self.logger.info(f'#---------{failed_case}/{num_outputs} cases failed.---------#\n')

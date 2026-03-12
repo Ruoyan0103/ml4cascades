@@ -98,10 +98,6 @@ class CascadeProcessor:
         exclude_list: list[int],
         single_traj_dir: Optional[str] = None,
     ):
-        time_all = []
-        num_vac_all = []
-        num_int_all = []
-        num_def_all = []
         self.logger.info(f'#------------Defect analysis, PKA_kin_eng: {self.PKA_kin_eng} eV------------#')
         cnt = 0
         traj_dirs = []
@@ -155,23 +151,42 @@ class CascadeProcessor:
                     f.write('Time (ps)\tnum_vac\tnum_int\tnum_def\n')
                     for t, v, i, d in zip(time, num_vac, num_int, num_def):
                         f.write(f'{t:.3f}\t{v:.2f}\t{i:.2f}\t{d:.2f}\n') 
+        self.logger.info('#------------ Defect analysis completed. ------------#\n')
 
-            time_all.append(time)
-            num_vac_all.append(num_vac) 
-            num_int_all.append(num_int)
-            num_def_all.append(num_def)
+    def cal_avg_WSDefect(
+        self,
+        other_traj_folder: str
+    ):
+        self.logger.info(f'#------------Average defect analysis, PKA_kin_eng: {self.PKA_kin_eng} eV------------#')
+        defect_files = []
+        for traj_id in os.listdir(self.traj_folder):
+            traj_dir = os.path.join(self.traj_folder, traj_id)
+            if os.path.isdir(traj_dir):
+                defect_file = os.path.join(traj_dir, 'defect.txt')
+                if os.path.exists(defect_file):
+                    defect_files.append(defect_file)
+        for traj_id in os.listdir(other_traj_folder):
+            traj_dir = os.path.join(other_traj_folder, traj_id)
+            if os.path.isdir(traj_dir):
+                defect_file = os.path.join(traj_dir, 'defect.txt')
+                if os.path.exists(defect_file):
+                    defect_files.append(defect_file)
 
-        if not time_all:
-            self.logger.warning('No valid trajectories found for defect analysis.')
-            return
-
-        # for defect plot: averaging defect over trajectories (interpolating to the first trajectory's time points)
+        time_all = []
+        num_vac_all = []
+        num_int_all = []
+        num_def_all = []
+        for defect_file in defect_files:
+            data = np.loadtxt(defect_file, skiprows=1)
+            time_all.append(data.T[0])
+            num_vac_all.append(data.T[1])
+            num_int_all.append(data.T[2])
+            num_def_all.append(data.T[3])
 
         vac_interp_all = []
         int_interp_all = []
         def_interp_all = []
         for time, num_vac_val, num_int_val, num_def_val in zip(time_all, num_vac_all, num_int_all, num_def_all):
-            # interpolate the number of vac/int/def to the first trajectory's time points
             vac_interp = np.interp(time_all[0], time, num_vac_val)
             int_interp = np.interp(time_all[0], time, num_int_val)
             def_interp = np.interp(time_all[0], time, num_def_val)
@@ -184,29 +199,12 @@ class CascadeProcessor:
         int_std = np.std(int_interp_all, axis=0)
         def_avg = np.mean(def_interp_all, axis=0)
         def_std = np.std(def_interp_all, axis=0)
-        output_dir = single_traj_dir if single_traj_dir is not None else self.traj_folder
-        with open(os.path.join(output_dir, 'defect.txt'), 'w') as f:
+
+        with open(os.path.join(self.traj_folder, 'defect.txt'), 'w') as f:
             f.write('Time (ps)\tnum_vac\tstd_vac\tnum_int\tstd_int\tnum_def\tstd_def\n')
             for t, v, vstd, i, istd, d, dstd in zip(time_all[0], vac_avg, vac_std, int_avg, int_std, def_avg, def_std):
                 f.write(f'{t:.3f}\t{v:.2f}\t{vstd:.2f}\t{i:.2f}\t{istd:.2f}\t{d:.2f}\t{dstd:.2f}\n')
-        # fig, ax = plt.subplots(figsize=(6, 4))
-        # vac_low = vac_avg - vac_std
-        # vac_high = vac_avg + vac_std
-        # int_low = int_avg - int_std
-        # int_high = int_avg + int_std
-        # def_low = def_avg - def_std
-        # def_high = def_avg + def_std
-        # ax.plot(time_all[0], def_avg, label='Defects')
-        # ax.fill_between(time_all[0], def_low, def_high, alpha=0.3)
-        # # ax.plot(time_all[0], int_avg, label='Interstitial')
-        # # ax.fill_between(time_all[0], int_low, int_high, alpha=0.3)
-        # ax.set_xlabel('Time (ps)')
-        # ax.set_ylabel('Number of Defects')
-        # ax.set_xscale('log')
-        # ax.legend()
-        # plt.tight_layout()
-        # fig.savefig(os.path.join(output_dir, 'defects.png'), dpi=300)
-        self.logger.info('#------------ Defect analysis completed. ------------#\n')
+
 
     def cal_cluster_final(
             self, 

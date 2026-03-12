@@ -132,7 +132,7 @@ class CascadeCalculator(LMPSCalculator):
                 PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV', f'{radius_frac}-{gsx}')
             os.makedirs(PKA_kin_eng_dir, exist_ok=True)
         elif self.model_name == 'STOPPING':
-            gsx = input_config["gsx"]  # needed for directory path
+            # gsx = input_config["gsx"]  # needed for directory path
             cutoff_eng = input_config["cutoff_eng"]
             if running_dir is not None:
                 PKA_kin_eng_dir = running_dir

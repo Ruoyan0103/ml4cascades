@@ -6,7 +6,7 @@
 #SBATCH --nodes=2
 #SBATCH --ntasks=80
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=20G
+#SBATCH --mem-per-cpu=20G
 #SBATCH --job-name=thermo
 #SBATCH --output=job.out
 #SBATCH --error=job.err

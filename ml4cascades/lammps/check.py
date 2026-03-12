@@ -18,6 +18,7 @@ class CascadeChecker:
         self.radius_frac = radius_frac
         self.traj_folder = traj_folder
         self.grid = grid
+        self.model_name = model_name
         self.log_dir = os.path.join(module_dir, 'logs', task_name)
         self.log_file = os.path.join(self.log_dir, f'{model_name}.log')
         self.logger = AppLogger(__name__, self.log_file, overwrite=True).get_logger()
@@ -27,7 +28,11 @@ class CascadeChecker:
                      start_output: int,
                      num_outputs: int, 
                      running_time: float):
-        self.logger.info(f'#---------Checking, PKA energy: {self.PKA_kin_eng}, supercellsize: {self.supercell_size[0]}-{self.supercell_size[1]}-{self.supercell_size[2]}, radius_frac: {self.radius_frac}, grid: {self.grid}---------#')
+        self.logger.info(f'#---------Checking, PKA energy: {self.PKA_kin_eng}---------#')
+        if self.model_name == 'EPH':
+            self.logger.info(f'#---------Supercellsize: {self.supercell_size[0]}-{self.supercell_size[1]}-{self.supercell_size[2]}, radius_frac: {self.radius_frac}, grid: {self.grid}---------#')
+        else:
+            self.logger.info(f'#---------Supercellsize: {self.supercell_size[0]}-{self.supercell_size[1]}-{self.supercell_size[2]}, radius_frac: {self.radius_frac}, cutoff: {self.grid}---------#')
         failed_case = 0
         for num_output in range(num_outputs):
             output_file = os.path.join(self.traj_folder, f'{start_output+num_output}', 'thermo.out')

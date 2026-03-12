@@ -82,9 +82,11 @@ class CascadeCalculator(LMPSCalculator):
         subprocess.run('sbatch submit-thermo.sh', shell=True, check=True, cwd=thermalize_dir)
 
     # -------------------------------------- PKA direction --------------------------------------#
-    def _get_PKA_directions(self, num_PKA_directions: int) -> np.ndarray:
+    def _get_PKA_directions(self, 
+                            rng: np.random.Generator,
+                            num_PKA_directions: int) -> np.ndarray:
         # random directions uniformly distributed over a unit sphere
-        rng = np.random.default_rng(42)
+        # rng = np.random.default_rng(42)
         phi = rng.uniform(0.0, 2.0 * np.pi, num_PKA_directions)
         costheta = rng.uniform(-1.0, 1.0, num_PKA_directions)
         theta = np.arccos(costheta)
@@ -98,6 +100,7 @@ class CascadeCalculator(LMPSCalculator):
     # -------------------------------------- Cascade simulation --------------------------------------#
     def run_cascade(self,
                     num_PKA_directions: int,
+                    running_directions: list[int], # directions to run, example [1, 2, 3], start from 1 to num_PKA_directions
                     radius_frac: float,
                     PKA_kin_eng: float,
                     input_config: dict,
@@ -126,7 +129,7 @@ class CascadeCalculator(LMPSCalculator):
             if running_dir is not None:
                 PKA_kin_eng_dir = running_dir
             else:
-                PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV-{radius_frac}-{gsx}')
+                PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV', f'{radius_frac}-{gsx}')
             os.makedirs(PKA_kin_eng_dir, exist_ok=True)
         elif self.model_name == 'STOPPING':
             gsx = input_config["gsx"]  # needed for directory path
@@ -134,19 +137,25 @@ class CascadeCalculator(LMPSCalculator):
             if running_dir is not None:
                 PKA_kin_eng_dir = running_dir
             else:
-                PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV-{radius_frac}-{cutoff_eng}')
+                PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV', f'{radius_frac}-{cutoff_eng}')
             os.makedirs(PKA_kin_eng_dir, exist_ok=True)
 
         PKA_id_list = []
         atomsfile = os.path.join(self.calculation_dir, 'thermalize', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}', 'data.output')
         thermalized_struct = read(atomsfile, format='lammps-data')
-        dirs = self._get_PKA_directions(num_PKA_directions)
+        rng = np.random.default_rng(42)
+        dirs = self._get_PKA_directions(rng, num_PKA_directions)
+
         atom_positions = thermalized_struct.get_positions()
         cell_lengths = thermalized_struct.cell.lengths()
         radius = 0.5 * min(cell_lengths) * radius_frac
         center = thermalized_struct.get_center_of_mass()
-        for idx, xyz in enumerate(dirs):
-            # Find PKA atom and set velocity
+        # for idx, xyz in enumerate(dirs):
+        for running_dir in running_directions:
+            if running_dir > num_PKA_directions:
+                self.logger.error(f'Running direction {running_dir} exceeds the number of generated PKA directions {num_PKA_directions}.')
+                continue
+            xyz = dirs[running_dir-1]  # running_dir starts from 1
             target_position = xyz * radius + center
             dists = np.linalg.norm(atom_positions - target_position, axis=1)
             PKA_id = np.argmin(dists)
@@ -157,7 +166,7 @@ class CascadeCalculator(LMPSCalculator):
             self.logger.info(f'Ekin: {int(PKA_kin_eng)} eV, size: {supercell_size[0]}*{supercell_size[1]}*{supercell_size[2]}')
             self.logger.info(f'PKA ID: {PKA_id}, direction: {xyz}, velocity: {velocity} ang/ps')
 
-            cascade_dir = os.path.join(PKA_kin_eng_dir, f'{idx+1}')
+            cascade_dir = os.path.join(PKA_kin_eng_dir, f'{running_dir}')
             os.makedirs(cascade_dir, exist_ok=True)
             shutil.copytree(self.pot_files, cascade_dir, dirs_exist_ok=True)
             
@@ -180,8 +189,9 @@ class CascadeCalculator(LMPSCalculator):
 
             submit_file = os.path.join(cascade_dir, 'submit-cascade.sh')
             with open(submit_file, 'w') as f:
-                f.write(submit_template.format(num=idx+1))
-                
+                f.write(submit_template.format(num=running_dir))
+            
+            self.logger.info(f'Prepared cascade simulation direction {running_dir}.')
             # Submit job
             subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
         return PKA_kin_eng_dir

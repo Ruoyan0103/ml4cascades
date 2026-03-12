@@ -57,8 +57,8 @@ if __name__ == "__main__":
     sw = SWPotential(pair_style, pair_coeff1, pair_coeff2)
     bi = BasicCellInfo(element=['Ge'], atomic_num=[32], mass=72.64, lattice='diamond', alat=[5.76]*3)
     # supercell_size = [16]*3
-    supercell_size = [18]*3
-    model_name  = 'EPH' # 'EPH' or 'STOPPING'
+    supercell_size = [40]*3
+    model_name  = 'STOPPING' # 'EPH' or 'STOPPING'
     calc = CascadeCalculator(sw, bi, model_name=model_name)
 
     '''
@@ -157,10 +157,11 @@ if __name__ == "__main__":
     '''
     ######################################### 4. Cascade simulation #########################################
     '''
-    num_PKA_directions = 30
+    num_PKA_directions = 35
+    running_directions = range(1, 9)  
     radius_frac = 0.7
-    PKA_kin_eng = 1000 # in eV
-    grid_value = 16
+    PKA_kin_eng = 5000 # in eV
+    grid_value = 1
     if choice == '4':
         print("Cascade simulation...")
         input_config = {
@@ -179,11 +180,12 @@ if __name__ == "__main__":
             "gsz": grid_value,
             "eph_C_e": Ce,
             "eph_kappa_e": kappa_e,
-            "cutoff_eng": 10, 
+            "cutoff_eng": 1, 
             # "tinfile": 'NULL',
             # "temperature_dependent": False
         }
         PKA_kin_eng_dir = calc.run_cascade(num_PKA_directions=num_PKA_directions,
+                                           running_directions=running_directions,
                                            radius_frac=radius_frac,
                                            PKA_kin_eng=PKA_kin_eng,
                                            input_config=input_config)
@@ -193,15 +195,29 @@ if __name__ == "__main__":
     '''
     if choice == '5':
         print("Cascade checking...")
+        PKA_kin_eng = 5000
         grid_value = 16
-        PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', f'PKA_1000eV-{radius_frac}-{grid_value}')
-        checker = CascadeChecker(PKA_kin_eng=PKA_kin_eng, 
-                                 supercell_size=supercell_size, 
-                                 radius_frac=radius_frac,
-                                 traj_folder=PKA_kin_eng_dir,
-                                 grid=grid_value,
-                                 model_name=model_name)
-        checker.check_output(start_output=1, num_outputs=30, running_time=65) # in ps  
+        cutoff = 10
+        radius_frac = 0.7
+        if model_name == 'EPH':
+            PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', f'PKA_{PKA_kin_eng}eV', f'{radius_frac}-{grid_value}')
+            checker = CascadeChecker(PKA_kin_eng=PKA_kin_eng, 
+                                    supercell_size=supercell_size, 
+                                    radius_frac=radius_frac,
+                                    traj_folder=PKA_kin_eng_dir,
+                                    grid=grid_value,
+                                    model_name=model_name)
+            print(f"Checking cascade outputs in {PKA_kin_eng_dir}...")
+        elif model_name == 'STOPPING':
+            PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', f'PKA_{PKA_kin_eng}eV', f'{radius_frac}-{cutoff}')
+            checker = CascadeChecker(PKA_kin_eng=PKA_kin_eng, 
+                                    supercell_size=supercell_size, 
+                                    radius_frac=radius_frac,
+                                    traj_folder=PKA_kin_eng_dir,
+                                    grid=cutoff,
+                                    model_name=model_name)
+        checker.check_output(start_output=1, num_outputs=35, running_time=5) # in ps  
+
 
     '''
     ######################################### 6. Cascade data plotting ####################################
@@ -211,15 +227,15 @@ if __name__ == "__main__":
             print("Cascade data plotting...")
             plotter = LammpsCascadePlotter()
             print("Plotting stopping results...")
-            folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/STOPPING/Test-CascadeProcess/Test-border-10/berendsen'
+            folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/STOPPING/cascade/PKA_2000eV/0.7-1/1'
             fig_file = f'{folder}/stopping_results.png'
-            plotter.plot_stopping_results(datafile=f'{folder}/thermo.out', figfile=fig_file, ecut=10)
+            plotter.plot_stopping_results(datafile=f'{folder}/thermo.out', figfile=fig_file, ecut=1)
     
         elif model_name == 'EPH':
             print("Cascade data plotting...")
             plotter = LammpsCascadePlotter()
             print("Plotting eph results...")
-            folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7-16/1'
+            folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_5000eV/0.7-16/1'
             # folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/Test-CascadeProcess/Test-num_grid_points/32-32-32/1'
             fig_file1 = f'{folder}/eph_results.png'
             plotter.plot_eph_results(datafile1=f'{folder}/eng.out', 
@@ -244,7 +260,7 @@ if __name__ == "__main__":
             frame_id_list = [31, 71, 172]
             time_list = [1, 5, 15]  # in ps
             fig_file2 = f'{folder}/extreme_Te_Ta.png'
-            plotter.get_extreme_Te_Ta(new_tout_file, new_dump_file, frame_id_list, time_list, fig_file2) 
+            # plotter.get_extreme_Te_Ta(new_tout_file, new_dump_file, frame_id_list, time_list, fig_file2) 
             
             #---------------------- for grid size 4, electronic system twice size of atomic system ----------------------#
             # grid_list = [37, 38]
@@ -258,22 +274,23 @@ if __name__ == "__main__":
 
             print("Plotting Te and Ta along x...")
             fig_file3 = f'{folder}/Te_Ta_along_x.png'
-            plotter.plot_te_ta_along_x(new_tout_file, new_dump_file, 
-                                       frame_id_list, time_list, 
-                                       grid_list, electron_grid_list, fig_file3)
+            # plotter.plot_te_ta_along_x(new_tout_file, new_dump_file, 
+            #                            frame_id_list, time_list, 
+            #                            grid_list, electron_grid_list, fig_file3)
      
     '''
     ######################################### 7. Cascade output processing ####################################
     '''
     if choice == '7':
         print("Cascade output processing...")
-        PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', 'PKA_1000eV-0.7-16')
-        processor = CascadeProcessor(bi, PKA_kin_eng=1000, traj_folder=PKA_kin_eng_dir, model_name=model_name)
+        PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', 'PKA_2000eV', '0.7-10')
+        processor = CascadeProcessor(bi, PKA_kin_eng=2000, traj_folder=PKA_kin_eng_dir, model_name=model_name)
         # # processor.cal_ibm(num_trajs=1, n0=1, ed=1)    # not working for LAMMPS data format
-        # processor.cal_WSDefect(start_traj=1, num_trajs=2, exclude_list=[])     
+        # processor.cal_WSDefect(start_traj=1, num_trajs=35, exclude_list=[3, 6, 24, 26, 28, 30])     
         # processor.cal_cluster(start_traj=1, num_trajs=30, expression='Occupancy!=1')  
-        # processor.cal_liquid_atoms(start_traj=1, num_trajs=30, expression='c_ek > 0.17', exclude_list=[7])
-        processor.cal_R2(start_traj=1, num_trajs=1, exclude_list=[7], n0=0.042, ed=130, single_traj_dir='/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/STOPPING/cascade/PKA_1000eV-0.7-1/1')
+        processor.cal_liquid_atoms(start_traj=1, num_trajs=35, expression='c_ek > 0.17', exclude_list=[22])
+        # processor.cal_R2(start_traj=1, num_trajs=30, exclude_list=[], n0=0.042, ed=870)
+        # processor.cal_cluster_final(start_traj=1, num_trajs=35, exclude_list=[22], expression='Occupancy!=1')  
    
     '''
     ######################################### 8. EPH processing ####################################

@@ -1,4 +1,4 @@
-import os
+import os, math
 from typing import Optional
 import numpy as np
 from ase.io.lammpsrun import read_lammps_dump_text
@@ -208,22 +208,109 @@ class CascadeProcessor:
         # fig.savefig(os.path.join(output_dir, 'defects.png'), dpi=300)
         self.logger.info('#------------ Defect analysis completed. ------------#\n')
 
+    def cal_cluster_final(
+            self, 
+            start_traj: int, 
+            num_trajs: int,
+            exclude_list: list[int],
+            expression: str, 
+            cutoff: float=8.1,
+            single_traj_dir: Optional[str] = None,
+        ):
+        self.logger.info(f'#------------Cluster analysis, PKA_kin_eng: {self.PKA_kin_eng} eV, cutoff: {cutoff} Å------------#')
+        cnt = 0
+        traj_dirs = []
+        if single_traj_dir is not None:
+            traj_dirs.append((single_traj_dir, os.path.basename(single_traj_dir.rstrip(os.sep))))
+        else:
+            for num_traj in range(num_trajs):
+                traj_id = start_traj + num_traj
+                if traj_id in exclude_list:
+                    self.logger.info(f'Skipping trajectory {traj_id} as it is in the exclude list.')
+                    continue
+                traj_dir = os.path.join(self.traj_folder, f'{traj_id}')
+                traj_dirs.append((traj_dir, traj_id))
+
+        counters = []
+        for traj_dir, traj_id in traj_dirs:
+            cnt += 1
+            self.logger.info(f'Starting the {cnt}th trajectory in folder {traj_id}...')
+            traj_file = os.path.join(traj_dir, 'data.output')
+            all_pipeline = import_file(traj_file)
+            init_frame = all_pipeline.compute(0)
+            reference_pipeline = Pipeline(source=StaticSource(data=init_frame))
+
+            last_frame_idx = all_pipeline.source.num_frames - 1
+            last_pipeline = Pipeline(source=StaticSource(data=all_pipeline.compute(last_frame_idx)))
+            wsam = WignerSeitzAnalysisModifier(per_type_occupancies=True, output_displaced=False)
+            wsam.reference = reference_pipeline.source
+            last_pipeline.modifiers.append(wsam)
+            sel = ExpressionSelectionModifier(expression=expression)
+            last_pipeline.modifiers.append(sel)
+
+            cls = ClusterAnalysisModifier(cutoff=cutoff, sort_by_size=True, only_selected=True)
+            last_pipeline.modifiers.append(cls)
+            data = last_pipeline.compute(0)
+            cluster_sizes = data.tables['clusters']['Cluster Size']
+            count_dict = Counter(cluster_sizes)   # {cluster size: count}
+            counters.append(count_dict)
+            with open (os.path.join(traj_dir, 'defect_cluster.txt'), 'w') as f:
+                f.write('Cluster Size\tCount\n')
+                for size, count in sorted(count_dict.items()):
+                    f.write(f"{size}\t{count}\n")
+
+        stats = {}
+        all_sizes = set()
+        for c in counters:
+            all_sizes.update(c.keys())
+        for size in all_sizes:
+            values = [c.get(size, 0) for c in counters]
+            mean = sum(values) / len(values)
+            var = sum((v - mean) ** 2 for v in values) / len(values)
+            std = math.sqrt(var)
+            stats[size] = (mean, std)
+
+        with open(os.path.join(self.traj_folder, 'defect_cluster.txt'), 'w') as f:
+            f.write('Size\tMean\tStd\n')
+            for size, (mean, std) in sorted(stats.items()):
+                f.write(f"{size}\t{mean:.2f}\t{std:.2f}\n")
+        self.logger.info('#------------ Cluster analysis completed. ------------#\n')
+
+
     # cutoff from 10.1103/PhysRevB.57.7556
-    def cal_cluster(self, start_traj: int, num_trajs: int, expression: str, cutoff: float=8.1):
+    def cal_cluster_vs_time(
+            self, 
+            start_traj: int, 
+            num_trajs: int,
+            exclude_list: list[int],
+            expression: str, 
+            cutoff: float=8.1,
+            single_traj_dir: Optional[str] = None,
+        ):
         time_all = []
         max_cluster_size_all = []
         num_point_defect_all = []
         num_cluster_defect_all = []
         self.logger.info(f'#------------Cluster analysis, PKA_kin_eng: {self.PKA_kin_eng} eV, cutoff: {cutoff} Å------------#')
         cnt = 0
-        for num_traj in range(num_trajs):
-            eng_out = os.path.join(self.traj_folder, f'{start_traj+num_traj}', 'eng.out')
+        traj_dirs = []
+        if single_traj_dir is not None:
+            traj_dirs.append((single_traj_dir, os.path.basename(single_traj_dir.rstrip(os.sep))))
+        else:
+            for num_traj in range(num_trajs):
+                traj_id = start_traj + num_traj
+                if traj_id in exclude_list:
+                    self.logger.info(f'Skipping trajectory {traj_id} as it is in the exclude list.')
+                    continue
+                traj_dir = os.path.join(self.traj_folder, f'{traj_id}')
+                traj_dirs.append((traj_dir, traj_id))
+
+        for traj_dir, traj_id in traj_dirs:
+            eng_out = os.path.join(traj_dir, 'thermo.out')
             if not os.path.exists(eng_out):
                 continue
             cnt += 1
-            if cnt > num_trajs:
-                break
-            self.logger.info(f'Starting the {cnt}th trajectory in folder {start_traj+num_traj}...')
+            self.logger.info(f'Starting the {cnt}th trajectory in folder {traj_id}...')
             data = np.loadtxt(eng_out, skiprows=1)
             interval = 1
             mydata = data[::interval]   
@@ -232,7 +319,7 @@ class CascadeProcessor:
             num_point_defect = []
             num_cluster_defect = []
 
-            traj_file = os.path.join(self.traj_folder, f'{start_traj+num_traj}', 'data.output')
+            traj_file = os.path.join(traj_dir, 'data.output')
             all_pipeline = import_file(traj_file)
             init_frame = all_pipeline.compute(0)
             reference_pipeline = Pipeline(source=StaticSource(data=init_frame))
@@ -325,7 +412,7 @@ class CascadeProcessor:
         ax.legend()
         plt.tight_layout()
         fig.savefig(os.path.join(self.traj_folder, 'defect_cluster.png'), dpi=300)
-        self.logger.info('#------------ Cluster analysis completed. ------------#')
+        self.logger.info('#------------ Cluster analysis completed. ------------#\n')
 
     def cal_liquid_atoms(
         self,
@@ -407,7 +494,7 @@ class CascadeProcessor:
             f.write('Time (ps)\tnum_liquid\tstd_liquid\n')
             for t, l, lstd in zip(time_all[0], liquid_avg, liquid_std):
                 f.write(f'{t:.3f}\t{l:.2f}\t{lstd:.2f}\n')
-        self.logger.info('#------------ Liquid atom analysis completed. ------------#/n')
+        self.logger.info('#------------ Liquid atom analysis completed. ------------#\n')
 
     def cal_R2(
         self,
@@ -485,10 +572,10 @@ class CascadeProcessor:
                 f.write('Time (ps)\tR2_val\n')
                 for t, r in zip(time, R_frame_values):
                     f.write(f'{t:.3f}\t{r:.2f}\n') 
-            with open(os.path.join(traj_dir, 'Q.txt'), 'w') as f:
-                f.write('Time (ps)\tQ_val\n')
-                for t, q in zip(time, Q_frame_values):
-                    f.write(f'{t:.3f}\t{q:.2f}\n')
+            # with open(os.path.join(traj_dir, 'Q.txt'), 'w') as f:
+            #     f.write('Time (ps)\tQ_val\n')
+            #     for t, q in zip(time, Q_frame_values):
+            #         f.write(f'{t:.3f}\t{q:.2f}\n')
 
         R2_interp_all = []
         for time, R2_val in zip(time_all, R2_all):
@@ -502,4 +589,4 @@ class CascadeProcessor:
             f.write('Time (ps)\tavg_R2\tstd_R2\t\n')
             for t, r, rstd in zip(time_all[0], R2_avg, R2_std):
                 f.write(f'{t:.3f}\t{r:.2f}\t{rstd:.2f}\n')
-        self.logger.info('#------------ Liquid atom analysis completed. ------------#/n')
+        self.logger.info('#------------ R2 analysis completed. ------------#\n')

@@ -139,6 +139,14 @@ class CascadeCalculator(LMPSCalculator):
             else:
                 PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV', f'{radius_frac}-{cutoff_eng}')
             os.makedirs(PKA_kin_eng_dir, exist_ok=True)
+        elif self.model_name == 'STOPPING-0K':
+            # gsx = input_config["gsx"]  # needed for directory path
+            cutoff_eng = input_config["cutoff_eng"]
+            if running_dir is not None:
+                PKA_kin_eng_dir = running_dir
+            else:
+                PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV', f'{radius_frac}-{cutoff_eng}')
+            os.makedirs(PKA_kin_eng_dir, exist_ok=True)
 
         PKA_id_list = []
         atomsfile = os.path.join(self.calculation_dir, 'thermalize', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}', 'data.output')
@@ -184,6 +192,13 @@ class CascadeCalculator(LMPSCalculator):
                 self._run_stopping_cascade(cascade_dir, atomsfile, PKA_id, velocity,
                                           xlow, xhigh, ylow, yhigh, zlow, zhigh, temp, 
                                           border_thickness, cascade_steps, cutoff_eng)
+                with open(os.path.join(self.template_dir, 'submit-cascade-stopping.sh'), 'r') as f:
+                    submit_template = f.read()
+            elif self.model_name == 'STOPPING-0K':
+                atomsfile = os.path.join(self.calculation_dir, 'thermalize', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}', 'data.input')
+                self._run_stopping_0K_cascade(cascade_dir, atomsfile, PKA_id, velocity,
+                                              xlow, xhigh, ylow, yhigh, zlow, zhigh, temp, 
+                                              border_thickness, cascade_steps, cutoff_eng)
                 with open(os.path.join(self.template_dir, 'submit-cascade-stopping.sh'), 'r') as f:
                     submit_template = f.read()
 
@@ -265,6 +280,26 @@ class CascadeCalculator(LMPSCalculator):
             input_template = f.read()
         input_file = os.path.join(cascade_dir, 'input.lmp')
         stoppingfile = os.path.join(self.template_dir, 'stopping', 'Ge_Ge_elstop.txt')
+        
+        with open(input_file, 'w') as f:
+            f.write(input_template.format(
+                atomsfile=atomsfile, ff_settings=self.potential.ff_settings, 
+                border_thickness=border_thickness, pka_id=PKA_id,
+                v_x=velocity[0], v_y=velocity[1], v_z=velocity[2],
+                mass=self.bi.mass, cascade_steps=cascade_steps,
+                xlow=xlow, xhigh=xhigh, ylow=ylow, yhigh=yhigh, 
+                zlow=zlow, zhigh=zhigh, temp=temp, cutoff_eng=cutoff_eng, 
+                stoppingfile=stoppingfile))
+            
+    def _run_stopping_0K_cascade(self, cascade_dir: str, atomsfile: str, PKA_id: int, 
+                                    velocity: np.ndarray, xlow: float, xhigh: float,
+                                    ylow: float, yhigh: float, zlow: float, zhigh: float, temp: float,
+                                    border_thickness: float, cascade_steps: int, cutoff_eng: float) -> None:
+        """Prepare and write input file for stopping cascade mode."""
+        with open(os.path.join(self.template_dir, 'cascade-stopping-0K.lmp'), 'r') as f:
+            input_template = f.read()
+        input_file = os.path.join(cascade_dir, 'input.lmp')
+        stoppingfile = os.path.join(self.template_dir, 'stopping', 'Ge_Ge_elstop_srim96.txt')
         
         with open(input_file, 'w') as f:
             f.write(input_template.format(

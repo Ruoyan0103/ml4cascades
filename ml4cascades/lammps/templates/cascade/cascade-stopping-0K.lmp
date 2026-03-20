@@ -56,7 +56,7 @@ variable        ekmaxall equal c_ekmax_all
 #------------------------------ STOPPING ---------------------------
 fix             NVE_thermo all nve       
 fix             stopping all electron/stopping {cutoff_eng} {stoppingfile}
-fix             out1 all print 300 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal) ${{ekmaxall}} $(f_stopping)" file thermo.out screen no
+fix             out1 all print 300 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal) ${{ekmaxall}}" file thermo.out screen no
 dump            2 all custom 300 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val 
 
 variable        stopcond equal "v_ekmaxbrdr>5 || v_t>=45"

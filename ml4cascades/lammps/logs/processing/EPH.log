@@ -1495,3 +1495,442 @@
 2026-03-11 09:37 - ml4cascades.lammps.process - INFO - Starting the 28th trajectory in folder 35...
 2026-03-11 09:37 - ml4cascades.lammps.process - INFO - #------------ Liquid atom analysis completed. ------------#
 
+2026-03-14 10:00 - ml4cascades.lammps.process - INFO - #------------Defect analysis, PKA_kin_eng: 5000 eV-----grid 1-------#
+2026-03-14 10:00 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 1 runs 0.30529361970000235 ps.
+2026-03-14 10:00 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 2 runs 0.3624206294503731 ps.
+2026-03-14 10:00 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 3.
+2026-03-14 10:00 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 4.
+2026-03-14 10:00 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 5.
+2026-03-14 10:00 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 6.
+2026-03-14 10:00 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 7.
+2026-03-14 10:00 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 8.
+2026-03-14 10:00 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 9.
+2026-03-14 10:00 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 10.
+2026-03-14 10:00 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 11.
+2026-03-14 10:00 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 12.
+2026-03-14 10:00 - ml4cascades.lammps.process - INFO - Starting the 1th trajectory in folder 13...
+2026-03-14 10:05 - ml4cascades.lammps.process - INFO - Starting the 2th trajectory in folder 14...
+2026-03-14 10:09 - ml4cascades.lammps.process - INFO - Starting the 3th trajectory in folder 15...
+2026-03-14 10:14 - ml4cascades.lammps.process - INFO - Starting the 4th trajectory in folder 16...
+2026-03-14 10:19 - ml4cascades.lammps.process - INFO - Starting the 5th trajectory in folder 17...
+2026-03-14 10:23 - ml4cascades.lammps.process - INFO - Starting the 6th trajectory in folder 18...
+2026-03-14 10:27 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 19 runs 0.2281925966696843 ps.
+2026-03-14 10:27 - ml4cascades.lammps.process - INFO - Starting the 7th trajectory in folder 20...
+2026-03-14 10:31 - ml4cascades.lammps.process - INFO - Starting the 8th trajectory in folder 21...
+2026-03-14 10:36 - ml4cascades.lammps.process - INFO - Starting the 9th trajectory in folder 22...
+2026-03-14 10:40 - ml4cascades.lammps.process - INFO - Starting the 10th trajectory in folder 23...
+2026-03-14 10:44 - ml4cascades.lammps.process - INFO - Starting the 11th trajectory in folder 24...
+2026-03-14 10:48 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 25.
+2026-03-14 10:48 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 26.
+2026-03-14 10:48 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 27 runs 0.2522282814402617 ps.
+2026-03-14 10:48 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 28.
+2026-03-14 10:48 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 29 runs 0.21786305349524318 ps.
+2026-03-14 10:48 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 30.
+2026-03-14 10:48 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 31.
+2026-03-14 10:48 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 32 runs 0.17431633709581892 ps.
+2026-03-14 10:48 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 33 runs 0.33338447434720625 ps.
+2026-03-14 10:48 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 34 runs 0.21975734811843664 ps.
+2026-03-14 10:48 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 35.
+2026-03-14 10:48 - ml4cascades.lammps.process - INFO - #------------ Defect analysis completed. ------------#
+
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - #------------Defect analysis, PKA_kin_eng: 5000 eV------------#
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 1.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 2.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 3.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 4.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 5.
+2026-03-14 13:54 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 6 runs 0.22761352442181984 ps.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 7.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 8.
+2026-03-14 13:54 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 9 runs 0.28993703543237925 ps.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 10.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 11.
+2026-03-14 13:54 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 12 runs 0.3707882106788323 ps.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 13.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 14.
+2026-03-14 13:54 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 15 runs 0.34084941851277933 ps.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 16.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 17.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 18.
+2026-03-14 13:54 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 19 runs 0.26686341632969235 ps.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 20.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 21.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 22.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 23.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 24.
+2026-03-14 13:54 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 25 runs 0.25945283096764643 ps.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 26.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 27.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 28.
+2026-03-14 13:54 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 29 runs 0.23336686999990258 ps.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 30.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 31.
+2026-03-14 13:54 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 32 runs 0.17432614264433982 ps.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 33.
+2026-03-14 13:54 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 34 runs 0.21721835139296475 ps.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 35.
+2026-03-14 13:54 - ml4cascades.lammps.process - INFO - #------------ Defect analysis completed. ------------#
+
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - #------------Defect analysis, PKA_kin_eng: 5000 eV------------#
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 1.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 2.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 3.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 4.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 5.
+2026-03-14 13:55 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 6 runs 0.22761352442181984 ps.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 7.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 8.
+2026-03-14 13:55 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 9 runs 0.28993703543237925 ps.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 10.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 11.
+2026-03-14 13:55 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 12 runs 0.3707882106788323 ps.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 13.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 14.
+2026-03-14 13:55 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 15 runs 0.34084941851277933 ps.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 16.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 17.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 18.
+2026-03-14 13:55 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 19 runs 0.26686341632969235 ps.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 20.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 21.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 22.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 23.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 24.
+2026-03-14 13:55 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 25 runs 0.25945283096764643 ps.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 26.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 27.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 28.
+2026-03-14 13:55 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 29 runs 0.23336686999990258 ps.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 30.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 31.
+2026-03-14 13:55 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 32 runs 0.17432614264433982 ps.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 33.
+2026-03-14 13:55 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 34 runs 0.21721835139296475 ps.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 35.
+2026-03-14 13:55 - ml4cascades.lammps.process - INFO - #------------ Defect analysis completed. ------------#
+
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - #------------Defect analysis, PKA_kin_eng: 5000 eV------------#
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 1.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 2.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 3.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 4.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 5.
+2026-03-14 13:57 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 6 runs 0.22761352442181984 ps.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 7.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 8.
+2026-03-14 13:57 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 9 runs 0.28993703543237925 ps.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 10.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 11.
+2026-03-14 13:57 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 12 runs 0.3707882106788323 ps.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 13.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 14.
+2026-03-14 13:57 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 15 runs 0.34084941851277933 ps.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 16.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 17.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 18.
+2026-03-14 13:57 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 19 runs 0.26686341632969235 ps.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 20.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 21.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 22.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 23.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 24.
+2026-03-14 13:57 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 25 runs 0.25945283096764643 ps.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 26.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 27.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 28.
+2026-03-14 13:57 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 29 runs 0.23336686999990258 ps.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 30.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 31.
+2026-03-14 13:57 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 32 runs 0.17432614264433982 ps.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 33.
+2026-03-14 13:57 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 34 runs 0.21721835139296475 ps.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 35.
+2026-03-14 13:57 - ml4cascades.lammps.process - INFO - #------------ Defect analysis completed. ------------#
+
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - #------------Defect analysis, PKA_kin_eng: 5000 eV------------#
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 1.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 2.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 3.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 4.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 5.
+2026-03-14 13:59 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 6 runs 0.22761352442181984 ps.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 7.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 8.
+2026-03-14 13:59 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 9 runs 0.28993703543237925 ps.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 10.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 11.
+2026-03-14 13:59 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 12 runs 0.3707882106788323 ps.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 13.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 14.
+2026-03-14 13:59 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 15 runs 0.34084941851277933 ps.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 16.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 17.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 18.
+2026-03-14 13:59 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 19 runs 0.26686341632969235 ps.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 20.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 21.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 22.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 23.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 24.
+2026-03-14 13:59 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 25 runs 0.25945283096764643 ps.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 26.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 27.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 28.
+2026-03-14 13:59 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 29 runs 0.23336686999990258 ps.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 30.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 31.
+2026-03-14 13:59 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 32 runs 0.17432614264433982 ps.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 33.
+2026-03-14 13:59 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 34 runs 0.21721835139296475 ps.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 35.
+2026-03-14 13:59 - ml4cascades.lammps.process - INFO - #------------ Defect analysis completed. ------------#
+
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - #------------Defect analysis, PKA_kin_eng: 5000 eV------------#
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 1.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 2.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 3.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 4.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 5.
+2026-03-14 16:17 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 6 runs 0.22761352442181984 ps.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 7.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 8.
+2026-03-14 16:17 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 9 runs 0.28993703543237925 ps.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 10.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 11.
+2026-03-14 16:17 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 12 runs 0.3707882106788323 ps.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 13.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 14.
+2026-03-14 16:17 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 15 runs 0.34084941851277933 ps.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 16.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 17.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 18.
+2026-03-14 16:17 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 19 runs 0.26686341632969235 ps.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 20.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 21.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 22.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 23.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 24.
+2026-03-14 16:17 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 25 runs 0.25945283096764643 ps.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 26.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 27.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 28.
+2026-03-14 16:17 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 29 runs 0.23336686999990258 ps.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 30.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 31.
+2026-03-14 16:17 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 32 runs 0.17432614264433982 ps.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 33.
+2026-03-14 16:17 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 34 runs 0.21721835139296475 ps.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 35.
+2026-03-14 16:17 - ml4cascades.lammps.process - INFO - #------------ Defect analysis completed. ------------#
+
+
+2026-03-16 08:56 - ml4cascades.lammps.process - INFO - #------------Average defect analysis, PKA_kin_eng: 5000 eV-----grid 1-------#
+2026-03-16 08:56 - ml4cascades.lammps.process - INFO - #------------Processing 32 files------------#
+
+2026-03-16 08:57 - ml4cascades.lammps.process - INFO - #------------Average defect analysis, PKA_kin_eng: 5000 eV-----grid 16-------#
+2026-03-16 08:57 - ml4cascades.lammps.process - INFO - #------------Processing 34 files------------#
+
+# radius: 0.7 grid 1 #
+
+2026-03-18 08:00 - ml4cascades.lammps.process - INFO - #------------Defect analysis, PKA_kin_eng: 10000 eV------------#
+2026-03-18 08:00 - ml4cascades.lammps.process - INFO - Starting the 1th trajectory in folder 1...
+2026-03-18 08:07 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 2 runs 0.38963040443269825 ps.
+2026-03-18 08:07 - ml4cascades.lammps.process - INFO - Starting the 2th trajectory in folder 3...
+2026-03-18 08:14 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 4 runs 0.1676467098334347 ps.
+2026-03-18 08:14 - ml4cascades.lammps.process - INFO - Starting the 3th trajectory in folder 5...
+2026-03-18 08:22 - ml4cascades.lammps.process - INFO - Starting the 4th trajectory in folder 6...
+2026-03-18 08:29 - ml4cascades.lammps.process - INFO - Starting the 5th trajectory in folder 7...
+2026-03-18 08:37 - ml4cascades.lammps.process - INFO - Starting the 6th trajectory in folder 8...
+2026-03-18 08:44 - ml4cascades.lammps.process - INFO - Starting the 7th trajectory in folder 9...
+2026-03-18 08:53 - ml4cascades.lammps.process - INFO - Starting the 8th trajectory in folder 10...
+2026-03-18 09:00 - ml4cascades.lammps.process - INFO - Starting the 9th trajectory in folder 11...
+2026-03-18 09:07 - ml4cascades.lammps.process - INFO - Starting the 10th trajectory in folder 12...
+2026-03-18 09:15 - ml4cascades.lammps.process - INFO - Starting the 11th trajectory in folder 13...
+2026-03-18 09:22 - ml4cascades.lammps.process - INFO - Starting the 12th trajectory in folder 14...
+2026-03-18 09:30 - ml4cascades.lammps.process - INFO - Starting the 13th trajectory in folder 15...
+2026-03-18 09:38 - ml4cascades.lammps.process - INFO - Starting the 14th trajectory in folder 16...
+2026-03-18 09:46 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 17 runs 0.26396432223576505 ps.
+2026-03-18 09:46 - ml4cascades.lammps.process - INFO - Starting the 15th trajectory in folder 18...
+2026-03-18 09:53 - ml4cascades.lammps.process - INFO - Starting the 16th trajectory in folder 19...
+2026-03-18 10:01 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 20 runs 0.2553718848559777 ps.
+2026-03-18 10:01 - ml4cascades.lammps.process - INFO - Starting the 17th trajectory in folder 21...
+2026-03-18 10:10 - ml4cascades.lammps.process - INFO - Starting the 18th trajectory in folder 22...
+2026-03-18 10:17 - ml4cascades.lammps.process - INFO - Starting the 19th trajectory in folder 23...
+2026-03-18 10:25 - ml4cascades.lammps.process - INFO - Starting the 20th trajectory in folder 24...
+2026-03-18 10:33 - ml4cascades.lammps.process - INFO - Starting the 21th trajectory in folder 25...
+2026-03-18 10:40 - ml4cascades.lammps.process - INFO - Starting the 22th trajectory in folder 26...
+2026-03-18 10:48 - ml4cascades.lammps.process - INFO - Starting the 23th trajectory in folder 27...
+2026-03-18 10:55 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 28 runs 0.38585445038969196 ps.
+2026-03-18 10:55 - ml4cascades.lammps.process - INFO - Starting the 24th trajectory in folder 29...
+2026-03-18 11:03 - ml4cascades.lammps.process - INFO - Starting the 25th trajectory in folder 30...
+2026-03-18 11:12 - ml4cascades.lammps.process - INFO - #------------ Defect analysis completed. ------------#
+
+# radius: 0.8 grid 1 #
+2026-03-18 11:18 - ml4cascades.lammps.process - INFO - #------------Defect analysis, PKA_kin_eng: 10000 eV------------#
+2026-03-18 11:18 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 1.
+2026-03-18 11:18 - ml4cascades.lammps.process - INFO - Starting the 1th trajectory in folder 2...
+2026-03-18 11:25 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 3.
+2026-03-18 11:25 - ml4cascades.lammps.process - INFO - Starting the 2th trajectory in folder 4...
+2026-03-18 11:32 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 5.
+2026-03-18 11:32 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 6.
+2026-03-18 11:32 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 7.
+2026-03-18 11:32 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 8.
+2026-03-18 11:32 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 9.
+2026-03-18 11:32 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 10.
+2026-03-18 11:32 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 11.
+2026-03-18 11:32 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 12.
+2026-03-18 11:32 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 13.
+2026-03-18 11:32 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 14.
+2026-03-18 11:32 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 15.
+2026-03-18 11:32 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 16.
+2026-03-18 11:32 - ml4cascades.lammps.process - INFO - Starting the 3th trajectory in folder 17...
+2026-03-18 11:39 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 18.
+2026-03-18 11:39 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 19.
+2026-03-18 11:39 - ml4cascades.lammps.process - INFO - Starting the 4th trajectory in folder 20...
+2026-03-18 11:46 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 21.
+2026-03-18 11:46 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 22.
+2026-03-18 11:46 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 23.
+2026-03-18 11:46 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 24.
+2026-03-18 11:46 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 25.
+2026-03-18 11:46 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 26.
+2026-03-18 11:46 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 27.
+2026-03-18 11:46 - ml4cascades.lammps.process - INFO - Starting the 5th trajectory in folder 28...
+2026-03-18 11:54 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 29.
+2026-03-18 11:54 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 30.
+2026-03-18 11:54 - ml4cascades.lammps.process - INFO - #------------ Defect analysis completed. ------------#
+
+# radius: 0.7 grid 16 #
+2026-03-18 11:59 - ml4cascades.lammps.process - INFO - #------------Defect analysis, PKA_kin_eng: 10000 eV------------#
+2026-03-18 11:59 - ml4cascades.lammps.process - INFO - Starting the 1th trajectory in folder 1...
+2026-03-18 12:06 - ml4cascades.lammps.process - INFO - Starting the 2th trajectory in folder 2...
+2026-03-18 12:12 - ml4cascades.lammps.process - INFO - Starting the 3th trajectory in folder 3...
+2026-03-18 12:19 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 4 runs 0.3653207064742065 ps.
+2026-03-18 12:19 - ml4cascades.lammps.process - INFO - Starting the 4th trajectory in folder 5...
+2026-03-18 12:26 - ml4cascades.lammps.process - INFO - Starting the 5th trajectory in folder 6...
+2026-03-18 12:33 - ml4cascades.lammps.process - INFO - Starting the 6th trajectory in folder 7...
+2026-03-18 12:40 - ml4cascades.lammps.process - INFO - Starting the 7th trajectory in folder 8...
+2026-03-18 12:47 - ml4cascades.lammps.process - INFO - Starting the 8th trajectory in folder 9...
+2026-03-18 12:54 - ml4cascades.lammps.process - INFO - Starting the 9th trajectory in folder 10...
+2026-03-18 13:01 - ml4cascades.lammps.process - INFO - Starting the 10th trajectory in folder 11...
+2026-03-18 13:07 - ml4cascades.lammps.process - INFO - Starting the 11th trajectory in folder 12...
+2026-03-18 13:14 - ml4cascades.lammps.process - INFO - Starting the 12th trajectory in folder 13...
+2026-03-18 13:21 - ml4cascades.lammps.process - INFO - Starting the 13th trajectory in folder 14...
+2026-03-18 13:28 - ml4cascades.lammps.process - INFO - Starting the 14th trajectory in folder 15...
+2026-03-18 13:35 - ml4cascades.lammps.process - INFO - Starting the 15th trajectory in folder 16...
+2026-03-18 13:42 - ml4cascades.lammps.process - INFO - Starting the 16th trajectory in folder 17...
+2026-03-18 13:49 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 18 runs 0.40885518215107414 ps.
+2026-03-18 13:49 - ml4cascades.lammps.process - INFO - Starting the 17th trajectory in folder 19...
+2026-03-18 13:56 - ml4cascades.lammps.process - INFO - Starting the 18th trajectory in folder 20...
+2026-03-18 14:04 - ml4cascades.lammps.process - INFO - Starting the 19th trajectory in folder 21...
+2026-03-18 14:11 - ml4cascades.lammps.process - INFO - Starting the 20th trajectory in folder 22...
+2026-03-18 14:18 - ml4cascades.lammps.process - INFO - Starting the 21th trajectory in folder 23...
+2026-03-18 14:25 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 24 runs 0.1863995981000284 ps.
+2026-03-18 14:25 - ml4cascades.lammps.process - INFO - Starting the 22th trajectory in folder 25...
+2026-03-18 14:32 - ml4cascades.lammps.process - INFO - Starting the 23th trajectory in folder 26...
+2026-03-18 14:39 - ml4cascades.lammps.process - INFO - Starting the 24th trajectory in folder 27...
+2026-03-18 14:46 - ml4cascades.lammps.process - INFO - Starting the 25th trajectory in folder 28...
+2026-03-18 14:53 - ml4cascades.lammps.process - INFO - Starting the 26th trajectory in folder 29...
+2026-03-18 15:00 - ml4cascades.lammps.process - INFO - Starting the 27th trajectory in folder 30...
+2026-03-18 15:07 - ml4cascades.lammps.process - INFO - #------------ Defect analysis completed. ------------#
+
+2026-03-18 15:09 - ml4cascades.lammps.process - INFO - #------------Defect analysis, PKA_kin_eng: 10000 eV------------#
+2026-03-18 15:09 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 1.
+2026-03-18 15:09 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 2.
+2026-03-18 15:09 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 3.
+2026-03-18 15:09 - ml4cascades.lammps.process - INFO - Starting the 1th trajectory in folder 4...
+2026-03-18 15:16 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 5.
+2026-03-18 15:16 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 6.
+2026-03-18 15:16 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 7.
+2026-03-18 15:16 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 8.
+2026-03-18 15:16 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 9.
+2026-03-18 15:16 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 10.
+2026-03-18 15:16 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 11.
+2026-03-18 15:16 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 12.
+2026-03-18 15:16 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 13.
+2026-03-18 15:16 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 14.
+2026-03-18 15:16 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 15.
+2026-03-18 15:16 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 16.
+2026-03-18 15:16 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 17.
+2026-03-18 15:16 - ml4cascades.lammps.process - INFO - Starting the 2th trajectory in folder 18...
+2026-03-18 15:24 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 19.
+2026-03-18 15:24 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 20.
+2026-03-18 15:24 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 21.
+2026-03-18 15:24 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 22.
+2026-03-18 15:24 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 23.
+2026-03-18 15:24 - ml4cascades.lammps.process - INFO - Starting the 3th trajectory in folder 24...
+2026-03-18 15:32 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 25.
+2026-03-18 15:32 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 26.
+2026-03-18 15:32 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 27.
+2026-03-18 15:32 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 28.
+2026-03-18 15:32 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 29.
+2026-03-18 15:32 - ml4cascades.lammps.process - WARNING - Warning: thermo.out does not exist in folder 30.
+2026-03-18 15:32 - ml4cascades.lammps.process - INFO - #------------ Defect analysis completed. ------------#
+
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - #------------Average defect analysis, PKA_kin_eng: 10000 eV------grid 1------#
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 30 running 45.03 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 11 running 44.995 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 29 running 44.858 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 12 running 45.004 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 9 running 45.018 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 1 running 44.916 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 3 running 44.885 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 24 running 44.92 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 22 running 44.998 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 26 running 44.862 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 8 running 44.849 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 6 running 45.057 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 5 running 44.822 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 15 running 44.967 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 16 running 45.097 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 21 running 45.031 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 10 running 44.883 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 7 running 44.976 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 27 running 44.903 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 19 running 45.092 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 18 running 44.864 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 14 running 44.925 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 13 running 45.02 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 25 running 45.083 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 23 running 44.846 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 2 running 44.94 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 20 running 44.984 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 28 running 45.048 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 17 running 45.035 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - Found defect.txt in 4 running 44.82 ps.
+2026-03-18 15:56 - ml4cascades.lammps.process - INFO - #------------Processing 30 files------------#
+
+
+
+
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - #------------Average defect analysis, PKA_kin_eng: 10000 eV------------#
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 30 running 44.849 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 11 running 45.1 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 29 running 44.923 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 12 running 45.068 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 9 running 44.881 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 1 running 44.908 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 3 running 45.035 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 22 running 45.094 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 26 running 44.819 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 2 running 44.863 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 20 running 44.824 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 8 running 44.86 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 6 running 44.843 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 5 running 45.012 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 15 running 45.001 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 16 running 44.986 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 21 running 44.803 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 10 running 44.827 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 7 running 44.98 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 27 running 44.95 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 19 running 44.864 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 28 running 44.872 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 14 running 44.906 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 13 running 45.054 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 17 running 44.829 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 25 running 44.888 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 23 running 45.086 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 24 running 45.033 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 18 running 45.027 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - Found defect.txt in 4 running 44.808 ps.
+2026-03-18 15:59 - ml4cascades.lammps.process - INFO - #------------Processing 30 files------------#

@@ -1,0 +1,270 @@
+2026-03-19 11:19 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:19 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 16807, direction: [ 0.1175276  -0.7749033  -0.62105728], velocity: [-38.31136082 252.60109656 202.45074632] ang/ps
+2026-03-19 11:19 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 1.
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 9382, direction: [-0.62345351  0.25193918 -0.74015699], velocity: [203.23186291 -82.12652398 241.27458008] ang/ps
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 2.
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 22971, direction: [ 0.62986661 -0.77518195 -0.04859015], velocity: [-205.32238872  252.69193171   15.83929844] ang/ps
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 3.
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 12718, direction: [-0.27199198 -0.79227921 -0.5461813 ], velocity: [ 88.66328534 258.26525569 178.04285599] ang/ps
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 4.
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 25931, direction: [0.78064102 0.52464505 0.33962799], velocity: [-254.47146652 -171.02251983 -110.71110818] ang/ps
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 5.
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 27577, direction: [ 0.98045414 -0.151361   -0.12569616], velocity: [-319.60606285   49.34029073   40.97413009] ang/ps
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 6.
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 16859, direction: [ 0.05220879 -0.744698    0.66535639], velocity: [ -17.01889533  242.75484824 -216.89126284] ang/ps
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 7.
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 18896, direction: [ 0.20585638 -0.89285985  0.4005302 ], velocity: [ -67.10456346  291.05228725 -130.56386439] ang/ps
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 8.
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 23979, direction: [ 0.64248209  0.66812548 -0.37526672], velocity: [-209.43475414 -217.79392209  122.32853425] ang/ps
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 9.
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 7389, direction: [-0.71125467  0.22919533  0.6645196 ], velocity: [ 231.85307075  -74.7125368  -216.61848828] ang/ps
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 10.
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 9567, direction: [-0.54557513  0.57517173  0.60952871], velocity: [ 177.84525762 -187.49308653 -198.69269206] ang/ps
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 11.
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 25269, direction: [ 0.87300313 -0.4326905  -0.22504324], velocity: [-284.57944303  141.04740125   73.35905015] ang/ps
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 12.
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:21 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 8748, direction: [-0.56036523 -0.71187839 -0.42334379], velocity: [182.66649726 232.05639194 138.00058251] ang/ps
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 13.
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 20944, direction: [ 0.41096198 -0.8353992   0.36499101], velocity: [-133.96438946  272.32140328 -118.97888346] ang/ps
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 14.
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 9376, direction: [-0.65009039  0.24139053 -0.72049503], velocity: [211.91488952 -78.68789979 234.86522318] ang/ps
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 15.
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 17956, direction: [ 0.11400143  0.79169649 -0.6001836 ], velocity: [ -37.16190911 -258.07530032  195.64639253] ang/ps
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 16.
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 15250, direction: [-0.16101713 -0.05749566 -0.98527546], velocity: [ 52.48797347  18.74229544 321.17770476] ang/ps
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 17.
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 25944, direction: [0.7540018  0.31965434 0.57384876], velocity: [-245.78767656 -104.20014692 -187.06182525] ang/ps
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 18.
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 20940, direction: [ 0.44245309 -0.83398564  0.32970171], velocity: [-144.22978641  271.8606145  -107.47536475] ang/ps
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 19.
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 8785, direction: [-0.61727765 -0.6712652   0.41033076], velocity: [ 201.21867054  218.81740312 -133.75862497] ang/ps
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 20.
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 16857, direction: [ 0.04203304 -0.82643697  0.56145806], velocity: [ -13.70182996  269.39991937 -183.02273721] ang/ps
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 21.
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 9788, direction: [-0.60848631  0.7892989  -0.08216845], velocity: [ 198.35289208 -257.29374103   26.78507168] ang/ps
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 22.
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 27459, direction: [ 0.97376431 -0.18133299  0.13748239], velocity: [-317.42532923   59.11048731  -44.81617664] ang/ps
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 23.
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 21149, direction: [ 0.54295773 -0.43152299 -0.720406  ], velocity: [-176.99204327  140.66681919  234.83620171] ang/ps
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 24.
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 16925, direction: [ 0.11298425 -0.62680643 -0.77093985], velocity: [-36.8303309  204.3248403  251.30910329] ang/ps
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 25.
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 20172, direction: [0.3209571  0.88518264 0.33680592], velocity: [-104.6248161  -288.5496909  -109.79117802] ang/ps
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 26.
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 5308, direction: [-0.97658269  0.20723061 -0.05780759], velocity: [318.3440579  -67.55253037  18.84397723] ang/ps
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 27.
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 27842, direction: [0.95413717 0.26944251 0.13047221], velocity: [-311.02731971  -87.83221591  -42.53101551] ang/ps
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 28.
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 21971, direction: [0.47977249 0.69922871 0.52999771], velocity: [-156.39507121 -227.93287775 -172.76736954] ang/ps
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 29.
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 10700, direction: [-0.3932661  -0.87905954  0.26943664], velocity: [128.19592894 286.55369623 -87.83030237] ang/ps
+2026-03-19 11:22 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 30.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 16807, direction: [ 0.1175276  -0.7749033  -0.62105728], velocity: [-38.31136082 252.60109656 202.45074632] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 1.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 9382, direction: [-0.62345351  0.25193918 -0.74015699], velocity: [203.23186291 -82.12652398 241.27458008] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 2.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 22971, direction: [ 0.62986661 -0.77518195 -0.04859015], velocity: [-205.32238872  252.69193171   15.83929844] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 3.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 12718, direction: [-0.27199198 -0.79227921 -0.5461813 ], velocity: [ 88.66328534 258.26525569 178.04285599] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 4.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 25931, direction: [0.78064102 0.52464505 0.33962799], velocity: [-254.47146652 -171.02251983 -110.71110818] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 5.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 27577, direction: [ 0.98045414 -0.151361   -0.12569616], velocity: [-319.60606285   49.34029073   40.97413009] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 6.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 16859, direction: [ 0.05220879 -0.744698    0.66535639], velocity: [ -17.01889533  242.75484824 -216.89126284] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 7.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 18896, direction: [ 0.20585638 -0.89285985  0.4005302 ], velocity: [ -67.10456346  291.05228725 -130.56386439] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 8.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 23979, direction: [ 0.64248209  0.66812548 -0.37526672], velocity: [-209.43475414 -217.79392209  122.32853425] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 9.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 7389, direction: [-0.71125467  0.22919533  0.6645196 ], velocity: [ 231.85307075  -74.7125368  -216.61848828] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 10.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 9567, direction: [-0.54557513  0.57517173  0.60952871], velocity: [ 177.84525762 -187.49308653 -198.69269206] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 11.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 25269, direction: [ 0.87300313 -0.4326905  -0.22504324], velocity: [-284.57944303  141.04740125   73.35905015] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 12.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 8748, direction: [-0.56036523 -0.71187839 -0.42334379], velocity: [182.66649726 232.05639194 138.00058251] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 13.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 20944, direction: [ 0.41096198 -0.8353992   0.36499101], velocity: [-133.96438946  272.32140328 -118.97888346] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 14.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 9376, direction: [-0.65009039  0.24139053 -0.72049503], velocity: [211.91488952 -78.68789979 234.86522318] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 15.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 17956, direction: [ 0.11400143  0.79169649 -0.6001836 ], velocity: [ -37.16190911 -258.07530032  195.64639253] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 16.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 15250, direction: [-0.16101713 -0.05749566 -0.98527546], velocity: [ 52.48797347  18.74229544 321.17770476] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 17.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 25944, direction: [0.7540018  0.31965434 0.57384876], velocity: [-245.78767656 -104.20014692 -187.06182525] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 18.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 20940, direction: [ 0.44245309 -0.83398564  0.32970171], velocity: [-144.22978641  271.8606145  -107.47536475] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 19.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 8785, direction: [-0.61727765 -0.6712652   0.41033076], velocity: [ 201.21867054  218.81740312 -133.75862497] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 20.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 16857, direction: [ 0.04203304 -0.82643697  0.56145806], velocity: [ -13.70182996  269.39991937 -183.02273721] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 21.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 9788, direction: [-0.60848631  0.7892989  -0.08216845], velocity: [ 198.35289208 -257.29374103   26.78507168] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 22.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 27459, direction: [ 0.97376431 -0.18133299  0.13748239], velocity: [-317.42532923   59.11048731  -44.81617664] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 23.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 21149, direction: [ 0.54295773 -0.43152299 -0.720406  ], velocity: [-176.99204327  140.66681919  234.83620171] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 24.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 16925, direction: [ 0.11298425 -0.62680643 -0.77093985], velocity: [-36.8303309  204.3248403  251.30910329] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 25.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 20172, direction: [0.3209571  0.88518264 0.33680592], velocity: [-104.6248161  -288.5496909  -109.79117802] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 26.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 5308, direction: [-0.97658269  0.20723061 -0.05780759], velocity: [318.3440579  -67.55253037  18.84397723] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 27.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 27842, direction: [0.95413717 0.26944251 0.13047221], velocity: [-311.02731971  -87.83221591  -42.53101551] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 28.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 21971, direction: [0.47977249 0.69922871 0.52999771], velocity: [-156.39507121 -227.93287775 -172.76736954] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 29.
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 10700, direction: [-0.3932661  -0.87905954  0.26943664], velocity: [128.19592894 286.55369623 -87.83030237] ang/ps
+2026-03-19 11:50 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 30.
+2026-03-20 13:58 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 13:58 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 16807, direction: [ 0.1175276  -0.7749033  -0.62105728], velocity: [-38.31136082 252.60109656 202.45074632] ang/ps
+2026-03-20 13:58 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 1.
+2026-03-20 13:59 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 13:59 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 9382, direction: [-0.62345351  0.25193918 -0.74015699], velocity: [203.23186291 -82.12652398 241.27458008] ang/ps
+2026-03-20 13:59 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 2.
+2026-03-20 13:59 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 13:59 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 22971, direction: [ 0.62986661 -0.77518195 -0.04859015], velocity: [-205.32238872  252.69193171   15.83929844] ang/ps
+2026-03-20 13:59 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 3.
+2026-03-20 13:59 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 13:59 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 12718, direction: [-0.27199198 -0.79227921 -0.5461813 ], velocity: [ 88.66328534 258.26525569 178.04285599] ang/ps
+2026-03-20 13:59 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 4.
+2026-03-20 13:59 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 13:59 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 25931, direction: [0.78064102 0.52464505 0.33962799], velocity: [-254.47146652 -171.02251983 -110.71110818] ang/ps
+2026-03-20 13:59 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 5.
+2026-03-20 13:59 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 13:59 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 27577, direction: [ 0.98045414 -0.151361   -0.12569616], velocity: [-319.60606285   49.34029073   40.97413009] ang/ps
+2026-03-20 13:59 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 6.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 16859, direction: [ 0.05220879 -0.744698    0.66535639], velocity: [ -17.01889533  242.75484824 -216.89126284] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 7.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 18896, direction: [ 0.20585638 -0.89285985  0.4005302 ], velocity: [ -67.10456346  291.05228725 -130.56386439] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 8.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 23979, direction: [ 0.64248209  0.66812548 -0.37526672], velocity: [-209.43475414 -217.79392209  122.32853425] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 9.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 7389, direction: [-0.71125467  0.22919533  0.6645196 ], velocity: [ 231.85307075  -74.7125368  -216.61848828] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 10.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 9567, direction: [-0.54557513  0.57517173  0.60952871], velocity: [ 177.84525762 -187.49308653 -198.69269206] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 11.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 25269, direction: [ 0.87300313 -0.4326905  -0.22504324], velocity: [-284.57944303  141.04740125   73.35905015] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 12.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 8748, direction: [-0.56036523 -0.71187839 -0.42334379], velocity: [182.66649726 232.05639194 138.00058251] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 13.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 20944, direction: [ 0.41096198 -0.8353992   0.36499101], velocity: [-133.96438946  272.32140328 -118.97888346] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 14.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 9376, direction: [-0.65009039  0.24139053 -0.72049503], velocity: [211.91488952 -78.68789979 234.86522318] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 15.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 17956, direction: [ 0.11400143  0.79169649 -0.6001836 ], velocity: [ -37.16190911 -258.07530032  195.64639253] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 16.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 15250, direction: [-0.16101713 -0.05749566 -0.98527546], velocity: [ 52.48797347  18.74229544 321.17770476] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 17.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 25944, direction: [0.7540018  0.31965434 0.57384876], velocity: [-245.78767656 -104.20014692 -187.06182525] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 18.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 20940, direction: [ 0.44245309 -0.83398564  0.32970171], velocity: [-144.22978641  271.8606145  -107.47536475] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 19.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 8785, direction: [-0.61727765 -0.6712652   0.41033076], velocity: [ 201.21867054  218.81740312 -133.75862497] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 20.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 16857, direction: [ 0.04203304 -0.82643697  0.56145806], velocity: [ -13.70182996  269.39991937 -183.02273721] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 21.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 9788, direction: [-0.60848631  0.7892989  -0.08216845], velocity: [ 198.35289208 -257.29374103   26.78507168] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 22.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 27459, direction: [ 0.97376431 -0.18133299  0.13748239], velocity: [-317.42532923   59.11048731  -44.81617664] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 23.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 21149, direction: [ 0.54295773 -0.43152299 -0.720406  ], velocity: [-176.99204327  140.66681919  234.83620171] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 24.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 16925, direction: [ 0.11298425 -0.62680643 -0.77093985], velocity: [-36.8303309  204.3248403  251.30910329] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 25.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 20172, direction: [0.3209571  0.88518264 0.33680592], velocity: [-104.6248161  -288.5496909  -109.79117802] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 26.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 5308, direction: [-0.97658269  0.20723061 -0.05780759], velocity: [318.3440579  -67.55253037  18.84397723] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 27.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 27842, direction: [0.95413717 0.26944251 0.13047221], velocity: [-311.02731971  -87.83221591  -42.53101551] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 28.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 21971, direction: [0.47977249 0.69922871 0.52999771], velocity: [-156.39507121 -227.93287775 -172.76736954] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 29.
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Ekin: 400 eV, size: 16*16*16
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - PKA ID: 10700, direction: [-0.3932661  -0.87905954  0.26943664], velocity: [128.19592894 286.55369623 -87.83030237] ang/ps
+2026-03-20 14:00 - ml4cascades.lammps.calcs_base - INFO - Prepared cascade simulation direction 30.

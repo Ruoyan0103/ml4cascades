@@ -3,6 +3,13 @@ import matplotlib.pyplot as plt
 import os 
 import math 
 
+plt.rcParams["font.family"] = "serif"
+plt.rcParams["font.serif"] = ["Times New Roman", "Times", "DejaVu Serif"]
+TICK_FONTSIZE = 15
+LABEL_FONTSIZE = 18
+TITLE_FONTSIZE = 20
+LEGEND_FONTSIZE = 14
+
 AMU_TO_KG = 1.66053906660E-27 # Atomic mass unit to kg conversion factor
 JOULE_TO_EV = 6.241509074E18  # Joule to eV conversion factor
 ANGSTROM_TO_METER = 1E-10     # Angstrom to meter conversion factor
@@ -15,7 +22,7 @@ class ParameterGetter:
         pass
 
     def get_data1(self, temp: float, 
-                  filename: str=os.path.join(module_dir, 'parameters', 'K_GaAs.dat')) -> tuple[float, float]:
+                  filename: str=os.path.join(module_dir, 'parameters', 'K_Ge.dat')) -> tuple[float, float]:
         # data from https://github.com/N-Medvedev/XTANT-3_coupling_data/blob/main/K_semiconductors/K_Ge.dat
         # linear interpolation
         element = os.path.basename(filename).split('_')[1].split('.')[0]
@@ -46,13 +53,28 @@ class ParameterGetter:
         # ax[0].set_xlabel(r'Te (K)')
         ax[0].set_ylabel(
             r'Ce '
-            r'$\left(\mathrm{eV\,K^{-1}\,\AA^{-3}}\right)$', fontsize=15
+            r'$\left(\mathrm{eV\,K^{-1}\,\AA^{-3}}\right)$', fontsize=15,
+            fontname='DejaVu Serif'
         )
         ax[0].axvline(x=temp, color='gray', linestyle='--', linewidth=1)
         ax[0].axhline(y=C_e_temp, color='gray', linestyle='--', linewidth=1)
         # add text for largest and smallest Ce, and the corresponding temperature (Te, Ce)
-        ax[0].text(Te[0], C_e[0], f"{Te[0]}, {C_e[0]:.2e}", fontsize=10, verticalalignment='top', horizontalalignment='left')
-        ax[0].text(Te[-1], C_e[-1], f"{Te[-1]}, {C_e[-1]:.2e}", fontsize=10, verticalalignment='bottom', horizontalalignment='right')
+        ax[0].text(
+            Te[0],
+            C_e[0],
+            f"{Te[0]} K, {C_e[0]:.2e} " + r"$\mathrm{eV\,K^{-1}\,\AA^{-3}}$",
+            fontsize=13,
+            verticalalignment='top',
+            horizontalalignment='left'
+        )
+        ax[0].text(
+            Te[-1],
+            C_e[-1],
+            f"{Te[-1]} K, {C_e[-1]:.2e} " + r"$\mathrm{eV\,K^{-1}\,\AA^{-3}}$",
+            fontsize=13,
+            verticalalignment='bottom',
+            horizontalalignment='right'
+        )
         
         # Right subplot: Electron thermal conductivity
         ax[1].set_yscale('log')
@@ -60,20 +82,37 @@ class ParameterGetter:
         ax[1].plot(Te, kappa_e, color='blue')
         ax[1].set_xlabel(r'Te (K)', fontsize=15)
         ax[1].set_ylabel(
-            r'Ke '
-            r'$\left(\mathrm{eV\,K^{-1}\,\AA^{-1}\,ps^{-1}}\right)$', fontsize=15
+            r'$\kappa_e$ '
+            r'$\left(\mathrm{eV\,K^{-1}\,\AA^{-1}\,ps^{-1}}\right)$', fontsize=15,
+            fontname='DejaVu Serif'
         )
         ax[1].axvline(x=temp, color='gray', linestyle='--', linewidth=1)
         ax[1].axhline(y=kappa_e_temp, color='gray', linestyle='--', linewidth=1)
         # add text for largest and smallest kappa_e, and the corresponding temperature (Te, ke)
-        ax[1].text(Te[0], kappa_e[0], f"{Te[0]}, {kappa_e[0]:.2e}", fontsize=10, verticalalignment='bottom', horizontalalignment='left')
-        ax[1].text(Te[-1], kappa_e[-1], f"{Te[-1]}, {kappa_e[-1]:.2e}", fontsize=10, verticalalignment='bottom', horizontalalignment='right')
+        # ax[1].text(Te[0], kappa_e[0], f"{Te[0]}, {kappa_e[0]:.2e}", fontsize=10, verticalalignment='bottom', horizontalalignment='left')
+        # ax[1].text(Te[-1], kappa_e[-1], f"{Te[-1]}, {kappa_e[-1]:.2e}", fontsize=10, verticalalignment='bottom', horizontalalignment='right')
+        ax[1].text(
+            Te[0],
+            kappa_e[0],
+            f"{Te[0]} K, {kappa_e[0]:.2e} " + r"$\left(\mathrm{eV\,K^{-1}\,\AA^{-1}\,ps^{-1}}\right)$",
+            fontsize=13,
+            verticalalignment='top',
+            horizontalalignment='left'
+        )
+        ax[1].text(
+            Te[-1],
+            kappa_e[-1],
+            f"{Te[-1]} K, {kappa_e[-1]:.2e} " + r"$\left(\mathrm{eV\,K^{-1}\,\AA^{-1}\,ps^{-1}}\right)$",
+            fontsize=13,
+            verticalalignment='bottom',
+            horizontalalignment='right'
+        )
 
         ax[0].tick_params(axis='both', which='major', labelsize=12, length=6, width=1.2)
         ax[0].tick_params(axis='both', which='minor', labelsize=10, length=3, width=1.0)
         ax[1].tick_params(axis='both', which='major', labelsize=12, length=6, width=1.2)
         ax[1].tick_params(axis='both', which='minor', labelsize=10, length=3, width=1.0)
-        ax[0].set_title(f'Temp: {temp} K, Ce: {C_e_temp:.3e} eV/K/A^3, kappa_e: {kappa_e_temp:.3e} eV/K/A/ps', fontsize=12)
+        # ax[0].set_title(f'Temp: {temp} K, Ce: {C_e_temp:.3e} eV/K/A^3, kappa_e: {kappa_e_temp:.3e} eV/K/A/ps', fontsize=12)
         fig.tight_layout()
         fig.savefig(os.path.join(module_dir, 'parameters', 'figs', f'thermal_properties_{element}.png'), dpi=300)
         return C_e_temp, kappa_e_temp
@@ -152,12 +191,13 @@ class ParameterGetter:
         return Ce
     
     
-# if __name__ == "__main__":
-#     getter = ParameterGetter()
-#     # Ce, ke = getter.get_data1(900)
-#     # print(f"Ce: {Ce:.3e} eV/K/A^3, ke: {ke:.3e} eV/K/A/ps")
-#     # Ce = getter.get_data2(900)
-#     Ce = getter.estimate_Ce(PKA_energy_eV=1000, band_gap_eV=0.67, volume_A3=778688, fe=1)
-#     print(f"Estimated Ce: {Ce:.3e} eV/K/A^3")
+if __name__ == "__main__":
+    getter = ParameterGetter()
+    temp = 450
+    Ce, ke = getter.get_data1(temp)
+    print(f"At {temp} K: Ce: {Ce:.3e} eV/K/A^3, ke: {ke:.3e} eV/K/A/ps")
+    # Ce = getter.get_data2(900)
+    # Ce = getter.estimate_Ce(PKA_energy_eV=1000, band_gap_eV=0.67, volume_A3=778688, fe=1)
+    # print(f"Estimated Ce: {Ce:.3e} eV/K/A^3")
 
    

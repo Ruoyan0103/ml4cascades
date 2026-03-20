@@ -65,8 +65,8 @@ dump            2 all custom 300 data.output id type x y z vx vy vz c_ep c_ek c_
 # run             {cascade_steps} every 100  " if '($t >= 3)' then 'quit' "  # for Ce, Ke testing
 # -----------------------------------DANGEROUS------------------------------------------------------
 
-variable        stopcond equal "v_ekmaxbrdr>5 || v_t>=70"
+variable        stopcond equal "v_ekmaxbrdr>5 || v_t>=50"
 fix             terminate all halt 100 v_stopcond == 1 error soft 
-run             90000
+run             1200000
 
 write_data      data.final

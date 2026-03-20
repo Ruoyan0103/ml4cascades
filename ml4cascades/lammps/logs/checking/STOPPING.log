@@ -15,14 +15,48 @@
 2026-03-12 08:37 - ml4cascades.lammps.check - INFO - Output 22 failed, running time: 0.15161802532966065 ps.
 2026-03-12 08:37 - ml4cascades.lammps.check - INFO - #---------1/35 cases failed.---------#
 
+2026-03-14 09:26 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 5000---------#
+2026-03-14 09:26 - ml4cascades.lammps.check - INFO - #---------Supercellsize: 35-35-35, radius_frac: 0.7, cutoff: 1---------#
+2026-03-14 09:26 - ml4cascades.lammps.check - INFO - Output 6 failed, running time: 0.5034442666115112 ps.
+2026-03-14 09:26 - ml4cascades.lammps.check - INFO - Output 16 failed, running time: 0.26222149000025796 ps.
+2026-03-14 09:26 - ml4cascades.lammps.check - INFO - Output 22 failed, running time: 0.250819878778757 ps.
+2026-03-14 09:26 - ml4cascades.lammps.check - INFO - Output 25 failed, running time: 0.37262373852576774 ps.
+2026-03-14 09:26 - ml4cascades.lammps.check - INFO - Output 32 failed, running time: 0.1741813268809005 ps.
+2026-03-14 09:26 - ml4cascades.lammps.check - INFO - Output 34 failed, running time: 0.3142897206056208 ps.
+2026-03-14 09:26 - ml4cascades.lammps.check - INFO - #---------6/35 cases failed.---------#
 
-2026-03-12 19:56 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 5000---------#
-2026-03-12 19:56 - ml4cascades.lammps.check - INFO - #---------Supercellsize: 35-35-35, radius_frac: 0.7, cutoff: 1---------#
-2026-03-12 19:56 - ml4cascades.lammps.check - INFO - Output 6 failed, running time: 0.5034442666115112 ps.
-2026-03-12 19:56 - ml4cascades.lammps.check - INFO - Output 16 failed, running time: 0.26222149000025796 ps.
-2026-03-12 19:56 - ml4cascades.lammps.check - INFO - Output 22 failed, running time: 0.250819878778757 ps.
-2026-03-12 19:56 - ml4cascades.lammps.check - INFO - Output 25 failed, running time: 0.37262373852576774 ps.
-2026-03-12 19:56 - ml4cascades.lammps.check - INFO - Output 32 failed, running time: 0.1741813268809005 ps.
-2026-03-12 19:56 - ml4cascades.lammps.check - INFO - Output 34 failed, running time: 0.3142897206056208 ps.
-2026-03-12 19:56 - ml4cascades.lammps.check - INFO - #---------6/35 cases failed.---------#
+2026-03-14 09:26 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 5000---------#
+2026-03-14 09:26 - ml4cascades.lammps.check - INFO - #---------Supercellsize: 35-35-35, radius_frac: 0.8, cutoff: 1---------#
+2026-03-14 09:26 - ml4cascades.lammps.check - INFO - Output 34 failed, running time: 0.20531373162845298 ps.
+2026-03-14 09:26 - ml4cascades.lammps.check - INFO - #---------1/35 cases failed.---------#
+
+2026-03-14 09:27 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 5000---------#
+2026-03-14 09:27 - ml4cascades.lammps.check - INFO - #---------Supercellsize: 35-35-35, radius_frac: 0.7, cutoff: 10---------#
+2026-03-14 09:27 - ml4cascades.lammps.check - INFO - Output 16 failed, running time: 0.2499404246118758 ps.
+2026-03-14 09:27 - ml4cascades.lammps.check - INFO - Output 22 failed, running time: 0.2077469625286562 ps.
+2026-03-14 09:27 - ml4cascades.lammps.check - INFO - Output 25 failed, running time: 0.32596758781776447 ps.
+2026-03-14 09:27 - ml4cascades.lammps.check - INFO - Output 32 failed, running time: 0.17574953316971847 ps.
+2026-03-14 09:27 - ml4cascades.lammps.check - INFO - Output 34 failed, running time: 0.3069208963010104 ps.
+2026-03-14 09:27 - ml4cascades.lammps.check - INFO - #---------5/35 cases failed.---------#
+
+2026-03-17 09:32 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 10000---------#
+2026-03-17 09:32 - ml4cascades.lammps.check - INFO - #---------Supercellsize: 45-45-45, radius_frac: 0.7, cutoff: 1---------#
+2026-03-17 09:32 - ml4cascades.lammps.check - INFO - Output 4 failed, running time: 0.6084487594258029 ps.
+2026-03-17 09:32 - ml4cascades.lammps.check - INFO - Output 7 failed, running time: 0.3129906653679921 ps.
+2026-03-17 09:32 - ml4cascades.lammps.check - INFO - Output 11 failed, running time: 0.23326728777449915 ps.
+2026-03-17 09:32 - ml4cascades.lammps.check - INFO - Output 16 failed, running time: 0.38208966036613345 ps.
+2026-03-17 09:32 - ml4cascades.lammps.check - INFO - Output 20 failed, running time: 0.23510612280959234 ps.
+2026-03-17 09:32 - ml4cascades.lammps.check - INFO - Output 21 failed, running time: 0.202261880565426 ps.
+2026-03-17 09:32 - ml4cascades.lammps.check - INFO - Output 29 failed, running time: 0.2484527719867678 ps.
+2026-03-17 09:32 - ml4cascades.lammps.check - INFO - #---------7/30 cases failed.---------#
+
+2026-03-17 09:32 - ml4cascades.lammps.check - INFO - #---------Checking, PKA energy: 10000---------#
+2026-03-17 09:32 - ml4cascades.lammps.check - INFO - #---------Supercellsize: 45-45-45, radius_frac: 0.7, cutoff: 10---------#
+2026-03-17 09:32 - ml4cascades.lammps.check - INFO - Output 7 failed, running time: 0.2901152041381208 ps.
+2026-03-17 09:32 - ml4cascades.lammps.check - INFO - Output 12 failed, running time: 0.4222338357208597 ps.
+2026-03-17 09:32 - ml4cascades.lammps.check - INFO - Output 20 failed, running time: 0.2046332684674721 ps.
+2026-03-17 09:32 - ml4cascades.lammps.check - INFO - Output 21 failed, running time: 0.20023835884282218 ps.
+2026-03-17 09:32 - ml4cascades.lammps.check - INFO - Output 29 failed, running time: 0.43968444548638524 ps.
+2026-03-17 09:32 - ml4cascades.lammps.check - INFO - #---------5/30 cases failed.---------#
+
 

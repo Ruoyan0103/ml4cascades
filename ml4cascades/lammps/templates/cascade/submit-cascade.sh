@@ -4,7 +4,7 @@
 #SBATCH --partition=sumo
 #SBATCH --account=sumo
 #SBATCH --nodes=1
-#SBATCH --ntasks=10
+#SBATCH --ntasks=40
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=30G
 #SBATCH --job-name=cas_{num}

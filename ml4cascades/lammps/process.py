@@ -95,7 +95,6 @@ class CascadeProcessor:
         self,
         start_traj: int,
         num_trajs: int,
-        exclude_list: list[int],
         single_traj_dir: Optional[str] = None,
     ):
         self.logger.info(f'#------------Defect analysis, PKA_kin_eng: {self.PKA_kin_eng} eV------------#')
@@ -106,16 +105,30 @@ class CascadeProcessor:
         else:
             for num_traj in range(num_trajs):
                 traj_id = start_traj + num_traj
-                if traj_id in exclude_list:
-                    self.logger.info(f'Skipping trajectory {traj_id} as it is in the exclude list.')
-                    continue
+                # if traj_id in exclude_list:
+                #     self.logger.info(f'Skipping trajectory {traj_id} as it is in the exclude list.')
+                #     continue
                 traj_dir = os.path.join(self.traj_folder, f'{traj_id}')
                 traj_dirs.append((traj_dir, traj_id))
 
         for traj_dir, traj_id in traj_dirs:
             eng_out = os.path.join(traj_dir, 'thermo.out')
             if not os.path.exists(eng_out):
+                self.logger.warning(f'Warning: thermo.out does not exist in folder {traj_id}.')
                 continue
+            else: 
+                data = np.loadtxt(eng_out, skiprows=1)
+                time_end = data[-1, 1]
+                if time_end <= 40:
+                    self.logger.warning(f'Warning: thermo.out in folder {traj_id} runs {time_end} ps.')
+                    continue          
+            defect_txt = os.path.join(traj_dir, 'defect.txt')
+            if os.path.exists(defect_txt):
+                data = np.loadtxt(defect_txt, skiprows=1)
+                time_end = data[-1, 0]
+                if time_end > 40:
+                    self.logger.info(f'defect.txt already exists in folder {traj_id}.')
+                    continue
             cnt += 1
             self.logger.info(f'Starting the {cnt}th trajectory in folder {traj_id}...')
             data = np.loadtxt(eng_out, skiprows=1)
@@ -164,14 +177,27 @@ class CascadeProcessor:
             if os.path.isdir(traj_dir):
                 defect_file = os.path.join(traj_dir, 'defect.txt')
                 if os.path.exists(defect_file):
+                    data = np.loadtxt(defect_file, skiprows=1)
+                    time_end = data[-1, 0]
+                    if time_end <= 40:
+                        self.logger.warning(f'Warning: {defect_file} runs {time_end} ps.')
+                        continue
                     defect_files.append(defect_file)
-        for traj_id in os.listdir(other_traj_folder):
-            traj_dir = os.path.join(other_traj_folder, traj_id)
-            if os.path.isdir(traj_dir):
-                defect_file = os.path.join(traj_dir, 'defect.txt')
-                if os.path.exists(defect_file):
-                    defect_files.append(defect_file)
-
+                    self.logger.info(f'Found defect.txt in {traj_id} running {time_end} ps.')
+        if other_traj_folder is not None:
+            for traj_id in os.listdir(other_traj_folder):
+                traj_dir = os.path.join(other_traj_folder, traj_id)
+                if os.path.isdir(traj_dir):
+                    defect_file = os.path.join(traj_dir, 'defect.txt')
+                    if os.path.exists(defect_file):
+                        data = np.loadtxt(defect_file, skiprows=1)
+                        time_end = data[-1, 0]
+                        if time_end <= 40:
+                            self.logger.warning(f'Warning: {defect_file} runs {time_end} ps.')
+                            continue
+                        defect_files.append(defect_file)
+                        self.logger.info(f'Found defect.txt in {traj_id} running {time_end} ps.')
+        self.logger.info(f'#------------Processing {len(defect_files)} files------------#')
         time_all = []
         num_vac_all = []
         num_int_all = []

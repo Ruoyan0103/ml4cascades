@@ -56,9 +56,8 @@ if __name__ == "__main__":
     pair_coeff2 = '* * sw Ge_3body.sw Ge'
     sw = SWPotential(pair_style, pair_coeff1, pair_coeff2)
     bi = BasicCellInfo(element=['Ge'], atomic_num=[32], mass=72.64, lattice='diamond', alat=[5.76]*3)
-    # supercell_size = [16]*3
-    supercell_size = [35]*3
-    model_name  = 'EPH' # 'EPH' or 'STOPPING'
+    supercell_size = [16]*3
+    model_name  = 'STOPPING-0K' # 'EPH' or 'STOPPING' or 'STOPPING-0K'
     calc = CascadeCalculator(sw, bi, model_name=model_name)
 
     '''
@@ -158,9 +157,10 @@ if __name__ == "__main__":
     ######################################### 4. Cascade simulation #########################################
     '''
     num_PKA_directions = 35
-    running_directions = [6, 16, 22, 25, 32, 34]
-    radius_frac = 0.8
-    PKA_kin_eng = 5000 # in eV
+    # running_directions = [x for x in range(1, num_PKA_directions+1) if x not in [16, 22, 25, 32, 34]] # for PKA_kin_eng=5000 eV
+    running_directions = range(2, 31) # for PKA_kin_eng=10000 eV  
+    radius_frac = 0.7
+    PKA_kin_eng = 400 # in eV
     grid_value = 1
     if choice == '4':
         print("Cascade simulation...")
@@ -168,7 +168,7 @@ if __name__ == "__main__":
             "supercell_size": supercell_size,
             "border_thickness": 5.76/2,
             "cascade_steps": 80000, 
-            "temp": 300,
+            "temp": 0,
             "xlow": -xhi/2+bi.alat[0]*supercell_size[0]/2,
             "xhigh": xhi/2+bi.alat[0]*supercell_size[0]/2,
             "ylow": -yhi/2+bi.alat[1]*supercell_size[1]/2,
@@ -180,7 +180,7 @@ if __name__ == "__main__":
             "gsz": grid_value,
             "eph_C_e": Ce,
             "eph_kappa_e": kappa_e,
-            "cutoff_eng": 1, 
+            "cutoff_eng": 10, 
             # "tinfile": 'NULL',
             # "temperature_dependent": False
         }
@@ -195,9 +195,9 @@ if __name__ == "__main__":
     '''
     if choice == '5':
         print("Cascade checking...")
-        PKA_kin_eng = 5000
-        grid_value = 1
-        cutoff = 1
+        PKA_kin_eng = 10000
+        grid_value = 16
+        cutoff = 10
         radius_frac = 0.8
         if model_name == 'EPH':
             PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', f'PKA_{PKA_kin_eng}eV', f'{radius_frac}-{grid_value}')
@@ -216,7 +216,7 @@ if __name__ == "__main__":
                                     traj_folder=PKA_kin_eng_dir,
                                     grid=cutoff,
                                     model_name=model_name)
-        checker.check_output(start_output=1, num_outputs=35, running_time=1) # in ps  
+        checker.check_output(start_output=1, num_outputs=30, running_time=40) # in ps  
 
 
     '''
@@ -239,7 +239,7 @@ if __name__ == "__main__":
             # folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/Test-CascadeProcess/Test-num_grid_points/32-32-32/1'
             fig_file1 = f'{folder}/eph_results.png'
             plotter.plot_eph_results(datafile1=f'{folder}/eng.out', 
-                                    datafile2=f'{folder}/thermo.out', figfile=fig_file1)
+                                     datafile2=f'{folder}/thermo.out', figfile=fig_file1)
 
             dump_file = f'{folder}/data.output'
             T_out_folder = f'{folder}/T_out'
@@ -283,10 +283,17 @@ if __name__ == "__main__":
     '''
     if choice == '7':
         print("Cascade output processing...")
-        PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', 'PKA_5000eV', '0.7-1')
-        processor = CascadeProcessor(bi, PKA_kin_eng=2000, traj_folder=PKA_kin_eng_dir, model_name=model_name)
+        PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', 'PKA_400eV', '0.7-10')
+        processor = CascadeProcessor(bi, PKA_kin_eng=400, traj_folder=PKA_kin_eng_dir, model_name=model_name)
         # # processor.cal_ibm(num_trajs=1, n0=1, ed=1)    # not working for LAMMPS data format
-        processor.cal_WSDefect(start_traj=1, num_trajs=35, exclude_list=[6, 16, 22, 25, 32, 34])     
+        # exclude_list = [6, 16, 22, 25, 32] # cutoff 1
+        # exclude_list = [16, 22, 25, 32, 34] # cutoff 10 
+        # others_exclude_list = [x for x in range(1, 36) if x not in exclude_list]
+        processor.cal_WSDefect(start_traj=1, num_trajs=30)
+        
+        # parent_folder = None
+        # processor.cal_avg_WSDefect(other_traj_folder=parent_folder)
+
         # processor.cal_cluster(start_traj=1, num_trajs=30, expression='Occupancy!=1')  
         # processor.cal_liquid_atoms(start_traj=1, num_trajs=35, expression='c_ek > 0.17', exclude_list=[22])
         # processor.cal_R2(start_traj=1, num_trajs=30, exclude_list=[], n0=0.042, ed=870)

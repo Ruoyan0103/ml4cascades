@@ -61,4 +61,4 @@ dump            2 all custom 300 data.output id type x y z vx vy vz c_ep c_ek c_
 
 variable        stopcond equal "v_ekmaxbrdr>5 || v_t>=45"
 fix             terminate all halt 100 v_stopcond == 1 error hard
-run             800000
+run             3000000

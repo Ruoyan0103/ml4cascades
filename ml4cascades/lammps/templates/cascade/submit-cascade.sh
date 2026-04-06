@@ -1,12 +1,19 @@
 #!/bin/bash
 
-#SBATCH --time=24:00:00
-#SBATCH --partition=sumo
-#SBATCH --account=sumo
-#SBATCH --nodes=1
-#SBATCH --ntasks=40
-#SBATCH --cpus-per-task=1
-#SBATCH --mem-per-cpu=30G
+#SBATCH --time=36:00:00
+
+##SBATCH --partition=sumo
+##SBATCH --account=sumo
+##SBATCH --nodes=1
+##SBATCH --ntasks=40
+##SBATCH --cpus-per-task=1
+
+#SBATCH --partition=batch
+#SBATCH --nodes=2
+#SBATCH --ntasks=20
+#SBATCH --cpus-per-task=2
+
+#SBATCH --mem=300G
 #SBATCH --job-name=cas_{num}
 #SBATCH --error=job.error
 #SBATCH --output=job.output

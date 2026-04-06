@@ -131,7 +131,7 @@ class CascadeCalculator(LMPSCalculator):
             else:
                 PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV', f'{radius_frac}-{gsx}')
             os.makedirs(PKA_kin_eng_dir, exist_ok=True)
-        elif self.model_name == 'STOPPING':
+        elif self.model_name == 'STOPPING' or self.model_name == 'STOPPING-100K':
             # gsx = input_config["gsx"]  # needed for directory path
             cutoff_eng = input_config["cutoff_eng"]
             if running_dir is not None:
@@ -188,7 +188,7 @@ class CascadeCalculator(LMPSCalculator):
                 with open(os.path.join(self.template_dir, 'submit-cascade.sh'), 'r') as f:
                     submit_template = f.read()
 
-            elif self.model_name == 'STOPPING':
+            elif self.model_name == 'STOPPING' or self.model_name == 'STOPPING-100K':
                 self._run_stopping_cascade(cascade_dir, atomsfile, PKA_id, velocity,
                                           xlow, xhigh, ylow, yhigh, zlow, zhigh, temp, 
                                           border_thickness, cascade_steps, cutoff_eng)
@@ -208,7 +208,7 @@ class CascadeCalculator(LMPSCalculator):
             
             self.logger.info(f'Prepared cascade simulation direction {running_dir}.')
             # Submit job
-            subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
+            # subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
         return PKA_kin_eng_dir
     
     def _write_tinfile(self, tinfile_path: str, gsx: int, gsy: int, gsz: int, 

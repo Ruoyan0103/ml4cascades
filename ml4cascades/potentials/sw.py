@@ -1,5 +1,5 @@
 import os, time, sys, argparse
-
+from pathlib import Path
 from matplotlib.pylab import f
 from ml4cascades.potentials import IPotential
 from ml4cascades.utils import BasicCellInfo
@@ -56,8 +56,8 @@ if __name__ == "__main__":
     pair_coeff2 = '* * sw Ge_3body.sw Ge'
     sw = SWPotential(pair_style, pair_coeff1, pair_coeff2)
     bi = BasicCellInfo(element=['Ge'], atomic_num=[32], mass=72.64, lattice='diamond', alat=[5.76]*3)
-    supercell_size = [16]*3
-    model_name  = 'STOPPING-0K' # 'EPH' or 'STOPPING' or 'STOPPING-0K'
+    supercell_size = [80]*3
+    model_name  = 'EPH' # 'EPH' or 'STOPPING' or 'STOPPING-0K' or 'STOPPING-100K'
     calc = CascadeCalculator(sw, bi, model_name=model_name)
 
     '''
@@ -158,17 +158,18 @@ if __name__ == "__main__":
     '''
     num_PKA_directions = 35
     # running_directions = [x for x in range(1, num_PKA_directions+1) if x not in [16, 22, 25, 32, 34]] # for PKA_kin_eng=5000 eV
-    running_directions = range(2, 31) # for PKA_kin_eng=10000 eV  
+    running_directions = range(6, 11) # for PKA_kin_eng=10000 eV 
+    # Ce = 5e-7
     radius_frac = 0.7
-    PKA_kin_eng = 400 # in eV
-    grid_value = 1
+    PKA_kin_eng = 30000 # in eV
+    grid_value = 16
     if choice == '4':
         print("Cascade simulation...")
         input_config = {
             "supercell_size": supercell_size,
             "border_thickness": 5.76/2,
             "cascade_steps": 80000, 
-            "temp": 0,
+            "temp": 300,
             "xlow": -xhi/2+bi.alat[0]*supercell_size[0]/2,
             "xhigh": xhi/2+bi.alat[0]*supercell_size[0]/2,
             "ylow": -yhi/2+bi.alat[1]*supercell_size[1]/2,
@@ -180,7 +181,7 @@ if __name__ == "__main__":
             "gsz": grid_value,
             "eph_C_e": Ce,
             "eph_kappa_e": kappa_e,
-            "cutoff_eng": 10, 
+            "cutoff_eng": 1, 
             # "tinfile": 'NULL',
             # "temperature_dependent": False
         }
@@ -195,10 +196,10 @@ if __name__ == "__main__":
     '''
     if choice == '5':
         print("Cascade checking...")
-        PKA_kin_eng = 10000
+        PKA_kin_eng = 20000
         grid_value = 16
         cutoff = 10
-        radius_frac = 0.8
+        radius_frac = 0.7
         if model_name == 'EPH':
             PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', f'PKA_{PKA_kin_eng}eV', f'{radius_frac}-{grid_value}')
             checker = CascadeChecker(PKA_kin_eng=PKA_kin_eng, 
@@ -234,12 +235,19 @@ if __name__ == "__main__":
         elif model_name == 'EPH':
             print("Cascade data plotting...")
             plotter = LammpsCascadePlotter()
-            print("Plotting eph results...")
-            folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_5000eV/0.7-16/1'
+            # print("Plotting eph results...")
+            folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_30000eV/0.7-1/1'
             # folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/Test-CascadeProcess/Test-num_grid_points/32-32-32/1'
             fig_file1 = f'{folder}/eph_results.png'
             plotter.plot_eph_results(datafile1=f'{folder}/eng.out', 
                                      datafile2=f'{folder}/thermo.out', figfile=fig_file1)
+
+            print('Coupling results...')
+            parent_folder = Path('/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade')
+            folder_list = [parent_folder/'PKA_5000eV-Ce_5e-6/0.7-16/30', parent_folder/'PKA_5000eV-Ce_5e-7/0.7-16/30']
+            label_list = ['High Ce', 'Low Ce']
+            fig_file2 = parent_folder/'PKA_5000eV-Ce_5e-6/0.7-16/30/coupling.png'
+            # plotter.plot_eph_coupling(folder_list, label_list, fig_file2)
 
             dump_file = f'{folder}/data.output'
             T_out_folder = f'{folder}/T_out'
@@ -256,12 +264,11 @@ if __name__ == "__main__":
             #                        avg_Te_file=avg_Te_file,
             #                        flag=flag)
             
-            print("Plotting extreme Ta and Te...")
-            frame_id_list = [31, 71, 172]
-            time_list = [1, 5, 15]  # in ps
-            fig_file2 = f'{folder}/extreme_Te_Ta.png'
-            # plotter.get_extreme_Te_Ta(new_tout_file, new_dump_file, frame_id_list, time_list, fig_file2) 
-            
+            # print("Plotting extreme Ta and Te...")
+            frame_id_list = [8, 14, 18, 27]
+            time_list = [22, 72, 112, 716]  # in fs
+            # frame_id_list = [11, 25, 58]
+            # time_list = [1, 5, 15]  # in ps
             #---------------------- for grid size 4, electronic system twice size of atomic system ----------------------#
             # grid_list = [37, 38]
             # electron_grid_list = range(36, 40)
@@ -269,52 +276,70 @@ if __name__ == "__main__":
             # grid_list = range(282, 286)
             # electron_grid_list = range(280, 288)
             # ---------------------- for grid size 16, electronic system double size as atomic system ----------------------#
-            grid_list = range(1892, 1900)
-            electron_grid_list = range(1888, 1904)
+            grid_list = range(2164, 2172)
+            electron_grid_list = range(2160, 2176)
+            grid_list = range(2132, 2140)
+            electron_grid_list = range(2128, 2144)
+            # grid_list = range(2148, 2156)
+            # electron_grid_list = range(2144, 2160)
+            fig_file2 = f'{folder}/extreme_Te_Ta.png'
+            # plotter.get_extreme_Te_Ta(new_tout_file, new_dump_file, frame_id_list, time_list, 
+            #                           grid_list, electron_grid_list, fig_file2) 
 
-            print("Plotting Te and Ta along x...")
+            # print("Plotting Te and Ta along x...")
             fig_file3 = f'{folder}/Te_Ta_along_x.png'
             # plotter.plot_te_ta_along_x(new_tout_file, new_dump_file, 
             #                            frame_id_list, time_list, 
             #                            grid_list, electron_grid_list, fig_file3)
-     
+            print("Plotting Te and Ta xy heatmaps...")
+            fig_file4 = f'{folder}/Te_heatmap.png'
+            fig_file5 = f'{folder}/Ta_heatmap.png'
+            fig_file6 = f'{folder}/Tdiff_heatmap.png'
+            # plotter.plot_xy_heatmap(new_tout_file, new_dump_file,
+            #                         frame_id_list, time_list,
+            #                         fig_file4, fig_file5, fig_file6,
+            #                         z=8, gridx=16, gridy=16, border=4)
     '''
     ######################################### 7. Cascade output processing ####################################
     '''
     if choice == '7':
         print("Cascade output processing...")
-        PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', 'PKA_400eV', '0.7-10')
-        processor = CascadeProcessor(bi, PKA_kin_eng=400, traj_folder=PKA_kin_eng_dir, model_name=model_name)
-        # # processor.cal_ibm(num_trajs=1, n0=1, ed=1)    # not working for LAMMPS data format
-        # exclude_list = [6, 16, 22, 25, 32] # cutoff 1
-        # exclude_list = [16, 22, 25, 32, 34] # cutoff 10 
-        # others_exclude_list = [x for x in range(1, 36) if x not in exclude_list]
-        processor.cal_WSDefect(start_traj=1, num_trajs=30)
+        PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', 'PKA_30000eV', '0.8-16')
+        processor = CascadeProcessor(bi, PKA_kin_eng=30000, traj_folder=PKA_kin_eng_dir, model_name=model_name)
+        processor.cal_WSDefect(start_traj=1, num_trajs=10)
         
-        # parent_folder = None
+        # parent_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_20000eV-Ce_5e-6', '0.8-16')
+        # # parent_folder = None 
         # processor.cal_avg_WSDefect(other_traj_folder=parent_folder)
+        # processor.cal_final_WSDefect(other_traj_folder=parent_folder)
 
-        # processor.cal_cluster(start_traj=1, num_trajs=30, expression='Occupancy!=1')  
-        # processor.cal_liquid_atoms(start_traj=1, num_trajs=35, expression='c_ek > 0.17', exclude_list=[22])
-        # processor.cal_R2(start_traj=1, num_trajs=30, exclude_list=[], n0=0.042, ed=870)
-        # processor.cal_cluster_final(start_traj=1, num_trajs=35, exclude_list=[22], expression='Occupancy!=1')  
+        # single_traj_dir = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/STOPPING-0K/cascade/PKA_2000eV/0.7-10-1998/20'
+        # processor.cal_R2(start_traj=1, num_trajs=1, single_traj_dir=single_traj_dir)
+        # other_traj_folder = None
+        # processor.cal_avg_R2(other_traj_folder=other_traj_folder)
    
     '''
     ######################################### 8. EPH processing ####################################
     '''
     if choice == '8':
         print("EPH processing...")
-        folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-0.7-1/1'
-        dump_file = f'{folder}/data.output'
-        fig_file = f'{folder}/coupling_analysis.png'
-        frame_id_list = [31, 71, 172]
-        time_list = [1, 5, 15]  # in ps
+        parent_folder = Path('/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade')
+        folder_list = [parent_folder/'PKA_10000eV-Ce_5e-6/0.7-16/25', parent_folder/'PKA_10000eV-Ce_5e-7/0.7-16/25']
+        label_list = ['5e-6', '5e-7']
+        # folder_list = [parent_folder/'PKA_5000eV-Ce_5e-7/0.7-16/30', parent_folder/'PKA_5000eV-Ce_5e-7/0.7-1/30']
+        # label_list = ['grid 16', 'grid 1']
+        frame_id_list = [[25, 23], [17, 16], [10, 10]]
+        time_list = [350, 88, 30]  # in fs
+        # frame_id_list = [[33, 23], [16, 15], [10, 10]]
+        # time_list = [350, 88, 30]  # in fs
+        frame_id_list = [[43, 40], [29, 27], [14, 14]]
+        time_list = [350, 88, 30]  # in fs        
         processor = EPHprocessor(task_name='EPHprocessing')
-        processor.analyze_coupling(dump_file=dump_file, 
+        processor.analyze_coupling(folder_list=folder_list,
+                                   label_list=label_list,
+                                   expression='c_ek>1',
                                    frame_idx_list=frame_id_list, 
-                                   time_list=time_list, 
-                                   figfile=fig_file)
-
+                                   time_list=time_list)
 
 
     

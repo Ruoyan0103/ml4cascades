@@ -4,7 +4,7 @@ MASS_AMU_TO_KG = 1.66053906660e-27
 JOULE_TO_EV = 6.242e18
 
 def srim96_stopping_file(stoppingfile: str, mass: float, new_stoppingfile: str):
-    data = np.loadtxt(stoppingfile, skiprows=1)
+    data = np.loadtxt(stoppingfile)
     velocity = data[:, 0] 
     stopping_power = data[:, 1]
     kinetic_energy = 0.5 * mass*MASS_AMU_TO_KG * velocity**2 * JOULE_TO_EV

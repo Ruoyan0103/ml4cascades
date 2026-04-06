@@ -1,0 +1,158 @@
+2026-03-25 16:21 - ml4cascades.lammps.process - INFO - #------------Defect analysis, PKA_kin_eng: 2000 eV------------#
+2026-03-25 16:21 - ml4cascades.lammps.process - INFO - Starting the 1th trajectory in folder 1...
+2026-03-25 16:21 - ml4cascades.lammps.process - INFO - Starting the 2th trajectory in folder 2...
+2026-03-25 16:22 - ml4cascades.lammps.process - INFO - Starting the 3th trajectory in folder 3...
+2026-03-25 16:23 - ml4cascades.lammps.process - INFO - Starting the 4th trajectory in folder 4...
+2026-03-25 16:24 - ml4cascades.lammps.process - INFO - Starting the 5th trajectory in folder 5...
+2026-03-25 16:24 - ml4cascades.lammps.process - INFO - Starting the 6th trajectory in folder 6...
+2026-03-25 16:25 - ml4cascades.lammps.process - INFO - Starting the 7th trajectory in folder 7...
+2026-03-25 16:26 - ml4cascades.lammps.process - INFO - Starting the 8th trajectory in folder 8...
+2026-03-25 16:27 - ml4cascades.lammps.process - INFO - Starting the 9th trajectory in folder 9...
+2026-03-25 16:27 - ml4cascades.lammps.process - INFO - Starting the 10th trajectory in folder 10...
+2026-03-25 16:28 - ml4cascades.lammps.process - INFO - Starting the 11th trajectory in folder 11...
+2026-03-25 16:29 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 12 runs 0.31012734343164144 ps.
+2026-03-25 16:29 - ml4cascades.lammps.process - INFO - Starting the 12th trajectory in folder 13...
+2026-03-25 16:30 - ml4cascades.lammps.process - INFO - Starting the 13th trajectory in folder 14...
+2026-03-25 16:30 - ml4cascades.lammps.process - INFO - Starting the 14th trajectory in folder 15...
+2026-03-25 16:31 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 16 runs 0.19317375550740204 ps.
+2026-03-25 16:31 - ml4cascades.lammps.process - INFO - Starting the 15th trajectory in folder 17...
+2026-03-25 16:32 - ml4cascades.lammps.process - INFO - Starting the 16th trajectory in folder 18...
+2026-03-25 16:33 - ml4cascades.lammps.process - INFO - Starting the 17th trajectory in folder 19...
+2026-03-25 16:34 - ml4cascades.lammps.process - INFO - Starting the 18th trajectory in folder 20...
+2026-03-25 16:34 - ml4cascades.lammps.process - INFO - #------------ Defect analysis completed. ------------#
+
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - #------------Average defect analysis, PKA_kin_eng: 2000 eV------------#
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 1 running 44.832 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 2 running 44.878 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 3 running 44.881 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 4 running 45.098 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 5 running 44.974 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 6 running 44.898 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 7 running 44.963 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 8 running 45.068 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 9 running 45.097 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 10 running 44.965 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 11 running 44.999 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 13 running 44.941 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 14 running 44.984 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 15 running 45.036 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 17 running 44.801 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 18 running 45.037 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 19 running 44.913 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 20 running 45.001 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - #------------Processing 18 files------------#
+
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - #------------Final defect analysis, PKA_kin_eng: 2000 eV------------#
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 1 running 44.832 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 2 running 44.878 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 3 running 44.881 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 4 running 45.098 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 5 running 44.974 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 6 running 44.898 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 7 running 44.963 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 8 running 45.068 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 9 running 45.097 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 10 running 44.965 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 11 running 44.999 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 13 running 44.941 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 14 running 44.984 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 15 running 45.036 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 17 running 44.801 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 18 running 45.037 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 19 running 44.913 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - Found defect.txt in 20 running 45.001 ps.
+2026-03-25 16:35 - ml4cascades.lammps.process - INFO - #------------Processing 18 files------------#
+
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - #------------Defect analysis, PKA_kin_eng: 2000 eV------------#
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 1.
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 2.
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 3.
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 4.
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 5.
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 6.
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 7.
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 8.
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 9.
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 10.
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 11.
+2026-03-26 12:14 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 12 runs 0.31012734343164144 ps.
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 13.
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 14.
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 15.
+2026-03-26 12:14 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 16 runs 0.19317375550740204 ps.
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 17.
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 18.
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 19.
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - defect.txt already exists in folder 20.
+2026-03-26 12:14 - ml4cascades.lammps.process - INFO - Starting the 1th trajectory in folder 21...
+2026-03-26 12:15 - ml4cascades.lammps.process - INFO - Starting the 2th trajectory in folder 22...
+2026-03-26 12:16 - ml4cascades.lammps.process - INFO - Starting the 3th trajectory in folder 23...
+2026-03-26 12:17 - ml4cascades.lammps.process - INFO - Starting the 4th trajectory in folder 24...
+2026-03-26 12:18 - ml4cascades.lammps.process - INFO - Starting the 5th trajectory in folder 25...
+2026-03-26 12:19 - ml4cascades.lammps.process - WARNING - Warning: thermo.out in folder 26 runs 0.17364541333692346 ps.
+2026-03-26 12:19 - ml4cascades.lammps.process - INFO - Starting the 6th trajectory in folder 27...
+2026-03-26 12:20 - ml4cascades.lammps.process - INFO - Starting the 7th trajectory in folder 28...
+2026-03-26 12:21 - ml4cascades.lammps.process - INFO - Starting the 8th trajectory in folder 29...
+2026-03-26 12:22 - ml4cascades.lammps.process - INFO - Starting the 9th trajectory in folder 30...
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - #------------ Defect analysis completed. ------------#
+
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - #------------Average defect analysis, PKA_kin_eng: 2000 eV------------#
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 1 running 44.832 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 2 running 44.878 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 3 running 44.881 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 4 running 45.098 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 5 running 44.974 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 6 running 44.898 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 7 running 44.963 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 8 running 45.068 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 9 running 45.097 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 10 running 44.965 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 11 running 44.999 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 13 running 44.941 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 14 running 44.984 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 15 running 45.036 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 17 running 44.801 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 18 running 45.037 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 19 running 44.913 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 20 running 45.001 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 21 running 49.824 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 22 running 49.849 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 23 running 50.032 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 24 running 49.823 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 25 running 49.822 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 27 running 50.048 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 28 running 49.873 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 29 running 50.012 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 30 running 49.834 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - #------------Processing 27 files------------#
+
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - #------------Final defect analysis, PKA_kin_eng: 2000 eV, final defect time: 45 ps------------#
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 1 running 44.832 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 2 running 44.878 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 3 running 44.881 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 4 running 45.098 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 5 running 44.974 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 6 running 44.898 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 7 running 44.963 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 8 running 45.068 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 9 running 45.097 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 10 running 44.965 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 11 running 44.999 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 13 running 44.941 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 14 running 44.984 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 15 running 45.036 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 17 running 44.801 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 18 running 45.037 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 19 running 44.913 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 20 running 45.001 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 21 running 49.824 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 22 running 49.849 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 23 running 50.032 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 24 running 49.823 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 25 running 49.822 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 27 running 50.048 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 28 running 49.873 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 29 running 50.012 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - Found defect.txt in 30 running 49.834 ps.
+2026-03-26 12:23 - ml4cascades.lammps.process - INFO - #------------Processing 27 files------------#
+

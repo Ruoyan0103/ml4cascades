@@ -172,7 +172,8 @@ class CascadeProcessor:
     ):
         self.logger.info(f'#------------Average defect analysis, PKA_kin_eng: {self.PKA_kin_eng} eV------------#')
         defect_files = []
-        for traj_id in os.listdir(self.traj_folder):
+        sorted_traj_ids = sorted([traj_id for traj_id in os.listdir(self.traj_folder) if os.path.isdir(os.path.join(self.traj_folder, traj_id))], key=lambda x: int(x))
+        for traj_id in sorted_traj_ids:
             traj_dir = os.path.join(self.traj_folder, traj_id)
             if os.path.isdir(traj_dir):
                 defect_file = os.path.join(traj_dir, 'defect.txt')
@@ -185,7 +186,8 @@ class CascadeProcessor:
                     defect_files.append(defect_file)
                     self.logger.info(f'Found defect.txt in {traj_id} running {time_end} ps.')
         if other_traj_folder is not None:
-            for traj_id in os.listdir(other_traj_folder):
+            sorted_other_traj_ids = sorted([traj_id for traj_id in os.listdir(other_traj_folder) if os.path.isdir(os.path.join(other_traj_folder, traj_id))], key=lambda x: int(x))
+            for traj_id in sorted_other_traj_ids:
                 traj_dir = os.path.join(other_traj_folder, traj_id)
                 if os.path.isdir(traj_dir):
                     defect_file = os.path.join(traj_dir, 'defect.txt')
@@ -197,7 +199,7 @@ class CascadeProcessor:
                             continue
                         defect_files.append(defect_file)
                         self.logger.info(f'Found defect.txt in {traj_id} running {time_end} ps.')
-        self.logger.info(f'#------------Processing {len(defect_files)} files------------#')
+        self.logger.info(f'#------------Processing {len(defect_files)} files------------#\n')
         time_all = []
         num_vac_all = []
         num_int_all = []
@@ -231,6 +233,99 @@ class CascadeProcessor:
             for t, v, vstd, i, istd, d, dstd in zip(time_all[0], vac_avg, vac_std, int_avg, int_std, def_avg, def_std):
                 f.write(f'{t:.3f}\t{v:.2f}\t{vstd:.2f}\t{i:.2f}\t{istd:.2f}\t{d:.2f}\t{dstd:.2f}\n')
 
+    def cal_final_WSDefect(
+        self,
+        other_traj_folder: str
+    ):  
+        final_defect_time = 45
+        self.logger.info(f'#------------Final defect analysis, PKA_kin_eng: {self.PKA_kin_eng} eV, final defect time: {final_defect_time} ps------------#')
+        final_vacs = []
+        final_ints = []
+        final_defs = []
+        sorted_traj_ids = sorted([traj_id for traj_id in os.listdir(self.traj_folder) if os.path.isdir(os.path.join(self.traj_folder, traj_id))], key=lambda x: int(x))
+        for traj_id in sorted_traj_ids:
+            traj_dir = os.path.join(self.traj_folder, traj_id)
+            if os.path.isdir(traj_dir):
+                defect_file = os.path.join(traj_dir, 'defect.txt')
+                if os.path.exists(defect_file):
+                    data = np.loadtxt(defect_file, skiprows=1)
+                    time_end = data[-1, 0]
+                    if time_end <= 40:
+                        self.logger.warning(f'Warning: {defect_file} runs {time_end} ps.')
+                        continue
+                    data = np.loadtxt(defect_file, skiprows=1)
+                    time = data[:, 0]
+                    num_vac = data[:, 1]
+                    num_int = data[:, 2]
+                    num_def = data[:, 3]
+
+                    mask = time <= final_defect_time
+                    time = time[mask]
+                    num_vac = num_vac[mask]
+                    num_int = num_int[mask]
+                    num_def = num_def[mask]
+
+                    final_vac = num_vac[-1]
+                    final_int = num_int[-1]
+                    final_def = num_def[-1]
+                    final_vacs.append(final_vac)
+                    final_ints.append(final_int)
+                    final_defs.append(final_def)
+                    self.logger.info(f'Found defect.txt in {traj_id} running {time_end} ps.')
+        if other_traj_folder is not None:
+            sorted_other_traj_ids = sorted([traj_id for traj_id in os.listdir(other_traj_folder) if os.path.isdir(os.path.join(other_traj_folder, traj_id))], key=lambda x: int(x))
+            for traj_id in sorted_other_traj_ids:
+                traj_dir = os.path.join(other_traj_folder, traj_id)
+                if os.path.isdir(traj_dir):
+                    defect_file = os.path.join(traj_dir, 'defect.txt')
+                    if os.path.exists(defect_file):
+                        data = np.loadtxt(defect_file, skiprows=1)
+                        time_end = data[-1, 0]
+                        if time_end <= 40:
+                            self.logger.warning(f'Warning: {defect_file} runs {time_end} ps.')
+                            continue
+                        data = np.loadtxt(defect_file, skiprows=1)
+                        time = data[:, 0]
+                        num_vac = data[:, 1]
+                        num_int = data[:, 2]
+                        num_def = data[:, 3]
+
+                        mask = time <= final_defect_time
+                        time = time[mask]
+                        num_vac = num_vac[mask]
+                        num_int = num_int[mask]
+                        num_def = num_def[mask]
+
+                        final_vac = num_vac[-1]
+                        final_int = num_int[-1]
+                        final_def = num_def[-1]
+                        final_vacs.append(final_vac)
+                        final_ints.append(final_int)
+                        final_defs.append(final_def)                        
+                        self.logger.info(f'Found defect.txt in {traj_id} running {time_end} ps.')
+        self.logger.info(f'#------------Processing {len(final_vacs)} files------------#\n')
+        with open(os.path.join(self.traj_folder, 'final_defect.txt'), 'w') as f:
+            f.write('Trajectory\tFinal_num_vac\tFinal_num_int\tFinal_num_def\n')
+            for idx, (v, i, d) in enumerate(zip(final_vacs, final_ints, final_defs)):
+                f.write(f'{idx+1}\t{v:.2f}\t{i:.2f}\t{d:.2f}\n')
+
+        plt.plot(range(1, len(final_ints) + 1), final_ints, '-o', label='Interstitials', markersize=4)
+        plt.xlim(1, len(final_ints))
+        avg_int = np.mean(final_ints)
+        std_int = np.std(final_ints)
+        plt.axhline(avg_int, color='r', linestyle='--', label=f'Avg Interstitials: {avg_int:.2f}')
+        plt.fill_between(range(1, len(final_ints) + 1), avg_int - std_int, avg_int + std_int, color='r', alpha=0.2, label=f'Avg Interstitials: {(avg_int - std_int):.2f}-{(avg_int + std_int):.2f}')
+        #x = plt.gca().get_xlim()
+        #PRB_avg = 47
+        #PRB_std = 6
+        #plt.axhline(PRB_avg, color='blue', linestyle='--', label=f'PRB 57, 7556 (SW-1998): {PRB_avg}')
+        #plt.fill_between(range(1, len(final_ints) + 1), PRB_avg - PRB_std, PRB_avg + PRB_std, color='blue', alpha=0.2, label=f'PRB 57, 7556 (SW-1998): {(PRB_avg - PRB_std): .0f}-{(PRB_avg + PRB_std): .0f}')
+        plt.xlabel('Trajectory')
+        plt.ylabel('Final Number of Interstitials')
+        plt.title(f'Final Number of Interstitials for PKA Kinetic Energy {self.PKA_kin_eng} eV')
+        plt.legend(loc='upper left', fontsize=8)
+        plt.tight_layout()
+        plt.savefig(os.path.join(self.traj_folder, 'final_interstitials.png'), dpi=300)
 
     def cal_cluster_final(
             self, 
@@ -524,14 +619,12 @@ class CascadeProcessor:
         self,
         start_traj: int,
         num_trajs: int,
-        exclude_list: list[int],
-        n0: float, # atomic density in atoms/Å³
-        ed: float, # deposited nuclear energy in eV
         single_traj_dir: Optional[str] = None,
     ):
-        time_all = []
-        R2_all = []
-        self.logger.info(f'#------------R2 analysis, PKA_kin_eng: {self.PKA_kin_eng} eV------------#')
+        # self.logger.info(f'#------------R2 calculation, PKA_kin_eng: {self.PKA_kin_eng} eV------------#')
+        a = 5.76
+        nearest_neighbor_dist = np.sqrt(3)/4 * a 
+        threshold_dr2 = nearest_neighbor_dist ** 2
         cnt = 0
         traj_dirs = []
         if single_traj_dir is not None:
@@ -539,78 +632,138 @@ class CascadeProcessor:
         else:
             for num_traj in range(num_trajs):
                 traj_id = start_traj + num_traj
-                if traj_id in exclude_list:
-                    self.logger.info(f'Skipping trajectory {traj_id} as it is in the exclude list.')
-                    continue
                 traj_dir = os.path.join(self.traj_folder, f'{traj_id}')
                 traj_dirs.append((traj_dir, traj_id))
 
         for traj_dir, traj_id in traj_dirs:
             eng_out = os.path.join(traj_dir, 'thermo.out')
             if not os.path.exists(eng_out):
+                # self.logger.warning(f'Warning: thermo.out does not exist in folder {traj_id}.')
                 continue
+            else: 
+                data = np.loadtxt(eng_out, skiprows=1)
+                time_end = data[-1, 1]
+                if time_end <= 40:
+                    # self.logger.warning(f'Warning: thermo.out in folder {traj_id} runs {time_end} ps.')
+                    continue          
+            R2_txt = os.path.join(traj_dir, 'R2.txt')
+            if os.path.exists(R2_txt):
+                data = np.loadtxt(R2_txt, skiprows=1)
+                time_end = data[-1, 0]
+                if time_end > 40:
+                    # self.logger.info(f'R2.txt already exists in folder {traj_id}.')
+                    continue
             cnt += 1
-            self.logger.info(f'Starting the {cnt}th trajectory in folder {traj_id}...')
+            # self.logger.info(f'Starting the {cnt}th trajectory in folder {traj_id}...')
             data = np.loadtxt(eng_out, skiprows=1)
             interval = 1
             mydata = data[::interval] 
             time = mydata.T[1]
-            R_frame_values = []
-            Q_frame_values = []
+            R2_list = []
+            num_atoms_list = []
+            atoms_id_list = []
+
             traj_file = os.path.join(traj_dir, 'data.output')
             all_pipeline = import_file(traj_file)
             init_frame = all_pipeline.compute(0)
             init_pos = np.asarray(init_frame.particles.positions).copy()
             init_ids = np.asarray(init_frame.particles['Particle Identifier']).copy()
-
             init_order = np.argsort(init_ids)
             init_ids_sorted = init_ids[init_order]
             init_pos_sorted = init_pos[init_order]
 
+            init_com = np.mean(init_pos_sorted, axis=0)
+            init_pos_centered = init_pos_sorted - init_com
+
             for frame_idx in range(0, len(data), interval):
                 R2_val = 0
                 cur_frame = all_pipeline.compute(frame_idx)
-                cur_pos = np.asarray(cur_frame.particles.positions)
-                cur_ids = np.asarray(cur_frame.particles['Particle Identifier'])
+                cur_pos = np.asarray(cur_frame.particles.positions).copy()
+                cur_ids = np.asarray(cur_frame.particles['Particle Identifier']).copy()
 
                 cur_order = np.argsort(cur_ids)
                 cur_ids_sorted = cur_ids[cur_order]
                 cur_pos_sorted = cur_pos[cur_order]
+
+                cur_com = np.mean(cur_pos_sorted, axis=0)
+                cur_pos_centered = cur_pos_sorted - cur_com
                 
                 dr = cur_pos_sorted - init_pos_sorted
+                # dr = cur_pos_centered - init_pos_centered
                 cell = np.asarray(cur_frame.cell.matrix)
                 Lx, Ly, Lz = cell[0, 0], cell[1, 1], cell[2, 2]
-                dr[:, 0] -= Lx * np.round(dr[:, 0] / Lx)
-                dr[:, 1] -= Ly * np.round(dr[:, 1] / Ly)
-                dr[:, 2] -= Lz * np.round(dr[:, 2] / Lz)
+                # np.round(nearest_neighbor_dist) = 2
+                dr[:, 0] = np.where(np.abs(np.round(np.abs(dr[:, 0]) - Lx)) <= 2, np.abs(dr[:, 0]) - Lx, dr[:, 0])
+                dr[:, 1] = np.where(np.abs(np.round(np.abs(dr[:, 1]) - Ly)) <= 2, np.abs(dr[:, 1]) - Ly, dr[:, 1])
+                dr[:, 2] = np.where(np.abs(np.round(np.abs(dr[:, 2]) - Lz)) <= 2, np.abs(dr[:, 2]) - Lz, dr[:, 2])
 
                 dr2 = np.sum(dr**2, axis=1)
-                R2_val = np.sum(dr2)
-                Q_val = R2_val / (6.0 * n0 * ed)
-                R_frame_values.append(R2_val)
-                Q_frame_values.append(Q_val)
-            
-            time_all.append(time)
-            R2_all.append(R_frame_values)
+                mask = dr2 >= threshold_dr2
+                frame_ids = [i for i in range(len(mask)) if mask[i] == 1]
+                num_atoms = np.sum(mask)
+                R2_val = np.sum(dr2[mask]) 
+                R2_list.append(R2_val)
+                num_atoms_list.append(num_atoms)
+                atoms_id_list.append(frame_ids)
+
             with open(os.path.join(traj_dir, 'R2.txt'), 'w') as f:
-                f.write('Time (ps)\tR2_val\n')
-                for t, r in zip(time, R_frame_values):
-                    f.write(f'{t:.3f}\t{r:.2f}\n') 
-            # with open(os.path.join(traj_dir, 'Q.txt'), 'w') as f:
-            #     f.write('Time (ps)\tQ_val\n')
-            #     for t, q in zip(time, Q_frame_values):
-            #         f.write(f'{t:.3f}\t{q:.2f}\n')
+                f.write('Time (ps)\tR2\tnum_atoms\tatoms_ids\n')
+                # for t, r2, n, id_list in zip(time, R2_list, num_atoms_list, atoms_id_list):
+                #     f.write(f'{t:.3f}\t{r2:.2f}\t{n:.0f}\t{id_list}\n') 
+                for t, r2, n in zip(time, R2_list, num_atoms_list):
+                    f.write(f'{t:.3f}\t{r2:.2f}\t{n:.0f}\n') 
+        # self.logger.info('#------------ R2 analysis completed. ------------#\n')
 
-        R2_interp_all = []
-        for time, R2_val in zip(time_all, R2_all):
-            R2_interp = np.interp(time_all[0], time, R2_val)
-            R2_interp_all.append(R2_interp)
+    def cal_avg_R2(
+            self,
+            other_traj_folder: str
+        ):
+            self.logger.info(f'#------------Average R2 analysis, PKA_kin_eng: {self.PKA_kin_eng} eV------------#')
+            R2_files = []
+            sorted_traj_ids = sorted([traj_id for traj_id in os.listdir(self.traj_folder) if os.path.isdir(os.path.join(self.traj_folder, traj_id))], key=lambda x: int(x))
+            for traj_id in sorted_traj_ids:
+                traj_dir = os.path.join(self.traj_folder, traj_id)
+                if os.path.isdir(traj_dir):
+                    R2_file = os.path.join(traj_dir, 'R2.txt')
+                    if os.path.exists(R2_file):
+                        data = np.loadtxt(R2_file, skiprows=1)
+                        time_end = data[-1, 0]
+                        if time_end <= 40:
+                            self.logger.warning(f'Warning: {R2_file} runs {time_end} ps.')
+                            continue
+                        R2_files.append(R2_file)
+                        self.logger.info(f'Found R2.txt in {traj_id} running {time_end} ps.')
+            if other_traj_folder is not None:
+                sorted_other_traj_ids = sorted([traj_id for traj_id in os.listdir(other_traj_folder) if os.path.isdir(os.path.join(other_traj_folder, traj_id))], key=lambda x: int(x))
+                for traj_id in sorted_other_traj_ids:
+                    traj_dir = os.path.join(other_traj_folder, traj_id)
+                    if os.path.isdir(traj_dir):
+                        defect_file = os.path.join(traj_dir, 'R2.txt')
+                        if os.path.exists(defect_file):
+                            data = np.loadtxt(defect_file, skiprows=1)
+                            time_end = data[-1, 0]
+                            if time_end <= 40:
+                                self.logger.warning(f'Warning: {defect_file} runs {time_end} ps.')
+                                continue
+                            R2_files.append(defect_file)
+                            self.logger.info(f'Found R2.txt in {traj_id} running {time_end} ps.')
+            self.logger.info(f'#------------Processing {len(R2_files)} files------------#\n')
+            time_all = []
+            R2_all = []
+            if len(R2_files) != 0:
+                for R2_file in R2_files:
+                    data = np.loadtxt(R2_file, skiprows=1)
+                    time_all.append(data.T[0])
+                    R2_all.append(data.T[1])
 
-        R2_avg = np.mean(R2_interp_all, axis=0)
-        R2_std = np.std(R2_interp_all, axis=0)
-        output_dir = single_traj_dir if single_traj_dir is not None else self.traj_folder
-        with open(os.path.join(output_dir, 'R2.txt'), 'w') as f:
-            f.write('Time (ps)\tavg_R2\tstd_R2\t\n')
-            for t, r, rstd in zip(time_all[0], R2_avg, R2_std):
-                f.write(f'{t:.3f}\t{r:.2f}\t{rstd:.2f}\n')
-        self.logger.info('#------------ R2 analysis completed. ------------#\n')
+                R2_interp_all = []
+                for time, R2_val in zip(time_all, R2_all):
+                    R2_interp = np.interp(time_all[0], time, R2_val)
+                    R2_interp_all.append(R2_interp)
+
+                R2_avg = np.mean(R2_interp_all, axis=0)
+                R2_std = np.std(R2_interp_all, axis=0)
+                with open(os.path.join(self.traj_folder, 'R2.txt'), 'w') as f:
+                    f.write('Time (ps)\tR2\tstd_R2\n')
+                    for t, r2, r2_std in zip(time_all[0], R2_avg, R2_std):
+                        f.write(f'{t:.3f}\t{r2:.2f}\t{r2_std:.2f}\n')

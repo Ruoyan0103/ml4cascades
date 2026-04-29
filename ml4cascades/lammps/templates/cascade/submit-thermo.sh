@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --time=03:00:00
+#SBATCH --time=05:00:00
 #SBATCH --partition=sumo
 #SBATCH --account=sumo
 #SBATCH --nodes=1

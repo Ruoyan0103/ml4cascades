@@ -208,7 +208,7 @@ class CascadeCalculator(LMPSCalculator):
             
             self.logger.info(f'Prepared cascade simulation direction {running_dir}.')
             # Submit job
-            # subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
+            subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
         return PKA_kin_eng_dir
     
     def _write_tinfile(self, tinfile_path: str, gsx: int, gsy: int, gsz: int, 

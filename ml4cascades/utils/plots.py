@@ -1,8 +1,10 @@
+from matplotlib.colors import SymLogNorm
 import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
 import os, math
 from ovito.io import import_file
+from matplotlib.colors import SymLogNorm
 
 TICK_FONTSIZE = 14
 LABEL_FONTSIZE = 16
@@ -131,7 +133,7 @@ class LammpsCascadePlotter:
         data = np.loadtxt(datafile, skiprows=1)
         step, Time, temp, pe, ke, etotal, ekmaxall, e_stopping_loss = data[:,0], data[:,1], data[:,2], data[:,3], data[:,4], data[:,5], data[:,6], data[:,7]
         Time_fs = Time*1000
-        fig, axes = plt.subplots(2, 1, figsize=(6, 6))
+        fig, axes = plt.subplots(3, 1, figsize=(6, 10))
         axes[0].plot(Time_fs, temp, label='Ta')
         axes[0].set_ylabel('Temperature (K)', fontsize=15)
         axes[0].legend(fontsize=15)
@@ -148,19 +150,19 @@ class LammpsCascadePlotter:
 
         init_etotal = etotal[0]
         energy_loss = [init_etotal - e for e in etotal]
-        axes[1].plot(Time_fs*1000, energy_loss, label='Energy loss')
-        axes[1].plot(Time_fs*1000, e_stopping_loss, label='E_stopping_loss')
+        axes[1].plot(Time_fs, energy_loss, label='Energy loss')
+        axes[1].plot(Time_fs, e_stopping_loss, label='E_stopping_loss')
         # axes[1].set_ylabel('Energy (eV)', fontsize=15)
         axes[1].legend(fontsize=15)
         axes[1].set_xlabel('Time (fs)', fontsize=15)
         
 
-        # axes[2].plot(Time_fs, temp, label='Temperature')
-        # axes[2].plot(Time_fs, border_temp, label='T_border')
+        # axes[2].plot(Time_fs, pe, label='Temperature')
+        axes[2].plot(Time_fs, ke, label='kinetic energy')
         # axes[2].plot(Time_fs, inside_temp, label='T_inside')
-        # axes[2].set_xlabel('Time_fs (ps)', fontsize=15)
-        # axes[2].set_ylabel('Temperature (K)', fontsize=15)
-        # axes[2].legend(fontsize=15)
+        axes[2].set_xlabel('Time (fs)', fontsize=15)
+        axes[2].set_ylabel('Kinetic Energy (K)', fontsize=15)
+        axes[2].legend(fontsize=15)
         # axes[2].text(0.05, 0.9, f"Last 10 ps average Tborder: {np.mean(border_temp[int(0.9*len(border_temp)):]):.2f} K", transform=axes[2].transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))
         # axes[2].text(0.05, 0.8, f"Last 10 ps average Tinside: {np.mean(inside_temp[int(0.9*len(inside_temp)):]):.2f} K", transform=axes[2].transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))
 
@@ -176,9 +178,9 @@ class LammpsCascadePlotter:
         # axes[4].set_xscale('log')
         # axes[4].legend(fontsize=15)
 
-        for ax in axes:
-            ax.tick_params(axis='both', which='major', labelsize=TICK_FONTSIZE)
-            ax.set_xscale('log')
+        # for ax in axes:
+        #     ax.tick_params(axis='both', which='major', labelsize=TICK_FONTSIZE)
+        #     ax.set_xscale('log')
         
         plt.tight_layout()
         fig.savefig(figfile, dpi=300)
@@ -217,12 +219,12 @@ class LammpsCascadePlotter:
         axes[1].text(0.05, 0.9, f"Average Ta: {np.mean(Ta[int(0.9*len(Ta)):]):.2f} K", transform=axes[1].transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))
         axes[1].text(0.05, 0.8, f"Average Te: {np.mean(Te[int(0.9*len(Te)):]):.2f} K", transform=axes[1].transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))
         
-        #pot_shift = -np.min(Epot) + np.min(Ekin)
+        # pot_shift = -np.min(Epot) + np.min(Ekin)
         #axes[2].plot(Time_fs, Ekin, label='Ekin')
-        #axes[2].plot(Time_fs, Epot+pot_shift, label='Epot')
-        axes[2].plot(Time_fs, Etotal, label='Etotal(Atomic)')
-        axes[2].plot(Time_fs, Etotal+transferred_eng, label='Etotal(Electronic+Atomic)')
-        axes[2].text(0.05, 0.9, f"Energy loss: {abs(min(Etotal+transferred_eng)-max(Etotal+transferred_eng)):.2f} eV", transform=axes[2].transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))  
+        axes[2].plot(Time_fs, Epot-Epot[0], label='Epot')
+        # axes[2].plot(Time_fs, Etotal, label='Etotal(Atomic)')
+        # axes[2].plot(Time_fs, Etotal+transferred_eng, label='Etotal(Electronic+Atomic)')
+        #axes[2].text(0.05, 0.9, f"Energy loss: {abs(min(Etotal+transferred_eng)-max(Etotal+transferred_eng)):.2f} eV", transform=axes[2].transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))  
         # record these two columns into a text file  
         # with open(figfile.replace('.png', '_dT_ddT.txt'), 'w') as fout:
         #     fout.write('Time_fs(ps) dT_e(eV/Angstrom^3/ps) ddT_e(eV/Angstrom^3/ps)\n')
@@ -238,16 +240,16 @@ class LammpsCascadePlotter:
         axes[2].legend(fontsize=15)
         axes[2].grid(True)
         
-        axes[3].plot(Time_fs, Epot-Epot[0], label='Epot')
+        axes[3].plot(Time_fs, Ekin, label='Ekin')
         axes[3].set_xlabel('Time (fs)', fontsize=15)
         axes[3].set_ylabel('Energy (eV)', fontsize=15)
         axes[3].legend(fontsize=15)
         axes[3].grid(True)
 
         # increase ticks size
-        for ax in axes:
-            ax.tick_params(axis='both', which='major', labelsize=15)
-            ax.set_xscale('log')
+        # for ax in axes:
+        #     ax.tick_params(axis='both', which='major', labelsize=15)
+        #     ax.set_xscale('log')
         
         # axes[1].set_xscale('log')
         # fig, ax = plt.subplots(figsize=(6, 6))
@@ -259,7 +261,6 @@ class LammpsCascadePlotter:
         # ax.grid(True)
         plt.tight_layout()
         fig.savefig(figfile, dpi=300)
-
 
     def plot_eph_coupling(self, 
                           folder_list: list[Path],
@@ -831,15 +832,20 @@ class LammpsCascadePlotter:
         te_vmax = max(m.max() for m in te_maps)
         fig, axes = plt.subplots(2, 2, figsize=(10, 8), constrained_layout=True)
         axes = axes.ravel()
-
         images = []
         for i, ax in enumerate(axes[:len(te_maps)]):
+            norm = SymLogNorm(
+            linthresh=1,      # linear region around 0
+            linscale=1,
+            vmin=te_vmin,
+            vmax=te_vmax,
+            base=10
+            )
             im = ax.imshow(
                 te_maps[i],
                 origin='lower',
                 cmap='coolwarm',
-                vmin=300,
-                vmax=2000,
+                norm=norm,
                 aspect='equal'
             )
             images.append(im)
@@ -849,6 +855,19 @@ class LammpsCascadePlotter:
             if i >= 2:
                 ax.set_xlabel("X", fontsize=LABEL_FONTSIZE-1)
             ax.tick_params(labelsize=TICK_FONTSIZE-1)
+            # add text for max and min values
+            max_val = te_maps[i].max()
+            min_val = te_maps[i].min()
+            ax.text(
+                0.02, 0.98, 
+                f"max: {max_val:.1f} K\nmin: {min_val:.1f} K",
+                fontsize=LABEL_FONTSIZE-3,
+                ha='left',
+                va='top',
+                transform=ax.transAxes,
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8)
+            )
+
 
         for j in range(len(te_maps), len(axes)):
             axes[j].axis('off')
@@ -869,17 +888,23 @@ class LammpsCascadePlotter:
         # ---- plot Ta (inner grid) ----
         ta_vmin = min(m.min() for m in ta_maps)
         ta_vmax = max(m.max() for m in ta_maps)
+
         fig, axes = plt.subplots(2, 2, figsize=(10, 8), constrained_layout=True)
         axes = axes.ravel()
-
         images = []
         for i, ax in enumerate(axes[:len(ta_maps)]):
+            norm = SymLogNorm(
+            linthresh=1,      # linear region around 0
+            linscale=1,
+            vmin=ta_vmin,
+            vmax=ta_vmax,
+            base=10
+            )
             im = ax.imshow(
                 ta_maps[i],
                 origin='lower',
                 cmap='coolwarm',
-                vmin=300,
-                vmax=2000,
+                norm=norm,
                 aspect='equal'
             )
             images.append(im)
@@ -889,6 +914,18 @@ class LammpsCascadePlotter:
             if i >= 2:
                 ax.set_xlabel("X", fontsize=LABEL_FONTSIZE-1)
             ax.tick_params(labelsize=TICK_FONTSIZE-1)
+            # add text for max and min values
+            max_val = ta_maps[i].max()
+            min_val = ta_maps[i].min()
+            ax.text(
+                0.02, 0.98, 
+                f"max: {max_val:.1f} K\nmin: {min_val:.1f} K",
+                fontsize=LABEL_FONTSIZE-3,
+                ha='left',
+                va='top',
+                transform=ax.transAxes,
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8)
+            )
 
         for j in range(len(te_maps), len(axes)):
             axes[j].axis('off')
@@ -909,9 +946,17 @@ class LammpsCascadePlotter:
         # ---- plot Te - Ta (inner grid only) ----
         fig, axes = plt.subplots(2, 2, figsize=(10, 8), constrained_layout=True)
         axes = axes.ravel()
-
+        tdiff_vmin = min(m.min() for m in tdiff_maps)
+        tdiff_vmax = max(m.max() for m in tdiff_maps)
         images = []
         for i, ax in enumerate(axes[:len(tdiff_maps)]):
+            # norm = SymLogNorm(
+            # linthresh=1,      # linear region around 0
+            # linscale=1,
+            # vmin=-10,
+            # vmax=100,
+            # base=10
+            # )
             im = ax.imshow(
                 tdiff_maps[i],
                 origin='lower',
@@ -927,6 +972,18 @@ class LammpsCascadePlotter:
             if i >= 2:
                 ax.set_xlabel("X", fontsize=LABEL_FONTSIZE-1)
             ax.tick_params(labelsize=TICK_FONTSIZE-1)
+            # add text for max and min values
+            max_val = tdiff_maps[i].max()
+            min_val = tdiff_maps[i].min()
+            ax.text(
+                0.02, 0.98, 
+                f"max: {max_val:.1f} K\nmin: {min_val:.1f} K",
+                fontsize=LABEL_FONTSIZE-3,
+                ha='left',
+                va='top',
+                transform=ax.transAxes,
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8)
+            )
 
         for j in range(len(tdiff_maps), len(axes)):
             axes[j].axis('off')

@@ -12,19 +12,31 @@ read_data       {atomsfile}
 {ff_settings}
 mass            1  {mass}
 
-#---------------------------USER EPH------------------------------
+#---------------------------ATOMIC EQULIBRATION NVT+NPT------------------------------
+min_style       cg
+minimize        1.0e-8 1.0e-10 10000 100000
+
+reset_timestep  0
 timestep        0.001
+
+velocity        all create {temp} 51742 mom yes rot yes dist gaussian units box
+
 thermo          10
-thermo_style    custom step time temp press pe ke etotal
+thermo_style    custom step time atoms temp press pe etotal lx ly lz vol
 
-velocity        all create {temp} 12345
-fix             1 all temp/berendsen {temp} {temp} $(100*dt)
-fix             friction all eph 12345 4 4 1.0 {eph_C_e} {eph_kappa_e} {temp} {gsx} {gsy} {gsz} {tinfile} 0 T_out {beta_file} Ge   # rho_e, c_e, k_e, t_e, nx, ny, nz are read from tinfile
+fix             1 all nvt temp {temp} {temp} 0.1 tchain 5
+run             10000
+unfix           1
+fix             2 all npt temp {temp} {temp} 0.1 iso 0.0 0.0 1.0 tchain 5 pchain 5 drag 1.0
+run             10000
+unfix           2
 
-fix             out1 all print 10 "$(step) $(time) $(temp) $(f_friction[1]) $(f_friction[2])" file eng.out screen no
-fix             out2 all print 10 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal)" file thermo.out screen no
+#--------------------------USER EPH-------------------------------------------------
+fix             friction all eph 12345 7 4 1.0 {eph_C_e} {eph_kappa_e} {temp} {gsx} {gsy} {gsz} {tinfile} 0 T_out {beta_file} Ge   # rho_e, c_e, k_e, t_e, nx, ny, nz are read from tinfile
 
-run             {equ_md_steps}
+fix             out all print 10 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal) $(f_friction[1]) $(f_friction[2])" file eng.out screen no
+
+run             10000
 write_data      data.output
 
 

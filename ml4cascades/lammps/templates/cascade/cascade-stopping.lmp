@@ -34,7 +34,7 @@ group           border region br_region
 group           inside region in_region
 
 #--------------------------BORDER THERMOSTAT-----------------------
-fix             2 border temp/berendsen {temp} {temp} 0.1
+fix             2 border temp/berendsen {temp} {temp} 0.5
 
 compute         ep all pe/atom
 compute         ek all ke/atom
@@ -53,12 +53,14 @@ variable        intemp_val equal c_intemp
 compute         ekmax_all all reduce max c_ek
 variable        ekmaxall equal c_ekmax_all
 
+compute         stress_atom all stress/atom NULL
+
 #------------------------------ STOPPING ---------------------------
 fix             NVE_thermo all nve       
 fix             stopping all electron/stopping {cutoff_eng} {stoppingfile}
 fix             out1 all print 300 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal) ${{ekmaxall}} $(f_stopping)" file thermo.out screen no
-dump            2 all custom 300 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val 
+dump            2 all custom 300 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val c_stress_atom[1] c_stress_atom[2] c_stress_atom[3]
 
-variable        stopcond equal "v_ekmaxbrdr>5 || v_t>=45"
+variable        stopcond equal "v_ekmaxbrdr>5 || v_t>=100"
 fix             terminate all halt 100 v_stopcond == 1 error hard
 run             3000000

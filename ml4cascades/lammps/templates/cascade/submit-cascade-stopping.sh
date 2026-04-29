@@ -2,16 +2,16 @@
 
 #SBATCH --time=24:00:00
 
-##SBATCH --partition=sumo
-##SBATCH --account=sumo
-##SBATCH --nodes=1
-##SBATCH --ntasks=20
-##SBATCH --cpus-per-task=1
+#SBATCH --partition=sumo
+#SBATCH --account=sumo
+#SBATCH --nodes=1
+#SBATCH --ntasks=40
+#SBATCH --cpus-per-task=1
 
-#SBATCH --partition=batch
-#SBATCH --nodes=2
-#SBATCH --ntasks=20
-#SBATCH --cpus-per-task=2
+##SBATCH --partition=batch
+##SBATCH --nodes=2
+##SBATCH --ntasks=20
+##SBATCH --cpus-per-task=2
 
 #SBATCH --mem=300G
 #SBATCH --job-name=cas_{num}

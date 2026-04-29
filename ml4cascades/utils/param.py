@@ -44,9 +44,19 @@ class ParameterGetter:
                 Te, 
                 np.array(data[:, 5]) * JOULE_TO_EV / ((1/ANGSTROM_TO_METER)**3)
             )
-            
+        # find Ce_temp closest to low and high Ce 
+        low_Ce_diff = np.abs(C_e - 5e-7)
+        closest_idx = np.argmin(low_Ce_diff)
+        closest_low_Te = Te[closest_idx]
+        closest_low_Ce = C_e[closest_idx]
+        
+        high_Ce_diff = np.abs(C_e - 5e-6)
+        closest_idx = np.argmin(high_Ce_diff)
+        closest_high_Te = Te[closest_idx]
+        closest_high_Ce = C_e[closest_idx]
         fig, ax = plt.subplots(2, 1, figsize=(8, 10))
         # Left subplot: Electron heat capacity
+        ax[0].text(0.08, 0.95, '(a)', fontsize=16, transform=ax[0].transAxes, verticalalignment='top')
         ax[0].set_yscale('log')
         ax[0].set_xscale('log')
         ax[0].plot(Te, C_e, color='orange')
@@ -58,25 +68,17 @@ class ParameterGetter:
         )
         ax[0].axvline(x=temp, color='gray', linestyle='--', linewidth=1)
         ax[0].axhline(y=C_e_temp, color='gray', linestyle='--', linewidth=1)
-        # add text for largest and smallest Ce, and the corresponding temperature (Te, Ce)
-        ax[0].text(
-            Te[0],
-            C_e[0],
-            f"{Te[0]} K, {C_e[0]:.2e} " + r"$\mathrm{eV\,K^{-1}\,\AA^{-3}}$",
-            fontsize=13,
-            verticalalignment='top',
-            horizontalalignment='left'
-        )
-        ax[0].text(
-            Te[-1],
-            C_e[-1],
-            f"{Te[-1]} K, {C_e[-1]:.2e} " + r"$\mathrm{eV\,K^{-1}\,\AA^{-3}}$",
-            fontsize=13,
-            verticalalignment='bottom',
-            horizontalalignment='right'
-        )
-        
+        ax[0].axvline(x=closest_low_Te, color='gray', linestyle='--', linewidth=1)
+        ax[0].axhline(y=closest_low_Ce, color='gray', linestyle='--', linewidth=1)
+        ax[0].axvline(x=closest_high_Te, color='gray', linestyle='--', linewidth=1)
+        ax[0].axhline(y=closest_high_Ce, color='gray', linestyle='--', linewidth=1)
+
+        # add text for temp, Ce_temp, and the closest low and high Ce and corresponding Te
+        ax[0].text(temp+30, C_e_temp, f"{temp:.1e}, {C_e_temp:.2e}", fontsize=14, verticalalignment='bottom', horizontalalignment='left')
+        ax[0].text(closest_low_Te+500, closest_low_Ce, f"{closest_low_Te:.1e}, {closest_low_Ce:.2e}", fontsize=13, verticalalignment='bottom', horizontalalignment='left')
+        ax[0].text(closest_high_Te+3000, closest_high_Ce, f"{closest_high_Te:.1e}, {closest_high_Ce:.2e}", fontsize=13, verticalalignment='bottom', horizontalalignment='left')    
         # Right subplot: Electron thermal conductivity
+        ax[1].text(0.08, 0.95, '(b)', fontsize=16, transform=ax[1].transAxes, verticalalignment='top')
         ax[1].set_yscale('log')
         ax[1].set_xscale('log')
         ax[1].plot(Te, kappa_e, color='blue')
@@ -88,25 +90,8 @@ class ParameterGetter:
         )
         ax[1].axvline(x=temp, color='gray', linestyle='--', linewidth=1)
         ax[1].axhline(y=kappa_e_temp, color='gray', linestyle='--', linewidth=1)
-        # add text for largest and smallest kappa_e, and the corresponding temperature (Te, ke)
-        # ax[1].text(Te[0], kappa_e[0], f"{Te[0]}, {kappa_e[0]:.2e}", fontsize=10, verticalalignment='bottom', horizontalalignment='left')
-        # ax[1].text(Te[-1], kappa_e[-1], f"{Te[-1]}, {kappa_e[-1]:.2e}", fontsize=10, verticalalignment='bottom', horizontalalignment='right')
-        ax[1].text(
-            Te[0],
-            kappa_e[0],
-            f"{Te[0]} K, {kappa_e[0]:.2e} " + r"$\left(\mathrm{eV\,K^{-1}\,\AA^{-1}\,ps^{-1}}\right)$",
-            fontsize=13,
-            verticalalignment='top',
-            horizontalalignment='left'
-        )
-        ax[1].text(
-            Te[-1],
-            kappa_e[-1],
-            f"{Te[-1]} K, {kappa_e[-1]:.2e} " + r"$\left(\mathrm{eV\,K^{-1}\,\AA^{-1}\,ps^{-1}}\right)$",
-            fontsize=13,
-            verticalalignment='bottom',
-            horizontalalignment='right'
-        )
+        # add text for temp and kappa_e_temp
+        ax[1].text(temp+20, kappa_e_temp, f"{temp:.1e}, {kappa_e_temp:.2e}", fontsize=13, verticalalignment='bottom', horizontalalignment='left')
 
         ax[0].tick_params(axis='both', which='major', labelsize=12, length=6, width=1.2)
         ax[0].tick_params(axis='both', which='minor', labelsize=10, length=3, width=1.0)
@@ -193,7 +178,7 @@ class ParameterGetter:
     
 if __name__ == "__main__":
     getter = ParameterGetter()
-    temp = 450
+    temp = 300
     Ce, ke = getter.get_data1(temp)
     print(f"At {temp} K: Ce: {Ce:.3e} eV/K/A^3, ke: {ke:.3e} eV/K/A/ps")
     # Ce = getter.get_data2(900)

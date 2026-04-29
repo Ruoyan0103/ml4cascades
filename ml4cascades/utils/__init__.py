@@ -1,6 +1,7 @@
 from .plots import TurbogapCascadePlotter, LammpsCascadePlotter
 from .param import ParameterGetter
-__all__ = ["TurbogapCascadePlotter", "LammpsCascadePlotter", "ParameterGetter"]
+from .visualize import LammpsCascadeVisualizer
+__all__ = ["TurbogapCascadePlotter", "LammpsCascadePlotter", "ParameterGetter", "LammpsCascadeVisualizer"]
 
 class BasicCellInfo:
     def __init__(

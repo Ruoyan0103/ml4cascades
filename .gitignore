@@ -9,6 +9,6 @@ ml4cascades/turbogap/results/
 
 
 # Ignore betafile
-ml4cascades/lammps/templates/pka/betafile
-ml4cascades/turbogap/templates/pka/betafile
+ml4cascades/lammps/templates/cascade/betafile
+ml4cascades/turbogap/templates/cascade/betafile
 

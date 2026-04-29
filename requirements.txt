@@ -1,0 +1,6 @@
+ase          # Atomic Simulation Environment - for atoms/crystal manipulation and I/O
+numpy        # Numerical arrays and math
+matplotlib   # Plotting
+pandas       # Data manipulation
+seaborn      # Statistical visualization
+ovito        # Atomic visualization and analysis (Wigner-Seitz, dislocation analysis, etc.)

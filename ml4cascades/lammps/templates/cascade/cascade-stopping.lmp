@@ -18,7 +18,7 @@ velocity        PKA set {v_x} {v_y} {v_z} units box
 
 #--------------------------ADAPTIVE TIMESTEP----------------------
 fix             1 all dt/reset 1 1e-6 1e-3 2e-2 emax 10 
-thermo          10
+thermo          500
 thermo_style    custom step time temp press pe ke etotal
 
 #--------------------------BORDER MONITOR-----------------------
@@ -53,14 +53,15 @@ variable        intemp_val equal c_intemp
 compute         ekmax_all all reduce max c_ek
 variable        ekmaxall equal c_ekmax_all
 
-compute         stress_atom all stress/atom NULL
-
 #------------------------------ STOPPING ---------------------------
 fix             NVE_thermo all nve       
 fix             stopping all electron/stopping {cutoff_eng} {stoppingfile}
-fix             out1 all print 300 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal) ${{ekmaxall}} $(f_stopping)" file thermo.out screen no
-dump            2 all custom 300 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val c_stress_atom[1] c_stress_atom[2] c_stress_atom[3]
+fix             out1 all print 500 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal) ${{ekmaxbrdr}} $(f_stopping)" file thermo.out screen no
+dump            2 all custom 500 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val
 
-variable        stopcond equal "v_ekmaxbrdr>5 || v_t>=100"
-fix             terminate all halt 100 v_stopcond == 1 error hard
-run             3000000
+variable        stopcond equal "v_ekmaxbrdr>5 || v_t>=150"
+fix             terminate all halt 100 v_stopcond == 1 error soft
+run             10000000
+
+write_data      data.final
+write_restart   restart.final.binary

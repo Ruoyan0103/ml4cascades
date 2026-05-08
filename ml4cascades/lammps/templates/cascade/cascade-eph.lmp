@@ -18,7 +18,7 @@ velocity        PKA set {v_x} {v_y} {v_z} units box
 
 #--------------------------ADAPTIVE TIMESTEP----------------------
 fix             1 all dt/reset 1 1e-6 1e-3 2e-2 emax 10 
-thermo          10
+thermo          500
 thermo_style    custom step time temp press pe ke etotal
 
 #--------------------------BORDER MONITOR-----------------------
@@ -34,7 +34,7 @@ group           border region br_region
 group           inside region in_region
 
 #--------------------------BORDER THERMOSTAT-----------------------
-# fix             2 border temp/berendsen {temp} {temp} 0.1
+fix             2 border temp/berendsen {temp} {temp} 0.1
 
 compute         ep all pe/atom
 compute         ek all ke/atom
@@ -56,17 +56,18 @@ variable        ekmaxall equal c_ekmax_all
 
 #------------------------------USER EPH---------------------------
 fix             friction all eph 12345 7 4 1.0 {eph_C_e} {eph_kappa_e} {temp} {gsx} {gsy} {gsz} {tinfile} 100 T_out/T_out {betafile} Ge   # rho_e, c_e, k_e, t_e, nx, ny, nz are read from tinfile 
-fix             out1 all print 300 "$(step) $(time) $(temp) $(f_friction[1]) $(f_friction[2]) ${{brtemp_val}} ${{intemp_val}}" file eng.out screen no
-fix             out2 all print 300 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal) ${{ekmaxall}} ${{epmaxbrdr}} ${{ekmaxbrdr}}" file thermo.out screen no
-dump            2 all custom 300 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val f_friction[1] f_friction[2] 
+fix             out1 all print 500 "$(step) $(time) $(temp) $(f_friction[1]) $(f_friction[2]) ${{brtemp_val}} ${{intemp_val}}" file eng.out screen no
+fix             out2 all print 500 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal) ${{ekmaxall}} ${{epmaxbrdr}} ${{ekmaxbrdr}}" file thermo.out screen no
+dump            2 all custom 500 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val f_friction[1] f_friction[2] 
 
 # -----------------------------------DANGEROUS-----------------------------------------------------
 # run             {cascade_steps} every 100  " if '(${{ekmaxbrdr}} > 5 || $t >= 70.0)' then 'quit' "
 # run             {cascade_steps} every 100  " if '($t >= 3)' then 'quit' "  # for Ce, Ke testing
 # -----------------------------------DANGEROUS------------------------------------------------------
 
-variable        stopcond equal "v_ekmaxbrdr>5 || v_t>=45"
+variable        stopcond equal "v_ekmaxbrdr>5 || v_t>=150"
 fix             terminate all halt 100 v_stopcond == 1 error soft 
-run             2000000
+run             10000000
 
 write_data      data.final
+write_restart   restart.final.binary

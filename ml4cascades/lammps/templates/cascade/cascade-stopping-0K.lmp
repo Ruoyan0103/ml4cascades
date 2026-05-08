@@ -34,7 +34,7 @@ group           border region br_region
 group           inside region in_region
 
 #--------------------------BORDER THERMOSTAT-----------------------
-fix             2 border temp/berendsen {temp} {temp} 0.1
+fix             2 border temp/berendsen {temp} {temp} 0.5
 
 compute         ep all pe/atom
 compute         ek all ke/atom
@@ -60,5 +60,8 @@ fix             out1 all print 300 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal
 dump            2 all custom 300 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val 
 
 variable        stopcond equal "v_ekmaxbrdr>5 || v_t>=45"
-fix             terminate all halt 100 v_stopcond == 1 error hard
+fix             terminate all halt 100 v_stopcond == 1 error soft
 run             800000
+
+write_data      data.final
+write_restart   restart.final.binary

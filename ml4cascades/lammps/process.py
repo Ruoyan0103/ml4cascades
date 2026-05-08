@@ -34,6 +34,21 @@ class CascadeProcessor:
     '''
     lack of other methods for defect analysis
     '''
+    @staticmethod
+    def _tail_convergence(time, values, tail_ps=20.0):
+        mask = time >= (time[-1] - tail_ps)
+        t, v = time[mask], values[mask]
+        if len(v) < 2:
+            return dict(mean=float(v[0]) if len(v) else 0.0, std=0.0,
+                        drift_pct=0.0, cv=0.0, n=len(v))
+        mean  = float(v.mean())
+        std   = float(v.std())
+        slope = np.polyfit(t, v, 1)[0]
+        drift_pct = abs(slope * (t[-1] - t[0]) / mean * 100) if mean else 0.0
+        cv = std / abs(mean) * 100 if mean else 0.0  # coefficient of variation %
+        return dict(mean=mean, std=std, drift_pct=drift_pct, cv=cv, n=int(len(v)))
+
+
     # Wigner-Seitz method
     def cal_WSDefect(
         self,
@@ -66,10 +81,10 @@ class CascadeProcessor:
                 time_end = data[-1, 1]
                 if time_end <= 40:
                     self.logger.warning(f'Warning: thermo.out in folder {traj_id} runs {time_end} ps.')
-                    traj_path = Path(traj_dir)
-                    if traj_path.exists() and traj_path.is_dir():
-                        shutil.rmtree(traj_path)
-                    self.logger.info(f'Trajectory {traj_id} has been removed due to short simulation time.')
+                    # traj_path = Path(traj_dir)
+                    # if traj_path.exists() and traj_path.is_dir():
+                    #     shutil.rmtree(traj_path)
+                    # self.logger.info(f'Trajectory {traj_id} has been removed due to short simulation time.')
                     continue          
             defect_txt = os.path.join(traj_dir, 'defect.txt')
             if os.path.exists(defect_txt):
@@ -77,6 +92,17 @@ class CascadeProcessor:
                 time_end = data[-1, 0]
                 if time_end > 40:
                     self.logger.info(f'defect.txt already exists in folder {traj_id}.')
+                    tail_ps = 50.0
+                    t_arr = data[:, 0]
+                    for col, name in [(1, 'num_vac'), (2, 'num_int'), (3, 'num_def')]:
+                        conv = self._tail_convergence(t_arr, data[:, col], tail_ps=tail_ps)
+                        tag = 'CONVERGED' if (conv['drift_pct'] < 3.0 and conv['cv'] < 10.0) else 'NOT CONVERGED'
+                        self.logger.info(
+                            f'  [{tag}] traj {Path(traj_dir).name} {name}: '
+                            f'tail mean={conv["mean"]:.1f} std={conv["std"]:.1f} '
+                            f'drift={conv["drift_pct"]:.1f}% cv={conv["cv"]:.1f}% over last {tail_ps} ps '
+                            f'({conv["n"]} pts)'
+                        )
                     continue
             cnt += 1
             self.logger.info(f'Starting the {cnt}th trajectory in folder {traj_id}...')
@@ -104,13 +130,8 @@ class CascadeProcessor:
                 wsam.reference = reference_pipeline.source
                 cur_pipeline.modifiers.append(wsam)
                 data = cur_pipeline.compute(0)
-                cnt_vacancies = 0
-                cnt_interstitials = 0
-                for occupancy in data.particles['Occupancy']:
-                    if occupancy == 0:
-                        cnt_vacancies += 1
-                    if occupancy > 1:
-                        cnt_interstitials += 1
+                cnt_vacancies = data.attributes['WignerSeitz.vacancy_count']
+                cnt_interstitials = data.attributes['WignerSeitz.interstitial_count']
                 cur_pipeline.modifiers.remove(wsam)
                 num_vac.append(cnt_vacancies)
                 num_int.append(cnt_interstitials)
@@ -118,14 +139,29 @@ class CascadeProcessor:
                 with open(os.path.join(traj_dir, 'defect.txt'), 'w') as f:
                     f.write('Time (ps)\tnum_vac\tnum_int\tnum_def\n')
                     for t, v, i, d in zip(time, num_vac, num_int, num_def):
-                        f.write(f'{t:.3f}\t{v:.2f}\t{i:.2f}\t{d:.2f}\n') 
+                        f.write(f'{t:.3f}\t{v:.2f}\t{i:.2f}\t{d:.2f}\n')
+
+            # --- convergence check (last 50 ps) ---
+            tail_ps = 50.0
+            t_arr = np.array(time)
+            for arr, name in [(np.array(num_vac), 'num_vac'),
+                              (np.array(num_int), 'num_int'),
+                              (np.array(num_def), 'num_def')]:
+                conv = self._tail_convergence(t_arr, arr, tail_ps=tail_ps)
+                tag = 'CONVERGED' if (conv['drift_pct'] < 3.0 and conv['cv'] < 10.0) else 'NOT CONVERGED'
+                self.logger.info(
+                    f'  [{tag}] traj {traj_id} {name}: '
+                    f'tail mean={conv["mean"]:.1f} std={conv["std"]:.1f} '
+                    f'drift={conv["drift_pct"]:.1f}% cv={conv["cv"]:.1f}% over last {tail_ps} ps '
+                    f'({conv["n"]} pts)'
+                )
         self.logger.info('#------------ Defect analysis completed. ------------#\n')
 
     def cal_avg_WSDefect(
         self,
         outlier_traj: list[int],
-        other_traj_folder: str,
-        other_outlier_traj: list[int]
+        other_traj_folder: str=None,
+        other_outlier_traj: list[int]=None
     ):
         self.logger.info(f'#------------Average defect analysis, PKA_kin_eng: {self.PKA_kin_eng} eV------------#')
         defect_files = []
@@ -342,19 +378,48 @@ class CascadeProcessor:
             wsam = WignerSeitzAnalysisModifier(per_type_occupancies=True, output_displaced=False)
             wsam.reference = reference_pipeline.source
             last_pipeline.modifiers.append(wsam)
-            expression = 'Occupancy != 1'  # for all defects
-            sel = ExpressionSelectionModifier(expression=expression) 
-            last_pipeline.modifiers.append(sel)
-
-            cls = ClusterAnalysisModifier(cutoff=cutoff, sort_by_size=True, only_selected=True)
-            last_pipeline.modifiers.append(cls)
+            # Vacancy clusters
+            sel_vac = ExpressionSelectionModifier(expression='Occupancy == 0')
+            last_pipeline.modifiers.append(sel_vac)
+            cls_vac = ClusterAnalysisModifier(cutoff=cutoff, sort_by_size=True, only_selected=True)
+            last_pipeline.modifiers.append(cls_vac)
             data = last_pipeline.compute(0)
-            cluster_sizes = data.tables['clusters']['Cluster Size']
-            count_dict = Counter(cluster_sizes)   # {cluster size: count}
-            with open (os.path.join(traj_dir, 'defect_cluster.txt'), 'w') as f:
-                f.write('Cluster size\tNumber of clusters\t\n')
-                for size, count in count_dict.items():
+            vac_cluster_sizes = data.tables['clusters']['Cluster Size']
+            last_pipeline.modifiers.remove(cls_vac)
+            last_pipeline.modifiers.remove(sel_vac)
+
+            # Interstitial clusters
+            sel_int = ExpressionSelectionModifier(expression='Occupancy > 1')
+            last_pipeline.modifiers.append(sel_int)
+            cls_int = ClusterAnalysisModifier(cutoff=cutoff, sort_by_size=True, only_selected=True)
+            last_pipeline.modifiers.append(cls_int)
+            data = last_pipeline.compute(0)
+            int_cluster_sizes = data.tables['clusters']['Cluster Size']
+            last_pipeline.modifiers.remove(cls_int)
+            last_pipeline.modifiers.remove(sel_int)
+
+            # Defect clusters
+            sel_def = ExpressionSelectionModifier(expression='Occupancy != 1')
+            last_pipeline.modifiers.append(sel_def)
+            cls_def = ClusterAnalysisModifier(cutoff=cutoff, sort_by_size=True, only_selected=True)
+            last_pipeline.modifiers.append(cls_def)
+            data = last_pipeline.compute(0)
+            def_cluster_sizes = data.tables['clusters']['Cluster Size']
+            last_pipeline.modifiers.remove(cls_def)
+            last_pipeline.modifiers.remove(sel_def)
+
+            with open(os.path.join(traj_dir, 'vacancy_cluster.txt'), 'w') as f:
+                f.write('Cluster size\tNumber of clusters\n')
+                for size, count in Counter(vac_cluster_sizes).items():
                     f.write(f'{size}\t{count}\n')
+            with open(os.path.join(traj_dir, 'interstitial_cluster.txt'), 'w') as f:
+                f.write('Cluster size\tNumber of clusters\n')
+                for size, count in Counter(int_cluster_sizes).items():
+                    f.write(f'{size}\t{count}\n')
+            with open(os.path.join(traj_dir, 'defect_cluster.txt'), 'w') as f:
+                f.write('Cluster size\tNumber of clusters\n')
+                for size, count in Counter(def_cluster_sizes).items():
+                    f.write(f'{size}\t{count}\n')            
             self.logger.info(f'#------------ Defect cluster analysis completed. ------------#\n')
 
     def cal_defect_cluster_final_avg(
@@ -722,7 +787,7 @@ class CascadeProcessor:
                 reference_pipeline = Pipeline(source=StaticSource(data=init_frame))
             for frame_idx in range(0, len(data), interval):
                 cur_pipeline = Pipeline(source=StaticSource(data=all_pipeline.compute(frame_idx)))
-                dispm = CalculateDisplacementsModifier()
+                dispm = CalculateDisplacementsModifier(affine_mapping=ReferenceConfigurationModifier.AffineMapping.ToReference)
                 dispm.reference = reference_pipeline.source
                 cur_pipeline.modifiers.append(dispm)
                 cur_pipeline.modifiers.append(ExpressionSelectionModifier(expression=expression))

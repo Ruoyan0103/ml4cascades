@@ -1,0 +1,46 @@
+units           metal
+boundary        p p p
+atom_style      atomic
+read_restart    restart.final.binary
+
+variable        br internal {border_thickness}
+region          in_region block $(xlo+v_br) $(xhi-v_br) $(ylo+v_br) $(yhi-v_br) $(zlo+v_br) $(zhi-v_br)
+region          br_region block $(xlo+v_br) $(xhi-v_br) $(ylo+v_br) $(yhi-v_br) $(zlo+v_br) $(zhi-v_br) side out
+
+fix             prop all property/atom i_myflag
+group           border region br_region
+group           inside region in_region
+
+fix             1 all dt/reset 1 1e-6 1e-3 2e-2 emax 10
+thermo          10
+thermo_style    custom step time temp press pe ke etotal
+
+fix             2 border temp/berendsen {temp} {temp} 0.1
+
+compute         ep all pe/atom
+compute         ek all ke/atom
+compute         ekmax border reduce max c_ek
+compute         epmax border reduce max c_ep
+compute         myflag_val all property/atom i_myflag
+variable        ekmaxbrdr equal c_ekmax
+variable        epmaxbrdr equal c_epmax
+variable        t equal "time"
+compute         brtemp border temp/region br_region
+variable        brtemp_val equal c_brtemp
+compute         intemp inside temp/region in_region
+variable        intemp_val equal c_intemp
+compute         ekmax_all all reduce max c_ek
+variable        ekmaxall equal c_ekmax_all
+
+fix             friction all eph {seed} 7 4 1.0 {eph_C_e} {eph_kappa_e} {temp} {gsx} {gsy} {gsz} {tinfile} 100 T_out/T_out {betafile} Ge
+fix             out1 all print 300 "$(step) $(time) $(temp) $(f_friction[1]) $(f_friction[2]) ${{brtemp_val}} ${{intemp_val}}" file eng.out screen no
+fix             out2 all print 300 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal) ${{ekmaxall}} ${{epmaxbrdr}} ${{ekmaxbrdr}}" file thermo.out screen no
+dump            2 all custom 300 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val f_friction[1] f_friction[2]
+
+variable        stopcond2 equal "v_t>=100"
+fix             terminate all halt 100 v_stopcond2 == 1 error soft
+
+reset_timestep  0
+run             5000000
+write_data      data.final_extended
+write_restart   restart.final_extended.binary

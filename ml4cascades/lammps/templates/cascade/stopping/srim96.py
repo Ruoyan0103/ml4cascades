@@ -15,4 +15,4 @@ def srim96_stopping_file(stoppingfile: str, mass: float, new_stoppingfile: str):
         for v, s in zip(kinetic_energy, stopping_power):
             f.write(f"{v}  {s}\n")
 
-srim96_stopping_file('elstop.in.2keV_srim96.Ge', mass=72.56, new_stoppingfile='Ge_Ge_elstop_srim96.txt')
+srim96_stopping_file('elstop.in.10keV_srim96.Ge', mass=72.56, new_stoppingfile='Ge_Ge_elstop_srim96.txt')

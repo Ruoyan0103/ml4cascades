@@ -156,12 +156,25 @@ if __name__ == "__main__":
     '''
     ######################################### 4. Cascade simulation #########################################
     '''
+    atomsfile = os.path.join(calc.calculation_dir, 'thermalize', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}', 'data.output')
+    with open(atomsfile, 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            if 'xlo xhi' in line:
+                xlo = float(line.split()[0])
+                xhi = float(line.split()[1])
+            elif 'ylo yhi' in line:
+                ylo = float(line.split()[0])
+                yhi = float(line.split()[1])
+            elif 'zlo zhi' in line:
+                zlo = float(line.split()[0])
+                zhi = float(line.split()[1])
     num_PKA_directions = 50
     # running_directions = [x for x in range(1, num_PKA_directions+1) if x not in [16, 22, 25, 32, 34]] # for PKA_kin_eng=5000 eV
-    running_directions = range(16, 26) # for PKA_kin_eng=10000 eV 
+    running_directions = range(16, 18) # for PKA_kin_eng=10000 eV 
     # Ce = 5e-7
     radius_frac = 0.7
-    PKA_kin_eng = 20000 # in eV
+    PKA_kin_eng = 10000 # in eV
     grid_value = 16
     if choice == '4':
         print("Cascade simulation...")
@@ -170,20 +183,20 @@ if __name__ == "__main__":
             "border_thickness": 5.76,
             "cascade_steps": 80000, 
             "temp": 300,
-            "xlow": -xhi/2+bi.alat[0]*supercell_size[0]/2,
-            "xhigh": xhi/2+bi.alat[0]*supercell_size[0]/2,
-            "ylow": -yhi/2+bi.alat[1]*supercell_size[1]/2,
-            "yhigh": yhi/2+bi.alat[1]*supercell_size[1]/2,
-            "zlow": -zhi/2+bi.alat[2]*supercell_size[2]/2,
-            "zhigh": zhi/2+bi.alat[2]*supercell_size[2]/2,
+            "xlow": xlo-(xhi-xlo)/2,
+            "xhigh": xhi+(xhi-xlo)/2,
+            "ylow": ylo-(yhi-ylo)/2,
+            "yhigh": yhi+(yhi-ylo)/2,
+            "zlow": zlo-(zhi-zlo)/2,
+            "zhigh": zhi+(zhi-zlo)/2,
             "gsx": grid_value,
             "gsy": grid_value,
-            "gsz": grid_value,
+            "gsz": grid_value, 
             "eph_C_e": Ce,
             "eph_kappa_e": kappa_e,
-            "cutoff_eng": 1, 
+            "cutoff_eng": 10, 
             # "tinfile": 'NULL',
-            # "temperature_dependent": False
+            # "temperature_dependent": True
         }
         PKA_kin_eng_dir = calc.run_cascade(num_PKA_directions=num_PKA_directions,
                                            running_directions=running_directions,
@@ -238,11 +251,11 @@ if __name__ == "__main__":
             print("Cascade data plotting...")
             plotter = LammpsCascadePlotter()
             # print("Plotting eph results...")
-            folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_1000eV-Ce_5e-8/0.7-16/2'
+            folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_20000eV/0.7-1/1'
             # folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/Test-CascadeProcess/Test-num_grid_points/32-32-32/1'
             fig_file1 = f'{folder}/eph_results.png'
-            # plotter.plot_eph_results(datafile1=f'{folder}/eng.out', 
-            #                          datafile2=f'{folder}/thermo.out', figfile=fig_file1)
+            plotter.plot_eph_results(datafile1=f'{folder}/eng.out', 
+                                     datafile2=f'{folder}/thermo.out', figfile=fig_file1)
 
             # print('Coupling results...')
             parent_folder = Path('/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade')
@@ -302,8 +315,8 @@ if __name__ == "__main__":
             #                         fig_file4, fig_file5, fig_file6,
             #                         z=8, gridx=16, gridy=16, border=4)
 
-            visualizer = LammpsCascadeVisualizer(task_name='Visualizing', model_name=model_name)
-            visualizer.exportDampfile(traj_folder=folder, export_step=5)
+            # visualizer = LammpsCascadeVisualizer(task_name='Visualizing', model_name=model_name)
+            # visualizer.exportDampfile(traj_folder=folder, export_step=5)
     '''
     ######################################### 7. Cascade output processing ####################################
     '''
@@ -311,9 +324,9 @@ if __name__ == "__main__":
         print("Cascade output processing...")
         PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', 'PKA_20000eV', '0.7-1')
         processor = CascadeProcessor(bi, PKA_kin_eng=20000, traj_folder=PKA_kin_eng_dir, model_name=model_name)
-        reference_traj_file = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/STOPPING/thermalize/72-72-72/data.input'
-        # reference_traj_file = None
-        processor.cal_WSDefect(start_traj=16, num_trajs=9, reference_traj_file=reference_traj_file)
+        reference_traj_file = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/STOPPING/thermalize/72-72-72/data.minimize'
+        #reference_traj_file = None
+        processor.cal_WSDefect(start_traj=1, num_trajs=6, reference_traj_file=reference_traj_file)
         # processor.cal_amorphous_fraction(start_traj=9, num_trajs=1)
         # processor.cal_local_T(start_traj=9, num_trajs=1, export_step=5)
         # parent_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_10000eV-Ce_5e-7', '0.8-16')
@@ -321,22 +334,19 @@ if __name__ == "__main__":
         # only 2 to 11 included 
         # in_traj = range(12, 22)
         # outlier_traj  = [i for i in range(1, 23) if i not in in_traj]
-        # other_outlier_traj = None
-        # processor.cal_avg_WSDefect(
-        #             outlier_traj=outlier_traj,
-        #             other_traj_folder=parent_folder,
-        #             other_outlier_traj=other_outlier_traj)
-        # processor.cal_final_WSDefect(other_traj_folder=parent_folder)
+        outlier_traj = None
+        # processor.cal_avg_WSDefect(outlier_traj=outlier_traj)
+        #processor.cal_final_WSDefect(other_traj_folder=parent_folder)
 
 
         # processor.cal_R2(start_traj=8, num_trajs=1)
-        # processor.cal_R2_ovito(start_traj=1011, num_trajs=1, reference_traj_file=reference_traj_file)
+        # processor.cal_R2_ovito(start_traj=1, num_trajs=30, reference_traj_file=reference_traj_file)
         # other_traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_10000eV-Ce_5e-7', '0.8-16')
         other_traj_folder = None
         # processor.cal_avg_R2(other_traj_folder=other_traj_folder)
 
         
-        # processor.cal_defect_cluster_final(start_traj=1, num_trajs=25)
+        # processor.cal_defect_cluster_final(start_traj=1, num_trajs=30)
         # other_traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_30000eV', '0.8-1')
         other_traj_folder = None
         # processor.cal_defect_cluster_final_avg(outlier_traj=outlier_traj, 

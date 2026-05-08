@@ -195,7 +195,7 @@ class CascadeCalculator(LMPSCalculator):
                 with open(os.path.join(self.template_dir, 'submit-cascade-stopping.sh'), 'r') as f:
                     submit_template = f.read()
             elif self.model_name == 'STOPPING-0K':
-                atomsfile = os.path.join(self.calculation_dir, 'thermalize', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}', 'data.input')
+                atomsfile = os.path.join(self.calculation_dir, 'thermalize', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}', 'data.output')
                 self._run_stopping_0K_cascade(cascade_dir, atomsfile, PKA_id, velocity,
                                               xlow, xhigh, ylow, yhigh, zlow, zhigh, temp, 
                                               border_thickness, cascade_steps, cutoff_eng)

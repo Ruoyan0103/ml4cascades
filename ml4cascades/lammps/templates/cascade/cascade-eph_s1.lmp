@@ -1,0 +1,85 @@
+# LAMMPS input for simulating collision cascade
+# Parameters: atomsfile, ff_settings, mass, pka_id, v_x, v_y, v_z,
+# eph_C_e, eph_kappa_e, temp, gsx, gsy, gsz, tinfile, betafile, border_thickness
+
+variable        t_ballistic         equal 0.1
+variable        dump_ballistic      equal 0.02
+
+#-------------------------INITIALIZATION--------------------------
+units           metal
+boundary        p p p
+atom_style      atomic
+read_data       {atomsfile}
+
+#---------------------------FORCE FIELD---------------------------
+{ff_settings}
+mass            1  {mass}
+
+#----------------------------PKA SETTING-------------------------
+group           PKA id == {pka_id}
+velocity        PKA set {v_x} {v_y} {v_z} units box
+
+#--------------------------ADAPTIVE TIMESTEP----------------------
+fix             1 all dt/reset 1 1e-6 1e-3 2e-2 emax 10
+thermo          500
+thermo_style    custom step time temp press pe ke etotal
+
+#--------------------------BORDER MONITOR-----------------------
+variable        br internal {border_thickness}
+region          in_region block $(xlo+v_br) $(xhi-v_br) $(ylo+v_br) $(yhi-v_br) $(zlo+v_br) $(zhi-v_br)
+region          br_region block $(xlo+v_br) $(xhi-v_br) $(ylo+v_br) $(yhi-v_br) $(zlo+v_br) $(zhi-v_br) side out
+
+fix             prop all property/atom i_myflag
+set             region in_region i_myflag 10                  # for visual checking region
+set             region br_region i_myflag 20                  # can be deleted if sure the region is correct
+#group           border dynamic all region br_region every 100 # for atoms in this region, monitoring their velocity
+group           border region br_region
+group           inside region in_region
+
+#--------------------------BORDER THERMOSTAT-----------------------
+# fix             2 border temp/berendsen {temp} {temp} 0.5
+
+compute         ep all pe/atom
+compute         ek all ke/atom
+compute         ekmax border reduce max c_ek
+compute         epmax border reduce max c_ep
+compute         myflag_val all property/atom i_myflag
+variable        ekmaxbrdr equal c_ekmax
+variable        t equal "time"
+
+compute         brtemp border temp/region br_region
+variable        brtemp_val equal c_brtemp
+compute         intemp inside temp/region in_region
+variable        intemp_val equal c_intemp
+
+#------------------------------ BORDER TERMINATION ---------------------------
+fix             border_terminate all halt 100 v_ekmaxbrdr > 5.0 error hard message yes
+
+#------------------------------USER EPH---------------------------------------
+fix             friction all eph 12345 7 4 1.0 {eph_C_e} {eph_kappa_e} {temp} {gsx} {gsy} {gsz} T.in 500 T_out/T_out {betafile} Ge   # rho_e, c_e, k_e, t_e, nx, ny, nz are read from tinfile
+fix             out1 all print 100 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal) $(f_friction[1]) $(f_friction[2])" file thermo.out screen no title "### step time temp pe ke etotal eph_power temp_electronic"
+#fix             out2 all print 500 "$(step) $(time)" file record_time.out screen no title "# step time"
+fix             recentering all recenter INIT INIT INIT
+
+#----------------------------- RUN SIMULATION ---------------------------
+#dump            d1 all custom 500 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val f_friction[1] f_friction[2]
+#dump_modify     d1 element Ge every/time ${{dump_ballistic}} time yes first yes
+
+fix terminate all halt 100 v_t > ${{t_ballistic}} error continue
+run	100000
+unfix terminate
+#undump d1
+unfix  out1
+#unfix  out2
+
+#----------------------------- WRITE COM AND RESTART ---------------------------
+write_restart   restart.ballistic.binary
+
+compute         com_all all com
+variable        xcm equal c_com_all[1]
+variable        ycm equal c_com_all[2]
+variable        zcm equal c_com_all[3]
+thermo_style    custom step c_com_all[1] c_com_all[2] c_com_all[3]
+run             0
+print           "${{xcm}} ${{ycm}} ${{zcm}}" file com_s1.txt screen no
+

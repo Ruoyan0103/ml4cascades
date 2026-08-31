@@ -1,21 +1,9 @@
 # LAMMPS input for simulating collision cascade
 # Parameters: atomsfile, ff_settings, mass, pka_id, v_x, v_y, v_z,
-# eph_C_e, eph_kappa_e, temp, gsx, gsy, gsz, tinfile, betafile, cascade_steps 
+# stopping_eng, stoppingfile, cascade_steps, temp
 
-# Different dump interals will be used for each part
-variable        t_ballistic         equal 0.1 
-variable        t_heatspike         equal 1            
-variable        t_rest              equal 400
-
-# Dump cadence in time units (ps)
-variable        dump_ballistic      equal v_t_ballistic/20
-variable        dump_heatspike      equal v_t_heatspike/10
-variable        dump_rest           equal v_t_rest/200
-
-# Thermo frequencies (steps)
-variable        thermo_ballistic    equal 500
-variable        thermo_heatspike    equal 500
-variable        thermo_rest         equal 1000
+variable        t_ballistic         equal 0.1              
+variable        dump_ballistic      equal 0.02   # ps 
 
 #-------------------------INITIALIZATION--------------------------
 units           metal
@@ -49,7 +37,7 @@ group           border region br_region
 group           inside region in_region
 
 #--------------------------BORDER THERMOSTAT-----------------------
-# fix             2 border temp/berendsen {temp} {temp} 0.5
+fix             2 border temp/berendsen {temp} {temp} 0.5
 
 compute         ep all pe/atom
 compute         ek all ke/atom
@@ -66,50 +54,29 @@ variable        intemp_val equal c_intemp
 
 #------------------------------ BORDER TERMINATION ---------------------------
 fix             border_terminate all halt 100 v_ekmaxbrdr > 5.0 error hard message yes
+
+#------------------------------ STOPPING ---------------------------
+fix             NVE_thermo all nve       
+fix             stopping all electron/stopping {cutoff_eng} {stoppingfile}
+fix             out1 all print 500 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal) $(f_stopping)" file thermo.out screen no title "### step time temp pe ke etotal stopping_power"
 fix             recentering all recenter INIT INIT INIT
 
-#------------------------------USER EPH---------------------------------------
-fix             friction all eph 12345 7 4 1.0 {eph_C_e} {eph_kappa_e} {temp} {gsx} {gsy} {gsz} {tinfile} 500 T_out/T_out {betafile} Ge   # rho_e, c_e, k_e, t_e, nx, ny, nz are read from tinfile 
-fix             out1 all print 500 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal) $(f_friction[1]) $(f_friction[2])" file thermo.out screen no
-
 #----------------------------- RUN SIMULATION ---------------------------
-# ----------------------------- #
-#       Ballistic phase         #
-# ----------------------------- #
-dump            d1 all custom 500 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val f_friction[1] f_friction[2]
+dump            d1 all custom 500 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val 
 dump_modify     d1 element Ge every/time ${{dump_ballistic}} time yes first yes
-thermo          ${{thermo_ballistic}}
 
 fix terminate all halt 100 v_t > ${{t_ballistic}} error continue
 run	100000
 unfix terminate
 undump d1
+unfix  out1
 
-# ----------------------------- #
-#       Heat spike phase        #
-# ----------------------------- #
-dump            d1 all custom 500 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val f_friction[1] f_friction[2] 
-dump_modify     d1 element Ge every/time ${{dump_heatspike}} time yes first no append yes
-thermo          ${{thermo_heatspike}}
-
-fix terminate all halt 100 v_t > ${{t_heatspike}} error continue
-run	1000000
-unfix terminate
-undump d1 
-
-# ----------------------------- #
-#       Coarse rest             #
-# ----------------------------- #
-dump            d1 all custom 500 data.output id type x y z vx vy vz c_ep c_ek c_myflag_val f_friction[1] f_friction[2]
-dump_modify     d1 element Ge every/time ${{dump_rest}} first no time yes append yes
-thermo          ${{thermo_rest}}
-
-fix terminate all halt 100 v_t > ${{t_rest}} error continue
-run	10000000
-unfix terminate
-undump d1
-
-write_data      data.final
-write_restart   restart.final.binary
-
+#----------------------------- WRITE COM AND RESTART ---------------------------
+write_restart   restart.ballistic.binary
+compute         com_all all com
+variable        xcm equal c_com_all[1]
+variable        ycm equal c_com_all[2]
+variable        zcm equal c_com_all[3]
+run             0
+print           "${{xcm}} ${{ycm}} ${{zcm}}" file com_s1.txt screen no
 

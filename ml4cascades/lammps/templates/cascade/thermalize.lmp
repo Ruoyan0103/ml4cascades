@@ -25,10 +25,10 @@ thermo          10
 thermo_style    custom step time atoms temp press pe etotal lx ly lz vol
 
 fix             1 all nvt temp {temp} {temp} 0.1 tchain 5
-run             10000
+run             5000
 unfix           1
 fix             2 all npt temp {temp} {temp} 0.1 iso 0.0 0.0 1.0 tchain 5 pchain 5 drag 1.0
-run             10000
+run             20000
 unfix           2
 
 #--------------------------USER EPH-------------------------------------------------
@@ -36,7 +36,7 @@ fix             friction all eph 12345 7 4 1.0 {eph_C_e} {eph_kappa_e} {temp} {g
 
 fix             out all print 10 "$(step) $(time) $(temp) $(pe) $(ke) $(etotal) $(f_friction[1]) $(f_friction[2])" file eng.out screen no
 
-run             10000
+run             3000
 write_data      data.output
 
 

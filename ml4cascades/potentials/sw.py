@@ -1,4 +1,4 @@
-import os, time, sys, argparse
+import os, sys, argparse
 from pathlib import Path
 from matplotlib.pylab import f
 from ml4cascades.potentials import IPotential
@@ -56,8 +56,8 @@ if __name__ == "__main__":
     pair_coeff2 = '* * sw Ge_3body.sw Ge'
     sw = SWPotential(pair_style, pair_coeff1, pair_coeff2)
     bi = BasicCellInfo(element=['Ge'], atomic_num=[32], mass=72.64, lattice='diamond', alat=[5.76]*3)
-    supercell_size = [72]*3
-    model_name  = 'STOPPING' # 'EPH' or 'STOPPING' or 'STOPPING-0K' or 'STOPPING-100K'
+    supercell_size = [100]*3
+    model_name  = 'EPH' # 'EPH' or 'STOPPING' or 'STOPPING-0K' or 'STOPPING-100K'
     calc = CascadeCalculator(sw, bi, model_name=model_name)
 
     '''
@@ -156,31 +156,31 @@ if __name__ == "__main__":
     '''
     ######################################### 4. Cascade simulation #########################################
     '''
-    atomsfile = os.path.join(calc.calculation_dir, 'thermalize', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}', 'data.output')
-    with open(atomsfile, 'r') as f:
-        lines = f.readlines()
-        for line in lines:
-            if 'xlo xhi' in line:
-                xlo = float(line.split()[0])
-                xhi = float(line.split()[1])
-            elif 'ylo yhi' in line:
-                ylo = float(line.split()[0])
-                yhi = float(line.split()[1])
-            elif 'zlo zhi' in line:
-                zlo = float(line.split()[0])
-                zhi = float(line.split()[1])
-    num_PKA_directions = 50
-    # running_directions = [x for x in range(1, num_PKA_directions+1) if x not in [16, 22, 25, 32, 34]] # for PKA_kin_eng=5000 eV
-    running_directions = range(16, 18) # for PKA_kin_eng=10000 eV 
-    # Ce = 5e-7
-    radius_frac = 0.7
-    PKA_kin_eng = 10000 # in eV
-    grid_value = 16
     if choice == '4':
+        atomsfile = os.path.join(calc.calculation_dir, 'thermalize', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}', 'data.output')
+        with open(atomsfile, 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+                if 'xlo xhi' in line:
+                    xlo = float(line.split()[0])
+                    xhi = float(line.split()[1])
+                elif 'ylo yhi' in line:
+                    ylo = float(line.split()[0])
+                    yhi = float(line.split()[1])
+                elif 'zlo zhi' in line:
+                    zlo = float(line.split()[0])
+                    zhi = float(line.split()[1])
+        num_PKA_directions = 50
+        # running_directions = [x for x in range(1, num_PKA_directions+1) if x not in [16, 22, 25, 32, 34]] # for PKA_kin_eng=5000 eV
+        running_directions = range(26, 31) 
+        Ce = 5e-7
+        radius_frac = 0.7
+        PKA_kin_eng = 50000 # in eV
+        grid_value = 44
         print("Cascade simulation...")
         input_config = {
             "supercell_size": supercell_size,
-            "border_thickness": 5.76,
+            "border_thickness": 5.65,
             "cascade_steps": 80000, 
             "temp": 300,
             "xlow": xlo-(xhi-xlo)/2,
@@ -196,7 +196,7 @@ if __name__ == "__main__":
             "eph_kappa_e": kappa_e,
             "cutoff_eng": 10, 
             # "tinfile": 'NULL',
-            # "temperature_dependent": True
+            "temperature_dependent": True
         }
         PKA_kin_eng_dir = calc.run_cascade(num_PKA_directions=num_PKA_directions,
                                            running_directions=running_directions,
@@ -241,21 +241,19 @@ if __name__ == "__main__":
             print("Cascade data plotting...")
             plotter = LammpsCascadePlotter()
             print("Plotting stopping results...")
-            folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/STOPPING/cascade/PKA_20000eV/0.7-1/13'
+            folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/STOPPING/cascade/PKA_20000eV/0.7-1/5'
             fig_file = f'{folder}/stopping_results.png'
-            plotter.plot_stopping_results(datafile=f'{folder}/thermo.out', figfile=fig_file, ecut=1)
-            visualizer = LammpsCascadeVisualizer(task_name='Visualizing', model_name=model_name)
-            visualizer.exportDampfile(traj_folder=folder, export_step=5)
+            #plotter.plot_stopping_results(datafile=f'{folder}/thermo.out', figfile=fig_file, ecut=10)
+            # visualizer = LammpsCascadeVisualizer(task_name='Visualizing', model_name=model_name)
+            # visualizer.exportDampfile(traj_folder=folder, export_step=10)
     
         elif model_name == 'EPH':
-            print("Cascade data plotting...")
-            plotter = LammpsCascadePlotter()
-            # print("Plotting eph results...")
-            folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_20000eV/0.7-1/1'
-            # folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/Test-CascadeProcess/Test-num_grid_points/32-32-32/1'
+            plotter = LammpsCascadePlotter() 
+            #print("Plotting eph results...")
+            folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade/PKA_20000eV-Clo/0.7-32/14'
+            #folder = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/STOPPING/cascade/PKA_20000eV/0.7-1/5'
             fig_file1 = f'{folder}/eph_results.png'
-            plotter.plot_eph_results(datafile1=f'{folder}/eng.out', 
-                                     datafile2=f'{folder}/thermo.out', figfile=fig_file1)
+            plotter.plot_eph_results(datafile=f'{folder}/thermo.out', figfile=fig_file1)
 
             # print('Coupling results...')
             parent_folder = Path('/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/EPH/cascade')
@@ -270,88 +268,91 @@ if __name__ == "__main__":
             new_tout_file = f'{folder}/T_out.modified'
             avg_Ta_file = f'{folder}/avg_Ta.out'
             avg_Te_file = f'{folder}/avg_Te.out'
-            flag = 5 # 1: new_dump_file, 2: new_tout
-            # plotter.get_grid_Ta_Te(dump_file=dump_file, 
-            #                        T_out_folder=T_out_folder, 
-            #                        new_dump_file=new_dump_file, 
-            #                        new_tout_file=new_tout_file, 
-            #                        avg_Ta_file=avg_Ta_file, 
-            #                        avg_Te_file=avg_Te_file,
-            #                        flag=flag)
-            
-            # print("Plotting extreme Ta and Te...")
-            frame_id_list = [8, 20, 39, 76]
-            time_list = [9, 23, 100, 533]  # in fs
-            # frame_id_list = [11, 25, 58]
-            # time_list = [1, 5, 15]  # in ps
-            #---------------------- for grid size 4, electronic system twice size of atomic system ----------------------#
-            # grid_list = [37, 38]
-            # electron_grid_list = range(36, 40)
-            #---------------------- for grid size 8, electronic system forth size of atomic system ----------------------#
-            # grid_list = range(282, 286)
-            # electron_grid_list = range(280, 288)
-            # ---------------------- for grid size 16, electronic system double size as atomic system ----------------------#
-            # grid_list = range(2164, 2172)
-            # electron_grid_list = range(2160, 2176)
-            # grid_list = range(2132, 2140)
-            # electron_grid_list = range(2128, 2144)
-            # grid_list = range(2148, 2156)
-            # electron_grid_list = range(2144, 2160)
-            fig_file2 = f'{folder}/extreme_Te_Ta.png'
-            # plotter.get_extreme_Te_Ta(new_tout_file, new_dump_file, frame_id_list, time_list, 
-            #                           grid_list, electron_grid_list, fig_file2) 
+            yes_dump = False
+            yes_tout = False
+            plotter.get_grid_Ta_Te(dump_file=dump_file, 
+                                   T_out_folder=T_out_folder, 
+                                   new_dump_file=new_dump_file, 
+                                   new_tout_file=new_tout_file, 
+                                   yes_dump=yes_dump,
+                                   yes_tout=yes_tout,
+                                   te_time_file=f'{folder}/record_time.out',
+                                   block_id_list=[6, 10, 17],
+                                   tout_step_id_list=[25, 33, 37])
+            # plotter.get_Ta_time(dump_file=dump_file, out_ta_time_file=f'{folder}/Ta_time.out')
+            # current, peak = tracemalloc.get_traced_memory()
+            # print(f"Peak memory: {peak / 1e9:.2f} GB")
+            # tracemalloc.stop()
 
-            # print("Plotting Te and Ta along x...")
+            print("Plotting extreme Te...")
+            num_of_frames = 4
+            fig_file2 = f'{folder}/extreme_Te.png'
+            txt_file2 = f'{folder}/extreme_Te.txt'
+            #plotter.get_extreme_Te(new_tout_file, num_of_frames, fig_file2, txt_file2) 
+            num_of_frames = 30
+            fig_file2 = f'{folder}/extreme_Ta.png'
+            txt_file2 = f'{folder}/extreme_Ta.txt'
+            #plotter.get_extreme_Ta(new_dump_file, num_of_frames, fig_file2, txt_file2) 
+
+            #print("Plotting Te and Ta along x...")
+            grid_value = 32 
+            height = 17
+            width = 14
+            grid_start = grid_value*grid_value*height + grid_value*width
+            grid_end = grid_start + grid_value 
+            grid_list = range(int(grid_start+grid_value/4), int(grid_end-grid_value/4))
+            electron_grid_list = range(int(grid_start), int(grid_end))
             fig_file3 = f'{folder}/Te_Ta_along_x.png'
-            # plotter.plot_te_ta_along_x(new_tout_file, new_dump_file, 
-            #                            frame_id_list, time_list, 
-            #                            grid_list, electron_grid_list, fig_file3)
+            plotter.plot_te_ta_along_x(new_tout_file, new_dump_file, 
+                                       grid_list, electron_grid_list, fig_file3)
+
             # print("Plotting Te and Ta xy heatmaps...")
             fig_file4 = f'{folder}/Te_heatmap.png'
             fig_file5 = f'{folder}/Ta_heatmap.png'
             fig_file6 = f'{folder}/Tdiff_heatmap.png'
-            # plotter.plot_xy_heatmap(new_tout_file, new_dump_file,
-            #                         frame_id_list, time_list,
-            #                         fig_file4, fig_file5, fig_file6,
-            #                         z=8, gridx=16, gridy=16, border=4)
+            plotter.plot_xy_heatmap(new_tout_file, new_dump_file,
+                                    fig_file4, fig_file5, fig_file6,
+                                    z=17, gridx=32, gridy=32, border=8)
 
             # visualizer = LammpsCascadeVisualizer(task_name='Visualizing', model_name=model_name)
-            # visualizer.exportDampfile(traj_folder=folder, export_step=5)
+            # visualizer.exportDampfile(traj_folder=folder, export_step=10)
     '''
     ######################################### 7. Cascade output processing ####################################
     '''
     if choice == '7':
         print("Cascade output processing...")
-        PKA_kin_eng_dir = os.path.join(calc.calculation_dir, 'cascade', 'PKA_20000eV', '0.7-1')
-        processor = CascadeProcessor(bi, PKA_kin_eng=20000, traj_folder=PKA_kin_eng_dir, model_name=model_name)
-        reference_traj_file = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/STOPPING/thermalize/72-72-72/data.minimize'
-        #reference_traj_file = None
-        processor.cal_WSDefect(start_traj=1, num_trajs=6, reference_traj_file=reference_traj_file)
-        # processor.cal_amorphous_fraction(start_traj=9, num_trajs=1)
-        # processor.cal_local_T(start_traj=9, num_trajs=1, export_step=5)
-        # parent_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_10000eV-Ce_5e-7', '0.8-16')
-        parent_folder = None
-        # only 2 to 11 included 
-        # in_traj = range(12, 22)
-        # outlier_traj  = [i for i in range(1, 23) if i not in in_traj]
-        outlier_traj = None
-        # processor.cal_avg_WSDefect(outlier_traj=outlier_traj)
-        #processor.cal_final_WSDefect(other_traj_folder=parent_folder)
+        PKA_kin_dirs = [
+            #os.path.join(calc.calculation_dir, 'cascade', 'PKA_20000eV', '0.7-1'),
+            #os.path.join(calc.calculation_dir, 'cascade', 'PKA_20000eV', '0.7-10'),
+            #os.path.join(calc.calculation_dir, 'cascade', 'PKA_20000eV-Clo', '0.7-1'),
+            #os.path.join(calc.calculation_dir, 'cascade', 'PKA_20000eV-Clo', '0.7-32'),
+            os.path.join(calc.calculation_dir, 'cascade', 'PKA_50000eV-Td', '0.7-44'),
+        ]
+        for PKA_kin_eng_dir in PKA_kin_dirs:
+            processor = CascadeProcessor(bi, PKA_kin_eng=50000, traj_folder=PKA_kin_eng_dir, model_name=model_name)
+            reference_traj_file = '/scratch/phys/t30429_nume-dft-ml/04-Ruoyan/02-Paper2/02-cascade/ml4cascades/ml4cascades/lammps/results/cascade/STOPPING/minimize/100-100-100/data.minimize'
+            #reference_traj_file = None
+            processor.cal_WSDefect(start_traj=30, num_trajs=1, final=True, reference_traj_file=reference_traj_file)
 
+            # processor.cal_liquid_atoms(start_traj=10, num_trajs=1)
+            # processor.cal_local_T(start_traj=9, num_trajs=1, export_step=5)
+            # parent_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_10000eV-Ce_5e-7', '0.8-16')
 
-        # processor.cal_R2(start_traj=8, num_trajs=1)
-        # processor.cal_R2_ovito(start_traj=1, num_trajs=30, reference_traj_file=reference_traj_file)
-        # other_traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_10000eV-Ce_5e-7', '0.8-16')
-        other_traj_folder = None
-        # processor.cal_avg_R2(other_traj_folder=other_traj_folder)
+            parent_folder = None
 
-        
-        # processor.cal_defect_cluster_final(start_traj=1, num_trajs=30)
-        # other_traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_30000eV', '0.8-1')
-        other_traj_folder = None
-        # processor.cal_defect_cluster_final_avg(outlier_traj=outlier_traj, 
-        #                                        other_traj_folder=other_traj_folder, 
-        #                                        other_outlier_traj=other_outlier_traj)
+            # processor.cal_R2(start_traj=8, num_trajs=1)
+            #processor.cal_R2_ovito(start_traj=1, num_trajs=35, reference_traj_file=reference_traj_file)
+            # other_traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_10000eV-Ce_5e-7', '0.8-16')
+            other_traj_folder = None
+            # processor.cal_avg_R2(other_traj_folder=other_traj_folder)
+
+            
+            processor.cal_defect_cluster_final(start_traj=30, num_trajs=1, final=True, reference_traj_file=reference_traj_file)
+            # other_traj_folder = os.path.join(calc.calculation_dir, 'cascade', 'PKA_30000eV', '0.8-1')
+            other_traj_folder = None
+            # processor.cal_defect_cluster_final_avg(outlier_traj=outlier_traj, 
+            #                                        other_traj_folder=other_traj_folder, 
+            #                                        other_outlier_traj=other_outlier_traj)
 
     '''
     ######################################### 8. EPH processing ####################################

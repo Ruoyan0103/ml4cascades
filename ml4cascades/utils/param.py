@@ -120,10 +120,10 @@ class ParameterGetter:
             f.write("#\n#\n#\n")
             f.write(f"{start_idx+value_num_points} {const_dT}\n")
             for _ in range(start_idx):                # [0, start_idx-1])
-                f.write("5e-08 0.0002529\n")          # fake values for temps below the Te[0]
+                f.write("5e-07 0.0002529\n")          # fake values for temps below the Te[0]
             for i in range(0, value_num_points):      # [start_idx, start_idx + value_num_points -1]
-                if C_e[i] < 5e-8:
-                    f.write(f"5e-8 0.0002529\n")
+                if C_e[i] < 5e-07:
+                    f.write(f"5e-07 0.0002529\n")
                 else:
                     f.write(f"{C_e[i]:.6e} {kappa_e[i]:.6e}\n")
 

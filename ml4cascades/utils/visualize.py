@@ -28,5 +28,5 @@ class LammpsCascadeVisualizer:
         self.logger.info(f'Export {number_of_frames} frames with export step {export_step}\n')
         output_file = os.path.join(traj_folder, f"output.xyz")
         export_file(all_pipeline, output_file, "xyz", multiple_frames=True, every_nth_frame=export_step,
-                    columns=["Particle Identifier", "Particle Type", "Position.X", "Position.Y", "Position.Z", "c_ep", "c_ek"])
+                    columns=["Particle Identifier", "Particle Type", "Position.X", "Position.Y", "Position.Z", "c_ep", "c_ek", "c_myflag_val"])
     

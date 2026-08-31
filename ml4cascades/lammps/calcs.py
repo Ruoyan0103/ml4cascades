@@ -129,7 +129,7 @@ class CascadeCalculator(LMPSCalculator):
             if running_dir is not None:
                 PKA_kin_eng_dir = running_dir
             else:
-                PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV', f'{radius_frac}-{gsx}')
+                PKA_kin_eng_dir = os.path.join(self.calculation_dir, 'cascade', f'PKA_{int(PKA_kin_eng)}eV-Td', f'{radius_frac}-{gsx}')
             os.makedirs(PKA_kin_eng_dir, exist_ok=True)
         elif self.model_name == 'STOPPING' or self.model_name == 'STOPPING-100K':
             # gsx = input_config["gsx"]  # needed for directory path
@@ -185,30 +185,30 @@ class CascadeCalculator(LMPSCalculator):
                                      zlow, zhigh, temp, eph_C_e, eph_kappa_e,
                                      border_thickness, cascade_steps,
                                      tinfile, temperature_dependent)
-                with open(os.path.join(self.template_dir, 'submit-cascade.sh'), 'r') as f:
+                with open(os.path.join(self.template_dir, 'submit-cascade-eph.sh'), 'r') as f:
                     submit_template = f.read()
 
             elif self.model_name == 'STOPPING' or self.model_name == 'STOPPING-100K':
                 self._run_stopping_cascade(cascade_dir, atomsfile, PKA_id, velocity,
                                           xlow, xhigh, ylow, yhigh, zlow, zhigh, temp, 
                                           border_thickness, cascade_steps, cutoff_eng)
-                with open(os.path.join(self.template_dir, 'submit-cascade-stopping.sh'), 'r') as f:
+                with open(os.path.join(self.template_dir, 'submit-cascade-stopping.sh'), 'r', encoding='utf-8') as f:
                     submit_template = f.read()
             elif self.model_name == 'STOPPING-0K':
                 atomsfile = os.path.join(self.calculation_dir, 'thermalize', f'{supercell_size[0]}-{supercell_size[1]}-{supercell_size[2]}', 'data.output')
                 self._run_stopping_0K_cascade(cascade_dir, atomsfile, PKA_id, velocity,
-                                              xlow, xhigh, ylow, yhigh, zlow, zhigh, temp, 
+                                              xlow, xhigh, ylow, yhigh, zlow, zhigh, temp,
                                               border_thickness, cascade_steps, cutoff_eng)
-                with open(os.path.join(self.template_dir, 'submit-cascade-stopping.sh'), 'r') as f:
+                with open(os.path.join(self.template_dir, 'submit-cascade-stopping.sh'), 'r', encoding='utf-8') as f:
                     submit_template = f.read()
 
             submit_file = os.path.join(cascade_dir, 'submit-cascade.sh')
-            with open(submit_file, 'w') as f:
+            with open(submit_file, 'w', encoding='utf-8') as f:
                 f.write(submit_template.format(num=running_dir))
             
             self.logger.info(f'Prepared cascade simulation direction {running_dir}.')
             # Submit job
-            subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
+            #subprocess.run('sbatch submit-cascade.sh', shell=True, check=True, cwd=cascade_dir)
         return PKA_kin_eng_dir
     
     def _write_tinfile(self, tinfile_path: str, gsx: int, gsy: int, gsz: int, 
@@ -245,51 +245,53 @@ class CascadeCalculator(LMPSCalculator):
                          temp: float, eph_C_e: float, eph_kappa_e: float,
                          border_thickness: float, cascade_steps: int,
                          tinfile: str, temperature_dependent: bool) -> None:
-        """Prepare and write input file for EPH cascade mode."""
+        """Prepare and write input files for EPH cascade mode (3 stages)."""
         betafile = os.path.join(self.template_dir, 'betafile', 'beta_Ge.dat')
-        with open(os.path.join(self.template_dir, 'cascade-eph.lmp'), 'r') as f:
-            input_template = f.read()
-        input_file = os.path.join(cascade_dir, 'input.lmp')
-        
+
         if tinfile is None:
             tinfile = os.path.join(cascade_dir, 'T.in')
-            self._write_tinfile(tinfile, gsx, gsy, gsz, xlow, xhigh, ylow, yhigh, 
-                               zlow, zhigh, temp, eph_C_e, eph_kappa_e, 
+            self._write_tinfile(tinfile, gsx, gsy, gsz, xlow, xhigh, ylow, yhigh,
+                               zlow, zhigh, temp, eph_C_e, eph_kappa_e,
                                temperature_dependent, cascade_dir)
             tinfile = 'T.in'
-        
-        T_out_folder = os.path.join(cascade_dir, 'T_out')
-        os.makedirs(T_out_folder, exist_ok=True)
-        
-        with open(input_file, 'w') as f:
-            f.write(input_template.format(
-                atomsfile=atomsfile, ff_settings=self.potential.ff_settings, 
-                border_thickness=border_thickness, pka_id=PKA_id, 
-                v_x=velocity[0], v_y=velocity[1], v_z=velocity[2],
-                mass=self.bi.mass, cascade_steps=cascade_steps, temp=temp, 
-                betafile=betafile, eph_C_e=eph_C_e, eph_kappa_e=eph_kappa_e,
-                xlow=xlow, xhigh=xhigh, ylow=ylow, yhigh=yhigh, 
-                zlow=zlow, zhigh=zhigh, gsx=gsx, gsy=gsy, gsz=gsz, tinfile=tinfile))
+
+        os.makedirs(os.path.join(cascade_dir, 'T_out'), exist_ok=True)
+
+        fmt_kwargs = dict(
+            atomsfile=atomsfile, ff_settings=self.potential.ff_settings,
+            border_thickness=border_thickness, pka_id=PKA_id,
+            v_x=velocity[0], v_y=velocity[1], v_z=velocity[2],
+            mass=self.bi.mass, cascade_steps=cascade_steps, temp=temp,
+            betafile=betafile, eph_C_e=eph_C_e, eph_kappa_e=eph_kappa_e,
+            xlow=xlow, xhigh=xhigh, ylow=ylow, yhigh=yhigh,
+            zlow=zlow, zhigh=zhigh, gsx=gsx, gsy=gsy, gsz=gsz, tinfile=tinfile)
+
+        for stage in (1, 2, 3, 4):
+            with open(os.path.join(self.template_dir, f'cascade-eph_s{stage}.lmp'), 'r') as f:
+                input_template = f.read()
+            with open(os.path.join(cascade_dir, f'input{stage}.lmp'), 'w') as f:
+                f.write(input_template.format(**fmt_kwargs))
     
     def _run_stopping_cascade(self, cascade_dir: str, atomsfile: str, PKA_id: int, 
                               velocity: np.ndarray, xlow: float, xhigh: float,
                               ylow: float, yhigh: float, zlow: float, zhigh: float, temp: float,
                               border_thickness: float, cascade_steps: int, cutoff_eng: float) -> None:
-        """Prepare and write input file for stopping cascade mode."""
-        with open(os.path.join(self.template_dir, 'cascade-stopping.lmp'), 'r') as f:
-            input_template = f.read()
-        input_file = os.path.join(cascade_dir, 'input.lmp')
+        """Prepare and write input files for stopping cascade mode (3 stages)."""
         stoppingfile = os.path.join(self.template_dir, 'stopping', 'Ge_Ge_elstop.txt')
-        
-        with open(input_file, 'w') as f:
-            f.write(input_template.format(
-                atomsfile=atomsfile, ff_settings=self.potential.ff_settings, 
-                border_thickness=border_thickness, pka_id=PKA_id,
-                v_x=velocity[0], v_y=velocity[1], v_z=velocity[2],
-                mass=self.bi.mass, cascade_steps=cascade_steps,
-                xlow=xlow, xhigh=xhigh, ylow=ylow, yhigh=yhigh, 
-                zlow=zlow, zhigh=zhigh, temp=temp, cutoff_eng=cutoff_eng, 
-                stoppingfile=stoppingfile))
+        fmt_kwargs = dict(
+            atomsfile=atomsfile, ff_settings=self.potential.ff_settings,
+            border_thickness=border_thickness, pka_id=PKA_id,
+            v_x=velocity[0], v_y=velocity[1], v_z=velocity[2],
+            mass=self.bi.mass, cascade_steps=cascade_steps,
+            xlow=xlow, xhigh=xhigh, ylow=ylow, yhigh=yhigh,
+            zlow=zlow, zhigh=zhigh, temp=temp, cutoff_eng=cutoff_eng,
+            stoppingfile=stoppingfile)
+
+        for stage in (1, 2, 3, 4):
+            with open(os.path.join(self.template_dir, f'cascade-stopping_s{stage}.lmp'), 'r') as f:
+                input_template = f.read()
+            with open(os.path.join(cascade_dir, f'input{stage}.lmp'), 'w') as f:
+                f.write(input_template.format(**fmt_kwargs))
             
     def _run_stopping_0K_cascade(self, cascade_dir: str, atomsfile: str, PKA_id: int, 
                                     velocity: np.ndarray, xlow: float, xhigh: float,

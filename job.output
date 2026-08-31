@@ -1,15 +1,1 @@
-
-################### Enter option: #######################
-
-1: Get Ce and Ke
-2: Test parameters
-3: Thermalization
-4: Cascade simulation
-5: Cascade checker
-6: Cascade data plotting
-7: Cascade output processing
-8: EPH processing
-
-##########################################################
-
-Enter number: Cascade output processing...
+Cascade output processing...

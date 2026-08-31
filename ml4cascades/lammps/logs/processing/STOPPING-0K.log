@@ -83,3 +83,7 @@
 2026-05-08 16:21 - ml4cascades.lammps.process - INFO - Found defect.txt in 17 running 45.004 ps.
 2026-05-08 16:21 - ml4cascades.lammps.process - INFO - #------------Processing 15 files------------#
 
+2026-07-01 13:55 - ml4cascades.lammps.process - INFO - #------------Liquid atoms calculation, PKA_kin_eng: 10000 eV------------#
+2026-07-01 13:55 - ml4cascades.lammps.process - INFO - Starting the 1th trajectory in folder 1...
+2026-07-01 13:57 - ml4cascades.lammps.process - INFO - #------------ Liquid Atoms calculation completed. ------------#
+

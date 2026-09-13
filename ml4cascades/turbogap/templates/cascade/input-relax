@@ -1,0 +1,11 @@
+! TurboGAP input file for thermalizing atomic system
+! Parameters: atomsfile, ff_settings, num_species, element, mass, equ_md_steps, temp, taut
+atoms_file = "{atomsfile}"
+pot_file = "gap_files/{ff_settings}"
+n_species = {num_species}
+species = {element}
+masses = {mass}
+
+optimize = "gd"
+write_xyz = 1
+md_nsteps = 1000

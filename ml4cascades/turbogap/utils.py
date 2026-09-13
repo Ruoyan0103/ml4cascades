@@ -1,151 +1,43 @@
 import numpy as np
-import warnings 
-
-class TCeKappa:
-    '''
-    Ce: electronic heat capacity
-    Kappa: electronic thermal conductivity
-    '''
-    def __init__(
-        self, 
-        parameters_in_file: str,
-        parameters_out_file: str,
-        tin_file: str,
-        grids: list[int],
-        boxsize: list[float],
-        T_e: float,
-        read_from_param_file: int, # 1: read from parameters file, 0: do not read
-        C_e: float=1,
-        K_e: float=1,
-        N_C_e: int=50,
-        M_K_e: int=50
-    ):
-        self.parameters_in_file = parameters_in_file
-        self.parameters_out_file = parameters_out_file
-        self.tin_file = tin_file
-        self.grids = grids
-        self.boxsize = boxsize
-        self.read_from_param_file = read_from_param_file
-        self.T_e = T_e
-        if C_e == 1:
-            warnings.warn("C_e is set to the default placeholder (1). Please provide a correct value.")
-        if K_e == 1:
-            warnings.warn("K_e is set to the default placeholder (1). Please provide a correct value.")
-        self.C_e = C_e
-        self.K_e = K_e
-        self.N_C_e = N_C_e
-        self.M_K_e = M_K_e
-    
-    def _convert_Ce_unit(
-        self,
-        values: list
-    ):
-        '''
-            Convert Ce (heat capacity) unit from J/m^3/K to eV/Å^3/K
-            1 J = 6.242e18 eV
-            1 m^3 = 1e30 Å^3
-            1 J/m^3/K = 6.242e-12 eV/Å^3/K
-        '''
-        converted_values = [value * 6.242e-12 for value in values]
-        modified_values = [value * 1e3 for value in converted_values] # from per cm^3 to per Å^3
-        return modified_values
-
-    def _convert_Kappa_unit(
-        self,
-        values: list
-    ):
-        '''
-            Convert Kappa (heat conductivity) unit from W/m/K to eV/Å/K/ps
-            1 W = 1 J/s = 6.242e18 eV/s
-            1 W/m/K = 6.242e18 eV/m/K/s
-            1 m = 1e10 Å
-            1 s = 1e12 ps
-            1 W/m/K = 6.242e-4 eV/Å/K/ps
-        '''
-        converted_values = [value * 6.242e-4 for value in values]
-        return converted_values
-    
-    def _read_file(self):
-        k_ge = np.loadtxt(self.parameters_in_file, skiprows=2)
-        Temp = k_ge[:, 0]
-        Kappa_org = k_ge[:, 1]
-        Ce_org = k_ge[:, 5]
-        Kappa_converted = self._convert_Kappa_unit(Kappa_org)
-        Ce_converted = self._convert_Ce_unit(Ce_org)
-        return Temp, Ce_converted, Kappa_converted
-    
-    def _write_parameters_file_lammps(self):
-        Temp, Ce, Kappa = self._read_file()
-        with open(self.parameters_out_file, 'w') as f:
-            f.write(f'# Ce & Kappa for Ge: {len(Temp)} data, 100 K dT\n')
-            f.write('# https://github.com/N-Medvedev/XTANT-3_coupling_data/blob/main/K_semiconductors/K_Ge.dat\n')
-            f.write('# First N line: T_e C_e(eV/Ang^3/K), no line gap, then M line: T_e K_e(eV/Ang/K/ps)\n')
-            f.write(f'{self.N_C_e}\n')
-            for T, C, _ in zip(Temp, Ce, range(self.N_C_e)):
-                f.write(f'{T} {C:.6e}\n')
-            f.write(f'{self.M_K_e}\n')
-            for T, K, _ in zip(Temp, Kappa, range(self.M_K_e)):
-                f.write(f'{T} {K:.6e}\n')
-        print('Parameters out file is written.')
-
-    def _write_parameters_file_turbogap(self):
-        Temp, Ce, Kappa = self._read_file()
-        with open(self.parameters_out_file, 'w') as f:
-            f.write(f'# Ce & Kappa for Ge: {len(Temp)} data, 100 K dT\n')
-            f.write('# https://github.com/N-Medvedev/XTANT-3_coupling_data/blob/main/K_semiconductors/K_Ge.dat\n')
-            f.write('# First N line: T_e C_e(eV/Ang^3/K), no line gap, then M line: T_e K_e(eV/Ang/K/ps)\n')
-            f.write(f'{self.N_C_e}\n')
-            for T, C, _ in zip(Temp, Ce, range(self.N_C_e)):
-                f.write(f'{T} {C:.6e}\n')
-            f.write(f'{self.M_K_e}\n')
-            for T, K, _ in zip(Temp, Kappa, range(self.M_K_e)):
-                f.write(f'{T} {K:.6e}\n')
-        print('Parameters out file is written.')
-
-    def _get_Ce_Ke_for_T(self):
-        Temp, Ce, Kappa = self._read_file()
-        for T, C, K in zip(Temp, Ce, Kappa):
-            if T == self.T_e:
-                return C, K
-        raise ValueError(f'Temperature {self.T_e} K not found in the parameters file.') 
-    
-    def write_tinfile_lammps(self):
-        self._write_parameters_file_lammps()
-        with open(self.tin_file, 'w') as f:
-            f.write('# Tin file\n')
-            f.write('# \n')
-            f.write('# i j k T_e S rho_e C_e kappa_e flag T_dynamic_flag\n')
-            f.write(f'{self.grids[0]} {self.grids[1]} {self.grids[2]} 1\n')
-            f.write(f'{self.boxsize[0]} {self.boxsize[1]}\n')
-            f.write(f'{self.boxsize[2]} {self.boxsize[3]}\n')
-            f.write(f'{self.boxsize[4]} {self.boxsize[5]}\n')
-            if self.read_from_param_file == 0:
-                f.write('NULL \n')
-            else:
-                f.write('Te-dependent_e-parameters.txt \n')
-            for x in range(self.grids[0]):
-                for y in range(self.grids[1]):
-                    for z in range(self.grids[2]):
-                        f.write(f'{x} {y} {z} {self.T_e} 0.000000e+00 1.000000e+00 {self.C_e} {self.K_e} 1 0\n')
-                        # only x, y, z matters, Te, Ce, Kappa will be read from parameters file
-
-    def write_tinfile_turbogap(self):
-        self._write_parameters_file_turbogap()
-        with open(self.tin_file, 'w') as f:
-            f.write('# Tin file\n')
-            f.write('# \n')
-            f.write('# \n')
-            f.write(f'{self.grids[0]+1} {self.grids[1]+1} {self.grids[2]+1} 1\n')
-            f.write(f'{self.boxsize[0]} {self.boxsize[1]}\n')
-            f.write(f'{self.boxsize[2]} {self.boxsize[3]}\n')
-            f.write(f'{self.boxsize[4]} {self.boxsize[5]}\n')
-            f.write('i j k T_e S_e rho_e C_e K_e flag T_dyn_flag \n')
-            for x in range(self.grids[0]+1):
-                for y in range(self.grids[1]+1):
-                    for z in range(self.grids[2]+1):
-                        f.write(f'{x+1} {y+1} {z+1} {self.T_e} 0.000000e+00 1.000000e+00 {self.C_e} {self.K_e} 0 {self.read_from_param_file}\n')
-                        # only x, y, z matters, Te, Ce, Kappa will be read from parameters file
+from ase import units
+from ase.io import write
+from ase.io.lammpsrun import read_lammps_dump_text
 
 
+def lammps_dump_to_extxyz(dump_file, out_file, specorder, index=-1, fixed_atom_ids=None):
+    """Convert a LAMMPS custom dump (metal units: Angstrom, ps, eV) into an
+    extxyz file with the species/pos/velocities/fix_atoms columns TurboGAP's
+    ``atoms_file`` expects.
 
+    index selects which dump frame to convert (default: the last one, e.g.
+    for building a restart atoms_file from the final frame).
+    """
+    with open(dump_file) as f:
+        atoms = read_lammps_dump_text(f, index=index, specorder=specorder)
 
+    # read_lammps_dump_text already interprets the dump as metal units and
+    # stores the result as momenta (velocity * mass) in ASE's native velocity
+    # unit (Angstrom per ASE time unit, ~10.18 fs). get_velocities() = momenta
+    # / masses gives that native-unit velocity back; multiplying by
+    # ase.units.fs converts it to Angstrom/fs, which is what TurboGAP expects.
+    velocities = atoms.get_velocities() * units.fs
+
+    n_atoms = len(atoms)
+    fix_flags = np.full((n_atoms, 3), 'F', dtype='<U1')
+    if fixed_atom_ids:
+        fix_flags[list(fixed_atom_ids)] = 'T'
+
+    atoms.set_array('velocities', velocities)
+    atoms.new_array('fix_atoms', fix_flags)
+    del atoms.arrays['momenta']  # leftover from read_lammps_dump_text; would otherwise
+                                 # leak into any later extxyz write that doesn't pass
+                                 # an explicit columns= list (e.g. run_cascade's copy/write)
+
+    write(
+        out_file,
+        atoms,
+        format='extxyz',
+        columns=['symbols', 'positions', 'velocities', 'fix_atoms'],
+    )
+
+    return atoms

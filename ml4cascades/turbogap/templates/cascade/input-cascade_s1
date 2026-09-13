@@ -1,0 +1,52 @@
+! TurboGAP input file for cascade simulation
+! PKA is chose and set in the atomsfile 
+! Parameters: atomsfile, ff_settings, element, mass, temp
+! Parameters for EPH: beta_file, xlow, xhigh, ylow, yhigh, zlow, zhigh, eph_tout_file, gsx, gsy, gsz
+! eph_C_e, eph_kappa_e, in_xlow, in_xhigh, in_ylow, in_yhigh, in_zlow, in_zhigh, num_species
+
+atoms_file = "atoms_file_s1.xyz"
+pot_file = "gap_files/{ff_settings}"
+n_species = {num_species}
+species = {element}
+masses = {mass}
+
+! MD options
+md_nsteps = 6500    ! roughly 1 ps 
+md_step = 1.
+
+! Adaptive timestep for cascade simulation 
+adaptive_time = .true.
+adapt_time_groupID = all
+adapt_tstep_interval = 1
+adapt_tmin = 1.0E-03               ! 0.001 fs
+adapt_tmax = 1.0E-00               ! 1 fs 
+adapt_xmax = 2.0E-02               ! 0.02 Angstrom
+adapt_emax = 10.0                  ! 10 eV
+
+! ! ! ! ! Electronic system - EPH model ! ! ! ! ! 
+nonadiabatic_processes = .true.
+eph_friction_option = 1           ! calculate friction forces
+eph_random_option = 1             ! calculate random forces 
+eph_fdm_option = 1                ! update electronic temperature using FDM                               
+eph_betafile = '{beta_file}' 
+
+! eph_Tinfile = 'T_input_s1.fdm'
+! omit if Tin file is provided 
+eph_rho_e = 1.0                   ! scaling parameter for FDM mesh                
+eph_C_e = {eph_C_e}               ! electronic heat capacity (eV/A^3/K)               
+eph_kappa_e = {eph_kappa_e}       ! electronic thermal conductivity (eV/A/K/ps)
+eph_Ti_e = {temp}                 ! initial electronic temperature (K)
+eph_box_limits = {xlow} {xhigh} {ylow} {yhigh} {zlow} {zhigh} ! electronic system size   
+eph_gsx = {gsx}    
+eph_gsy = {gsy}    
+eph_gsz = {gsz}                  ! FDM grid size in each direction
+eph_fdm_steps = 1                ! number of steps to perform in the integration of heat diffusion equation
+! omit if Tin file is provided 
+
+! ! ! ! ! Output ! ! ! ! ! 
+write_thermo = 10                 ! Write thermo every 10 steps
+eph_freq_Tout = 10                ! frequency to output electronic temperature, to eph-EnergySharingData.txt
+
+eph_Toutfile = '{eph_tout_file}'  ! electronic temperature map output file
+eph_freq_mesh_Tout = 500 
+write_xyz = 500                   ! Write final structure, output 13 frames 
